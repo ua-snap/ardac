@@ -1,0 +1,12 @@
+# Core modules (mandatory)
+jupyterlite-core==0.3.0
+jupyterlab~=4.1.6
+notebook~=7.1.2
+
+# Python kernel (technically optional)
+jupyterlite-pyodide-kernel==0.3.2
+
+# Python: libraries (optional)
+pandas
+numpy
+ipywidgets
