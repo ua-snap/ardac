@@ -1,0 +1,44 @@
+:deep(.item) {
+  p {
+    color: $gray-darker !important;
+  }
+
+  &.text h3,
+  &.text-picture h3 {
+    margin-bottom: 0.3rem;
+  }
+
+  img {
+    filter: grayscale(1);
+  }
+
+  &:hover {
+    transition: 0.3s;
+    background-color: $white-lighter !important;
+    h3 {
+      transition: 0.3s;
+      color: $link !important;
+    }
+    p {
+      transition: 0.3s;
+      color: $link !important;
+    }
+    img {
+      transition: 0.3s;
+      filter: none;
+    }
+  }
+
+  &.missing {
+    h3::after {
+      color: #888;
+      display: block;
+      font-size: 80%;
+      content: ' (not implemented yet)';
+    }
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
+}
