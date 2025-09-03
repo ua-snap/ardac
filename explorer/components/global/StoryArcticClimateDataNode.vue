@@ -140,7 +140,7 @@ onMounted(() => {
             <strong>
               <span class="bling">CMIP6</span> models and scenarios that perform
               best in Alaska and the pan&ndash;Arctic: </strong
-            >These include 12 global climate models, 4 emissions scenarios, and
+            >These include 13 global climate models, 4 emissions scenarios, and
             18 variables. Compared to prior CMIP5 data housed at UAF, the CMIP6
             data available through the ACDN offers more models and more
             variables, while representing the current state-of-the-art climate
