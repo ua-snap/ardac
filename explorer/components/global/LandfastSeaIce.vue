@@ -237,14 +237,7 @@ const buildChart = () => {
     plotData,
     {
       title: {
-        text:
-          'Landfast sea ice for ' +
-          latLng.value?.lat +
-          ', ' +
-          latLng.value?.lng +
-          '<br />' +
-          'Year: ' +
-          yearInput.value,
+        text: placesStore.getChartTitle('Landfast sea ice'),
         font: {
           size: 24,
         },
@@ -276,6 +269,11 @@ const buildChart = () => {
         'autoScale2d',
         'resetScale2d',
       ],
+      toImageButtonOptions: {
+        format: 'png',
+        filename: placesStore.getChartTitle('Landfast sea ice'),
+        scale: 2,
+      },
     }
   )
 }

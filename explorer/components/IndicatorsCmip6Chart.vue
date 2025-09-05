@@ -210,11 +210,7 @@ const buildChart = () => {
       {
         title: {
           text:
-            props.label +
-            ' for ' +
-            placesStore.latLng?.lat +
-            ', ' +
-            placesStore.latLng?.lng +
+            placesStore.getChartTitle(props.label) +
             '<br />Model: ' +
             chartInputs.value.model +
             ', Scenario: ' +
@@ -254,6 +250,11 @@ const buildChart = () => {
           'autoScale2d',
           'resetScale2d',
         ],
+        toImageButtonOptions: {
+          format: 'png',
+          filename: placesStore.getChartTitle(props.label),
+          scale: 2,
+        },
       }
     )
   }

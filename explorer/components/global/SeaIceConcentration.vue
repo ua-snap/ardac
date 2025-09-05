@@ -137,10 +137,7 @@ const buildChart = () => {
       {
         title: {
           text:
-            'Sea ice concentration for ' +
-            latLng.value?.lat +
-            ', ' +
-            latLng.value?.lng +
+            placesStore.getChartTitle('Sea ice concentration') +
             '<br />' +
             'Month: ' +
             months[parseInt(monthInput.value) - 1],
@@ -175,6 +172,11 @@ const buildChart = () => {
           'autoScale2d',
           'resetScale2d',
         ],
+        toImageButtonOptions: {
+          format: 'png',
+          filename: placesStore.getChartTitle('Sea ice concentration'),
+          scale: 2,
+        },
       }
     )
   }

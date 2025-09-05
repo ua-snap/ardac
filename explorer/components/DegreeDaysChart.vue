@@ -169,12 +169,7 @@ const buildChart = () => {
       traces,
       {
         title: {
-          text:
-            props.label +
-            ' for ' +
-            placesStore.latLng?.lat +
-            ', ' +
-            placesStore.latLng?.lng,
+          text: placesStore.getChartTitle(props.label),
           font: {
             size: 24,
           },
@@ -208,6 +203,11 @@ const buildChart = () => {
           'autoScale2d',
           'resetScale2d',
         ],
+        toImageButtonOptions: {
+          format: 'png',
+          filename: placesStore.getChartTitle(props.label),
+          scale: 2,
+        },
       }
     )
   }
