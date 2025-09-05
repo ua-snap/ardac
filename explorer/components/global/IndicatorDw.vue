@@ -6,6 +6,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData)
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const layers: MapLayer[] = [
   {
@@ -70,7 +73,7 @@ mapStore.setLegendItems(mapId, legend)
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Deep Winter Days</h3>
-      <XrayIntroblurb resolution="~12" unit="km" cmip="5"/>
+      <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         Deep winter days are the number of days per year that are below
         -22&deg;F. The map below shows the 30-year mean of deep winter days for
@@ -118,33 +121,7 @@ mapStore.setLegendItems(mapId, legend)
           The following download links bundle summer days data with other
           climate indicators. Deep winter days use the "dw" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/base/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/base/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/indicators/cmip5/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

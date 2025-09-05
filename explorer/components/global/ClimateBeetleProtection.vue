@@ -220,33 +220,7 @@ onUnmounted(() => {
           {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/beetles/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/beetles/point/' +
-                latLng!.lat +
-                '/' +
-                latLng!.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/beetles/point" />
       </div>
       <GetAndUseDataBeetle />
     </div>

@@ -158,33 +158,7 @@ onUnmounted(() => {
           data with other permafrost data. Mean annual ground temperature uses
           the "magt" identifier prefix.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/permafrost/point/gipl/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/permafrost/point/gipl/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/permafrost/point/gipl" />
       </div>
       <GetAndUseDataPermafrost :presentInNcr="true" :presentInEds="true" />
     </div>

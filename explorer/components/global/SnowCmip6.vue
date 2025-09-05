@@ -314,34 +314,7 @@ mapStore.setLegendItems(mapId, legend)
           Download CMIP6 snow data for {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=prsn,snw&format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=prsn,snw'
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/cmip6/point" variables="prsn,snw" />
       </div>
     </div>
   </section>

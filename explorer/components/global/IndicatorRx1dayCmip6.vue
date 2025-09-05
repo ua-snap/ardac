@@ -109,33 +109,7 @@ mapStore.setLegendItems(mapId, legend)
           with other climate indicators. Maximum 1-day precipitation uses the
           "rx1day" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/indicators/cmip6/point" />
       </div>
     </div>
   </section>

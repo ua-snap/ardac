@@ -334,33 +334,7 @@ onUnmounted(() => {
           Download precipitation frequency data for {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/precipitation/frequency/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/precipitation/frequency/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/precipitation/frequency/point" />
       </div>
       <GetAndUseData
         :presentInEds="true"

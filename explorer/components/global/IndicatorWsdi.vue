@@ -69,7 +69,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <XrayIntroblurb resolution="~12" unit="km" cmip="5"/>
+      <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <h3 class="title is-3">Warm Spell Duration Index</h3>
       <p class="mb-6">
         The warm spell duration index is the annual count of occurrences of at
@@ -126,33 +126,7 @@ mapStore.setLegendItems(mapId, legend)
           with other climate indicators. Warm spell duration index uses the
           "wsdi" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/base/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/base/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/indicators/cmip5/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

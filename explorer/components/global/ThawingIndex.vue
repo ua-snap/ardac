@@ -52,7 +52,7 @@ mapStore.setLegendItems(mapId, legend)
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Thawing Index</h3>
-      <XrayIntroblurb resolution="~12" unit="km" cmip="5"/>
+      <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The thawing index is the number of degree days above freezing per year.
         The map below shows the 30-year mean of the thawing index for three
@@ -95,33 +95,7 @@ mapStore.setLegendItems(mapId, legend)
           Download thawing index data for {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/degree_days/thawing_index/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/degree_days/thawing_index/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/degree_days/thawing_index" />
       </div>
       <GetAndUseDataDegreeDays :presentInEds="true">
         <li>

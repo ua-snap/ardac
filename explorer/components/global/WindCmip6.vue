@@ -215,34 +215,7 @@ onUnmounted(() => {
           Download CMIP6 near-surface wind speed data for {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=sfcWind,uas,vas&format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=sfcWind,uas,vas'
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/cmip6/point" variables="sfcWind,uas,vas" />
       </div>
     </div>
   </section>

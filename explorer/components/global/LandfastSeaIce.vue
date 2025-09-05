@@ -416,33 +416,7 @@ onUnmounted(() => {
           Download landfast sea ice data for {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/landfastice/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/landfastice/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/landfastice/point" />
       </div>
       <GetAndUseData apiUrl="https://earthmaps.io/landfastice/" />
       <Bios :people="['Andy Mahoney', 'Hajo Eicken']" />

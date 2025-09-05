@@ -105,33 +105,7 @@ onUnmounted(() => {
           The following download links bundle talik thickness data with other
           permafrost data. Talik thickness uses the "talikthickness" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/permafrost/point/gipl/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/permafrost/point/gipl/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/permafrost/point/gipl" />
       </div>
       <GetAndUseDataPermafrost />
     </div>

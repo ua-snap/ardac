@@ -70,7 +70,7 @@ mapStore.setLegendItems(mapId, legend)
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Maximum 5-day Precipitation</h3>
-      <XrayIntroblurb resolution="~12" unit="km" cmip="5"/>
+      <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows the 30-year mean of the maximum 5-day precipitation
         for three eras. The historical era (1980&ndash;2009) uses historical
@@ -124,33 +124,7 @@ mapStore.setLegendItems(mapId, legend)
           with other climate indicators. Maximum 5-day precipitation uses the
           "rx5day" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/base/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/base/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/indicators/cmip5/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

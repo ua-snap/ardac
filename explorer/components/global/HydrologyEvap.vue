@@ -101,33 +101,7 @@ onUnmounted(() => {
           The following download links bundle evapotranspiration data with other
           hydrology data. Evapotranspiration uses the "evap" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/hydrology/point" />
       </div>
       <GetAndUseDataHydrology :presentInNcr="true" />
     </div>

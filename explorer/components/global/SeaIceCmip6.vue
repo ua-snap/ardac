@@ -178,34 +178,7 @@ mapStore.setLegendItems(mapId, legend)
           Download CMIP6 sea ice concentration data for {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=siconc&format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=siconc'
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/cmip6/point" variables="siconc" />
       </div>
     </div>
   </section>

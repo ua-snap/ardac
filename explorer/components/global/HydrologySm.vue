@@ -206,33 +206,7 @@ onUnmounted(() => {
           hydrology data. Soil moisture uses the "sm1" (layer 1), "sm2" (layer
           2), and "sm3" (layer 3) identifiers.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/hydrology/point" />
       </div>
       <GetAndUseDataHydrology />
     </div>
