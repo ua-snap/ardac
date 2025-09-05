@@ -6,6 +6,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData)
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const layers: MapLayer[] = [
   {
@@ -116,7 +119,9 @@ mapStore.setLegendItems(mapId, legend)
 
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download maximum 5-day precipitation data for {{ latLng.lat }},
+          Download maximum 5-day precipitation data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <p>

@@ -15,6 +15,9 @@ const returnIntervalInput = defineModel('returnInterval', { default: '100' })
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const dataError = computed<boolean>(() => dataStore.dataErrors[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 const errorMsg = ref('')
 
 const returnIntervals = [2, 5, 10, 25, 50, 100, 200, 500, 1000]
@@ -331,7 +334,9 @@ onUnmounted(() => {
       <div id="chart"></div>
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download precipitation frequency data for {{ latLng.lat }},
+          Download precipitation frequency data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <DownloadLinks endpoint="/precipitation/frequency/point" />

@@ -8,6 +8,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const layers: MapLayer[] = [
   {
@@ -208,7 +211,9 @@ onUnmounted(() => {
 
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download CMIP6 evaporation data for {{ latLng.lat }},
+          Download CMIP6 evaporation data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <DownloadLinks endpoint="/cmip6/point" variables="evspsbl" />

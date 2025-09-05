@@ -11,6 +11,9 @@ const scenarioInput = defineModel('scenario', { default: 'rcp85' })
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const eras = ['2010-2039', '2040-2069', '2070-2099']
 const models = ['NCAR-CCSM4', 'GFDL-ESM2M', 'HadGEM2-ES', 'MRI-CGCM3']
@@ -165,8 +168,9 @@ onUnmounted(() => {
           </div>
         </div>
         <h4 class="title is-4">
-          Climate protection from spruce beetles for {{ latLng.lat }},
-          {{ latLng.lng }} with
+          Climate protection from spruce beetles for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }}, {{ latLng.lng }} with
           {{ snowpackLabels[snowpackInput].toLowerCase() }} snowpack
         </h4>
         <table class="mb-6">

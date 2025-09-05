@@ -115,7 +115,9 @@ mapStore.setLegendItems(mapId, legend)
 
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download deep winter days data for {{ latLng.lat }}, {{ latLng.lng }}
+          Download deep winter days data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }}, {{ latLng.lng }}
         </h4>
         <p>
           The following download links bundle summer days data with other
