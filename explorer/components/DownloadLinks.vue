@@ -36,7 +36,9 @@ const jsonUrl = computed(() => {
   }
   if (selectedCommunity.value) {
     url +=
-      (props.variables ? '&' : '?') + 'community=' + selectedCommunity.value.id
+      (url.includes('?') ? '&' : '?') +
+      'community=' +
+      selectedCommunity.value.id
   }
   return url
 })
