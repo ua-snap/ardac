@@ -6,6 +6,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData)
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const layers: MapLayer[] = [
   {
@@ -69,7 +72,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <XrayIntroblurb resolution="~12" unit="km" cmip="5"/>
+      <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <h3 class="title is-3">Warm Spell Duration Index</h3>
       <p class="mb-6">
         The warm spell duration index is the annual count of occurrences of at
@@ -118,7 +121,9 @@ mapStore.setLegendItems(mapId, legend)
 
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download warm spell duration index data for {{ latLng.lat }},
+          Download warm spell duration index data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <p>
@@ -126,33 +131,7 @@ mapStore.setLegendItems(mapId, legend)
           with other climate indicators. Warm spell duration index uses the
           "wsdi" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/base/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/indicators/base/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/indicators/cmip5/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

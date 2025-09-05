@@ -8,6 +8,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const layers: MapLayer[] = [
   {
@@ -94,40 +97,16 @@ onUnmounted(() => {
 
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download glacier melt data for {{ latLng.lat }},
+          Download glacier melt data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <p>
           The following download links bundle glacier melt data with other
           hydrology data. Glacier melt uses the "glacier_melt" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/hydrology/point" />
       </div>
       <GetAndUseDataHydrology />
     </div>
