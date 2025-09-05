@@ -221,6 +221,7 @@ onUnmounted(() => {
         </table>
         <h4 class="title is-4">
           Download climate protection from spruce beetles data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
