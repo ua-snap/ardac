@@ -4,6 +4,7 @@ const endpoint = 'landfastSeaIce'
 const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 const dataStore = useDataStore()
+const chartStore = useChartStore()
 const runtimeConfig = useRuntimeConfig()
 
 const { $Plotly, $_ } = useNuxtApp()
@@ -237,7 +238,7 @@ const buildChart = () => {
     plotData,
     {
       title: {
-        text: placesStore.getChartTitle('Landfast sea ice'),
+        text: chartStore.getChartTitle('Landfast sea ice'),
         font: {
           size: 24,
         },
@@ -271,7 +272,7 @@ const buildChart = () => {
       ],
       toImageButtonOptions: {
         format: 'png',
-        filename: placesStore.getChartTitle('Landfast sea ice'),
+        filename: chartStore.getChartTitle('Landfast sea ice'),
         scale: 2,
       },
     }

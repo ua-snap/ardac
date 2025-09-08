@@ -210,7 +210,7 @@ const buildChart = () => {
       {
         title: {
           text:
-            placesStore.getChartTitle(props.label) +
+            chartStore.getChartTitle(props.label) +
             '<br />Model: ' +
             chartInputs.value.model +
             ', Scenario: ' +
@@ -252,7 +252,7 @@ const buildChart = () => {
         ],
         toImageButtonOptions: {
           format: 'png',
-          filename: placesStore.getChartTitle(props.label),
+          filename: chartStore.getChartTitle(props.label),
           scale: 2,
         },
       }

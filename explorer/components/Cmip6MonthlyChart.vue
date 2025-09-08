@@ -171,7 +171,7 @@ const buildChart = () => {
       {
         title: {
           text:
-            placesStore.getChartTitle(props.label) +
+            chartStore.getChartTitle(props.label) +
             '<br />' +
             'Model: ' +
             chartLabels.value.models[chartInputs.value.model] +
@@ -213,7 +213,7 @@ const buildChart = () => {
         ],
         toImageButtonOptions: {
           format: 'png',
-          filename: placesStore.getChartTitle(props.label),
+          filename: chartStore.getChartTitle(props.label),
           scale: 2,
         },
       }

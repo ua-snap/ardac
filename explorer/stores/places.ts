@@ -135,17 +135,6 @@ export const usePlacesStore = defineStore('places', () => {
     randomLocation.value = undefined
   }
 
-  function getChartTitle(label: string): string {
-    let title = label + ' for '
-    if (selectedCommunity.value) {
-      title += selectedCommunity.value.name + ' '
-    }
-    if (latLng.value) {
-      title += latLng.value.lat + ', ' + latLng.value.lng
-    }
-    return title
-  }
-
   return {
     fetchCommunitiesBySubstringAndExtent,
     latLng,
@@ -155,6 +144,5 @@ export const usePlacesStore = defineStore('places', () => {
     error,
     fetchRandomLocation,
     clearRandomLocation,
-    getChartTitle,
   }
 })

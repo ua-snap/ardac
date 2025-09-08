@@ -155,7 +155,7 @@ const buildChart = () => {
       })
     })
 
-    let titleText: string = placesStore.getChartTitle(props.label)
+    let titleText: string = chartStore.getChartTitle(props.label)
 
     if (props.depth) {
       titleText += '<br />Depth: ' + props.depth + ', '
@@ -206,7 +206,7 @@ const buildChart = () => {
         ],
         toImageButtonOptions: {
           format: 'png',
-          filename: placesStore.getChartTitle(props.label),
+          filename: chartStore.getChartTitle(props.label),
           scale: 2,
         },
       }

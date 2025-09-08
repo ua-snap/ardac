@@ -4,6 +4,7 @@ const endpoint = 'seaIceConcentration'
 const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 const dataStore = useDataStore()
+const chartStore = useChartStore()
 const runtimeConfig = useRuntimeConfig()
 
 const { $Plotly, $_ } = useNuxtApp()
@@ -137,7 +138,7 @@ const buildChart = () => {
       {
         title: {
           text:
-            placesStore.getChartTitle('Sea ice concentration') +
+            chartStore.getChartTitle('Sea ice concentration') +
             '<br />' +
             'Month: ' +
             months[parseInt(monthInput.value) - 1],
@@ -174,7 +175,7 @@ const buildChart = () => {
         ],
         toImageButtonOptions: {
           format: 'png',
-          filename: placesStore.getChartTitle('Sea ice concentration'),
+          filename: chartStore.getChartTitle('Sea ice concentration'),
           scale: 2,
         },
       }

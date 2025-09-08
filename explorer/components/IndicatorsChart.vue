@@ -12,6 +12,7 @@ import type { Data } from 'plotly.js-dist-min'
 const { $Plotly, $_ } = useNuxtApp()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
+const chartStore = useChartStore()
 
 const scenarioInput = defineModel({ default: 'rcp85' })
 
@@ -151,7 +152,7 @@ const buildChart = () => {
       {
         title: {
           text:
-            placesStore.getChartTitle(props.label) +
+            chartStore.getChartTitle(props.label) +
             '<br />' +
             'Scenario: ' +
             scenarioLabels[scenarioInput.value],
@@ -190,7 +191,7 @@ const buildChart = () => {
         ],
         toImageButtonOptions: {
           format: 'png',
-          filename: placesStore.getChartTitle(props.label),
+          filename: chartStore.getChartTitle(props.label),
           scale: 2,
         },
       }
