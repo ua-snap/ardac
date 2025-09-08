@@ -123,7 +123,7 @@ mapStore.setLegendItems(mapId, legend)
           The following download links bundle summer days data with other
           climate indicators. Summer days use the "su" identifier.
         </p>
-        <DownloadLinks endpoint="/indicators/cmip5/point" />
+        <DownloadLinks endpoint="/indicators/base/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

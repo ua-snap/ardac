@@ -125,7 +125,7 @@ mapStore.setLegendItems(mapId, legend)
           The following download links bundle hot day threshold data with other
           climate indicators. Hot day threshold uses the "hd" identifier.
         </p>
-        <DownloadLinks endpoint="/indicators/cmip5/point" />
+        <DownloadLinks endpoint="/indicators/base/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

@@ -129,7 +129,7 @@ mapStore.setLegendItems(mapId, legend)
           with other climate indicators. Maximum 5-day precipitation uses the
           "rx5day" identifier.
         </p>
-        <DownloadLinks endpoint="/indicators/cmip5/point" />
+        <DownloadLinks endpoint="/indicators/base/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

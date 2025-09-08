@@ -11,7 +11,7 @@ const endpoints: Record<string, string> = {
   degreeDaysBelow0: '/degree_days/below_zero/',
   heatingDegreeDays: '/degree_days/heating/',
   hydrology: '/hydrology/point/',
-  indicators: '/indicators/cmip5/point/',
+  indicators: '/indicators/base/point/',
   landfastSeaIce: '/landfastice/point/',
   freezingIndex: '/degree_days/freezing_index/',
   meanAnnualTemperature: '/temperature/',

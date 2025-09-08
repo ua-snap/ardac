@@ -126,7 +126,7 @@ mapStore.setLegendItems(mapId, legend)
           other climate indicators. Consecutive dry days uses the "cdd"
           identifier.
         </p>
-        <DownloadLinks endpoint="/indicators/cmip5/point" />
+        <DownloadLinks endpoint="/indicators/base/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

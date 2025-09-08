@@ -131,7 +131,7 @@ mapStore.setLegendItems(mapId, legend)
           with other climate indicators. Warm spell duration index uses the
           "wsdi" identifier.
         </p>
-        <DownloadLinks endpoint="/indicators/cmip5/point" />
+        <DownloadLinks endpoint="/indicators/base/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>

@@ -125,7 +125,7 @@ mapStore.setLegendItems(mapId, legend)
           The following download links bundle cold day threshold data with other
           climate indicators. Cold day threshold uses the "cd" identifier.
         </p>
-        <DownloadLinks endpoint="/indicators/cmip5/point" />
+        <DownloadLinks endpoint="/indicators/base/point" />
       </div>
       <GetAndUseDataIndicators :presentInNcr="true" />
     </div>
