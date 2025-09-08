@@ -34,18 +34,20 @@ const jsonUrl = computed(() => {
   if (props.variables) {
     url += '?vars=' + props.variables
   }
-  if (selectedCommunity.value) {
-    url +=
-      (url.includes('?') ? '&' : '?') +
-      'community=' +
-      selectedCommunity.value.id
-  }
+
   return url
 })
 
 const csvUrl = computed(() => {
   if (!jsonUrl.value) return ''
   let url = jsonUrl.value
+
+  if (selectedCommunity.value) {
+    url +=
+      (url.includes('?') ? '&' : '?') +
+      'community=' +
+      selectedCommunity.value.id
+  }
 
   url += (url.includes('?') ? '&' : '?') + 'format=csv'
 
