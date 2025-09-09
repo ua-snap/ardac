@@ -18,8 +18,21 @@ export const useChartStore = defineStore('chart', () => {
     >
   > = ref({})
 
+function getChartTitle(label: string): string {
+    const placesStore = usePlacesStore()
+    let title = label + ' for '
+    if (placesStore.selectedCommunity) {
+      title += placesStore.selectedCommunity.name + ' at '
+    }
+    if (placesStore.latLng) {
+      title += placesStore.latLng.lat + ', ' + placesStore.latLng.lng
+    }
+    return title
+  }
+
   return {
     labels,
     inputs,
+    getChartTitle,
   }
 })

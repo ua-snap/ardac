@@ -171,11 +171,7 @@ const buildChart = () => {
       {
         title: {
           text:
-            props.label +
-            ' for ' +
-            placesStore.latLng?.lat +
-            ', ' +
-            placesStore.latLng?.lng +
+            chartStore.getChartTitle(props.label) +
             '<br />' +
             'Model: ' +
             chartLabels.value.models[chartInputs.value.model] +
@@ -215,6 +211,11 @@ const buildChart = () => {
           'autoScale2d',
           'resetScale2d',
         ],
+        toImageButtonOptions: {
+          format: 'png',
+          filename: chartStore.getChartTitle(props.label),
+          scale: 2,
+        },
       }
     )
   }

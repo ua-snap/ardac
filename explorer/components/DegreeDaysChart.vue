@@ -12,6 +12,7 @@ import { precisionMean } from '~/utils/math'
 const { $Plotly, $_ } = useNuxtApp()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
+const chartStore = useChartStore()
 
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
@@ -169,12 +170,7 @@ const buildChart = () => {
       traces,
       {
         title: {
-          text:
-            props.label +
-            ' for ' +
-            placesStore.latLng?.lat +
-            ', ' +
-            placesStore.latLng?.lng,
+          text: chartStore.getChartTitle(props.label),
           font: {
             size: 24,
           },
@@ -208,6 +204,11 @@ const buildChart = () => {
           'autoScale2d',
           'resetScale2d',
         ],
+        toImageButtonOptions: {
+          format: 'png',
+          filename: chartStore.getChartTitle(props.label),
+          scale: 2,
+        },
       }
     )
   }

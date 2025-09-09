@@ -155,12 +155,7 @@ const buildChart = () => {
       })
     })
 
-    let titleText: string =
-      props.label +
-      ' for ' +
-      placesStore.latLng?.lat +
-      ', ' +
-      placesStore.latLng?.lng
+    let titleText: string = chartStore.getChartTitle(props.label)
 
     if (props.depth) {
       titleText += '<br />Depth: ' + props.depth + ', '
@@ -209,6 +204,11 @@ const buildChart = () => {
           'autoScale2d',
           'resetScale2d',
         ],
+        toImageButtonOptions: {
+          format: 'png',
+          filename: titleText,
+          scale: 2,
+        },
       }
     )
   }

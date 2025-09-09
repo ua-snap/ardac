@@ -24,6 +24,7 @@ const { $Plotly } = useNuxtApp()
 const store = useStore()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
+const chartStore = useChartStore()
 
 const seasonInput = defineModel('season', { default: 'DJF' })
 const scenarioInput = defineModel('scenario', { default: 'rcp85' })
@@ -119,11 +120,7 @@ const buildChart = () => {
       {
         title: {
           text:
-            props.label +
-            ' for ' +
-            placesStore.latLng?.lat +
-            ', ' +
-            placesStore.latLng?.lng +
+            chartStore.getChartTitle(props.label) +
             ' (5-Model Average)<br />' +
             'Season: ' +
             seasonLabels[seasonInput.value] +
@@ -161,6 +158,11 @@ const buildChart = () => {
           'autoScale2d',
           'resetScale2d',
         ],
+        toImageButtonOptions: {
+          format: 'png',
+          filename: chartStore.getChartTitle(props.label),
+          scale: 2,
+        },
       }
     )
   }
