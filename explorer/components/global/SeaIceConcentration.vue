@@ -13,6 +13,9 @@ const monthInput = defineModel({ default: '3' })
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const years = $_.range(1850, 2021)
 
@@ -260,7 +263,9 @@ onUnmounted(() => {
       <div id="chart"></div>
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download sea ice concentration data for {{ latLng.lat }},
+          Download sea ice concentration data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <DownloadLinks endpoint="/seaice/point" />

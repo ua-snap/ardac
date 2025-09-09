@@ -13,6 +13,9 @@ const yearInput = defineModel('snowpack', { default: '2023' })
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const years = $_.range(1996, 2024)
 
@@ -415,7 +418,9 @@ onUnmounted(() => {
           </div>
         </div>
         <h4 class="title is-4">
-          Download landfast sea ice data for {{ latLng.lat }},
+          Download landfast sea ice data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <DownloadLinks endpoint="/landfastice/point" />

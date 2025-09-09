@@ -14,6 +14,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const layers: MapLayer[] = [
   {
@@ -316,7 +319,9 @@ onUnmounted(() => {
       <div id="chart"></div>
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download wet days per year data for {{ latLng.lat }},
+          Download wet days per year data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <DownloadLinks endpoint="/wet_days_per_year/all/point" />
