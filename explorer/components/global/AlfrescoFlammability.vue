@@ -73,49 +73,21 @@ const buildChart = () => {
       },
     })
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            'Flammability for ' +
-            'HUC-12 ' +
-            apiData.value['huc_id'] +
-            '<br />' +
-            'Model: ' +
-            modelInput.value +
-            ', Scenario: ' +
-            scenarioLabels[scenarioInput.value],
-          font: {
-            size: 24,
-          },
-        },
-        yaxis: {
-          title: {
-            text: 'Flammability (%)',
-            font: {
-              size: 18,
-            },
-          },
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+    const chartTitle = 'Flammability for HUC-12 ' + apiData.value['huc_id']
+    const titleText =
+      chartTitle +
+      '<br />' +
+      'Model: ' +
+      modelInput.value +
+      ', Scenario: ' +
+      scenarioLabels[scenarioInput.value]
+
+    const yAxisLabel = 'Flammability (%)'
+
+    const layout = getLayout(titleText, yAxisLabel)
+    const config = getConfig(chartTitle)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 

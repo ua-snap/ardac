@@ -146,56 +146,22 @@ const buildChart = () => {
       yAxisLabel += ' (' + props.units + ')'
     }
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            chartStore.getChartTitle(props.label) +
-            '<br />' +
-            'Scenario: ' +
-            scenarioLabels[scenarioInput.value],
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          // Pad x-axis with one null to avoid overlapping y-axis line.
-          tickvals: ([null] as Array<number | null>).concat(ticks),
-          ticktext: [''].concat(eraLabels),
-          dtick: 1,
-        },
-        yaxis: {
-          title: {
-            text: yAxisLabel,
-            font: {
-              size: 18,
-            },
-          },
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-        toImageButtonOptions: {
-          format: 'png',
-          filename: chartStore.getChartTitle(props.label),
-          scale: 2,
-        },
-      }
-    )
+    const chartTitle = chartStore.getChartTitle(props.label)
+
+    const titleText: string =
+      chartTitle + '<br />' + 'Scenario: ' + scenarioLabels[scenarioInput.value]
+
+    const xAxis = {
+      // Pad x-axis with one null to avoid overlapping y-axis line.
+      tickvals: ([null] as Array<number | null>).concat(ticks),
+      ticktext: [''].concat(eraLabels),
+      dtick: 1,
+    }
+
+    const layout = getLayout(titleText, yAxisLabel, xAxis)
+    const config = getConfig(chartTitle)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 

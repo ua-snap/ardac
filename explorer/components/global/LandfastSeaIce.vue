@@ -4,6 +4,7 @@ const endpoint = 'landfastSeaIce'
 const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 const dataStore = useDataStore()
+const chartStore = useChartStore()
 const runtimeConfig = useRuntimeConfig()
 
 const { $Plotly, $_ } = useNuxtApp()
@@ -232,52 +233,30 @@ const buildChart = () => {
     } satisfies Data,
   ]
 
-  $Plotly.newPlot(
-    'chart',
-    plotData,
-    {
-      title: {
-        text:
-          'Landfast sea ice for ' +
-          latLng.value?.lat +
-          ', ' +
-          latLng.value?.lng +
-          '<br />' +
-          'Year: ' +
-          yearInput.value,
-        font: {
-          size: 24,
-        },
-      },
-      xaxis: {
-        title: {
-          text: 'Day of the month',
-          font: {
-            size: 18,
-          },
-        },
-        showgrid: false,
-      },
-      yaxis: {
-        showgrid: false,
+  const chartTitle = chartStore.getChartTitle('Landfast Sea Ice Extent')
+
+  const titleText = chartTitle + '<br />' + 'Year: ' + yearInput.value
+
+  const yAxisLabel = 'Month'
+
+  const xAxis = {
+    title: {
+      text: 'Day of the month',
+      font: {
+        size: 18,
       },
     },
-    {
-      responsive: true, // changes the height / width dynamically for charts
-      displayModeBar: true, // always show the camera icon
-      displaylogo: false,
-      modeBarButtonsToRemove: [
-        'zoom2d',
-        'pan2d',
-        'select2d',
-        'lasso2d',
-        'zoomIn2d',
-        'zoomOut2d',
-        'autoScale2d',
-        'resetScale2d',
-      ],
-    }
-  )
+    showgrid: false,
+  }
+
+  const layout = getLayout(titleText, yAxisLabel, xAxis)
+  layout.yaxis = {
+    showgrid: false,
+  }
+
+  const config = getConfig(chartTitle)
+
+  $Plotly.newPlot('chart', plotData, layout, config)
 }
 
 watch(latLng, async () => {

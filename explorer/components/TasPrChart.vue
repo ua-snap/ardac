@@ -114,57 +114,28 @@ const buildChart = () => {
       },
     })
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            chartStore.getChartTitle(props.label) +
-            ' (5-Model Average)<br />' +
-            'Season: ' +
-            seasonLabels[seasonInput.value] +
-            ', Scenario: ' +
-            scenarioLabels[scenarioInput.value],
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          tickvals: yearRanges,
-          ticktext: yearRangesWithDashes,
-          dtick: 1,
-        },
-        yaxis: {
-          title: {
-            text: props.label + ' (' + props.units + ')',
-            font: {
-              size: 18,
-            },
-          },
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-        toImageButtonOptions: {
-          format: 'png',
-          filename: chartStore.getChartTitle(props.label),
-          scale: 2,
-        },
-      }
-    )
+    const chartTitle = chartStore.getChartTitle(props.label)
+
+    const titleText =
+      chartTitle +
+      ' (5-Model Average)<br />' +
+      'Season: ' +
+      seasonLabels[seasonInput.value] +
+      ', Scenario: ' +
+      scenarioLabels[scenarioInput.value]
+
+    const yAxisLabel = props.label + ' (' + props.units + ')'
+
+    const xAxis = {
+      tickvals: yearRanges,
+      ticktext: yearRangesWithDashes,
+      dtick: 1,
+    }
+
+    const layout = getLayout(titleText, yAxisLabel, xAxis)
+    const config = getConfig(chartTitle)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 
