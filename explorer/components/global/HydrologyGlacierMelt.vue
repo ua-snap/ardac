@@ -101,33 +101,7 @@ onUnmounted(() => {
           The following download links bundle glacier melt data with other
           hydrology data. Glacier melt uses the "glacier_melt" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/hydrology/point" />
       </div>
       <GetAndUseDataHydrology />
     </div>

@@ -153,33 +153,7 @@ onUnmounted(() => {
           with other hydrology data. Ice water equivalent uses the "iwe"
           identifier and snow water equivalent uses the "swe" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/hydrology/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/hydrology/point" />
       </div>
       <GetAndUseDataHydrology />
     </div>

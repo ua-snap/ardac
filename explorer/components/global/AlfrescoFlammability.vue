@@ -277,33 +277,7 @@ onUnmounted(() => {
           example, a flammability value of 0.002 is equivalent to 0.2%
           flammability.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/alfresco/flammability/local/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/alfresco/flammability/local/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/alfresco/flammability/local" />
       </div>
       <GetAndUseDataAlfresco
         :presentInNcr="true"

@@ -203,34 +203,7 @@ onUnmounted(() => {
           Download CMIP6 temperature data for {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=tas,tasmax,tasmin&format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=tas,tasmax,tasmin'
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/cmip6/point" variables="tas,tasmax,tasmin" />
       </div>
     </div>
   </section>

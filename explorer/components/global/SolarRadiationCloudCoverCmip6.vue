@@ -244,34 +244,10 @@ onUnmounted(() => {
           fraction data for {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=rsds,rlds,hfss,hfls,clt&format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=rsds,rlds,hfss,hfls,clt'
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks
+          endpoint="/cmip6/point"
+          variables="rsds,rlds,hfss,hfls,clt"
+        />
       </div>
     </div>
   </section>
