@@ -99,8 +99,8 @@ mapStore.setLegendItems(mapId, legend)
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
           Download degree days below 0&deg;F data for
-          {{ selectedCommunity ? selectedCommunity.name + ' at ' : ''
-          }}{{ latLng.lat }},
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <DownloadLinks endpoint="/degree_days/below_zero" />
