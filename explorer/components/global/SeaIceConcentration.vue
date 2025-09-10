@@ -150,9 +150,7 @@ const buildChart = () => {
     }
 
     const layout = getLayout(titleText, yAxisLabel, xAxis)
-    layout.yaxis = {
-      showgrid: false,
-    }
+    layout.yaxis = { ...layout.yaxis, showgrid: false }
 
     const config = getConfig(chartTitle)
 
