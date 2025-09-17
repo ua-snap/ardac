@@ -371,7 +371,7 @@ table caption {
 }
 
 .blurbs .columns .column:first-of-type {
-  border-right: 1px dashed $grey-lighter;
+  border-right: 1px dashed $gray-lighter;
 }
 
 @media (max-width: 1023px) {
