@@ -7,6 +7,7 @@ export const useChartStore = defineStore('chart', () => {
       | HydrologyChartLabelsObj
       | PermafrostChartLabelsObj
       | IndicatorsCmip6ChartLabelsObj
+      | Cmip6DownscaledChartLabelsObj
     >
   > = ref({})
   let inputs: Ref<
@@ -15,6 +16,7 @@ export const useChartStore = defineStore('chart', () => {
       | HydrologyChartInputsObj
       | PermafrostChartInputsObj
       | IndicatorsCmip6ChartInputsObj
+      | Cmip6DownscaledChartInputsObj
     >
   > = ref({})
 

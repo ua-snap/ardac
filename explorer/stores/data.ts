@@ -6,6 +6,7 @@ const endpoints: Record<string, string> = {
   elevation: '/elevation/point/',
   flammability: '/alfresco/flammability/local/',
   beetles: '/beetles/point/',
+  cmip6Downscaled: '/cmip6_downscaled/point/',
   cmip6Monthly: '/cmip6/point/',
   indicatorsCmip6: '/indicators/cmip6/point/',
   degreeDaysBelow0: '/degree_days/below_zero/',

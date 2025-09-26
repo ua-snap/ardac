@@ -127,6 +127,7 @@ export default defineNuxtConfig({
         '/item/notebook-precip-poly',
         '/item/temperature-cmip5',
         '/item/temperature-cmip6',
+        '/item/temperature-cmip6-downscaled',
         '/item/notebook-era5-cds-api',
         '/item/elevation',
         '/item/notebook-fmz-flammability',

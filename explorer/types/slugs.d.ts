@@ -43,6 +43,7 @@ type Slug =
   | 'notebook-precip-poly'
   | 'temperature-cmip5'
   | 'temperature-cmip6'
+  | 'temperature-cmip6-downscaled'
   | 'notebook-era5-cds-api'
   | 'elevation'
   | 'notebook-fmz-flammability'

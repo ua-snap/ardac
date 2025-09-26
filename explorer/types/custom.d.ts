@@ -102,6 +102,20 @@ interface Cmip6MonthlyChartInputs {
   month: string
 }
 
+interface Cmip6DownscaledChartLabels {
+  models: Record<string, string>
+  scenarios: Record<string, string>
+  baselineYears: Record<string, string>
+  projectedYears: Record<string, string>
+}
+
+interface Cmip6DownscaledChartInputs {
+  model: string
+  scenario: string
+  baselineYear: string
+  projectedYear: string
+}
+
 type LatLngValue = LatLng | undefined
 
 type PlaceType = 'community' | 'latLng' | undefined
@@ -117,3 +131,6 @@ type IndicatorsCmip6ChartInputsObj = IndicatorsCmip6ChartInputs | undefined
 
 type Cmip6MonthlyChartLabelsObj = Cmip6MonthlyChartLabels | undefined
 type Cmip6MonthlyChartInputsObj = Cmip6MonthlyChartInputs | undefined
+
+type Cmip6DownscaledChartLabelsObj = Cmip6DownscaledChartLabels | undefined
+type Cmip6DownscaledChartInputsObj = Cmip6DownscaledChartInputs | undefined
