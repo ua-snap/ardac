@@ -456,4 +456,10 @@ export default [
       'Climate indicators summarize complex climate data and create connections between climate data and the human experience.',
     tags: ['Climate', 'Temperature'],
   },
+  {
+    slug: 'story-fire-prone-conditions',
+    title: 'Hotter, Drier Summers and Fire-Prone Conditions',
+    blurb: 'Explore daily fire weather conditions using high-resolution reanalysis data. Compare temperature and humidity patterns across different years to understand fire-prone conditions in Alaska.',
+    tags: ['Climate', 'Wildfire', 'Temperature'],
+  },
 ] satisfies Item[]
