@@ -66,3 +66,4 @@ type Slug =
   | 'evaporation-cmip6'
   | 'places-and-polygons'
   | 'story-climate-indicators'
+  | 'story-fire-prone-conditions'
