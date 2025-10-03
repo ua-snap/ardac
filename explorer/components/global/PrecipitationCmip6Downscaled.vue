@@ -104,7 +104,7 @@ onUnmounted(() => {
                 chartInputs!.model +
                 '&scenarios=historical,' +
                 chartInputs!.scenario +
-                '&vars=pr'
+                '&vars=pr&format=csv'
               "
               >Download as CSV</a
             >

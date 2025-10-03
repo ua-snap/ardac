@@ -77,12 +77,13 @@ const buildChart = () => {
         year = chartInputs.value!.projectedYear
       }
 
-      let dailyData = chartData[model][config.scenario][props.dataKey]
+      let dailyData = chartData[model][config.scenario]
       let entries = $_.pickBy(dailyData, (value: number, key: string) =>
         key.startsWith(year)
       )
 
-      values = Object.values(entries)
+      // Get daily values for the selected dataKey.
+      values = Object.values(entries).map((value: any) => value[props.dataKey])
 
       // Makes chart for sea ice concentration into a line chart
       if (props.chartType === 'lines') {
@@ -90,7 +91,6 @@ const buildChart = () => {
           x: config.years,
           y: values,
           mode: 'lines',
-          // type: 'scatter',
           name: config.label,
           line: {
             shape: 'linear',
@@ -101,7 +101,6 @@ const buildChart = () => {
           x: config.years,
           y: values,
           mode: 'lines',
-          // type: 'scatter',
           name: config.label,
           marker: {
             symbol: config.symbol,

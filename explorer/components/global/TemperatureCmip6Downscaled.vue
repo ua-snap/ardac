@@ -154,7 +154,7 @@ onUnmounted(() => {
                 chartInputs!.model +
                 '&scenarios=historical,' +
                 chartInputs!.scenario +
-                '&vars=tasmax,tasmin'
+                '&vars=tasmax,tasmin&format=csv'
               "
               >Download as CSV</a
             >
