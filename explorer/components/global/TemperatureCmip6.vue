@@ -192,7 +192,7 @@ onUnmounted(() => {
         class="mb-5"
       />
       <Cmip6MonthlyChart
-        label="Mininum Near-surface Air Temperature"
+        label="Minimum Near-surface Air Temperature"
         units="°C"
         dataKey="tasmin"
         class="mb-5"
