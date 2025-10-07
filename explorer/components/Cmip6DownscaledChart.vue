@@ -1,23 +1,15 @@
 <script lang="ts" setup>
 const props = defineProps<{
   label: string
-  units?: string
+  units: string
   dataKey: string
-  chartType?: string
-  multiplier?: number
 }>()
 
 const endpoint = 'cmip6Downscaled'
+const units = props.units
 
 import type { Data } from 'plotly.js-dist-min'
 import { isProxy, toRaw } from 'vue'
-
-// Multiplier is an optional prop that can be used to change the scale of units
-// during chart population.
-let multiplier = 1
-if (props.multiplier) {
-  multiplier = props.multiplier
-}
 
 const { $Plotly, $_ } = useNuxtApp()
 const dataStore = useDataStore()
@@ -36,6 +28,20 @@ const chartInputs = computed<Cmip6DownscaledChartInputsObj>(
 
 const chartId = computed<string>(() => props.dataKey + '-chart')
 const validChart = ref(true)
+
+const doyToDateString = (doy: number) => {
+  const year = 2025 // Can be any year, but not a leap year.
+  const date = new Date(year, 0) // January 1st of the given year
+  date.setDate(doy) // Add DOY as days offset
+  const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' }
+  return date.toLocaleDateString('en-US', options)
+}
+
+const doys = $_.range(1, 365 + 1)
+const dataLabels = doys.map((doy: number) => {
+  return doyToDateString(doy)
+})
+const dataUnits = Array(doys.length).fill(units)
 
 const buildChart = () => {
   if (apiData.value && chartLabels.value && chartInputs.value) {
@@ -71,10 +77,13 @@ const buildChart = () => {
       let values: Array<number | null> = []
 
       let year: string
+      let labelSuffix = ''
       if (config.scenario === 'historical') {
         year = chartInputs.value!.baselineYear
+        labelSuffix = ' (Baseline)'
       } else {
         year = chartInputs.value!.projectedYear
+        labelSuffix = ' (Projected)'
       }
 
       let dailyData = chartData[model][config.scenario]
@@ -85,30 +94,20 @@ const buildChart = () => {
       // Get daily values for the selected dataKey.
       values = Object.values(entries).map((value: any) => value[props.dataKey])
 
-      // Makes chart for sea ice concentration into a line chart
-      if (props.chartType === 'lines') {
-        traces.push({
-          x: config.years,
-          y: values,
-          mode: 'lines',
-          name: config.label,
-          line: {
-            shape: 'linear',
-          },
-          hoverlabel: { namelength: -1 },
-        })
-      } else {
-        traces.push({
-          x: config.years,
-          y: values,
-          mode: 'lines',
-          name: config.label,
-          marker: {
-            symbol: config.symbol,
-          },
-          hoverlabel: { namelength: -1 },
-        })
-      }
+      let labelSuffixArray = Array(values.length).fill(labelSuffix)
+      traces.push({
+        x: config.years,
+        y: values,
+        mode: 'lines',
+        name: config.label,
+        marker: {
+          symbol: config.symbol,
+        },
+        hoverlabel: { namelength: -1 },
+        hovertemplate:
+          '%{customdata[0]}: %{customdata[1]}%{customdata[2]}%{customdata[3]}<extra></extra>',
+        customdata: $_.zip(dataLabels, values, dataUnits, labelSuffixArray),
+      })
 
       allChartValues = allChartValues.concat(values)
     })
@@ -120,26 +119,13 @@ const buildChart = () => {
       return
     }
 
-    let yAxisLabel = props.label
-    if (props.units) {
-      yAxisLabel += ' (' + props.units + ')'
-    }
+    const yAxisLabel = props.label + ' (' + units + ')'
 
+    // These numbers correspond to the 1st of each month in a non-leap year.
     let xTickVals = [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]
-    let xTickLabels = [
-      'Jan. 1',
-      'Feb. 1',
-      'Mar. 1',
-      'Apr. 1',
-      'May. 1',
-      'Jun. 1',
-      'Jul. 1',
-      'Aug. 1',
-      'Sep. 1',
-      'Oct. 1',
-      'Nov. 1',
-      'Dec. 1',
-    ]
+    let xTickLabels = xTickVals.map((doy: number) => {
+      return doyToDateString(doy)
+    })
 
     $Plotly.newPlot(
       chartId.value,
@@ -165,8 +151,6 @@ const buildChart = () => {
           tickangle: 45,
           tickvals: xTickVals,
           ticktext: xTickLabels,
-          // showgrid: false,
-          // ticklen: 5,
         },
         yaxis: {
           title: {
@@ -175,7 +159,6 @@ const buildChart = () => {
               size: 18,
             },
           },
-          // range: [min, max],
           fixedrange: true,
         },
       },
