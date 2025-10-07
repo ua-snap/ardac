@@ -53,6 +53,7 @@ type Slug =
   | 'wind-cmip6'
   | 'oceanography-cmip6'
   | 'precipitation-cmip6'
+  | 'precipitation-cmip6-downscaled'
   | 'sea-ice-cmip6'
   | 'solar-radiation-cloud-cover-cmip6'
   | 'snow-cmip6'
