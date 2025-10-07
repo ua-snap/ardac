@@ -30,6 +30,11 @@ type Cmip6DownscaledOptions = {
   }
 }
 
+// Supported variable/model/scenario combinations are hard-coded here because,
+// unlike other data x-ray items, daily downscaled CMIP6 data is fetched in
+// variable/model/scenario chunks for performance reasons. Since only a subset
+// of data is available, we cannot determine all variable/model/scenario
+// combinations are present just by looking at the data.
 const cmip6_downscaled_options: Cmip6DownscaledOptions = {
   tasmax: {
     '7ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],

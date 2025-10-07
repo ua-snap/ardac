@@ -53,20 +53,16 @@ const buildChart = () => {
       chartData = toRaw(chartData)
     }
 
-    // Pad the historical/projected with nulls as needed to line up properly
-    // with the chart x-axis ticks.
     let traceConfig = [
       {
         label: chartInputs.value!.projectedYear + ' (Projected)',
         years: $_.range(1, 365 + 1),
         scenario: chartInputs.value!.scenario,
-        symbol: 'square',
       },
       {
         label: chartInputs.value!.baselineYear + ' (Baseline)',
         years: $_.range(1, 365 + 1),
         scenario: 'historical',
-        symbol: 'circle',
       },
     ]
 
