@@ -95,6 +95,7 @@ const buildChart = () => {
           line: {
             shape: 'linear',
           },
+          hoverlabel: { namelength: -1 },
         })
       } else {
         traces.push({
@@ -105,6 +106,7 @@ const buildChart = () => {
           marker: {
             symbol: config.symbol,
           },
+          hoverlabel: { namelength: -1 },
         })
       }
 
