@@ -137,6 +137,7 @@ export default defineNuxtConfig({
         '/item/wind-cmip6',
         '/item/oceanography-cmip6',
         '/item/precipitation-cmip6',
+        '/item/precipitation-cmip6-downscaled',
         '/item/evaporation-cmip6',
         '/item/solar-radiation-cloud-cover-cmip6',
         '/item/sea-ice-cmip6',

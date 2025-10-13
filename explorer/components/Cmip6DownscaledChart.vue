@@ -96,9 +96,6 @@ const buildChart = () => {
         y: values,
         mode: 'lines',
         name: config.label,
-        marker: {
-          symbol: config.symbol,
-        },
         hoverlabel: { namelength: -1 },
         hovertemplate:
           '%{customdata[0]}: %{customdata[1]}%{customdata[2]}%{customdata[3]}<extra></extra>',
