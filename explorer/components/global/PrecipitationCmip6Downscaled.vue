@@ -65,7 +65,7 @@ onUnmounted(() => {
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Precipitation, Downscaled CMIP6</h3>
-      <!-- <XrayIntroblurb resolution="100" unit="km" cmip="6" beta /> -->
+      <XrayIntroblurb resolution="4" unit="km" cmip="6" beta />
       <MapBlock :mapId="mapId" class="mb-6">
         <template v-slot:layers>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
