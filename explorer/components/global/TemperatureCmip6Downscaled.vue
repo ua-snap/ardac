@@ -19,8 +19,8 @@ const layers: MapLayer[] = [
     id: 'tasmax_cmip6_2000',
     title: '2000, 7-Model Average',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmax_wms_crstephenson',
-    style: 'test',
+    wmsLayerName: 'cmip6_downscaled_tasmax_wms',
+    style: 'ardac_tasmax',
     legend: 'tas',
     rasdamanConfiguration: {
       dim_scenario: 0,
@@ -32,8 +32,8 @@ const layers: MapLayer[] = [
     id: 'tasmax_cmip6_2100',
     title: '2100, 7-Model Average, SSP5-8.5',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmax_wms_crstephenson',
-    style: 'test',
+    wmsLayerName: 'cmip6_downscaled_tasmax_wms',
+    style: 'ardac_tasmax',
     legend: 'tas',
     rasdamanConfiguration: {
       dim_scenario: 1,
@@ -45,8 +45,8 @@ const layers: MapLayer[] = [
     id: 'tasmin_cmip6_2000',
     title: '2000, 7-Model Average',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmin_wms_crstephenson',
-    style: 'test',
+    wmsLayerName: 'cmip6_downscaled_tasmin_wms',
+    style: 'ardac_tasmin',
     legend: 'tas',
     rasdamanConfiguration: {
       dim_scenario: 0,
@@ -58,8 +58,8 @@ const layers: MapLayer[] = [
     id: 'tasmin_cmip6_2100',
     title: '2100, 7-Model Average, SSP5-8.5',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmin_wms_crstephenson',
-    style: 'test',
+    wmsLayerName: 'cmip6_downscaled_tasmin_wms',
+    style: 'ardac_tasmin',
     legend: 'tas',
     rasdamanConfiguration: {
       dim_scenario: 1,
