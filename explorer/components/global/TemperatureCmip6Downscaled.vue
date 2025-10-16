@@ -17,7 +17,7 @@ const chartInputs = computed<Cmip6DownscaledChartInputsObj>(
 const layers: MapLayer[] = [
   {
     id: 'tasmax_cmip6_2000',
-    title: '2000, 7-Model Average',
+    title: '2000, 5-Model Average',
     source: 'rasdaman',
     wmsLayerName: 'cmip6_downscaled_tasmax_wms',
     style: 'ardac_tasmax',
@@ -30,7 +30,7 @@ const layers: MapLayer[] = [
   },
   {
     id: 'tasmax_cmip6_2100',
-    title: '2100, 7-Model Average, SSP5-8.5',
+    title: '2100, 5-Model Average, SSP5-8.5',
     source: 'rasdaman',
     wmsLayerName: 'cmip6_downscaled_tasmax_wms',
     style: 'ardac_tasmax',
@@ -43,7 +43,7 @@ const layers: MapLayer[] = [
   },
   {
     id: 'tasmin_cmip6_2000',
-    title: '2000, 7-Model Average',
+    title: '2000, 5-Model Average',
     source: 'rasdaman',
     wmsLayerName: 'cmip6_downscaled_tasmin_wms',
     style: 'ardac_tasmin',
@@ -56,7 +56,7 @@ const layers: MapLayer[] = [
   },
   {
     id: 'tasmin_cmip6_2100',
-    title: '2100, 7-Model Average, SSP5-8.5',
+    title: '2100, 5-Model Average, SSP5-8.5',
     source: 'rasdaman',
     wmsLayerName: 'cmip6_downscaled_tasmin_wms',
     style: 'ardac_tasmin',
