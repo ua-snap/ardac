@@ -23,6 +23,9 @@ const placesStore = usePlacesStore()
 
 const { $autoComplete, $parseDMS } = useNuxtApp()
 
+// Pattern to match characters that are not found in coordinate notation
+const NON_COORDINATE_CHARS_PATTERN = /[^\d\s.,-]/
+
 const fieldMessage = ref('') // Helper message when user is entering lat/lng
 const parsedLatLng: Ref<LatLngValue> = ref(undefined)
 const latLngIsValid = ref(false)
@@ -64,7 +67,7 @@ onMounted(() => {
         if (results.length === 0) {
           // Only show community error message if query contains non-numeric characters.
           // This prevents lat / long inputs from triggering the message.
-          if (/[^\d\s.,-]/.test(query)) {
+          if (NON_COORDINATE_CHARS_PATTERN.test(query)) {
             fieldMessage.value =
               '⚠️ Sorry, no matching communities within the extent of this dataset were found.'
           }
