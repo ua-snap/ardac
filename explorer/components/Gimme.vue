@@ -26,6 +26,25 @@ const { $autoComplete, $parseDMS } = useNuxtApp()
 // Pattern to match characters that are not found in coordinate notation
 const NON_COORDINATE_CHARS_PATTERN = /[^\d\s.,-]/
 
+// Error message constants used in multiple places
+const ERROR_MESSAGES = {
+  NO_COMMUNITIES_FOUND:
+    '⚠️ Sorry, no matching communities within the extent of this dataset were found.',
+  OUTSIDE_BOUNDING_BOX:
+    '⚠️ This point is outside the bounding box of data: latitude between ',
+  INVALID_COORDINATE_FORMAT: `Lat/long must be in decimal degrees or DMS format, i.e. 65°30'0.56" -140°7'34.45"`,
+  DATA_LOAD_FAILED:
+    '⚠️ Failed to load data for the selected location. Please choose a different location.',
+}
+
+// Check if current message is a coordinate validation error
+const isCoordinateValidationError = (message: string): boolean => {
+  return (
+    message === ERROR_MESSAGES.INVALID_COORDINATE_FORMAT ||
+    message.startsWith(ERROR_MESSAGES.OUTSIDE_BOUNDING_BOX)
+  )
+}
+
 const fieldMessage = ref('') // Helper message when user is entering lat/lng
 const parsedLatLng: Ref<LatLngValue> = ref(undefined)
 const latLngIsValid = ref(false)
@@ -68,15 +87,11 @@ onMounted(() => {
           // Only show community error message if query contains non-numeric characters.
           // This prevents lat / long inputs from triggering the message.
           if (NON_COORDINATE_CHARS_PATTERN.test(query)) {
-            fieldMessage.value =
-              '⚠️ Sorry, no matching communities within the extent of this dataset were found.'
+            fieldMessage.value = ERROR_MESSAGES.NO_COMMUNITIES_FOUND
           }
         } else {
           // Only clear the error message if it's not a lat / long error.
-          if (
-            !fieldMessage.value.includes('outside the bounding box') &&
-            !fieldMessage.value.includes('decimal degrees or DMS format')
-          ) {
+          if (!isCoordinateValidationError(fieldMessage.value)) {
             fieldMessage.value = ''
           }
         }
@@ -172,7 +187,7 @@ const validate = (latLng: string) => {
 
       if (!isInsideBBOX) {
         fieldMessage.value =
-          '⚠️ This point is outside the bounding box of data: latitude between ' +
+          ERROR_MESSAGES.OUTSIDE_BOUNDING_BOX +
           bbox[1] +
           ' – ' +
           bbox[3] +
@@ -196,7 +211,7 @@ const validate = (latLng: string) => {
   } catch (e) {
     // ignore, it's ParseDMS throwing an error
   }
-  fieldMessage.value = `Lat/long must be in decimal degrees or DMS format, i.e. 65°30'0.56" -140°7'34.45"`
+  fieldMessage.value = ERROR_MESSAGES.INVALID_COORDINATE_FORMAT
   latLngIsValid.value = false
   parsedLatLng.value = undefined
   placesStore.latLng = undefined
@@ -238,8 +253,7 @@ const dataStore = useDataStore()
 const dataErrors = computed<Record<string, boolean>>(() => dataStore.dataErrors)
 watch(nothingButErrors, async () => {
   if (nothingButErrors) {
-    fieldMessage.value =
-      '⚠️ Failed to load data for the selected location. Please choose a different location.'
+    fieldMessage.value = ERROR_MESSAGES.DATA_LOAD_FAILED
   } else {
     fieldMessage.value = ''
   }
