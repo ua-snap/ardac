@@ -62,9 +62,20 @@ onMounted(() => {
           )
         }
         if (results.length === 0) {
-          fieldMessage.value = '⚠️ Sorry, no matching communities within the extent of this dataset were found.'
+          // Only show community error message if query contains non-numeric characters.
+          // This prevents lat / long inputs from triggering the message.
+          if (/[^\d\s.,-]/.test(query)) {
+            fieldMessage.value =
+              '⚠️ Sorry, no matching communities within the extent of this dataset were found.'
+          }
         } else {
-          fieldMessage.value = ''
+          // Only clear the error message if it's not a lat / long error.
+          if (
+            !fieldMessage.value.includes('outside the bounding box') &&
+            !fieldMessage.value.includes('decimal degrees or DMS format')
+          ) {
+            fieldMessage.value = ''
+          }
         }
         return results
       },
