@@ -114,7 +114,7 @@
         The variation of local weather is obvious across these stripes. This
         deep blue line represents 1972, the coldest year in the record with an
         average annual temperature of just 3.7&deg;C (39&deg;F). The warmest
-        year though, is the most recent for this data…2017.
+        year on record is 2017.
       </p>
       <p>
         Overall though the trend is clear. Some warmer than average years do
