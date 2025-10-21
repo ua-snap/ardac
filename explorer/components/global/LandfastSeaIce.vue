@@ -235,7 +235,11 @@ const buildChart = () => {
 
   const chartTitle = chartStore.getChartTitle('Landfast Sea Ice Extent')
 
-  const titleText = chartTitle + '<br />' + 'Year: ' + yearInput.value
+  // Instead of passing a long list of undefineds, use an options object.
+  const titleText = chartStore.getTitleText({
+    chartTitle,
+    year: yearInput.value,
+  })
 
   const yAxisLabel = 'Month'
 

@@ -157,15 +157,11 @@ const buildChart = () => {
 
     const chartTitle = chartStore.getChartTitle(props.label)
 
-    let titleText = chartTitle
-
-    if (props.depth) {
-      titleText += '<br />Depth: ' + props.depth + ', '
-    } else {
-      titleText += '<br />'
-    }
-
-    titleText += 'Scenario: ' + chartInputs.value.scenario
+    let titleText = chartStore.getTitleText({
+      chartTitle,
+      scenario: chartInputs.value.scenario,
+      depth: props.depth,
+    })
 
     const yAxisLabel = props.label + ' (' + props.units + ')'
 

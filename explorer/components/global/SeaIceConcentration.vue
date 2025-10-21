@@ -134,8 +134,10 @@ const buildChart = () => {
 
     const chartTitle = chartStore.getChartTitle('Sea Ice Concentration')
 
-    const titleText =
-      chartTitle + '<br />' + 'Month: ' + months[parseInt(monthInput.value) - 1]
+    const titleText = chartStore.getTitleText({
+      chartTitle,
+      month: months[parseInt(monthInput.value) - 1],
+    })
 
     const yAxisLabel = 'Sea Ice Concentration (%)'
 

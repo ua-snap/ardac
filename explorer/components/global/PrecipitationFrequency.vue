@@ -108,13 +108,11 @@ const buildChart = () => {
 
     const chartTitle = chartStore.getChartTitle('Precipitation Frequency')
 
-    const titleText =
-      chartTitle +
-      '<br />' +
-      'Duration: ' +
-      durationInput.value +
-      ', Return interval: ' +
-      returnIntervalInput.value
+    const titleText = chartStore.getTitleText({
+      chartTitle,
+      duration: durationLabels[durationInput.value],
+      returnInterval: returnIntervalInput.value,
+    })
 
     const yAxisLabel = 'Precipitation (㎜)'
 

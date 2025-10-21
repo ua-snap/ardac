@@ -167,15 +167,12 @@ const buildChart = () => {
 
     const chartTitle = chartStore.getChartTitle(props.label)
 
-    const titleText: string =
-      chartTitle +
-      '<br />' +
-      'Model: ' +
-      chartLabels.value.models[chartInputs.value.model] +
-      ', Scenario: ' +
-      chartLabels.value.scenarios[chartInputs.value.scenario] +
-      ', Month: ' +
-      chartLabels.value.months[chartInputs.value.month]
+    const titleText: string = chartStore.getTitleText({
+      chartTitle,
+      model: chartLabels.value.models[chartInputs.value.model],
+      scenario: chartLabels.value.scenarios[chartInputs.value.scenario],
+      month: chartLabels.value.months[chartInputs.value.month],
+    })
 
     const layout = getLayout(titleText, yAxisLabel, {
       tickangle: 45,

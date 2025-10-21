@@ -148,8 +148,10 @@ const buildChart = () => {
 
     const chartTitle = chartStore.getChartTitle(props.label)
 
-    const titleText: string =
-      chartTitle + '<br />' + 'Scenario: ' + scenarioLabels[scenarioInput.value]
+    const titleText: string = chartStore.getTitleText({
+      chartTitle,
+      scenario: scenarioLabels[scenarioInput.value],
+    })
 
     const xAxis = {
       // Pad x-axis with one null to avoid overlapping y-axis line.

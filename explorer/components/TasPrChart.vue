@@ -114,13 +114,16 @@ const buildChart = () => {
       },
     })
 
-    const chartTitle = chartStore.getChartTitle(props.label)
+    const chartTitle =
+      chartStore.getChartTitle(props.label) + ' (5-Model Average)'
 
-    const titleText =
-      chartTitle +
-      ' (5-Model Average)<br />' +
-      'Season: ' +
-      seasonLabels[seasonInput.value] +
+    const titleText = chartStore.getTitleText({
+      chartTitle,
+      scenario: scenarioLabels[scenarioInput.value],
+      season: seasonLabels[seasonInput.value],
+    })
+
+    seasonLabels[seasonInput.value] +
       ', Scenario: ' +
       scenarioLabels[scenarioInput.value]
 

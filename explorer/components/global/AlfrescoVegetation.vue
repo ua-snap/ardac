@@ -8,6 +8,7 @@ const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 const dataStore = useDataStore()
 const runtimeConfig = useRuntimeConfig()
+const chartStore = useChartStore()
 
 const modelInput = defineModel('model', { default: 'NCAR-CCSM4' })
 const scenarioInput = defineModel('scenario', { default: 'rcp85' })
@@ -87,13 +88,11 @@ const buildChart = () => {
     })
 
     const chartTitle = 'Vegetation type for HUC-12 ' + apiData.value['huc_id']
-    const titleText =
-      chartTitle +
-      '<br />' +
-      'Model: ' +
-      modelInput.value +
-      ', Scenario: ' +
-      scenarioLabels[scenarioInput.value]
+    const titleText = chartStore.getTitleText({
+      chartTitle,
+      model: modelInput.value,
+      scenario: scenarioLabels[scenarioInput.value],
+    })
 
     const yAxisLabel = 'Vegetation type coverage (%)'
 
