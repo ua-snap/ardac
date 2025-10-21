@@ -17,7 +17,7 @@ const chartInputs = computed<Cmip6DownscaledChartInputsObj>(
 const layers: MapLayer[] = [
   {
     id: 'pr_cmip6_2000',
-    title: 'August 2000, 5-Model Average',
+    title: 'August 2000, 6-Model Average',
     source: 'rasdaman',
     wmsLayerName: 'cmip6_downscaled_pr_wms',
     style: 'ardac_pr',
@@ -30,7 +30,7 @@ const layers: MapLayer[] = [
   },
   {
     id: 'pr_cmip6_2100',
-    title: 'August 2100, 5-Model Average, SSP5-8.5',
+    title: 'August 2100, 6-Model Average, SSP5-8.5',
     source: 'rasdaman',
     wmsLayerName: 'cmip6_downscaled_pr_wms',
     style: 'ardac_pr',

@@ -65,7 +65,7 @@ const cmip6_downscaled_options: Cmip6DownscaledOptions = {
     TaiESM1: ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
   },
   pr: {
-    '5ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
+    '6ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
     CESM2: ['historical', 'ssp126', 'ssp585'],
     'CNRM-CM6-1-HR': ['historical', 'ssp126', 'ssp585'],
     'E3SM-2-0': ['historical', 'ssp370'],
@@ -83,7 +83,7 @@ const cmip6_downscaled_options: Cmip6DownscaledOptions = {
 
 chartStore.labels[endpoint] = {
   models: {
-    '5ModelAvg': '5-Model Average',
+    '6ModelAvg': '6-Model Average',
     CESM2: 'CESM2',
     'CNRM-CM6-1-HR': 'CNRM-CM6-1-HR',
     'E3SM-2-0': 'E3SM-2-0',
