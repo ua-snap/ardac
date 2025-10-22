@@ -45,10 +45,10 @@ export const useChartStore = defineStore('chart', () => {
     const params = [
       options.model && `Model: ${options.model}`,
       options.depth && `Depth: ${options.depth}`,
-      options.season && `Season: ${options.season}`,
+      options.season && `${options.season}`,
       options.scenario && `Scenario: ${options.scenario}`,
-      options.month && `Month: ${options.month}`,
-      options.year && `Year: ${options.year}`,
+      options.month && `${options.month}`,
+      options.year && `${options.year}`,
       options.duration && `Duration: ${options.duration}`,
       options.returnInterval && `Return Interval: ${options.returnInterval}`,
     ]
