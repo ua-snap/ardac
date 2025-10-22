@@ -4,6 +4,7 @@ const endpoint = 'seaIceConcentration'
 const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 const dataStore = useDataStore()
+const chartStore = useChartStore()
 const runtimeConfig = useRuntimeConfig()
 
 const { $Plotly, $_ } = useNuxtApp()
@@ -131,52 +132,31 @@ const buildChart = () => {
       },
     })
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            'Sea ice concentration for ' +
-            latLng.value?.lat +
-            ', ' +
-            latLng.value?.lng +
-            '<br />' +
-            'Month: ' +
-            months[parseInt(monthInput.value) - 1],
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          title: {
-            text: 'Year',
-            font: {
-              size: 18,
-            },
-          },
-          showgrid: false,
-        },
-        yaxis: {
-          showgrid: false,
+    const chartTitle = chartStore.getChartTitle('Sea Ice Concentration')
+
+    const titleText = chartStore.getTitleText({
+      chartTitle,
+      month: months[parseInt(monthInput.value) - 1],
+    })
+
+    const yAxisLabel = 'Sea Ice Concentration (%)'
+
+    const xAxis = {
+      title: {
+        text: 'Year',
+        font: {
+          size: 18,
         },
       },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+      showgrid: false,
+    }
+
+    const layout = getLayout(titleText, yAxisLabel, xAxis)
+    layout.yaxis = { ...layout.yaxis, showgrid: false }
+
+    const config = getConfig(chartTitle)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 

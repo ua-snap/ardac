@@ -7,6 +7,7 @@ const { $Plotly, $_ } = useNuxtApp()
 const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 const dataStore = useDataStore()
+const chartStore = useChartStore()
 const runtimeConfig = useRuntimeConfig()
 
 const durationInput = defineModel('duration', { default: '24h' })
@@ -105,55 +106,22 @@ const buildChart = () => {
       })
     })
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            'Precipitation frequency for ' +
-            latLng.value?.lat +
-            ', ' +
-            latLng.value?.lng +
-            '<br />' +
-            'Duration: ' +
-            durationInput.value +
-            ', Return interval: ' +
-            returnIntervalInput.value,
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          tickvals: ticks,
-          ticktext: ['', ...eras],
-          dtick: 1,
-        },
-        yaxis: {
-          title: {
-            text: 'Precipitation (㎜)',
-            font: {
-              size: 18,
-            },
-          },
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+    const chartTitle = chartStore.getChartTitle('Precipitation Frequency')
+
+    const titleText = chartStore.getTitleText({
+      chartTitle,
+      duration: durationLabels[durationInput.value],
+      returnInterval: returnIntervalInput.value,
+    })
+
+    const yAxisLabel = 'Precipitation (㎜)'
+
+    const xAxis = { tickvals: ticks, ticktext: ['', ...eras], dtick: 1 }
+
+    const layout = getLayout(titleText, yAxisLabel, xAxis)
+    const config = getConfig(chartTitle)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 
