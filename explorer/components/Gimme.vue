@@ -23,8 +23,9 @@ const placesStore = usePlacesStore()
 
 const { $autoComplete, $parseDMS } = useNuxtApp()
 
+const STARTS_WITH_LETTER = /^[a-zA-Z]+/
 // Pattern to match characters that are not found in coordinate notation
-const NON_COORDINATE_CHARS_PATTERN = /[^\d\s.,-]/
+const NON_COORDINATE_CHARS_PATTERN = /[^\d\s.,-°'"]/
 
 // Error message constants used in multiple places
 const ERROR_MESSAGES = {
@@ -86,7 +87,10 @@ onMounted(() => {
         if (results.length === 0) {
           // Only show community error message if query contains non-numeric characters.
           // This prevents lat / long inputs from triggering the message.
-          if (NON_COORDINATE_CHARS_PATTERN.test(query)) {
+          if (
+            STARTS_WITH_LETTER.test(query) ||
+            NON_COORDINATE_CHARS_PATTERN.test(query)
+          ) {
             fieldMessage.value = ERROR_MESSAGES.NO_COMMUNITIES_FOUND
           }
         } else {
@@ -168,7 +172,7 @@ const validate = (latLng: string) => {
   let lon: number
 
   // If it's alphanumeric or empty or too short, don't try to parse / validate
-  if (latLng === '' || /^[a-zA-Z]+/.test(latLng) || latLng.length <= 3) {
+  if (latLng === '' || STARTS_WITH_LETTER.test(latLng) || latLng.length <= 3) {
     fieldMessage.value = ''
     latLngIsValid.value = false
     return false
