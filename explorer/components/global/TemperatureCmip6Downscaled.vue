@@ -97,6 +97,13 @@ onUnmounted(() => {
     <div class="content is-size-5">
       <h3 class="title is-3">Temperature, Downscaled CMIP6</h3>
       <XrayIntroblurb resolution="4" unit="km" cmip="6" beta />
+      <p class="mb-6">
+        The map below shows maximum near-surface air temperature for the month
+        of July and minimum near-surface air temperature for the month of
+        January in the years 2000 and 2100 using a downscaled 6-model average.
+        The maps for the year 2100 are based on the SSP5-8.5 emissions scenario.
+      </p>
+
       <MapBlock :mapId="mapId" class="mb-6">
         <template v-slot:layers>
           <h4 class="title is-4 mb-3">
