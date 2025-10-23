@@ -155,62 +155,27 @@ const buildChart = () => {
       })
     })
 
-    let titleText: string =
-      props.label +
-      ' for ' +
-      placesStore.latLng?.lat +
-      ', ' +
-      placesStore.latLng?.lng
+    const chartTitle = chartStore.getChartTitle(props.label)
 
-    if (props.depth) {
-      titleText += '<br />Depth: ' + props.depth + ', '
-    } else {
-      titleText += '<br />'
+    let titleText = chartStore.getTitleText({
+      chartTitle,
+      scenario: chartInputs.value.scenario,
+      depth: props.depth,
+    })
+
+    const yAxisLabel = props.label + ' (' + props.units + ')'
+
+    const xAxis = {
+      // Pad x-axis with one null to avoid overlapping y-axis line.
+      tickvals: [null].concat($_.range(1, allDecades.length)),
+      ticktext: allDecades,
+      dtick: 1,
     }
 
-    titleText += 'Scenario: ' + chartInputs.value.scenario
+    const layout = getLayout(titleText, yAxisLabel, xAxis)
+    const config = getConfig(chartTitle)
 
-    $Plotly.newPlot(
-      chartId.value,
-      traces,
-      {
-        title: {
-          text: titleText,
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          // Pad x-axis with one null to avoid overlapping y-axis line.
-          tickvals: [null].concat($_.range(1, allDecades.length)),
-          ticktext: allDecades,
-          dtick: 1,
-        },
-        yaxis: {
-          title: {
-            text: props.label + ' (' + props.units + ')',
-            font: {
-              size: 18,
-            },
-          },
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+    $Plotly.newPlot(chartId.value, traces, layout, config)
   }
 }
 

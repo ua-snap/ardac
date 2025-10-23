@@ -8,6 +8,7 @@ const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 const dataStore = useDataStore()
 const runtimeConfig = useRuntimeConfig()
+const chartStore = useChartStore()
 
 const modelInput = defineModel('model', { default: 'NCAR-CCSM4' })
 const scenarioInput = defineModel('scenario', { default: 'rcp85' })
@@ -86,50 +87,21 @@ const buildChart = () => {
       })
     })
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            'Vegetation type for ' +
-            'HUC-12 ' +
-            apiData.value['huc_id'] +
-            '<br />' +
-            'Model: ' +
-            modelInput.value +
-            ', Scenario: ' +
-            scenarioLabels[scenarioInput.value],
-          font: {
-            size: 24,
-          },
-        },
-        yaxis: {
-          title: {
-            text: 'Vegetation type coverage (%)',
-            font: {
-              size: 18,
-            },
-          },
-        },
-        barmode: 'stack',
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+    const chartTitle = 'Vegetation type for HUC-12 ' + apiData.value['huc_id']
+    const titleText = chartStore.getTitleText({
+      chartTitle,
+      model: modelInput.value,
+      scenario: scenarioLabels[scenarioInput.value],
+    })
+
+    const yAxisLabel = 'Vegetation type coverage (%)'
+
+    const layout = getLayout(titleText, yAxisLabel)
+    layout.barmode = 'stack'
+
+    const config = getConfig(chartTitle)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 

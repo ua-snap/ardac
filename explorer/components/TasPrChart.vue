@@ -24,6 +24,7 @@ const { $Plotly } = useNuxtApp()
 const store = useStore()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
+const chartStore = useChartStore()
 
 const seasonInput = defineModel('season', { default: 'DJF' })
 const scenarioInput = defineModel('scenario', { default: 'rcp85' })
@@ -113,56 +114,31 @@ const buildChart = () => {
       },
     })
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            props.label +
-            ' for ' +
-            placesStore.latLng?.lat +
-            ', ' +
-            placesStore.latLng?.lng +
-            ' (5-Model Average)<br />' +
-            'Season: ' +
-            seasonLabels[seasonInput.value] +
-            ', Scenario: ' +
-            scenarioLabels[scenarioInput.value],
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          tickvals: yearRanges,
-          ticktext: yearRangesWithDashes,
-          dtick: 1,
-        },
-        yaxis: {
-          title: {
-            text: props.label + ' (' + props.units + ')',
-            font: {
-              size: 18,
-            },
-          },
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+    const chartTitle =
+      chartStore.getChartTitle(props.label) + ' (5-Model Average)'
+
+    const titleText = chartStore.getTitleText({
+      chartTitle,
+      scenario: scenarioLabels[scenarioInput.value],
+      season: seasonLabels[seasonInput.value],
+    })
+
+    seasonLabels[seasonInput.value] +
+      ', Scenario: ' +
+      scenarioLabels[scenarioInput.value]
+
+    const yAxisLabel = props.label + ' (' + props.units + ')'
+
+    const xAxis = {
+      tickvals: yearRanges,
+      ticktext: yearRangesWithDashes,
+      dtick: 1,
+    }
+
+    const layout = getLayout(titleText, yAxisLabel, xAxis)
+    const config = getConfig(chartTitle)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 

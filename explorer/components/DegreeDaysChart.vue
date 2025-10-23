@@ -12,6 +12,7 @@ import { precisionMean } from '~/utils/math'
 const { $Plotly, $_ } = useNuxtApp()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
+const chartStore = useChartStore()
 
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
@@ -164,52 +165,21 @@ const buildChart = () => {
       })
     })
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            props.label +
-            ' for ' +
-            placesStore.latLng?.lat +
-            ', ' +
-            placesStore.latLng?.lng,
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          // Pad x-axis with one null to avoid overlapping y-axis line.
-          tickvals: [null].concat($_.range(1, allDecades.length)),
-          ticktext: allDecades,
-          dtick: 1,
-        },
-        yaxis: {
-          title: {
-            text: props.label + ' (°F⋅days)',
-            font: {
-              size: 18,
-            },
-          },
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+    const titleText = chartStore.getChartTitle(props.label)
+
+    const xAxis = {
+      // Pad x-axis with one null to avoid overlapping y-axis line.
+      tickvals: [null].concat($_.range(1, allDecades.length)),
+      ticktext: allDecades,
+      dtick: 1,
+    }
+
+    const yAxisLabel = props.label + ' (°F⋅days)'
+
+    const layout = getLayout(titleText, yAxisLabel, xAxis)
+    const config = getConfig(titleText)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 

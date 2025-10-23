@@ -10,6 +10,7 @@ const { $Plotly, $_ } = useNuxtApp()
 const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 const dataStore = useDataStore()
+const chartStore = useChartStore()
 const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData[endpoint])
@@ -207,51 +208,20 @@ const buildChart = () => {
       })
     })
 
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        title: {
-          text:
-            'Wet days per year for ' +
-            latLng.value?.lat +
-            ', ' +
-            latLng.value?.lng,
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          // Pad x-axis with one null to avoid overlapping y-axis line.
-          tickvals: [null].concat($_.range(1, allDecades.length)),
-          ticktext: allDecades,
-          dtick: 1,
-        },
-        yaxis: {
-          title: {
-            text: 'Wet days per year',
-            font: {
-              size: 18,
-            },
-          },
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+    const titleText = chartStore.getChartTitle('Wet Days Per Year')
+
+    const yAxisLabel = 'Wet days per year'
+    const xAxis = {
+      // Pad x-axis with one null to avoid overlapping y-axis line.
+      tickvals: [null].concat($_.range(1, allDecades.length)),
+      ticktext: allDecades,
+      dtick: 1,
+    }
+
+    const layout = getLayout(titleText, yAxisLabel, xAxis)
+    const config = getConfig(titleText)
+
+    $Plotly.newPlot('chart', traces, layout, config)
   }
 }
 
