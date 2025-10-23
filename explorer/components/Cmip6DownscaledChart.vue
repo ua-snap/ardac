@@ -120,57 +120,21 @@ const buildChart = () => {
       return doyToDateString(doy)
     })
 
-    $Plotly.newPlot(
-      chartId.value,
-      traces,
-      {
-        title: {
-          text:
-            props.label +
-            ' for ' +
-            placesStore.latLng?.lat +
-            ', ' +
-            placesStore.latLng?.lng +
-            '<br />' +
-            'Model: ' +
-            chartLabels.value.models[chartInputs.value.model] +
-            ', Scenario: ' +
-            chartLabels.value.scenarios[chartInputs.value.scenario],
-          font: {
-            size: 24,
-          },
-        },
-        xaxis: {
-          tickangle: 45,
-          tickvals: xTickVals,
-          ticktext: xTickLabels,
-        },
-        yaxis: {
-          title: {
-            text: yAxisLabel,
-            font: {
-              size: 18,
-            },
-          },
-          fixedrange: true,
-        },
-      },
-      {
-        responsive: true, // changes the height / width dynamically for charts
-        displayModeBar: true, // always show the camera icon
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-      }
-    )
+    const chartTitle = chartStore.getChartTitle(props.label)
+
+    const titleText: string = chartStore.getTitleText({
+      chartTitle,
+      model: chartLabels.value.models[chartInputs.value.model],
+      scenario: chartLabels.value.scenarios[chartInputs.value.scenario],
+    })
+
+    const layout = getLayout(titleText, yAxisLabel, {
+      tickangle: 45,
+    })
+
+    const config = getConfig(chartTitle)
+
+    $Plotly.newPlot(chartId.value, traces, layout, config)
   }
 }
 
