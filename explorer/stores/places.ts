@@ -21,7 +21,7 @@ export const usePlacesStore = defineStore('places', () => {
     if (extent) {
       url += '&extent=' + encodeURIComponent(extent)
     }
-    let communities = (await $fetch(url)) satisfies Community[]
+    const communities = await $fetch<Community[]>(url as string)
     return communities
   }
 

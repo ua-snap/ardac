@@ -25,6 +25,7 @@
     "vue-tsc": "^1.8.27"
   },
   "dependencies": {
+    "@playwright/test": "^1.53.0",
     "@pinia/nuxt": "^0.5.1",
     "@tarekraafat/autocomplete.js": "^10.2.7",
     "bulma": "^0.9.4",
