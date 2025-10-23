@@ -17,14 +17,19 @@ module.exports = defineConfig({
     video: 'on',
     baseURL: 'http://127.0.0.1:3000',
   },
-  // webServer: {
-  //   command: 'npm run dev',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
-  //   timeout: 180_000,
-  //   stderr: 'pipe',
-  //   stdout: 'pipe',
-  // },
+  webServer: {
+    // Force Nuxt to bind exactly where Playwright will probe
+    command: 'npx nuxt dev --port 3000 --host 127.0.0.1',
+    url: 'http://127.0.0.1:3000',
+    reuseExistingServer: !process.env.CI,
+    timeout: 30_000, // Nuxt + Vite can be slow cold
+    stdout: 'pipe',
+    stderr: 'pipe',
+    env: {
+      NUXT_TELEMETRY_DISABLED: '1',
+      NUXT_TYPECHECK: '0',
+    },
+  },
   projects: [
     {
       name: 'Chrome',
