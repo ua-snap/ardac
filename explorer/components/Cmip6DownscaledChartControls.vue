@@ -54,7 +54,7 @@ const cmip6_downscaled_options: Cmip6DownscaledOptions = {
     '6ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
     'CNRM-CM6-1-HR': ['historical', 'ssp126', 'ssp585'],
     'E3SM-2-0': ['historical', 'ssp370'],
-    'EC-Earth3-Veg': ['historical', 'ssp126', 'ssp370', 'ssp585'],
+    'EC-Earth3-Veg': ['historical', 'ssp370', 'ssp585'],
     'HadGEM3-GC31-LL': ['historical', 'ssp126', 'ssp245', 'ssp585'],
     'HadGEM3-GC31-MM': ['historical', 'ssp126', 'ssp585'],
     'KACE-1-0-G': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
