@@ -171,9 +171,9 @@ watch([latLng, modelInput, scenarioInput], async () => {
 <template>
   <div v-if="latLng && chartLabels && apiData">
     <div class="parameter">
-      <label for="scenario" class="label">Model:</label>
+      <label for="model" class="label">Model:</label>
       <div class="select mb-5 mr-3">
-        <select id="scenario" v-model="modelInput">
+        <select id="model" v-model="modelInput">
           <option
             v-for="model in Object.keys(chartLabels.models)"
             :value="model"
