@@ -178,7 +178,8 @@ export default defineNuxtConfig({
         scss: {
           additionalData: `
             @use "~/assets/styles/_variables.scss" as *;
-            @import "~/node_modules/bulma/sass/utilities/mixins.sass";
+            @import "~/node_modules/bulma/sass/utilities/initial-variables.scss";
+            @import "~/node_modules/bulma/sass/utilities/mixins.scss";
           `,
         },
       },
