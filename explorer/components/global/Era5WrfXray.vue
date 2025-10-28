@@ -49,26 +49,11 @@ onUnmounted(() => {
   <section class="section xray">
     <div class="content clamp is-size-5">
       <h3 class="title is-3">ERA5-WRF Xray</h3>
-      <XrayIntroblurb resolution="4" unit="km">
-        <div class="variable-overview mt-4">
-          <h4 class="title is-5 mb-2">Available variables</h4>
-          <div class="columns is-multiline">
-            <div
-              class="column is-half-tablet is-one-third-desktop"
-              v-for="group in variableGroups"
-              :key="group.category"
-            >
-              <h5 class="title is-6 mb-2">{{ group.category }}</h5>
-              <ul>
-                <li v-for="variable in group.variables" :key="variable.key">
-                  <strong>{{ variable.label }}</strong>
-                  <span class="has-text-grey"> ({{ variable.unit }}) </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </XrayIntroblurb>
+      <XrayIntroblurb
+        resolution="4"
+        unit="km"
+        :variable-groups="variableGroups"
+      />
 
       <p>
         Explore the high-resolution ERA5-WRF reanalysis archive covering
@@ -81,7 +66,7 @@ onUnmounted(() => {
       <p>
         Select a community or enter coordinates to view charts of temperature,
         humidity, precipitation, and wind patterns for your location. Choose a
-        date range to focus your analysis.
+        date range to focus on a time period of interest.
       </p>
 
       <Gimme :communities-enabled="true" :extent="era5wrfExtent" />
@@ -136,20 +121,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.variable-overview ul {
-  margin-left: 1.25rem;
-}
-
-.variable-overview li + li {
-  margin-top: 0.5rem;
-}
-
-.introblurb .variable-overview {
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 6px;
-  padding: 1rem 1.25rem;
-}
-
 .download-block ul {
   margin-left: 1.25rem;
 }

@@ -1,5 +1,11 @@
 <script lang="ts" setup>
-const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
+const props = defineProps([
+  'resolution',
+  'unit',
+  'cmip',
+  'beta',
+  'variableGroups',
+])
 </script>
 
 <template>
@@ -58,6 +64,24 @@ const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
         <strong>{{ resolution }}&#8239;{{ unit }}</strong
         >.
       </li>
+      <li v-if="variableGroups">
+        Available variables:
+        <div class="variable-groups">
+          <div
+            class="variable-group"
+            v-for="group in variableGroups"
+            :key="group.category"
+          >
+            <strong>{{ group.category }}</strong>
+            <ul class="variable-list">
+              <li v-for="variable in group.variables" :key="variable.key">
+                {{ variable.label }}
+                <span class="has-text-grey">({{ variable.unit }})</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
     </ul>
     <slot />
   </blockquote>
@@ -73,5 +97,28 @@ const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
 
 strong {
   font-weight: 600;
+}
+
+.variable-groups {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.variable-group {
+  strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+}
+
+.variable-list {
+  margin-left: 1.25rem;
+  margin-top: 0.25rem;
+
+  li + li {
+    margin-top: 0.5rem;
+  }
 }
 </style>

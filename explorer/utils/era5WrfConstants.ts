@@ -187,25 +187,3 @@ export const ERA5_WRF_VARIABLES = [
 ] as const
 
 export type Era5WrfVariableKey = (typeof ERA5_WRF_VARIABLES)[number]['key']
-
-export const ERA5_WRF_VARIABLE_LOOKUP = ERA5_WRF_VARIABLES.reduce(
-  (acc, variable) => {
-    acc[variable.key] = variable
-    return acc
-  },
-  {} as Record<Era5WrfVariableKey, (typeof ERA5_WRF_VARIABLES)[number]>
-)
-
-export const ERA5_WRF_VARIABLE_KEYS = ERA5_WRF_VARIABLES.map(
-  variable => variable.key
-) as Era5WrfVariableKey[]
-
-export const buildEra5WrfRequestParams = (
-  variables?: Era5WrfVariableKey[] | readonly Era5WrfVariableKey[]
-) => {
-  const filtered = variables?.filter(Boolean) as
-    | Era5WrfVariableKey[]
-    | undefined
-  if (!filtered || filtered.length === 0) return ''
-  return `?vars=${Array.from(new Set(filtered)).join(',')}`
-}
