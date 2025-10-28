@@ -200,26 +200,6 @@ export const ERA5_WRF_VARIABLE_KEYS = ERA5_WRF_VARIABLES.map(
   variable => variable.key
 ) as Era5WrfVariableKey[]
 
-export const ERA5_WRF_AGGREGATION_MODES = [
-  {
-    key: 'daily',
-    label: 'Daily values',
-    description: 'Original daily data with light thinning for long time spans.',
-  },
-  {
-    key: 'monthly',
-    label: 'Monthly averages/totals',
-    description:
-      'Monthly means (wind/temperature/humidity) and totals (precipitation).',
-  },
-  {
-    key: 'seasonal',
-    label: 'Seasonal (Jan-Mar, Apr-Jun, Jul-Sep, Oct-Dec)',
-    description:
-      'Seasonal aggregates using rolling three-month windows aligned to calendar quarters.',
-  },
-] as const
-
 export const buildEra5WrfRequestParams = (
   variables?: Era5WrfVariableKey[] | readonly Era5WrfVariableKey[]
 ) => {

@@ -33,7 +33,6 @@ const variables: Era5WrfVariableKey[] = [
   'rh2_mean',
   'rh2_min',
   'rainnc_sum',
-  'wspd10_max',
   'wspd10_mean',
   'wdir10_mean',
 ]
@@ -131,23 +130,13 @@ const isLoading = computed(
           />
         </div>
 
-        <!-- Wind Rose - Mean Speed -->
-        <div class="mb-5">
+        <!-- Wind Rose -->
+        <div>
           <Era5WrfWindRose
             :speedSeries="seriesByVariable.wspd10_mean"
             :directionSeries="seriesByVariable.wdir10_mean"
             speedLabel="Mean Wind Speed"
             chartId="wind-rose-mean"
-          />
-        </div>
-
-        <!-- Wind Rose - Max Speed -->
-        <div>
-          <Era5WrfWindRose
-            :speedSeries="seriesByVariable.wspd10_max"
-            :directionSeries="seriesByVariable.wdir10_mean"
-            speedLabel="Max Wind Speed"
-            chartId="wind-rose-max"
           />
         </div>
       </div>
