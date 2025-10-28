@@ -53,33 +53,38 @@ const layers: MapLayer[] = [
 
 const legend: Record<string, LegendItem[]> = {
   era5_cold: [
-    { color: '#08306b', label: '&lt;-45°C' },
-    { color: '#2171b5', label: '-45°C to -35°C' },
-    { color: '#6baed6', label: '-35°C to -25°C' },
-    { color: '#c6dbef', label: '-25°C to -15°C' },
-    { color: '#f0f0f0', label: '&ge;-15°C' },
+    { color: '#3b4cc0', label: '&lt;-40°C' },
+    { color: '#9bb2e8', label: '-40°C to -20°C' },
+    { color: '#f7f7f7', label: '-20°C to 0°C' },
+    { color: '#fcbba1', label: '0°C to 15°C' },
+    { color: '#d6604d', label: '&ge;15°C' },
   ],
   era5_heat: [
-    { color: '#ffffb2', label: '&lt;15°C' },
-    { color: '#fecc5c', label: '15°C to 20°C' },
-    { color: '#fd8d3c', label: '20°C to 25°C' },
-    { color: '#f03b20', label: '25°C to 30°C' },
-    { color: '#bd0026', label: '&ge;30°C' },
+    { color: '#3b4cc0', label: '&lt;-40°C' },
+    { color: '#9bb2e8', label: '-40°C to -20°C' },
+    { color: '#f7f7f7', label: '-20°C to 0°C' },
+    { color: '#fcbba1', label: '0°C to 15°C' },
+    { color: '#d6604d', label: '&ge;15°C' },
   ],
   era5_precip: [
-    { color: '#f7fbff', label: '&lt;10mm' },
-    { color: '#c6dbef', label: '10-25mm' },
-    { color: '#6baed6', label: '25-50mm' },
-    { color: '#2171b5', label: '50-100mm' },
-    { color: '#08306b', label: '&ge;100mm' },
+    { color: '#ffffff', label: '0mm' },
+    { color: '#9ecae1', label: '1-5mm' },
+    { color: '#4292c6', label: '5-20mm' },
+    { color: '#08519c', label: '20-40mm' },
+    { color: '#006837', label: '40-60mm' },
+    { color: '#ffbf00', label: '60-80mm' },
+    { color: '#ff7f00', label: '80-100mm' },
+    { color: '#ff0000', label: '&ge;100mm' },
   ],
   era5_wind: [
-    { color: '#ffffcc', label: '&lt;5 m/s' },
-    { color: '#ffeda0', label: '5-10 m/s' },
-    { color: '#fed976', label: '10-15 m/s' },
-    { color: '#feb24c', label: '15-20 m/s' },
-    { color: '#fd8d3c', label: '20-25 m/s' },
-    { color: '#f03b20', label: '&ge;25 m/s' },
+    { color: '#ffffff', label: '0 m/s' },
+    { color: '#7fcdbb', label: '2-5 m/s' },
+    { color: '#2c7fb8', label: '5-15 m/s' },
+    { color: '#253494', label: '15-20 m/s' },
+    { color: '#ffffbf', label: '20-25 m/s' },
+    { color: '#fdae61', label: '25-35 m/s' },
+    { color: '#d73027', label: '35-50 m/s' },
+    { color: '#a50026', label: '&ge;50 m/s' },
   ],
 }
 
@@ -163,8 +168,8 @@ onUnmounted(() => {
 
       <p>
         Select a community or enter coordinates to view charts of temperature,
-        humidity, precipitation, and wind patterns for your location. Choose a
-        date range to focus on a time period of interest.
+        humidity, precipitation, and wind for your location. Choose a date range
+        to focus on a time period of interest.
       </p>
 
       <Gimme :communities-enabled="true" :extent="era5wrfExtent" />
