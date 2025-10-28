@@ -4,12 +4,87 @@ import { ERA5_WRF_VARIABLES } from '~/utils/era5WrfConstants'
 const runtimeConfig = useRuntimeConfig()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
+const mapStore = useMapStore()
 
 const endpoint = 'era5wrf'
 const era5wrfExtent = 'blockyAlaska'
 
 const latLng = computed(() => placesStore.latLng)
 const apiData = computed(() => dataStore.apiData[endpoint] ?? null)
+
+const layers: MapLayer[] = [
+  {
+    id: 'era5_extreme_cold',
+    title: 'Extreme Cold: January 23, 1971',
+    source: 'rasdaman',
+    wmsLayerName: 'era5_4km_daily_t2_min',
+    style: 'ardac_t2_min_daily',
+    legend: 'era5_cold',
+    rasdamanConfiguration: { time: '1971-01-23T00:00:00.000Z' },
+  },
+  {
+    id: 'era5_extreme_precip',
+    title: 'Extreme Precipitation: October 10, 1986',
+    source: 'rasdaman',
+    wmsLayerName: 'era5_4km_daily_rainnc_sum',
+    style: 'ardac_rainnc_sum_daily',
+    legend: 'era5_precip',
+    rasdamanConfiguration: { time: '1986-10-10T00:00:00.000Z' },
+  },
+  {
+    id: 'era5_extreme_heat',
+    title: 'Extreme Heat: June 21, 1991',
+    source: 'rasdaman',
+    wmsLayerName: 'era5_4km_daily_t2_max',
+    style: 'ardac_t2_max_daily',
+    legend: 'era5_heat',
+    rasdamanConfiguration: { time: '1991-06-21T00:00:00.000Z' },
+  },
+  {
+    id: 'era5_extreme_wind',
+    title: 'Extreme Wind: December 22, 2020',
+    source: 'rasdaman',
+    wmsLayerName: 'era5_4km_daily_wspd10_max',
+    style: 'ardac_wspd10_max_daily',
+    legend: 'era5_wind',
+    rasdamanConfiguration: { time: '2020-12-22T00:00:00.000Z' },
+  },
+]
+
+const legend: Record<string, LegendItem[]> = {
+  era5_cold: [
+    { color: '#08306b', label: '&lt;-45°C' },
+    { color: '#2171b5', label: '-45°C to -35°C' },
+    { color: '#6baed6', label: '-35°C to -25°C' },
+    { color: '#c6dbef', label: '-25°C to -15°C' },
+    { color: '#f0f0f0', label: '&ge;-15°C' },
+  ],
+  era5_heat: [
+    { color: '#ffffb2', label: '&lt;15°C' },
+    { color: '#fecc5c', label: '15°C to 20°C' },
+    { color: '#fd8d3c', label: '20°C to 25°C' },
+    { color: '#f03b20', label: '25°C to 30°C' },
+    { color: '#bd0026', label: '&ge;30°C' },
+  ],
+  era5_precip: [
+    { color: '#f7fbff', label: '&lt;10mm' },
+    { color: '#c6dbef', label: '10-25mm' },
+    { color: '#6baed6', label: '25-50mm' },
+    { color: '#2171b5', label: '50-100mm' },
+    { color: '#08306b', label: '&ge;100mm' },
+  ],
+  era5_wind: [
+    { color: '#ffffcc', label: '&lt;5 m/s' },
+    { color: '#ffeda0', label: '5-10 m/s' },
+    { color: '#fed976', label: '10-15 m/s' },
+    { color: '#feb24c', label: '15-20 m/s' },
+    { color: '#fd8d3c', label: '20-25 m/s' },
+    { color: '#f03b20', label: '&ge;25 m/s' },
+  ],
+}
+
+const mapId = 'era5_extremes'
+mapStore.setLegendItems(mapId, legend)
 
 const downloadLinks = computed(() => {
   if (!latLng.value) return null
@@ -62,6 +137,29 @@ onUnmounted(() => {
         (WRF) model to a <strong>4 km</strong> grid spanning mainland Alaska and
         adjacent Canada.
       </p>
+
+      <p>
+        The maps below showcase four extreme weather events captured in the
+        ERA5-WRF reanalysis. Toggle between the layers to explore snapshots of
+        these historic extremes across Alaska.
+      </p>
+
+      <MapBlock :mapId="mapId" class="mb-6">
+        <template v-slot:layers>
+          <MapLayer :mapId="mapId" :layer="layers[0]" default>
+            <template v-slot:title>{{ layers[0].title }}</template>
+          </MapLayer>
+          <MapLayer :mapId="mapId" :layer="layers[1]">
+            <template v-slot:title>{{ layers[1].title }}</template>
+          </MapLayer>
+          <MapLayer :mapId="mapId" :layer="layers[2]">
+            <template v-slot:title>{{ layers[2].title }}</template>
+          </MapLayer>
+          <MapLayer :mapId="mapId" :layer="layers[3]">
+            <template v-slot:title>{{ layers[3].title }}</template>
+          </MapLayer>
+        </template>
+      </MapBlock>
 
       <p>
         Select a community or enter coordinates to view charts of temperature,
