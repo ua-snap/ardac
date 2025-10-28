@@ -459,7 +459,15 @@ export default [
   {
     slug: 'story-fire-prone-conditions',
     title: 'Hotter, Drier Summers and Fire-Prone Conditions',
-    blurb: 'Explore daily fire weather conditions using high-resolution reanalysis data. Compare temperature and humidity patterns across different years to understand fire-prone conditions in Alaska.',
+    blurb:
+      'Explore daily fire weather conditions using high-resolution reanalysis data.',
     tags: ['Climate', 'Wildfire', 'Temperature'],
+  },
+  {
+    slug: 'era5-wrf-xray',
+    title: 'ERA5-WRF: High Resolution Dynamically Downscaled Reanalysis',
+    blurb:
+      'Query ERA5-WRF downscaled reanalysis data for any location.',
+    tags: ['Climate', 'Temperature', 'Precipitation', 'Wind'],
   },
 ] satisfies Item[]

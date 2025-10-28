@@ -4,17 +4,13 @@ import type { SeasonalStats } from '~/utils/era5WrfStatistics'
 interface Props {
   seasonalStatistics: SeasonalStats | null
   selectedYear: string
-  showClimatology: boolean
 }
 
 const props = defineProps<Props>()
 </script>
 
 <template>
-  <div
-    v-if="seasonalStatistics && showClimatology"
-    class="statistics-panel mt-4"
-  >
+  <div v-if="seasonalStatistics" class="statistics-panel mt-4">
     <h5 class="title is-5">
       {{ selectedYear }} vs {{ seasonalStatistics.period }}
     </h5>

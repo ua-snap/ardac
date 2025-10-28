@@ -67,3 +67,4 @@ type Slug =
   | 'places-and-polygons'
   | 'story-climate-indicators'
   | 'story-fire-prone-conditions'
+  | 'era5-wrf-xray'

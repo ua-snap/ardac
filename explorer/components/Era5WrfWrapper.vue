@@ -1,28 +1,34 @@
 <script lang="ts" setup>
+// Fire Story extension: Adds climatology, statistics, and fire-specific analysis
+// Builds on Xray foundation with specialized controls and overlays
+// Uses separate cache key (era5wrf-fire) to avoid collision with basic Xray
 import {
   calculateClimatology,
   calculateSeasonalStatistics,
   type SeasonalStats,
   type ClimatologyData,
 } from '~/utils/era5WrfStatistics'
-import { ERA5_WRF_CONFIG, CLIMATOLOGY_PERIODS } from '~/utils/era5WrfConstants'
+import {
+  ERA5_WRF_CONFIG,
+  CLIMATOLOGY_PERIODS,
+  type Era5WrfVariableKey,
+} from '~/utils/era5WrfConstants'
 
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
 
-const endpoint = ERA5_WRF_CONFIG.endpoint
-const requestParams = ERA5_WRF_CONFIG.requestParams
+// Use different endpoint to avoid cache collision with Xray
+const endpoint = 'era5wrf-fire'
+
+// Define specific variables for fire analysis
+const variables: Era5WrfVariableKey[] = ['t2_max', 'rh2_min']
+const requestParams = `?vars=${variables.join(',')}`
 
 const apiData = computed(() => dataStore.apiData[endpoint])
 const latLng = computed(() => placesStore.latLng)
 
 // Control state (managed by controls component)
-const showTemperature = ref(true)
-const showHumidity = ref(true)
 const selectedYear = ref(ERA5_WRF_CONFIG.defaultYear)
-const showClimatology = ref(false)
-const showPercentileBands = ref(false)
-const highlightExtremes = ref(false)
 const climatologyPeriod = ref(ERA5_WRF_CONFIG.defaultClimatologyPeriod)
 
 // Climatology periods from constants
@@ -30,7 +36,7 @@ const climatologyPeriods = CLIMATOLOGY_PERIODS
 
 // Computed climatology based on selected period
 const currentClimatology = computed((): ClimatologyData | null => {
-  if (!apiData.value || !showClimatology.value) return null
+  if (!apiData.value) return null
 
   const period = climatologyPeriods[climatologyPeriod.value]
   return calculateClimatology(apiData.value, period.start, period.end)
@@ -67,9 +73,8 @@ const seasonalStatistics = computed((): SeasonalStats | null => {
 
 // API data fetching
 const fetchChartData = () => {
-  if (latLng.value) {
-    dataStore.fetchData(endpoint, requestParams)
-  }
+  if (!latLng.value) return
+  dataStore.fetchData(endpoint, requestParams)
 }
 
 // Watch for location changes
@@ -85,12 +90,7 @@ onUnmounted(() => {
   <div class="chart-container">
     <!-- Controls Section -->
     <Era5WrfChartControls
-      v-model:showTemperature="showTemperature"
-      v-model:showHumidity="showHumidity"
       v-model:selectedYear="selectedYear"
-      v-model:showClimatology="showClimatology"
-      v-model:showPercentileBands="showPercentileBands"
-      v-model:highlightExtremes="highlightExtremes"
       v-model:climatologyPeriod="climatologyPeriod"
       :showAdvancedControls="!!apiData"
     />
@@ -99,21 +99,16 @@ onUnmounted(() => {
     <Era5WrfStatisticsPanel
       :seasonalStatistics="seasonalStatistics"
       :selectedYear="selectedYear"
-      :showClimatology="showClimatology"
     />
 
     <!-- Chart Section -->
     <div v-if="latLng" class="chart-section">
       <Era5WrfChart
-        :showTemperature="showTemperature"
-        :showHumidity="showHumidity"
         :selectedYear="selectedYear"
-        :showClimatology="showClimatology"
-        :showPercentileBands="showPercentileBands"
-        :highlightExtremes="highlightExtremes"
         :climatologyPeriod="climatologyPeriod"
         :currentClimatology="currentClimatology"
         :filteredDates="filteredDates"
+        chartId="era5-fire-chart"
       />
     </div>
 

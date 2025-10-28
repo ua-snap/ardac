@@ -4,38 +4,42 @@ import type { ClimatologyData } from '~/utils/era5WrfStatistics'
 import { CHART_COLORS, CHART_CONFIG } from '~/utils/era5WrfConstants'
 
 interface Props {
-  showTemperature: boolean
-  showHumidity: boolean
   selectedYear: string
-  showClimatology: boolean
-  showPercentileBands: boolean
-  highlightExtremes: boolean
   climatologyPeriod: string
   currentClimatology: ClimatologyData | null
   filteredDates: string[]
+  chartId?: string
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  chartId: 'era5-chart',
+})
 
 const { $Plotly } = useNuxtApp()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
 
-const endpoint = 'era5wrf'
+// Use fire endpoint to match wrapper
+const endpoint = 'era5wrf-fire'
 const apiData = computed(() => dataStore.apiData[endpoint])
 const latLng = computed(() => placesStore.latLng)
+const chartId = props.chartId
 
 const buildChart = () => {
   if (!apiData.value || !latLng.value) return
 
   if (props.filteredDates.length === 0) {
-    $Plotly.newPlot('era5-chart', [], {
+    $Plotly.newPlot(chartId, [], {
       title: {
         text: `Fire Weather Conditions: ${props.selectedYear}<br>${latLng.value.lat.toFixed(3)}°N, ${latLng.value.lng.toFixed(3)}°W`,
         font: { size: 18 },
       },
       xaxis: {
-        title: 'Date (March 15 - October 15)',
+        title: {
+          text: 'Date (March 15 - October 15)',
+          font: { size: 18 },
+          standoff: 20,
+        },
         type: 'date',
         tickformat: '%b %d',
       },
@@ -61,7 +65,7 @@ const buildChart = () => {
   let traces: Data[] = []
 
   // Add percentile bands if enabled
-  if (props.showPercentileBands && props.currentClimatology) {
+  if (props.currentClimatology) {
     // Temperature percentile bands (p10 first, then p90 with fill)
     traces.push({
       x: props.filteredDates,
@@ -120,7 +124,7 @@ const buildChart = () => {
   }
 
   // Add climatology average lines
-  if (props.showClimatology && props.currentClimatology) {
+  if (props.currentClimatology) {
     traces.push({
       x: props.filteredDates,
       y: props.filteredDates.map(date => {
@@ -158,114 +162,60 @@ const buildChart = () => {
     })
   }
 
-  // Enhanced annual data traces with anomaly information
-  if (props.showTemperature) {
-    const temperatureTrace: any = {
-      x: props.filteredDates,
-      y: props.filteredDates.map(date => apiData.value[date].t2_max),
-      name: `Max Temperature (${props.selectedYear})`,
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: { color: CHART_COLORS.temperature, width: 2 },
-      yaxis: 'y',
-      hovertemplate: props.showClimatology
-        ? '%{x}<br>Temperature: %{y:.1f}°C<br>Anomaly: %{customdata:.1f}°C<extra></extra>'
-        : '%{x}<br>Temperature: %{y:.1f}°C<extra></extra>',
-    }
-
-    // Add anomaly calculations if climatology is shown
-    if (props.showClimatology && props.currentClimatology) {
-      temperatureTrace.customdata = props.filteredDates.map(date => {
-        const dayOfYear = date.slice(5)
-        const observed = apiData.value[date].t2_max
-        const climatologyMean =
-          props.currentClimatology?.[dayOfYear]?.t2_max?.mean
-        return climatologyMean ? observed - climatologyMean : null
-      })
-
-      // Highlight extreme values (only hot days for temperature)
-      if (props.highlightExtremes) {
-        temperatureTrace.marker = {
-          size: props.filteredDates.map(date => {
-            const dayOfYear = date.slice(5)
-            const observed = apiData.value[date].t2_max
-            const p90 = props.currentClimatology?.[dayOfYear]?.t2_max?.p90
-            return p90 !== undefined && observed > p90 ? 8 : 4 // Only highlight hot days
-          }),
-          color: props.filteredDates.map(date => {
-            const dayOfYear = date.slice(5)
-            const observed = apiData.value[date].t2_max
-            const p90 = props.currentClimatology?.[dayOfYear]?.t2_max?.p90
-            if (p90 !== undefined && observed > p90)
-              return CHART_COLORS.extremeHighlight // Hot extreme
-            return CHART_COLORS.temperature // Normal
-          }),
-        }
-      } else {
-        temperatureTrace.marker = { size: 4 }
-      }
-    } else {
-      temperatureTrace.marker = { size: 4 }
-    }
-
-    traces.push(temperatureTrace)
+  // Temperature trace
+  const temperatureTrace: any = {
+    x: props.filteredDates,
+    y: props.filteredDates.map(date => apiData.value[date].t2_max),
+    name: `Max Temperature (${props.selectedYear})`,
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: CHART_COLORS.temperature, width: 2 },
+    yaxis: 'y',
+    hovertemplate: props.currentClimatology
+      ? '%{x}<br>Temperature: %{y:.1f}°C<br>Anomaly: %{customdata:.1f}°C<extra></extra>'
+      : '%{x}<br>Temperature: %{y:.1f}°C<extra></extra>',
   }
 
-  // Enhanced humidity trace
-  if (props.showHumidity) {
-    const humidityTrace: any = {
-      x: props.filteredDates,
-      y: props.filteredDates.map(date => apiData.value[date].rh2_min),
-      name: `Min Relative Humidity (${props.selectedYear})`,
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: { color: CHART_COLORS.humidity, width: 2 },
-      yaxis: 'y2',
-      hovertemplate: props.showClimatology
-        ? '%{x}<br>Humidity: %{y:.1f}%<br>Anomaly: %{customdata:.1f}%<extra></extra>'
-        : '%{x}<br>Humidity: %{y:.1f}%<extra></extra>',
-    }
-
-    // Add anomaly calculations if climatology is shown
-    if (props.showClimatology && props.currentClimatology) {
-      humidityTrace.customdata = props.filteredDates.map(date => {
-        const dayOfYear = date.slice(5)
-        const observed = apiData.value[date].rh2_min
-        const climatologyMean =
-          props.currentClimatology?.[dayOfYear]?.rh2_min?.mean
-        return climatologyMean ? observed - climatologyMean : null
-      })
-
-      // Highlight extreme values
-      if (props.highlightExtremes) {
-        humidityTrace.marker = {
-          size: props.filteredDates.map(date => {
-            const dayOfYear = date.slice(5)
-            const observed = apiData.value[date].rh2_min
-            const p10 = props.currentClimatology?.[dayOfYear]?.rh2_min?.p10
-            return p10 !== undefined && observed < p10 ? 8 : 4 // Only highlight dry days
-          }),
-          color: props.filteredDates.map(date => {
-            const dayOfYear = date.slice(5)
-            const observed = apiData.value[date].rh2_min
-            const p10 = props.currentClimatology?.[dayOfYear]?.rh2_min?.p10
-            if (p10 !== undefined && observed < p10)
-              return CHART_COLORS.extremeHighlight // Dry extreme
-            return CHART_COLORS.humidity // Normal
-          }),
-        }
-      } else {
-        humidityTrace.marker = { size: 4 }
-      }
-    } else {
-      humidityTrace.marker = { size: 4 }
-    }
-
-    traces.push(humidityTrace)
+  if (props.currentClimatology) {
+    temperatureTrace.customdata = props.filteredDates.map(date => {
+      const dayOfYear = date.slice(5)
+      const observed = apiData.value[date].t2_max
+      const climatologyMean =
+        props.currentClimatology?.[dayOfYear]?.t2_max?.mean
+      return climatologyMean ? observed - climatologyMean : null
+    })
   }
+  temperatureTrace.marker = { size: 4 }
+  traces.push(temperatureTrace)
+
+  // Humidity trace
+  const humidityTrace: any = {
+    x: props.filteredDates,
+    y: props.filteredDates.map(date => apiData.value[date].rh2_min),
+    name: `Min Relative Humidity (${props.selectedYear})`,
+    type: 'scatter',
+    mode: 'lines+markers',
+    line: { color: CHART_COLORS.humidity, width: 2 },
+    yaxis: 'y2',
+    hovertemplate: props.currentClimatology
+      ? '%{x}<br>Humidity: %{y:.1f}%<br>Anomaly: %{customdata:.1f}%<extra></extra>'
+      : '%{x}<br>Humidity: %{y:.1f}%<extra></extra>',
+  }
+
+  if (props.currentClimatology) {
+    humidityTrace.customdata = props.filteredDates.map(date => {
+      const dayOfYear = date.slice(5)
+      const observed = apiData.value[date].rh2_min
+      const climatologyMean =
+        props.currentClimatology?.[dayOfYear]?.rh2_min?.mean
+      return climatologyMean ? observed - climatologyMean : null
+    })
+  }
+  humidityTrace.marker = { size: 4 }
+  traces.push(humidityTrace)
 
   $Plotly.newPlot(
-    'era5-chart',
+    chartId,
     traces,
     {
       title: {
@@ -273,7 +223,11 @@ const buildChart = () => {
         font: { size: 18 },
       },
       xaxis: {
-        title: 'Date (March 15 - October 15)',
+        title: {
+          text: 'Date (March 15 - October 15)',
+          font: { size: 18 },
+          standoff: 20,
+        },
         type: 'date',
         tickformat: '%b %d',
       },
@@ -298,12 +252,7 @@ const buildChart = () => {
 watch(
   [
     apiData,
-    () => props.showTemperature,
-    () => props.showHumidity,
     () => props.selectedYear,
-    () => props.showClimatology,
-    () => props.showPercentileBands,
-    () => props.highlightExtremes,
     () => props.climatologyPeriod,
     () => props.currentClimatology,
     () => props.filteredDates,
@@ -313,5 +262,5 @@ watch(
 </script>
 
 <template>
-  <div id="era5-chart"></div>
+  <div :id="chartId"></div>
 </template>

@@ -13,36 +13,14 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 // Control state
-const showTemperature = defineModel<boolean>('showTemperature', {
-  default: true,
-})
-const showHumidity = defineModel<boolean>('showHumidity', { default: true })
 const selectedYear = defineModel<string>('selectedYear', { default: '2004' })
-const showClimatology = defineModel<boolean>('showClimatology', {
-  default: false,
-})
-const showPercentileBands = defineModel<boolean>('showPercentileBands', {
-  default: false,
-})
-const highlightExtremes = defineModel<boolean>('highlightExtremes', {
-  default: false,
-})
 const climatologyPeriod = defineModel<string>('climatologyPeriod', {
-  default: '1990-2019',
+  default: '1960-1989',
 })
 
 // Available years and climatology periods from constants
 const availableYears = getAvailableYears()
 const climatologyPeriods = CLIMATOLOGY_PERIODS
-
-// Use validation composable
-const {
-  canDisableTemperature,
-  canDisableHumidity,
-  validationMessage,
-  handleTemperatureChange,
-  handleHumidityChange,
-} = useEra5WrfValidation(showTemperature, showHumidity)
 </script>
 
 <template>
@@ -71,39 +49,8 @@ const {
       <!-- Variable Selection -->
       <div class="column is-half">
         <label class="label">Variables</label>
-        <div class="field">
-          <div class="control">
-            <label
-              class="checkbox"
-              :class="{ 'is-disabled': !canDisableTemperature }"
-              :title="!canDisableTemperature ? validationMessage : ''"
-            >
-              <input
-                type="checkbox"
-                :checked="showTemperature"
-                @change="handleTemperatureChange"
-              />
-              Daily Maximum Temperature
-            </label>
-          </div>
-          <div class="control">
-            <label
-              class="checkbox"
-              :class="{ 'is-disabled': !canDisableHumidity }"
-              :title="!canDisableHumidity ? validationMessage : ''"
-            >
-              <input
-                type="checkbox"
-                :checked="showHumidity"
-                @change="handleHumidityChange"
-              />
-              Daily Minimum Relative Humidity
-            </label>
-          </div>
-        </div>
-        <div v-if="validationMessage" class="help is-info">
-          <small>{{ validationMessage }}</small>
-        </div>
+        <p class="mb-2">Daily Maximum Temperature (°C)</p>
+        <p>Daily Minimum Relative Humidity (%)</p>
       </div>
     </div>
 
@@ -112,41 +59,31 @@ const {
       <div class="column">
         <div class="field">
           <label class="label">Climatological Comparison</label>
+          <p class="mb-3">
+            Daily values are compared against the selected reference period,
+            including the 10th-90th percentile range.
+          </p>
 
-          <div class="control mb-3">
-            <label class="checkbox">
-              <input type="checkbox" v-model="showClimatology" />
-              Show climatological average
-            </label>
-          </div>
-
-          <div v-if="showClimatology" class="control mb-3">
+          <div class="control">
             <label class="label is-size-6">Reference Period</label>
-            <div class="select is-fullwidth">
-              <select v-model="climatologyPeriod">
-                <option
-                  v-for="(period, key) in climatologyPeriods"
-                  :key="key"
-                  :value="key"
-                >
-                  {{ period.label }}
-                </option>
-              </select>
+            <div class="reference-options">
+              <label class="radio">
+                <input
+                  type="radio"
+                  value="1960-1989"
+                  v-model="climatologyPeriod"
+                />
+                {{ climatologyPeriods['1960-1989'].label }}
+              </label>
+              <label class="radio">
+                <input
+                  type="radio"
+                  value="1990-2019"
+                  v-model="climatologyPeriod"
+                />
+                {{ climatologyPeriods['1990-2019'].label }}
+              </label>
             </div>
-          </div>
-
-          <div v-if="showClimatology" class="control mb-3">
-            <label class="checkbox">
-              <input type="checkbox" v-model="showPercentileBands" />
-              Show normal range (10th-90th percentile)
-            </label>
-          </div>
-
-          <div v-if="showClimatology" class="control">
-            <label class="checkbox">
-              <input type="checkbox" v-model="highlightExtremes" />
-              Highlight extreme days
-            </label>
           </div>
         </div>
       </div>
@@ -162,19 +99,17 @@ const {
   border: 1px solid #e9ecef;
 }
 
-/* Validation styles */
-.checkbox.is-disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
-.checkbox.is-disabled input[type='checkbox'] {
-  cursor: not-allowed;
+.mb-3 {
+  margin-bottom: 1rem;
 }
 
-.help.is-info {
-  color: #3273dc;
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
+.reference-options {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 </style>
