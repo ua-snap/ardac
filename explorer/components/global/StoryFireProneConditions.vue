@@ -5,29 +5,6 @@ const runtimeConfig = useRuntimeConfig()
 
 const era5wrfExtent = 'blockyAlaska'
 
-interface ReferenceEntry {
-  id: string
-  citation: string
-}
-
-const references: ReferenceEntry[] = [
-  {
-    id: 'ref-aicc-2005',
-    citation:
-      'Alaska Interagency Coordination Center. (2005). <em>2004 Alaska Fire Season Summary</em>. National Interagency Fire Center. <a href="https://fire.ak.blm.gov/content/aicc/sitreport/2004_Season_Summary.pdf">https://fire.ak.blm.gov/content/aicc/sitreport/2004_Season_Summary.pdf</a>',
-  },
-  {
-    id: 'ref-kasischke-turetsky-2006',
-    citation:
-      'Kasischke, E. S., &amp; Turetsky, M. R. (2006). Recent changes in the fire regime of the Alaskan boreal forest. <em>Geophysical Research Letters</em>, 33(9), L09703. <a href="https://doi.org/10.1029/2006GL025944">https://doi.org/10.1029/2006GL025944</a>',
-  },
-  {
-    id: 'ref-bieniek-2016',
-    citation:
-      'Bieniek, P. A., Bhatt, U. S., Walsh, J. E., Rupp, T. S., Zhang, J., &amp; Smikrud, K. M. (2016). Dynamical downscaling of ERA-Interim temperature and precipitation for Alaska. <em>Journal of Applied Meteorology and Climatology</em>, 55(3), 635–654. <a href="https://doi.org/10.1175/JAMC-D-15-0153.1">https://doi.org/10.1175/JAMC-D-15-0153.1</a>',
-  },
-]
-
 onMounted(() => {
   // Clear any stale errors from other pages/endpoints to prevent
   // false "Failed to load data" messages
@@ -52,13 +29,11 @@ onUnmounted(() => {
         Explore daily fire weather conditions using the high-resolution ERA5-WRF
         dynamically downscaled dataset. The 2004 Alaska summer was marked by
         significant meteorological anomalies, culminating in the largest fire
-        season on record for Alaska: 6.6 million acres burned.<sup>
-          <a href="#ref-aicc-2005" aria-label="Jump to reference 1">[1]</a>
-        </sup>
-        The Taylor Complex, a group of several large fires accounted for more
-        than 1.7 million acres burned in eastern Alaska near the Yukon border.
-        To learn more about how temperature and humidity extremes drove the
-        Taylor Complex fire behavior, choose Tok, or another nearby community or
+        season on record for Alaska: 6.6 million acres burned. The Taylor
+        Complex, a group of several large fires accounted for more than 1.7
+        million acres burned in eastern Alaska near the Yukon border. To learn
+        more about how temperature and humidity extremes drove the Taylor
+        Complex fire behavior, choose Tok, or another nearby community or
         latitude/longitude in the location selector and follow along with the
         narrative below. Set the <strong>Year Selection</strong> control to 2004
         (the default) and notice how the chart and summary statistics respond,
@@ -145,8 +120,6 @@ onUnmounted(() => {
             </p>
           </template>
         </GetAndUseData>
-
-        <ReferencesList class="mt-6" :references="references" />
       </p>
     </div>
   </section>
