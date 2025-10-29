@@ -23,7 +23,7 @@ test('Check header links and front page', async ({ page }) => {
 test('Check about page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
-  await page.waitForSelector('h1:has-text("Arctic Data Collaborative")')
+  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
   await page.click('a:has-text("About")')
   await expect(page.locator('h2')).toHaveText('ARDAC is a home for alive data')
 
@@ -39,7 +39,7 @@ test('Check about page', async ({ page }) => {
 test('Check people page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
-  await page.waitForSelector('h1:has-text("Arctic Data Collaborative")')
+  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
   await page.click('a:has-text("People")')
   await expect(page.locator('h2')).toHaveText('People')
 
