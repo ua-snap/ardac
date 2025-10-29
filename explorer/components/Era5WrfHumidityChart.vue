@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Data } from 'plotly.js-dist-min'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
-import { CHART_CONFIG } from '~/utils/era5WrfConstants'
+import { CHART_CONFIG, ERA5_WRF_VARIABLES } from '~/utils/era5WrfConstants'
 
 interface Props {
   rh2Max: Era5WrfSeriesPoint[]
@@ -19,31 +19,35 @@ const props = withDefaults(defineProps<Props>(), {
 const { $Plotly } = useNuxtApp()
 const chartId = props.chartId
 
+const rh2MaxVar = ERA5_WRF_VARIABLES.find(v => v.key === 'rh2_max')!
+const rh2MeanVar = ERA5_WRF_VARIABLES.find(v => v.key === 'rh2_mean')!
+const rh2MinVar = ERA5_WRF_VARIABLES.find(v => v.key === 'rh2_min')!
+
 const buildChart = () => {
   const traces: Data[] = [
     {
       x: props.rh2Max.map(p => p.date),
       y: props.rh2Max.map(p => p.value),
-      name: 'Max Humidity',
+      name: rh2MaxVar.label,
       type: 'scatter',
       mode: 'lines',
-      line: { color: '#1f77b4', width: 2 },
+      line: { color: rh2MaxVar.color, width: 2 },
     },
     {
       x: props.rh2Mean.map(p => p.date),
       y: props.rh2Mean.map(p => p.value),
-      name: 'Mean Humidity',
+      name: rh2MeanVar.label,
       type: 'scatter',
       mode: 'lines',
-      line: { color: '#17becf', width: 2 },
+      line: { color: rh2MeanVar.color, width: 2 },
     },
     {
       x: props.rh2Min.map(p => p.date),
       y: props.rh2Min.map(p => p.value),
-      name: 'Min Humidity',
+      name: rh2MinVar.label,
       type: 'scatter',
       mode: 'lines',
-      line: { color: '#2ca02c', width: 2 },
+      line: { color: rh2MinVar.color, width: 2 },
     },
   ]
 

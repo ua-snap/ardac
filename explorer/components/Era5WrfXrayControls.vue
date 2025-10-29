@@ -55,7 +55,6 @@ const dateRangeError = computed(() => {
       </p>
       <p v-else class="help">
         Select the time window to display. Default shows the most recent year.
-        All climate variables are shown below.
       </p>
     </div>
   </div>

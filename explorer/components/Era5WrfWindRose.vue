@@ -107,7 +107,7 @@ const buildWindRose = () => {
 
   const layout: Partial<Layout> = {
     title: {
-      text: `Wind Rose - ${props.speedLabel}<br><sub>n = ${data.totalCount} observations</sub>`,
+      text: `Wind Rose - ${props.speedLabel}<br><sub>n = ${data.totalCount} values</sub>`,
       font: { size: 24 },
     },
     barmode: 'stack',

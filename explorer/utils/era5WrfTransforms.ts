@@ -49,37 +49,22 @@ export interface WindRoseData {
   totalCount: number
 }
 
-const DIRECTION_SECTORS = 16 // 16 compass directions (22.5° each)
+const DIRECTION_SECTORS = 8 // 8 compass directions (45° each)
 const SECTOR_SIZE = 360 / DIRECTION_SECTORS
 
 const DIRECTION_LABELS = [
-  'N',
-  'NNE',
-  'NE',
-  'ENE',
-  'E',
-  'ESE',
-  'SE',
-  'SSE',
-  'S',
-  'SSW',
-  'SW',
-  'WSW',
-  'W',
-  'WNW',
-  'NW',
-  'NNW',
+  'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW',
 ]
 
-// Meteorological wind speed ranges (m/s)
+// Wind speed ranges (m/s)
 const SPEED_BINS = [
-  { min: 0, max: 0.5, label: 'Calm (0-0.5)' },
-  { min: 0.5, max: 3, label: 'Light (0.5-3)' },
-  { min: 3, max: 5, label: 'Gentle (3-5)' },
-  { min: 5, max: 8, label: 'Moderate (5-8)' },
-  { min: 8, max: 11, label: 'Fresh (8-11)' },
-  { min: 11, max: 14, label: 'Strong (11-14)' },
-  { min: 14, max: Infinity, label: 'Very Strong (>14)' },
+  { min: 0, max: 0.5},
+  { min: 0.5, max: 3 },
+  { min: 3, max: 5 },
+  { min: 5, max: 8 },
+  { min: 8, max: 11 },
+  { min: 11, max: 14 },
+  { min: 14, max: Infinity },
 ]
 
 const binDirection = (degrees: number): number => {
@@ -146,7 +131,7 @@ export const prepareWindRoseData = (
       bins.push({
         direction: centerDegrees,
         directionLabel: DIRECTION_LABELS[dirIdx],
-        speedRange: SPEED_BINS[speedIdx].label,
+        speedRange: `${SPEED_BINS[speedIdx].min}-${SPEED_BINS[speedIdx].max}`,
         frequency,
         count,
       })
@@ -155,7 +140,7 @@ export const prepareWindRoseData = (
 
   return {
     bins,
-    speedRanges: SPEED_BINS.map(b => b.label),
+    speedRanges: SPEED_BINS.map(b => `${b.min}-${b.max}`),
     directionSectors,
     totalCount,
   }

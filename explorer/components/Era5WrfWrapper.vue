@@ -4,13 +4,13 @@
 // Uses separate cache key (era5wrf-fire) to avoid collision with basic Xray
 import {
   calculateClimatology,
-  calculateSeasonalStatistics,
-  type SeasonalStats,
+  calculateHotDryStatistics,
+  type HotDryStats,
   type ClimatologyData,
 } from '~/utils/era5WrfStatistics'
 import {
   ERA5_WRF_CONFIG,
-  CLIMATOLOGY_PERIODS,
+  ERA5_CLIMATOLOGY_PERIODS,
   type Era5WrfVariableKey,
 } from '~/utils/era5WrfConstants'
 
@@ -18,11 +18,12 @@ const dataStore = useDataStore()
 const placesStore = usePlacesStore()
 
 // Use different endpoint to avoid cache collision with Xray
-const endpoint = 'era5wrf-fire'
+const endpoint = ERA5_WRF_CONFIG.fireEndpoint
 
-// Define specific variables for fire analysis
+// Define specific variables for fire analysis (for documentation)
+// Note: We fetch all variables like the x-ray does since the API doesn't support filtering
 const variables: Era5WrfVariableKey[] = ['t2_max', 'rh2_min']
-const requestParams = `?vars=${variables.join(',')}`
+const requestParams = ''
 
 const apiData = computed(() => dataStore.apiData[endpoint])
 const latLng = computed(() => placesStore.latLng)
@@ -32,7 +33,7 @@ const selectedYear = ref(ERA5_WRF_CONFIG.defaultYear)
 const climatologyPeriod = ref(ERA5_WRF_CONFIG.defaultClimatologyPeriod)
 
 // Climatology periods from constants
-const climatologyPeriods = CLIMATOLOGY_PERIODS
+const climatologyPeriods = ERA5_CLIMATOLOGY_PERIODS
 
 // Computed climatology based on selected period
 const currentClimatology = computed((): ClimatologyData | null => {
@@ -54,7 +55,7 @@ const filteredDates = computed(() => {
 })
 
 // Computed seasonal statistics
-const seasonalStatistics = computed((): SeasonalStats | null => {
+const seasonalStatistics = computed((): HotDryStats | null => {
   if (
     !apiData.value ||
     !filteredDates.value?.length ||
@@ -63,7 +64,7 @@ const seasonalStatistics = computed((): SeasonalStats | null => {
     return null
 
   const period = climatologyPeriods[climatologyPeriod.value]
-  return calculateSeasonalStatistics(
+  return calculateHotDryStatistics(
     apiData.value,
     filteredDates.value,
     currentClimatology.value,
@@ -97,13 +98,13 @@ onUnmounted(() => {
 
     <!-- Statistics Panel -->
     <Era5WrfStatisticsPanel
-      :seasonalStatistics="seasonalStatistics"
+      :hotDryStatistics="seasonalStatistics"
       :selectedYear="selectedYear"
     />
 
     <!-- Chart Section -->
     <div v-if="latLng" class="chart-section">
-      <Era5WrfChart
+      <Era5WrfHotDryFireProneChart
         :selectedYear="selectedYear"
         :climatologyPeriod="climatologyPeriod"
         :currentClimatology="currentClimatology"

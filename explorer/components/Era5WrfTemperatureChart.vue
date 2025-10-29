@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Data } from 'plotly.js-dist-min'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
-import { CHART_CONFIG } from '~/utils/era5WrfConstants'
+import { CHART_CONFIG, ERA5_WRF_VARIABLES } from '~/utils/era5WrfConstants'
 
 interface Props {
   t2Max: Era5WrfSeriesPoint[]
@@ -19,31 +19,35 @@ const props = withDefaults(defineProps<Props>(), {
 const { $Plotly } = useNuxtApp()
 const chartId = props.chartId
 
+const t2MaxVar = ERA5_WRF_VARIABLES.find(v => v.key === 't2_max')!
+const t2MeanVar = ERA5_WRF_VARIABLES.find(v => v.key === 't2_mean')!
+const t2MinVar = ERA5_WRF_VARIABLES.find(v => v.key === 't2_min')!
+
 const buildChart = () => {
   const traces: Data[] = [
     {
       x: props.t2Max.map(p => p.date),
       y: props.t2Max.map(p => p.value),
-      name: 'Max Temperature',
+      name: t2MaxVar.label,
       type: 'scatter',
       mode: 'lines',
-      line: { color: '#d62728', width: 2 },
+      line: { color: t2MaxVar.color, width: 2 },
     },
     {
       x: props.t2Mean.map(p => p.date),
       y: props.t2Mean.map(p => p.value),
-      name: 'Mean Temperature',
+      name: t2MeanVar.label,
       type: 'scatter',
       mode: 'lines',
-      line: { color: '#ff7f0e', width: 2 },
+      line: { color: t2MeanVar.color, width: 2 },
     },
     {
       x: props.t2Min.map(p => p.date),
       y: props.t2Min.map(p => p.value),
-      name: 'Min Temperature',
+      name: t2MinVar.label,
       type: 'scatter',
       mode: 'lines',
-      line: { color: '#9467bd', width: 2 },
+      line: { color: t2MinVar.color, width: 2 },
     },
   ]
 

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {
-  CLIMATOLOGY_PERIODS,
+  ERA5_CLIMATOLOGY_PERIODS,
+  ERA5_WRF_CONFIG,
   getAvailableYears,
 } from '~/utils/era5WrfConstants'
 
@@ -13,14 +14,16 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 // Control state
-const selectedYear = defineModel<string>('selectedYear', { default: '2004' })
+const selectedYear = defineModel<string>('selectedYear', {
+  default: ERA5_WRF_CONFIG.defaultYear,
+})
 const climatologyPeriod = defineModel<string>('climatologyPeriod', {
-  default: '1960-1989',
+  default: ERA5_WRF_CONFIG.defaultClimatologyPeriod,
 })
 
 // Available years and climatology periods from constants
 const availableYears = getAvailableYears()
-const climatologyPeriods = CLIMATOLOGY_PERIODS
+const climatologyPeriods = ERA5_CLIMATOLOGY_PERIODS
 </script>
 
 <template>
@@ -45,15 +48,7 @@ const climatologyPeriods = CLIMATOLOGY_PERIODS
           </div>
         </div>
       </div>
-
-      <!-- Variable Selection -->
-      <div class="column is-half">
-        <label class="label">Variables</label>
-        <p class="mb-2">Daily Maximum Temperature (°C)</p>
-        <p>Daily Minimum Relative Humidity (%)</p>
-      </div>
     </div>
-
     <!-- Climatology Controls -->
     <div class="columns" v-if="showAdvancedControls">
       <div class="column">

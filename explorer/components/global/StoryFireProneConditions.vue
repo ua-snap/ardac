@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-// Following existing story patterns
 const placesStore = usePlacesStore()
+const dataStore = useDataStore()
 const runtimeConfig = useRuntimeConfig()
 
-// Search extent for ERA5-WRF domain (matches other ARDAC wildfire tools)
 const era5wrfExtent = 'blockyAlaska'
 
 interface ReferenceEntry {
@@ -28,6 +27,12 @@ const references: ReferenceEntry[] = [
       'Bieniek, P. A., Bhatt, U. S., Walsh, J. E., Rupp, T. S., Zhang, J., &amp; Smikrud, K. M. (2016). Dynamical downscaling of ERA-Interim temperature and precipitation for Alaska. <em>Journal of Applied Meteorology and Climatology</em>, 55(3), 635–654. <a href="https://doi.org/10.1175/JAMC-D-15-0153.1">https://doi.org/10.1175/JAMC-D-15-0153.1</a>',
   },
 ]
+
+onMounted(() => {
+  // Clear any stale errors from other pages/endpoints to prevent
+  // false "Failed to load data" messages
+  dataStore.dataErrors = {}
+})
 
 onUnmounted(() => {
   // Note: We intentionally don't clear location state here to allow

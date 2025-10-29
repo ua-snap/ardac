@@ -1,9 +1,8 @@
 /**
- * Statistical utility functions for ERA5-WRF chart calculations
- * Extracted from Era5WrfChart.vue for reusability and testability
+ * Statistical utility functions for ERA5-WRF climo norms, percentiles, counting days meeting criteria, etc.
  */
 
-export interface SeasonalStats {
+export interface HotDryStats {
   period: string
   hotDays: number
   dryDays: number
@@ -50,7 +49,7 @@ export const calculatePercentile = (values: number[], percentile: number): numbe
 }
 
 /**
- * Calculate climatology for a selected period
+ * Calculate climatology for a selected period, right now these are specific to t2_max, rh2_min, but could be extended to other variables.
  */
 export const calculateClimatology = (
   data: Record<string, any>,
@@ -107,15 +106,15 @@ export const calculateClimatology = (
 }
 
 /**
- * Calculate seasonal statistics for the selected year vs climatology
+ * Calculate seasonal statistics for the selected year vs climatology, also specific to rh2_min and t2_max
  */
-export const calculateSeasonalStatistics = (
+export const calculateHotDryStatistics = (
   apiData: Record<string, any>,
   filteredDates: string[],
   climatology: ClimatologyData,
   period: { label: string; start: number; end: number }
-): SeasonalStats => {
-  const stats: SeasonalStats = {
+): HotDryStats => {
+  const stats: HotDryStats = {
     period: period.label,
     hotDays: 0,
     dryDays: 0,
@@ -180,5 +179,5 @@ export const calculateSeasonalStatistics = (
     stats.humidityAnomaly = humidityAnomalySum / validHumidityDays
   }
 
-  return stats
+  return stats  
 }

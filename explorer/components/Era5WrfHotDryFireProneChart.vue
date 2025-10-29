@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import type { Data } from 'plotly.js-dist-min'
 import type { ClimatologyData } from '~/utils/era5WrfStatistics'
-import { CHART_COLORS, CHART_CONFIG } from '~/utils/era5WrfConstants'
+import {
+  ERA5_WRF_CHART_COLORS,
+  ERA5_WRF_CHART_CONFIG,
+  ERA5_WRF_CONFIG,
+} from '~/utils/era5WrfConstants'
 
 interface Props {
   selectedYear: string
@@ -20,7 +24,7 @@ const dataStore = useDataStore()
 const placesStore = usePlacesStore()
 
 // Use fire endpoint to match wrapper
-const endpoint = 'era5wrf-fire'
+const endpoint = ERA5_WRF_CONFIG.fireEndpoint
 const apiData = computed(() => dataStore.apiData[endpoint])
 const latLng = computed(() => placesStore.latLng)
 const chartId = props.chartId
@@ -46,17 +50,17 @@ const buildChart = () => {
       yaxis: {
         title: 'Temperature (°C)',
         side: 'left',
-        color: CHART_COLORS.temperature,
+        color: ERA5_WRF_CHART_COLORS.temperature,
       },
       yaxis2: {
         title: 'Relative Humidity Min (%)',
         side: 'right',
         overlaying: 'y',
-        color: CHART_COLORS.humidity,
+        color: ERA5_WRF_CHART_COLORS.humidity,
       },
-      ...CHART_CONFIG.layout,
+      ...ERA5_WRF_CHART_CONFIG.layout,
       legend: {
-        ...CHART_CONFIG.layout.legend,
+        ...ERA5_WRF_CHART_CONFIG.layout.legend,
         y: -0.15,
       },
     })
@@ -86,7 +90,7 @@ const buildChart = () => {
         return props.currentClimatology?.[dayOfYear]?.t2_max?.p90 || null
       }),
       fill: 'tonexty',
-      fillcolor: CHART_COLORS.temperatureBand,
+      fillcolor: ERA5_WRF_CHART_COLORS.temperatureBand,
       line: { width: 0 },
       name: `Temperature Normal Range (${props.climatologyPeriod})`,
       showlegend: true,
@@ -114,7 +118,7 @@ const buildChart = () => {
         return props.currentClimatology?.[dayOfYear]?.rh2_min?.p90 || null
       }),
       fill: 'tonexty',
-      fillcolor: CHART_COLORS.humidityBand,
+      fillcolor: ERA5_WRF_CHART_COLORS.humidityBand,
       line: { width: 0 },
       name: `Humidity Normal Range (${props.climatologyPeriod})`,
       showlegend: true,
@@ -135,7 +139,7 @@ const buildChart = () => {
       type: 'scatter',
       mode: 'lines',
       line: {
-        color: CHART_COLORS.temperature,
+        color: ERA5_WRF_CHART_COLORS.temperature,
         width: 1,
         dash: 'dash',
       },
@@ -153,7 +157,7 @@ const buildChart = () => {
       type: 'scatter',
       mode: 'lines',
       line: {
-        color: CHART_COLORS.humidity,
+        color: ERA5_WRF_CHART_COLORS.humidity,
         width: 1,
         dash: 'dash',
       },
@@ -169,7 +173,7 @@ const buildChart = () => {
     name: `Max Temperature (${props.selectedYear})`,
     type: 'scatter',
     mode: 'lines+markers',
-    line: { color: CHART_COLORS.temperature, width: 2 },
+    line: { color: ERA5_WRF_CHART_COLORS.temperature, width: 2 },
     yaxis: 'y',
     hovertemplate: props.currentClimatology
       ? '%{x}<br>Temperature: %{y:.1f}°C<br>Anomaly: %{customdata:.1f}°C<extra></extra>'
@@ -195,7 +199,7 @@ const buildChart = () => {
     name: `Min Relative Humidity (${props.selectedYear})`,
     type: 'scatter',
     mode: 'lines+markers',
-    line: { color: CHART_COLORS.humidity, width: 2 },
+    line: { color: ERA5_WRF_CHART_COLORS.humidity, width: 2 },
     yaxis: 'y2',
     hovertemplate: props.currentClimatology
       ? '%{x}<br>Humidity: %{y:.1f}%<br>Anomaly: %{customdata:.1f}%<extra></extra>'
@@ -234,17 +238,17 @@ const buildChart = () => {
       yaxis: {
         title: 'Temperature (°C)',
         side: 'left',
-        color: CHART_COLORS.temperature,
+        color: ERA5_WRF_CHART_COLORS.temperature,
       },
       yaxis2: {
         title: 'Relative Humidity (%)',
         side: 'right',
         overlaying: 'y',
-        color: CHART_COLORS.humidity,
+        color: ERA5_WRF_CHART_COLORS.humidity,
       },
-      ...CHART_CONFIG.layout,
+      ...ERA5_WRF_CHART_CONFIG.layout,
     },
-    CHART_CONFIG.plotlyOptions
+    ERA5_WRF_CHART_CONFIG.plotlyOptions
   )
 }
 

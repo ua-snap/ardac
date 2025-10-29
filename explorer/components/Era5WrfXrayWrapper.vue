@@ -2,7 +2,10 @@
 // Xray foundation: Provides basic visualization of all ERA5-WRF variables
 // Extended by specialized stories like Fire Weather Analysis
 import { getDefaultWindow } from '~/utils/era5WrfTransforms'
-import type { Era5WrfVariableKey } from '~/utils/era5WrfConstants'
+import {
+  ERA5_WRF_CONFIG,
+  type Era5WrfVariableKey,
+} from '~/utils/era5WrfConstants'
 
 interface Props {
   showLocationPrompt?: boolean
@@ -15,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
 
-const endpoint = 'era5wrf'
+const endpoint = ERA5_WRF_CONFIG.endpoint
 
 const dataError = computed(() => dataStore.dataErrors[endpoint] ?? false)
 const latLng = computed(() => placesStore.latLng)
@@ -25,6 +28,7 @@ const startDate = ref<string>('')
 const endDate = ref<string>('')
 
 // Define all variables to visualize
+// omitting seaice_max and wspd10_max for now
 const variables: Era5WrfVariableKey[] = [
   't2_max',
   't2_mean',
@@ -85,8 +89,8 @@ const isLoading = computed(
       />
 
       <div v-if="dataError" class="notification is-danger mt-4">
-        Unable to load ERA5-WRF data for this location. Try a different point or
-        reload the page.
+        Unable to load ERA5-WRF data for this location. Try a different
+        location.
       </div>
 
       <div v-else-if="isLoading" class="mt-4">

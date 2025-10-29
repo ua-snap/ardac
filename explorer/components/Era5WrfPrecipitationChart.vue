@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Data } from 'plotly.js-dist-min'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
-import { CHART_CONFIG } from '~/utils/era5WrfConstants'
+import { CHART_CONFIG, ERA5_WRF_VARIABLES } from '~/utils/era5WrfConstants'
 
 interface Props {
   rainnc: Era5WrfSeriesPoint[]
@@ -17,14 +17,16 @@ const props = withDefaults(defineProps<Props>(), {
 const { $Plotly } = useNuxtApp()
 const chartId = props.chartId
 
+const rainncVar = ERA5_WRF_VARIABLES.find(v => v.key === 'rainnc_sum')!
+
 const buildChart = () => {
   const traces: Data[] = [
     {
       x: props.rainnc.map(p => p.date),
       y: props.rainnc.map(p => p.value),
-      name: 'Daily Total Precipitation',
+      name: rainncVar.label,
       type: 'bar',
-      marker: { color: '#8c564b', opacity: 0.7 },
+      marker: { color: rainncVar.color, opacity: 0.7 },
     },
   ]
 
