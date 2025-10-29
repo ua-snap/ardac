@@ -178,4 +178,3 @@ Use the following CLI command:
 ```bash
 aws cloudfront create-invalidation --distribution-id EW659H9IK8XAT --paths "/*"
 ```
-
