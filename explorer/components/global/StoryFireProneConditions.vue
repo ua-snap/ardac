@@ -4,18 +4,6 @@ const dataStore = useDataStore()
 const runtimeConfig = useRuntimeConfig()
 
 const era5wrfExtent = 'blockyAlaska'
-
-onMounted(() => {
-  // Clear any stale errors from other pages/endpoints to prevent
-  // false "Failed to load data" messages
-  dataStore.dataErrors = {}
-})
-
-onUnmounted(() => {
-  // Note: We intentionally don't clear location state here to allow
-  // navigation between Fire Story and Xray pages while preserving
-  // the selected location for better user experience
-})
 </script>
 
 <template>
