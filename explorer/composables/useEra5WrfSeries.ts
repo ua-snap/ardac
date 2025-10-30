@@ -1,4 +1,5 @@
 import type { Ref } from 'vue'
+import { ERA5_WRF_CONFIG } from '~/utils/era5WrfConstants'
 import type { Era5WrfVariableKey } from '~/utils/era5WrfConstants'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 
@@ -19,7 +20,7 @@ export const useEra5WrfSeries = (
   variables: Era5WrfVariableKey[]
 ) => {
   const dataStore = useDataStore()
-  const endpoint = 'era5wrf'
+  const endpoint = ERA5_WRF_CONFIG.endpoint
 
   const apiData = computed(() => dataStore.apiData[endpoint] ?? null)
 

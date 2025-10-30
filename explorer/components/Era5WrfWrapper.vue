@@ -20,11 +20,6 @@ const placesStore = usePlacesStore()
 // Use different endpoint to avoid cache collision with Xray
 const endpoint = ERA5_WRF_CONFIG.fireEndpoint
 
-// Define specific variables for fire analysis (for documentation)
-// Note: We fetch all variables like the x-ray does since the API doesn't support filtering
-const variables: Era5WrfVariableKey[] = ['t2_max', 'rh2_min']
-const requestParams = ''
-
 const apiData = computed(() => dataStore.apiData[endpoint])
 const latLng = computed(() => placesStore.latLng)
 
@@ -75,11 +70,15 @@ const seasonalStatistics = computed((): HotDryStats | null => {
 // API data fetching
 const fetchChartData = () => {
   if (!latLng.value) return
-  dataStore.fetchData(endpoint, requestParams)
+  dataStore.fetchData(endpoint)
 }
 
+onMounted(() => {
+  fetchChartData()
+})
+
 // Watch for location changes
-watch(latLng, fetchChartData, { immediate: true })
+watch(latLng, fetchChartData)
 
 // Cleanup
 onUnmounted(() => {
@@ -109,6 +108,9 @@ onUnmounted(() => {
         :climatologyPeriod="climatologyPeriod"
         :currentClimatology="currentClimatology"
         :filteredDates="filteredDates"
+        :apiData="apiData"
+        :lat="latLng.lat"
+        :lng="latLng.lng"
         chartId="era5-fire-chart"
       />
     </div>

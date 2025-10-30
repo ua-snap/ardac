@@ -61,15 +61,12 @@ export const CHART_CONFIG = {
   },
 } as const
 
-// Alias for backward compatibility
-export const ERA5_WRF_CHART_CONFIG = CHART_CONFIG
-
 /**
  * Generate available years array from config
  */
 export const getAvailableYears = () => {
   const { start, end } = ERA5_WRF_CONFIG.availableYears
-  return Array.from({ length: end - start }, (_, i) => start + i)
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i)
 }
 
 export const ERA5_WRF_VARIABLES = [

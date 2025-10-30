@@ -3,7 +3,7 @@ import type { Data } from 'plotly.js-dist-min'
 import type { ClimatologyData } from '~/utils/era5WrfStatistics'
 import {
   ERA5_WRF_CHART_COLORS,
-  ERA5_WRF_CHART_CONFIG,
+  CHART_CONFIG,
   ERA5_WRF_CONFIG,
 } from '~/utils/era5WrfConstants'
 
@@ -12,6 +12,9 @@ interface Props {
   climatologyPeriod: string
   currentClimatology: ClimatologyData | null
   filteredDates: string[]
+  apiData: Record<string, any> | null
+  lat: number
+  lng: number
   chartId?: string
 }
 
@@ -20,22 +23,18 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const { $Plotly } = useNuxtApp()
-const dataStore = useDataStore()
-const placesStore = usePlacesStore()
-
-// Use fire endpoint to match wrapper
-const endpoint = ERA5_WRF_CONFIG.fireEndpoint
-const apiData = computed(() => dataStore.apiData[endpoint])
-const latLng = computed(() => placesStore.latLng)
 const chartId = props.chartId
 
+// Use props for data access
+const apiData = computed(() => props.apiData)
+
 const buildChart = () => {
-  if (!apiData.value || !latLng.value) return
+  if (!apiData.value || !props.lat || !props.lng) return
 
   if (props.filteredDates.length === 0) {
     $Plotly.newPlot(chartId, [], {
       title: {
-        text: `Fire Weather Conditions: ${props.selectedYear}<br>${latLng.value.lat.toFixed(3)}°N, ${latLng.value.lng.toFixed(3)}°W`,
+        text: `Fire Weather Conditions: ${props.selectedYear}<br>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W`,
         font: { size: 18 },
       },
       xaxis: {
@@ -58,9 +57,9 @@ const buildChart = () => {
         overlaying: 'y',
         color: ERA5_WRF_CHART_COLORS.humidity,
       },
-      ...ERA5_WRF_CHART_CONFIG.layout,
+      ...CHART_CONFIG.layout,
       legend: {
-        ...ERA5_WRF_CHART_CONFIG.layout.legend,
+        ...CHART_CONFIG.layout.legend,
         y: -0.15,
       },
     })
@@ -169,7 +168,7 @@ const buildChart = () => {
   // Temperature trace
   const temperatureTrace: any = {
     x: props.filteredDates,
-    y: props.filteredDates.map(date => apiData.value[date].t2_max),
+    y: props.filteredDates.map(date => apiData.value![date].t2_max),
     name: `Max Temperature (${props.selectedYear})`,
     type: 'scatter',
     mode: 'lines+markers',
@@ -183,7 +182,7 @@ const buildChart = () => {
   if (props.currentClimatology) {
     temperatureTrace.customdata = props.filteredDates.map(date => {
       const dayOfYear = date.slice(5)
-      const observed = apiData.value[date].t2_max
+      const observed = apiData.value![date].t2_max
       const climatologyMean =
         props.currentClimatology?.[dayOfYear]?.t2_max?.mean
       return climatologyMean ? observed - climatologyMean : null
@@ -195,7 +194,7 @@ const buildChart = () => {
   // Humidity trace
   const humidityTrace: any = {
     x: props.filteredDates,
-    y: props.filteredDates.map(date => apiData.value[date].rh2_min),
+    y: props.filteredDates.map(date => apiData.value![date].rh2_min),
     name: `Min Relative Humidity (${props.selectedYear})`,
     type: 'scatter',
     mode: 'lines+markers',
@@ -209,7 +208,7 @@ const buildChart = () => {
   if (props.currentClimatology) {
     humidityTrace.customdata = props.filteredDates.map(date => {
       const dayOfYear = date.slice(5)
-      const observed = apiData.value[date].rh2_min
+      const observed = apiData.value![date].rh2_min
       const climatologyMean =
         props.currentClimatology?.[dayOfYear]?.rh2_min?.mean
       return climatologyMean ? observed - climatologyMean : null
@@ -223,7 +222,7 @@ const buildChart = () => {
     traces,
     {
       title: {
-        text: `Fire Weather Conditions: ${props.selectedYear}<br>${latLng.value.lat.toFixed(3)}°N, ${latLng.value.lng.toFixed(3)}°W`,
+        text: `Fire Weather Conditions: ${props.selectedYear}<br>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W`,
         font: { size: 18 },
       },
       xaxis: {
@@ -246,16 +245,18 @@ const buildChart = () => {
         overlaying: 'y',
         color: ERA5_WRF_CHART_COLORS.humidity,
       },
-      ...ERA5_WRF_CHART_CONFIG.layout,
+      ...CHART_CONFIG.layout,
     },
-    ERA5_WRF_CHART_CONFIG.plotlyOptions
+    CHART_CONFIG.plotlyOptions
   )
 }
 
 // Watchers - chart rebuilds when props change
 watch(
   [
-    apiData,
+    () => props.apiData,
+    () => props.lat,
+    () => props.lng,
     () => props.selectedYear,
     () => props.climatologyPeriod,
     () => props.currentClimatology,

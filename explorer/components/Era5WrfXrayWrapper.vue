@@ -68,7 +68,11 @@ const fetchData = () => {
   dataStore.fetchData(endpoint)
 }
 
-watch(latLng, fetchData, { immediate: true })
+onMounted(() => {
+  fetchData()
+})
+
+watch(latLng, fetchData)
 
 onUnmounted(() => {
   dataStore.apiData[endpoint] = null
