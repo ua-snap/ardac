@@ -86,7 +86,7 @@ const cmip6_downscaled_layers: MapLayer[] = [
     id: 'tasmax_cmip6_2000',
     title: '2000, CNRM-CM6-1-HR',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmax_wms_test',
+    wmsLayerName: 'cmip6_downscaled_tasmax_wms',
     style: 'ardac_tasmax',
     legend: 'tas',
     rasdamanConfiguration: {
@@ -100,7 +100,7 @@ const cmip6_downscaled_layers: MapLayer[] = [
     id: 'tasmax_cmip6_2100',
     title: '2100, CNRM-CM6-1-HR',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmax_wms_test',
+    wmsLayerName: 'cmip6_downscaled_tasmax_wms',
     style: 'ardac_tasmax',
     legend: 'tas',
     rasdamanConfiguration: {
