@@ -167,7 +167,7 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
       </h3>
 
       <p>
-        Raw outputs from Global Climate Models (GCMs) are helpful to get a
+        Raw outputs from General Circulation Models (GCMs) are helpful to get a
         glimpse into how the climate is likely to change at a global scale, but
         they have limitations. When zooming in on a particular region like
         Alaska, for example, the data is very coarse (low resolution) and
@@ -204,9 +204,9 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
         Previously, we have made CMIP6 data of the non-downscaled variety
         available through ARDAC Explorer. These datasets are not strictly raw
         CMIP6 data. They are cropped and regridded to a pan-Arctic projection
-        but still very coarse. For example, here is a map of regridded,
-        low-resolution, pan-Arctic mean monthly temperature data for the
-        CNRM-CM6-1-HR model:
+        but still very coarse at a resolution of 100 km. For example, here is a
+        map of regridded, low-resolution, pan-Arctic mean monthly temperature
+        data for the CNRM-CM6-1-HR model:
       </p>
 
       <MapBlock :mapId="cmip6_mapId" crs="EPSG:3572" :zoom="7" class="mb-6">
@@ -235,8 +235,8 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
 
       <p>
         Zoom into Alaska and notice how blocky the data layer appears. Compare
-        this with the map below, which shows our new downscaled CMIP6 offerings,
-        which were produced as follows:
+        this with the map below, which shows our new downscaled CMIP6 offerings
+        at a resolution of 4 km, which were produced as follows:
       </p>
 
       <ol>

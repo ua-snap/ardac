@@ -470,4 +470,11 @@ export default [
       'Climate indicators summarize complex climate data and create connections between climate data and the human experience.',
     tags: ['Climate', 'Temperature'],
   },
+  {
+    slug: 'story-cmip6-downscaled',
+    title: 'CMIP6: Increasing Resolution Through Downscaling',
+    blurb:
+      'An overview of the methods used to downscale coarse, global CMIP6 outputs to a higher resolution for Alaska',
+    tags: ['Climate', 'CMIP6'],
+  },
 ] satisfies Item[]
