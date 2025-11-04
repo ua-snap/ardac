@@ -1,5 +1,11 @@
 <script lang="ts" setup>
-const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
+const props = defineProps([
+  'resolution',
+  'unit',
+  'cmip',
+  'beta',
+  'variableGroups',
+])
 </script>
 
 <template>
@@ -25,8 +31,7 @@ const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
         similar data which are peer reviewed
       </li>
       <li v-if="cmip == 6">
-        EC-Earth3-Veg, MIROC6, etc&hellip; these are the names of climate
-        models.
+        GDFL-ESM4, CESM2, etc&hellip; these are the names of climate models.
         <a href="https://doi.org/10.1016/j.envsoft.2018.03.021"
           >&#x2192; read more</a
         >
@@ -47,19 +52,38 @@ const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
         representing emissions scenarios.
       </li>
       <li v-if="cmip == 6">
-        There are up to
+        There are
         <NuxtLink to="/item/story-arctic-climate-data-node"
           >fourteen models</NuxtLink
         >
-        and four different scenarios included in this dataset. Not all models
-        have all scenarios available.
+        included in this dataset, and up to four different scenarios. Not all
+        models have all scenarios available.
       </li>
       <li>
         the spatial resolution of this dataset is
         <strong>{{ resolution }}&#8239;{{ unit }}</strong
         >.
       </li>
+      <li v-if="variableGroups">
+        Available variables:
+        <div class="variable-groups">
+          <div
+            class="variable-group"
+            v-for="group in variableGroups"
+            :key="group.category"
+          >
+            <strong>{{ group.category }}</strong>
+            <ul class="variable-list">
+              <li v-for="variable in group.variables" :key="variable.key">
+                {{ variable.label }}
+                <span class="has-text-grey">({{ variable.unit }})</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
     </ul>
+    <slot />
   </blockquote>
 </template>
 
@@ -73,5 +97,28 @@ const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
 
 strong {
   font-weight: 600;
+}
+
+.variable-groups {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.variable-group {
+  strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+}
+
+.variable-list {
+  margin-left: 1.25rem;
+  margin-top: 0.25rem;
+
+  li + li {
+    margin-top: 0.5rem;
+  }
 }
 </style>
