@@ -300,20 +300,6 @@ export default [
     tags: ['Temperature'],
   },
   {
-    slug: 'temperature-cmip6-downscaled',
-    title: 'Temperature, CMIP6 Downscaled',
-    blurb:
-      'Daily downscaled model outputs for min/max near-surface air temperature at 4km resolution',
-    tags: ['Temperature', 'CMIP6'],
-  },
-  {
-    slug: 'precipitation-cmip6-downscaled',
-    title: 'Precipitation, CMIP6 Downscaled',
-    blurb:
-      'Daily downscaled model outputs for total precipitation at 4km resolution',
-    tags: ['Precipitation', 'CMIP6'],
-  },
-  {
     slug: 'temperature-cmip6',
     title: 'Temperature, CMIP6',
     blurb:
@@ -469,5 +455,12 @@ export default [
     blurb:
       'Climate indicators summarize complex climate data and create connections between climate data and the human experience.',
     tags: ['Climate', 'Temperature'],
+  },
+  {
+    slug: 'era5-wrf-xray',
+    title: 'ERA5-WRF: High Resolution Dynamically Downscaled Reanalysis',
+    blurb:
+      'Query WRF-downscaled ERA5 reanalysis data for any location.',
+    tags: ['Climate', 'Temperature', 'Precipitation', 'Wind'],
   },
 ] satisfies Item[]
