@@ -6,7 +6,6 @@ const endpoints: Record<string, string> = {
   elevation: '/elevation/point/',
   flammability: '/alfresco/flammability/local/',
   beetles: '/beetles/point/',
-  cmip6Downscaled: '/cmip6_downscaled/point/',
   cmip6Monthly: '/cmip6/point/',
   indicatorsCmip6: '/indicators/cmip6/point/',
   degreeDaysBelow0: '/degree_days/below_zero/',
@@ -25,6 +24,7 @@ const endpoints: Record<string, string> = {
   thawingIndex: '/degree_days/thawing_index/',
   vegType: '/alfresco/veg_type/local/',
   wetDaysPerYear: '/wet_days_per_year/all/point/',
+  era5wrf: '/era5wrf/point/',
 }
 
 export const useDataStore = defineStore('data', () => {
