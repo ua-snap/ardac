@@ -8,6 +8,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const layers: MapLayer[] = [
   {
@@ -154,37 +157,11 @@ onUnmounted(() => {
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
           Download CMIP6 sea level pressure and surface temperature data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=psl,ts&format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/cmip6/point/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?vars=psl,ts'
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/cmip6/point" variables="psl,ts" />
       </div>
     </div>
   </section>

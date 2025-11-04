@@ -8,6 +8,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
 
 const layers: MapLayer[] = [
   {
@@ -157,7 +160,9 @@ onUnmounted(() => {
 
       <div v-if="latLng && apiData" class="my-6">
         <h4 class="title is-4">
-          Download permafrost base and top depth data for {{ latLng.lat }},
+          Download permafrost base and top depth data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
+          {{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
         <p>
@@ -166,33 +171,7 @@ onUnmounted(() => {
           "permafrostbase" identifier. Permafrost top depth uses the
           "permafrosttop" identifier.
         </p>
-        <ul>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/permafrost/point/gipl/' +
-                latLng.lat +
-                '/' +
-                latLng.lng +
-                '?format=csv'
-              "
-              >Download as CSV</a
-            >
-          </li>
-          <li>
-            <a
-              :href="
-                runtimeConfig.public.apiUrl +
-                '/permafrost/point/gipl/' +
-                latLng.lat +
-                '/' +
-                latLng.lng
-              "
-              >Download as JSON</a
-            >
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/permafrost/point/gipl" />
       </div>
       <GetAndUseDataPermafrost :presentInNcr="true" :presentInEds="true" />
     </div>
