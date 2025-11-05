@@ -307,6 +307,20 @@ export default [
     tags: ['Temperature', 'CMIP6'],
   },
   {
+    slug: 'temperature-cmip6-downscaled',
+    title: 'Temperature, CMIP6 Downscaled',
+    blurb:
+      'Daily downscaled model outputs for min/max near-surface air temperature at 4km resolution',
+    tags: ['Temperature', 'CMIP6'],
+  },
+  {
+    slug: 'precipitation-cmip6-downscaled',
+    title: 'Precipitation, CMIP6 Downscaled',
+    blurb:
+      'Daily downscaled model outputs for total precipitation at 4km resolution',
+    tags: ['Precipitation', 'CMIP6'],
+  },
+  {
     slug: 'notebook-era5-cds-api',
     title: 'ERA5 access via the CDS API',
     blurb: 'Learn to download ERA5 data via Python programming',
