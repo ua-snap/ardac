@@ -14,13 +14,22 @@ const props = withDefaults(defineProps<Props>(), {
   showLocationPrompt: true,
 })
 
+const { $Plotly } = useNuxtApp()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
+const { latLng } = storeToRefs(placesStore)
 
 const endpoint = ERA5_WRF_CONFIG.endpoint
 
+// Chart IDs used by Era5Wrf chart components
+const CHART_IDS = [
+  'era5-temperature-chart',
+  'era5-humidity-chart', 
+  'era5-precipitation-chart',
+  'wind-rose-mean'
+]
+
 const dataError = computed(() => dataStore.dataErrors[endpoint] ?? false)
-const latLng = computed(() => placesStore.latLng)
 
 // Date range state
 const startDate = ref<string>('')
@@ -62,6 +71,21 @@ watch(
   { immediate: true }
 )
 
+// Proactively purge all Era5Wrf charts (following WetDaysPerYear pattern)
+const purgeAllCharts = () => {
+  CHART_IDS.forEach(chartId => {
+    try {
+      const element = document.getElementById(chartId)
+      if (element && element.hasChildNodes()) {
+        $Plotly.purge(chartId)
+      }
+    } catch (error) {
+      // Ignore purge errors - chart may already be cleaned up
+      console.debug(`Chart purge skipped for ${chartId}:`, error)
+    }
+  })
+}
+
 const fetchData = () => {
   if (!latLng.value) return
   dataStore.fetchData(endpoint)
@@ -71,9 +95,16 @@ onMounted(() => {
   fetchData()
 })
 
-watch(latLng, fetchData)
+watch(latLng, async () => {
+  // Proactively purge all charts before data changes (following WetDaysPerYear pattern)
+  purgeAllCharts()
+  dataStore.apiData[endpoint] = null
+  dataStore.dataErrors[endpoint] = false
+  fetchData()
+})
 
 onUnmounted(() => {
+  purgeAllCharts()
   dataStore.apiData[endpoint] = null
   dataStore.dataErrors[endpoint] = false
 })

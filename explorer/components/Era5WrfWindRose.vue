@@ -158,7 +158,15 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  $Plotly.purge(chartId)
+  try {
+    const element = document.getElementById(chartId)
+    if (element && element.hasChildNodes()) {
+      $Plotly.purge(chartId)
+    }
+  } catch (error) {
+    // Ignore purge errors - chart may already be cleaned up by wrapper
+    console.debug(`Chart purge skipped for ${chartId}:`, error)
+  }
 })
 </script>
 

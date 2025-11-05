@@ -85,7 +85,17 @@ watch(() => [props.t2Max, props.t2Mean, props.t2Min], buildChart, {
 })
 
 onMounted(buildChart)
-onUnmounted(() => $Plotly.purge(chartId))
+onUnmounted(() => {
+  try {
+    const element = document.getElementById(chartId)
+    if (element && element.hasChildNodes()) {
+      $Plotly.purge(chartId)
+    }
+  } catch (error) {
+    // Ignore purge errors - chart may already be cleaned up by wrapper
+    console.debug(`Chart purge skipped for ${chartId}:`, error)
+  }
+})
 </script>
 
 <template>
