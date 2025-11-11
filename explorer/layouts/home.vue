@@ -16,21 +16,28 @@
         </p>
         <p class="trumpet is-size-4">
           <span>📢</span>
-          <strong>What&rsquo;s new?</strong> Interactive data stories about
-          <NuxtLink to="/item/places-and-polygons"
-            >places &amp; polygons</NuxtLink
+          <strong>What's new?</strong> Dive into the latest ARDAC updates!
+          Explore the
+          <NuxtLink to="/item/era5-xray">ERA5 X-Ray module</NuxtLink> to view
+          the full <strong>ERA5 reanalysis dataset</strong> through interactive
+          maps and charts; experience the
+          <NuxtLink to="/item/story-era5">ERA5 Data Story</NuxtLink>, a guided
+          narrative showing downscaled ERA5 data; and interact with
+          <strong>CMIP6 Downscaled Data</strong>, including daily
+          <NuxtLink to="/item/temperature-cmip6-downscaled"
+            >temperature (min/max)</NuxtLink
           >
-          in ARDAC, a
-          <NuxtLink to="/item/story-climate-stripes-2"
-            >climate stripe visualization</NuxtLink
+          and
+          <NuxtLink to="/item/precipitation-cmip6-downscaled"
+            >precipitation</NuxtLink
           >
-          that incorporates projected climate data, an introduction about how
-          <NuxtLink to="/item/story-climate-indicators"
-            >climate indicators</NuxtLink
-          >
-          help explain important ecological thresholds, and integration of the
-          <NuxtLink to="/tag/CMIP6">E3SM CMIP6 climate model output</NuxtLink>
-          throughout all available CMIP6 variables.
+          visualizations. Also freshly added are the
+          <NuxtLink to="/item/story-cmip6-downscaled"
+            >Downscaled CMIP6 Data Story</NuxtLink
+          >, offering insights into Alaska's future climate, and the
+          <NuxtLink to="/item/story-fire-prone-conditions"
+            >Fire Weather Indices Data Story</NuxtLink
+          >, which highlights fire-weather findings using CMIP6 projections.
         </p>
       </div>
     </section>
