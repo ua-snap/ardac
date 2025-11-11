@@ -24,9 +24,9 @@ const endpoint = ERA5_WRF_CONFIG.endpoint
 // Chart IDs used by Era5Wrf chart components
 const CHART_IDS = [
   'era5-temperature-chart',
-  'era5-humidity-chart', 
+  'era5-humidity-chart',
   'era5-precipitation-chart',
-  'wind-rose-mean'
+  'wind-rose-mean',
 ]
 
 const dataError = computed(() => dataStore.dataErrors[endpoint] ?? false)
