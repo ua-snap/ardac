@@ -482,6 +482,7 @@ export default [
     blurb:
       'An overview of the methods used to downscale coarse, global CMIP6 outputs to a higher resolution for Alaska',
     tags: ['Climate', 'CMIP6', 'Temperature'],
+    image: 'story-cmip6-downscaled.png',
   },
   {
     slug: 'story-fire-prone-conditions',

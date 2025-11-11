@@ -55,7 +55,7 @@
         <div class="tile is-ancestor">
           <div class="tile is-parent is-vertical">
             <div class="tile lead is-child border-bottom">
-              <ItemTextPicture slug="story-climate-stripes-2" />
+              <ItemTextPicture slug="story-cmip6-downscaled" />
             </div>
             <div class="general">
               <div class="row tile is-parent mb-4">
