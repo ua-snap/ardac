@@ -63,6 +63,7 @@ type Slug =
   | 'indicator-rx1day-cmip6'
   | 'story-climate-stripes-1'
   | 'story-climate-stripes-2'
+  | 'story-cmip6-downscaled'
   | 'story-beetle-climate-protection'
   | 'summary-landfast-sea-ice'
   | 'evaporation-cmip6'

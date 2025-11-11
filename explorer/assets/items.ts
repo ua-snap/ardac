@@ -474,7 +474,14 @@ export default [
     slug: 'era5-wrf-xray',
     title: 'ERA5-WRF: High Resolution Dynamically Downscaled Reanalysis',
     blurb:
-      'Query WRF-downscaled ERA5 reanalysis data for any location.',
+      'Query high-resolution WRF-downscaled ERA5 reanalysis data.',
     tags: ['Climate', 'Temperature', 'Precipitation', 'Wind'],
+  },
+  {
+    slug: 'story-cmip6-downscaled',
+    title: 'CMIP6: Increasing Resolution Through Downscaling',
+    blurb:
+      'An overview of the methods used to downscale coarse, global CMIP6 outputs to a higher resolution for Alaska',
+    tags: ['Climate', 'CMIP6', 'Temperature'],
   },
 ] satisfies Item[]
