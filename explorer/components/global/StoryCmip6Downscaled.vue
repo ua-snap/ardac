@@ -177,8 +177,7 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
 
       <p>
         Downscaling is the process of producing a higher-resolution dataset from
-        low-resolution GCM data. We have used two different downscaling methods
-        that work together to produce our new downscaled CMIP6 product:
+        low-resolution GCM data. Two commonly used downscaling methods are:
       </p>
 
       <ul>
