@@ -308,7 +308,7 @@ test('Check Temperature tag -> Temperature, CMIP6 page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Temperature')
 
-  await page.click('a:has-text("Temperature, CMIP6")')
+  await page.click('a:has(h3:text-is("Temperature, CMIP6"))')
 
   await expect(page.locator('section > div > h3')).toHaveText(
     'Temperature, CMIP6'
@@ -339,7 +339,7 @@ test('Check CMIP6 tag -> Precipitation, CMIP6 page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('CMIP6')
 
-  await page.click('a:has-text("Precipitation, CMIP6")')
+  await page.click('a:has(h3:text-is("Precipitation, CMIP6"))')
 
   await expect(page.locator('section > div > h3')).toHaveText(
     'Precipitation, CMIP6'
