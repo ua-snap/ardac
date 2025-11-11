@@ -287,13 +287,12 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
       </MapBlock>
 
       <p>
-        Notice that the downscaled map has a much higher resolution, and also
-        how the downscaled data correlates with the blockier non-downscaled map
-        for Alaska. You will also notice that the extent of the downscaled
-        dataset is limited to most of Alaska and a small region of western
-        Canada. Computational capacity, observed historical data, and local
-        expertise are all factors that influence the extent of a downscaled data
-        product.
+        Notice that, in addition to the higher resolution, the impact of
+        topography on temperature is also present in the downscaled map. The
+        extent of the downscaled dataset is limited to most of Alaska and a
+        small region of western Canada. Computational capacity, observed
+        historical data, and local expertise are all factors that influence the
+        extent of a downscaled data product.
       </p>
 
       <p>
