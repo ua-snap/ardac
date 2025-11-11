@@ -177,20 +177,21 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
 
       <p>
         Downscaling is the process of producing a higher-resolution dataset from
-        low-resolution GCM data. Downscaling has two flavors:
+        low-resolution GCM data. We have used two different downscaling methods
+        that work together to produce our new downscaled CMIP6 product:
       </p>
 
       <ul>
+        <li>
+          <strong>Dynamical downscaling</strong>: Use low-resolution GCM data as
+          inputs into a weather forecasting model to simulate conditions at a
+          local scale using physical laws
+        </li>
         <li>
           <strong>Statistical downscaling:</strong> Use the historical period of
           a high-resolution dataset that is based on observed data, compared to
           the historical baseline of a low-resolution GCM dataset, to draw
           inferences about how conditions are likely to change at a local scale
-        </li>
-        <li>
-          <strong>Dynamical downscaling</strong>: Use low-resolution GCM data as
-          inputs into a weather forecasting model to simulate conditions at a
-          local scale using physical laws
         </li>
       </ul>
 
