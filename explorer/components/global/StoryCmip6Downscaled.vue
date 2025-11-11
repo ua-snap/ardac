@@ -234,21 +234,12 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
       </MapBlock>
 
       <p>
-        Zoom into Alaska and notice how blocky the data layer appears. Compare
-        this with the map below, which shows our new downscaled CMIP6 offerings
-        at a resolution of 4 km, which were produced as follows:
+        Zoom into Alaska and notice how coarse the data are compared to the map
+        below of the new downscaled CMIP6 product. The high resolution (4 km)
+        CMIP6 data are produced by statistically downscaling the low resolution
+        CMIP6 model outputs to a dynamically downscaled (via the Weather
+        Research and Forecasting model) ERA5 reanalysis historical reference.
       </p>
-
-      <ol>
-        <li>
-          ERA5, a reanalysis dataset based on historically observed data, was
-          dynamically downscaled using the WRF weather model
-        </li>
-        <li>
-          CMIP6 model outputs were statistically downscaled using the
-          WRF-downscaled data from step 1 as a historical reference
-        </li>
-      </ol>
 
       <MapBlock :mapId="cmip6_downscaled_mapId" class="mb-6">
         <template v-slot:layers>
