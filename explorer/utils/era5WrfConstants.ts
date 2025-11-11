@@ -109,16 +109,6 @@ export const ERA5_WRF_VARIABLES = [
     chartType: 'bar',
   },
   {
-    key: 'wspd10_max',
-    label: 'Daily Max 10 m Wind Speed',
-    unit: 'm s^-1',
-    category: 'Wind',
-    description: 'Daily maximum 10-meter wind speed.',
-    color: '#bcbd22',
-    climatologyBand: 'rgba(188,189,34,0.1)',
-    chartType: 'line',
-  },
-  {
     key: 'wspd10_mean',
     label: 'Daily Mean 10 m Wind Speed',
     unit: 'm s^-1',
@@ -136,16 +126,6 @@ export const ERA5_WRF_VARIABLES = [
     description: 'Daily mean 10-meter wind direction.',
     color: '#e377c2',
     climatologyBand: 'rgba(227,119,194,0.1)',
-    chartType: 'line',
-  },
-  {
-    key: 'seaice_max',
-    label: 'Daily Max Sea Ice Concentration',
-    unit: 'fraction',
-    category: 'Sea Ice',
-    description: 'Daily maximum sea ice concentration.',
-    color: '#17becf',
-    climatologyBand: 'rgba(23,190,207,0.1)',
     chartType: 'line',
   },
 ] as const
