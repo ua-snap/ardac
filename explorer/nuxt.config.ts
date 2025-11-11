@@ -148,6 +148,7 @@ export default defineNuxtConfig({
         '/item/indicator-rx1day-cmip6',
         '/item/story-climate-stripes-1',
         '/item/story-climate-stripes-2',
+        '/item/story-cmip6-downscaled',
         '/item/story-beetle-climate-protection',
         '/item/summary-landfast-sea-ice',
         '/item/story-climate-indicators',
