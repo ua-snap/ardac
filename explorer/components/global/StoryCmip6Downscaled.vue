@@ -195,12 +195,6 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
       </ul>
 
       <p>
-        <a href="https://uaf-snap.org/how-do-we-do-it/downscaling/"
-          >Read more about these downscaling methods</a
-        >
-      </p>
-
-      <p>
         Previously, we have made CMIP6 data of the non-downscaled variety
         available through ARDAC Explorer. These datasets are not strictly raw
         CMIP6 data. They are cropped and regridded to a pan-Arctic projection
