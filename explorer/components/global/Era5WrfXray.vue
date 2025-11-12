@@ -13,7 +13,7 @@ const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 
 const endpoint = 'era5wrf'
-const era5wrfExtent = 'blockyAlaska'
+const era5wrfExtent = 'cmip6Downscaled'
 
 const latLng = computed(() => placesStore.latLng)
 const apiData = computed(() => dataStore.apiData[endpoint] ?? null)
