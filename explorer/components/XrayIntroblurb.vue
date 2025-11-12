@@ -31,7 +31,7 @@ const props = defineProps([
         similar data which are peer reviewed
       </li>
       <li v-if="cmip == 6">
-        GDFL-ESM4, CESM2, etc&hellip; these are the names of climate models.
+        GFDL-ESM4, CESM2, etc&hellip; these are the names of climate models.
         <a href="https://doi.org/10.1016/j.envsoft.2018.03.021"
           >&#x2192; read more</a
         >
