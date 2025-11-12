@@ -307,18 +307,18 @@ export default [
     tags: ['Temperature', 'CMIP6'],
   },
   {
-    slug: 'temperature-cmip6',
-    title: 'Temperature, CMIP6',
-    blurb:
-      'Monthly model outputs for min/mean/max near-surface air temperature',
-    tags: ['Temperature', 'CMIP6'],
-  },
-  {
     slug: 'precipitation-cmip6-downscaled',
     title: 'Precipitation, CMIP6 Downscaled',
     blurb:
       'Daily downscaled model outputs for total precipitation at 4km resolution',
     tags: ['Precipitation', 'CMIP6'],
+  },
+  {
+    slug: 'temperature-cmip6',
+    title: 'Temperature, CMIP6',
+    blurb:
+      'Monthly model outputs for min/mean/max near-surface air temperature',
+    tags: ['Temperature', 'CMIP6'],
   },
   {
     slug: 'notebook-era5-cds-api',
