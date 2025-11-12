@@ -8,10 +8,13 @@ interface Props {
   lat: number
   lng: number
   chartId?: string
+  // Fire season filtering indicator
+  isFireSeason?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   chartId: 'era5-precipitation-chart',
+  isFireSeason: false,
 })
 
 const { $Plotly } = useNuxtApp()
@@ -40,7 +43,7 @@ const buildChart = () => {
       },
       xaxis: {
         title: {
-          text: 'Date',
+          text: props.isFireSeason ? 'Date (March 15 - October 15)' : 'Date',
           font: { size: 18 },
           standoff: 20,
         },
