@@ -5,8 +5,28 @@
 export const ERA5_WRF_CONFIG = {
   endpoint: 'era5wrf',
   defaultYear: '2004',
+  defaultClimatologyPeriod: '1960-1989',
 } as const
 
+export const ERA5_CLIMATOLOGY_PERIODS = {
+  '1960-1989': {
+    label: '1960-1989',
+    start: 1960,
+    end: 1989,
+  },
+  '1990-2019': {
+    label: '1990-2019',
+    start: 1990,
+    end: 2019,
+  },
+} as const
+
+export const ERA5_SEASONS = {
+  fireSeasonDates: {
+    start: '03-15', // Earliest official start of fire season for AK
+    end: '10-15',
+  },
+} as const
 
 export const CHART_CONFIG = {
   plotlyOptions: {
