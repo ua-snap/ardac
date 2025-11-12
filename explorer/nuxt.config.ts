@@ -217,11 +217,6 @@ export default defineNuxtConfig({
           async: 'true',
           defer: 'true',
         },
-        {
-          type: 'text/javascript',
-          src: '//script.crazyegg.com/pages/scripts/0126/7664.js',
-          async: true,
-        },
       ],
       link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
       meta: [
