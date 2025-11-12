@@ -168,23 +168,8 @@ const isLoading = computed(
         :availableYears="availableYears"
       />
 
-      <!-- Error State -->
-      <div v-if="dataError" class="notification is-danger mt-4">
-        Unable to load data for this location. Try a different location.
-      </div>
-
-      <!-- Loading State -->
-      <div v-else-if="isLoading" class="mt-4">
-        <div class="loading-state">
-          <progress class="progress is-small is-primary" max="100">
-            Loading
-          </progress>
-          <span>Fetching downscaled ERA5 reanalysis time series…</span>
-        </div>
-      </div>
-
       <!-- Data Loaded -->
-      <div v-else-if="apiData" class="mt-4">
+      <div v-if="apiData" class="mt-4">
         <!-- Statistics Panel -->
         <Era5WrfFireStatisticsPanel
           v-if="fireStatistics"
@@ -241,10 +226,7 @@ const isLoading = computed(
       </div>
     </div>
 
-    <!-- Location Prompt -->
-    <div v-else-if="props.showLocationPrompt" class="notification is-info">
-      Select a location to analyze fire weather conditions.
-    </div>
+   
   </div>
 </template>
 
