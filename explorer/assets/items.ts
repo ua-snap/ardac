@@ -300,17 +300,17 @@ export default [
     tags: ['Temperature'],
   },
   {
-    slug: 'temperature-cmip6',
-    title: 'Temperature, CMIP6',
-    blurb:
-      'Monthly model outputs for min/mean/max near-surface air temperature',
-    tags: ['Temperature', 'CMIP6'],
-  },
-  {
     slug: 'temperature-cmip6-downscaled',
     title: 'Temperature, CMIP6 Downscaled',
     blurb:
       'Daily downscaled model outputs for min/max near-surface air temperature at 4km resolution',
+    tags: ['Temperature', 'CMIP6'],
+  },
+  {
+    slug: 'temperature-cmip6',
+    title: 'Temperature, CMIP6',
+    blurb:
+      'Monthly model outputs for min/mean/max near-surface air temperature',
     tags: ['Temperature', 'CMIP6'],
   },
   {
@@ -473,8 +473,7 @@ export default [
   {
     slug: 'era5-wrf-xray',
     title: 'ERA5-WRF: High Resolution Dynamically Downscaled Reanalysis',
-    blurb:
-      'Query high-resolution WRF-downscaled ERA5 reanalysis data.',
+    blurb: 'Query high-resolution WRF-downscaled ERA5 reanalysis data.',
     tags: ['Climate', 'Temperature', 'Precipitation', 'Wind'],
   },
   {
