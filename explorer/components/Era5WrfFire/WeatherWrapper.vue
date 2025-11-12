@@ -196,7 +196,7 @@ const isLoading = computed(
 
         <!-- Temperature Chart with Climatology -->
         <div class="mb-5">
-          <Era5WrfTemperatureChart
+          <Era5WrfChartTemperature
             :t2Max="seriesByVariable.t2_max"
             :t2Mean="seriesByVariable.t2_mean"
             :t2Min="seriesByVariable.t2_min"
@@ -213,7 +213,7 @@ const isLoading = computed(
 
         <!-- Humidity Chart with Climatology -->
         <div class="mb-5">
-          <Era5WrfHumidityChart
+          <Era5WrfChartHumidity
             :rh2Max="seriesByVariable.rh2_max"
             :rh2Mean="seriesByVariable.rh2_mean"
             :rh2Min="seriesByVariable.rh2_min"
@@ -230,7 +230,7 @@ const isLoading = computed(
 
         <!-- Precipitation Chart -->
         <div>
-          <Era5WrfPrecipitationChart
+          <Era5WrfChartPrecipitation
             :rainnc="seriesByVariable.rainnc_sum"
             :isFireSeason="true"
             :lat="latLng.lat"
