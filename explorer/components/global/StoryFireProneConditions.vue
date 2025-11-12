@@ -3,7 +3,7 @@ const placesStore = usePlacesStore()
 const dataStore = useDataStore()
 const runtimeConfig = useRuntimeConfig()
 
-const era5wrfExtent = 'blockyAlaska'
+const era5wrfExtent = 'cmip6Downscaled'
 </script>
 
 <template>
