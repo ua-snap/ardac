@@ -277,13 +277,13 @@ onUnmounted(() => {
       <Gimme :communities-enabled="true" :extent="era5wrfExtent" />
 
       <div v-if="latLng && apiData" class="mt-4">
-        <Era5WrfChartsEra5WrfXrayControls
+        <Era5WrfChartControls
           v-model:startDate="startDate"
           v-model:endDate="endDate"
         />
         <!-- Temperature -->
         <div class="mb-5">
-          <Era5WrfChartsEra5WrfTemperatureChart
+          <Era5WrfChartTemperature
             :t2Max="seriesByVariable.t2_max"
             :t2Mean="seriesByVariable.t2_mean"
             :t2Min="seriesByVariable.t2_min"
@@ -294,7 +294,7 @@ onUnmounted(() => {
 
         <!-- Humidity -->
         <div class="mb-5">
-          <Era5WrfChartsEra5WrfHumidityChart
+          <Era5WrfChartHumidity
             :rh2Max="seriesByVariable.rh2_max"
             :rh2Mean="seriesByVariable.rh2_mean"
             :rh2Min="seriesByVariable.rh2_min"
@@ -305,7 +305,7 @@ onUnmounted(() => {
 
         <!-- Precipitation -->
         <div class="mb-5">
-          <Era5WrfChartsEra5WrfPrecipitationChart
+          <Era5WrfChartPrecipitation
             :rainnc="seriesByVariable.rainnc_sum"
             :lat="latLng.lat"
             :lng="latLng.lng"
@@ -314,7 +314,7 @@ onUnmounted(() => {
 
         <!-- Wind Rose -->
         <div>
-          <Era5WrfChartsEra5WrfWindRose
+          <Era5WrfChartWindRose
             :speedSeries="seriesByVariable.wspd10_mean"
             :directionSeries="seriesByVariable.wdir10_mean"
             speedLabel="Mean Wind Speed"
