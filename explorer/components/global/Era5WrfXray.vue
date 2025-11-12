@@ -1,6 +1,12 @@
 <script lang="ts" setup>
-import { ERA5_WRF_VARIABLES } from '~/utils/era5WrfConstants'
+import { getDefaultWindow } from '~/utils/era5WrfTransforms'
+import {
+  ERA5_WRF_VARIABLES,
+  ERA5_WRF_CONFIG,
+  type Era5WrfVariableKey,
+} from '~/utils/era5WrfConstants'
 
+const { $Plotly } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const dataStore = useDataStore()
 const placesStore = usePlacesStore()
@@ -11,6 +17,79 @@ const era5wrfExtent = 'blockyAlaska'
 
 const latLng = computed(() => placesStore.latLng)
 const apiData = computed(() => dataStore.apiData[endpoint] ?? null)
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
+
+// Chart IDs used by Era5Wrf chart components
+const CHART_IDS = [
+  'era5-temperature-chart',
+  'era5-humidity-chart',
+  'era5-precipitation-chart',
+  'wind-rose-mean',
+]
+
+const dataError = computed(() => dataStore.dataErrors[endpoint] ?? false)
+
+// Date range state
+const startDate = ref<string>('')
+const endDate = ref<string>('')
+
+// Define all variables to visualize
+// omitting seaice_max and wspd10_max for now
+const variables: Era5WrfVariableKey[] = [
+  't2_max',
+  't2_mean',
+  't2_min',
+  'rh2_max',
+  'rh2_mean',
+  'rh2_min',
+  'rainnc_sum',
+  'wspd10_mean',
+  'wdir10_mean',
+]
+
+// Use composable for series preparation
+const { seriesByVariable } = useEra5WrfSeries(startDate, endDate, variables)
+
+// Initialize date range when data loads
+watch(
+  apiData,
+  newData => {
+    if (newData && !startDate.value) {
+      const defaultWindow = getDefaultWindow(newData)
+      if (defaultWindow) {
+        startDate.value = defaultWindow.start
+        endDate.value = defaultWindow.end
+      }
+    }
+  },
+  { immediate: true }
+)
+
+// Proactively purge all Era5Wrf charts (following WetDaysPerYear pattern)
+const purgeAllCharts = () => {
+  CHART_IDS.forEach(chartId => {
+    try {
+      const element = document.getElementById(chartId)
+      if (element && element.hasChildNodes()) {
+        $Plotly.purge(chartId)
+      }
+    } catch (error) {
+      // Ignore purge errors - chart may already be cleaned up
+      console.debug(`Chart purge skipped for ${chartId}:`, error)
+    }
+  })
+}
+
+const fetchData = () => {
+  if (!latLng.value) return
+  dataStore.fetchData(endpoint)
+}
+
+const isLoading = computed(
+  () => !!latLng.value && !apiData.value && !dataError.value
+)
 
 const layers: MapLayer[] = [
   {
@@ -91,16 +170,6 @@ const legend: Record<string, LegendItem[]> = {
 const mapId = 'era5_extremes'
 mapStore.setLegendItems(mapId, legend)
 
-const downloadLinks = computed(() => {
-  if (!latLng.value) return null
-  const { lat, lng } = latLng.value
-  const base = `${runtimeConfig.public.apiUrl}/era5wrf/point/${lat}/${lng}`
-  return {
-    base,
-    csv: `${base}?format=csv`,
-  }
-})
-
 const variableGroups = computed(() =>
   Object.entries(
     ERA5_WRF_VARIABLES.reduce<
@@ -117,17 +186,56 @@ const variableGroups = computed(() =>
     variables,
   }))
 )
+
+onMounted(() => {
+  fetchData()
+})
+
+watch(latLng, async () => {
+  // Proactively purge all charts before data changes (following WetDaysPerYear pattern)
+  purgeAllCharts()
+  dataStore.apiData[endpoint] = null
+  dataStore.dataErrors[endpoint] = false
+  fetchData()
+})
+
+onUnmounted(() => {
+  purgeAllCharts()
+  dataStore.apiData[endpoint] = null
+  dataStore.dataErrors[endpoint] = false
+})
 </script>
 
 <template>
   <section class="section xray">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">ERA5-WRF Xray</h3>
-      <XrayIntroblurb
-        resolution="4"
-        unit="km"
-        :variable-groups="variableGroups"
-      />
+      <h3 class="title is-3">Dynamically Downscaled ERA5</h3>
+      <XrayIntroblurb resolution="4" unit="km">
+        <template #ERA5variables>
+          <li>
+            Available variables:
+            <div class="columns is-multiline mt-3">
+              <div
+                class="column is-half"
+                v-for="group in variableGroups"
+                :key="group.category"
+              >
+                <strong>{{ group.category }}</strong>
+                <ul class="ml-5 mt-1">
+                  <li
+                    v-for="variable in group.variables"
+                    :key="variable.key"
+                    class="mt-2"
+                  >
+                    {{ variable.label }}
+                    <span class="has-text-grey">({{ variable.unit }})</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </template>
+      </XrayIntroblurb>
 
       <p>
         Explore the high-resolution dynamically downscaled ERA5 reanalysis
@@ -168,37 +276,69 @@ const variableGroups = computed(() =>
 
       <Gimme :communities-enabled="true" :extent="era5wrfExtent" />
 
-      <div v-if="!latLng" class="notification is-info mt-4">
-        Select a community or enter coordinates above to load the ERA5-WRF time
-        series.
+      <div v-if="latLng && apiData" class="mt-4">
+        <Era5WrfChartsEra5WrfXrayControls
+          v-model:startDate="startDate"
+          v-model:endDate="endDate"
+        />
+        <!-- Temperature -->
+        <div class="mb-5">
+          <Era5WrfChartsEra5WrfTemperatureChart
+            :t2Max="seriesByVariable.t2_max"
+            :t2Mean="seriesByVariable.t2_mean"
+            :t2Min="seriesByVariable.t2_min"
+            :lat="latLng.lat"
+            :lng="latLng.lng"
+          />
+        </div>
+
+        <!-- Humidity -->
+        <div class="mb-5">
+          <Era5WrfChartsEra5WrfHumidityChart
+            :rh2Max="seriesByVariable.rh2_max"
+            :rh2Mean="seriesByVariable.rh2_mean"
+            :rh2Min="seriesByVariable.rh2_min"
+            :lat="latLng.lat"
+            :lng="latLng.lng"
+          />
+        </div>
+
+        <!-- Precipitation -->
+        <div class="mb-5">
+          <Era5WrfChartsEra5WrfPrecipitationChart
+            :rainnc="seriesByVariable.rainnc_sum"
+            :lat="latLng.lat"
+            :lng="latLng.lng"
+          />
+        </div>
+
+        <!-- Wind Rose -->
+        <div>
+          <Era5WrfChartsEra5WrfWindRose
+            :speedSeries="seriesByVariable.wspd10_mean"
+            :directionSeries="seriesByVariable.wdir10_mean"
+            speedLabel="Mean Wind Speed"
+            chartId="wind-rose-mean"
+          />
+        </div>
       </div>
 
-      <Era5WrfXrayWrapper :show-location-prompt="false" />
-
-      <div
-        v-if="latLng && apiData && downloadLinks"
-        class="download-block mt-4"
-      >
+      <div v-if="latLng && apiData" class="download-block mt-4">
         <h4 class="title is-4">
-          Download ERA5-WRF data for {{ latLng.lat.toFixed(3) }},
-          {{ latLng.lng.toFixed(3) }}
+          Download ERA5-WRF data for
+          {{ selectedCommunity ? selectedCommunity.name + ' at ' : ''
+          }}{{ latLng.lat }},
+          {{ latLng.lng }}
         </h4>
-        <ul>
-          <li>
-            <a :href="downloadLinks.csv">Download as CSV</a> (all variables)
-          </li>
-          <li>
-            <a :href="downloadLinks.base">Download as JSON</a>
-          </li>
-          <li>
-            Limit the response with query variables, for example
-            <code>?vars=t2_mean,rh2_mean</code>
-          </li>
-        </ul>
+        <DownloadLinks endpoint="/era5wrf/point" />
+        <p class="mt-2">
+          Limit the response with query variables, for example
+          <code>?vars=t2_mean,rh2_mean</code>
+        </p>
       </div>
 
       <GetAndUseData
-        v-if="latLng"
+        v-if="latLng && apiData"
         :api-url="`${runtimeConfig.public.apiUrl}/era5wrf/`"
         class="mt-5"
       >
@@ -214,12 +354,4 @@ const variableGroups = computed(() =>
   </section>
 </template>
 
-<style scoped>
-.download-block ul {
-  margin-left: 1.25rem;
-}
-
-.download-block li + li {
-  margin-top: 0.5rem;
-}
-</style>
+<style scoped></style>
