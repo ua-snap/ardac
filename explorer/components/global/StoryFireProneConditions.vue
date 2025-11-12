@@ -20,9 +20,9 @@ const era5wrfExtent = 'cmip6Downscaled'
         precipitation. Days that are both hot (temperature exceeds the 90th
         percentile of the climatological normal range) and dry (humidity falls
         below the 10th percentile of the climatological normal range)
-        simultaneously may be considered "fire-prone" days. High temperatures
-        and low humidity dry out vegetation while extended periods without
-        precipitation allow fuels to accumulate and become increasingly
+        simultaneously may be considered &ldquo;fire-prone&rdquo; days. High
+        temperatures and low humidity dry out vegetation while extended periods
+        without precipitation allow fuels to accumulate and become increasingly
         flammable.
       </p>
       <p>
@@ -38,12 +38,12 @@ const era5wrfExtent = 'cmip6Downscaled'
         chart and count of hot and dry days respond. Afterward, experiment with
         any fire season from <strong>1960 through 2023</strong> to see how other
         years compare to 2004. Use the <strong>Reference Period</strong> radio
-        buttons to compare any season against either the 1960-1989 or 1990-2019
-        reference period and see how conditions deviated from the climatological
-        normals.
+        buttons to compare any season against either the 1960&ndash;1989 or
+        1990&ndash;2019 reference period and see how conditions deviated from
+        the climatological normals.
       </p>
 
-      <div class="box mt-5">
+      <div class="mt-5">
         <h4 class="title is-4">Fire-Prone Conditions</h4>
 
         <p class="mb-3">
