@@ -87,10 +87,6 @@ const fetchData = () => {
   dataStore.fetchData(endpoint)
 }
 
-const isLoading = computed(
-  () => !!latLng.value && !apiData.value && !dataError.value
-)
-
 const layers: MapLayer[] = [
   {
     id: 'era5_extreme_cold',
