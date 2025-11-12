@@ -46,12 +46,13 @@ const era5wrfExtent = 'cmip6Downscaled'
       <div class="mt-5">
         <h4 class="title is-4">Fire-Prone Conditions</h4>
 
-        <p class="mb-3">
-          Pick a community or enter latitude/longitude coordinates to load
-          ERA5-WRF data for that location. Select a fire season year to analyze
-          and compare against the climatologies.
-        </p>
-        <Gimme :communities-enabled="true" :extent="era5wrfExtent" />
+        <Gimme :communities-enabled="true" :extent="era5wrfExtent">
+          <template v-slot:additionalInstructions>
+            Pick a community or enter latitude/longitude coordinates to load
+            ERA5-WRF data for that location. Select a fire season year to
+            analyze and compare against the climatologies.</template
+          >
+        </Gimme>
 
         <Era5WrfFireWeatherWrapper />
       </div>
@@ -105,11 +106,11 @@ const era5wrfExtent = 'cmip6Downscaled'
 
       <p>
         This data story uses the ERA5-WRF dynamically downscaled dataset, which
-        provides high-resolution (4&#8239;km) meteorological data by using the Weather
-        Research and Forecasting Model to downscale ERA5 reanalysis data. The
-        dataset covers mainland Alaska and adjacent Canada. The source dataset
-        has hourly temporal resolution, and is aggregated to a daily resolution
-        here.
+        provides high-resolution (4&#8239;km) meteorological data by using the
+        Weather Research and Forecasting Model to downscale ERA5 reanalysis
+        data. The dataset covers mainland Alaska and adjacent Canada. The source
+        dataset has hourly temporal resolution, and is aggregated to a daily
+        resolution here.
       </p>
 
       <GetAndUseData :api-url="`${runtimeConfig.public.apiUrl}/era5wrf/`">

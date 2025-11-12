@@ -292,7 +292,11 @@ onUnmounted(() => {
           <span v-if="communitiesEnabled">a community or by</span>
           lat/long</label
         >
-        <slot name="additionalInstructions" />
+
+        <div class="is-size-5 mb-4">
+          <slot name="additionalInstructions" />
+        </div>
+
         <p v-if="communitiesEnabled" class="is-size-5">
           Only communities within the footprint of the data are included in this
           search.
