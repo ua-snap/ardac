@@ -484,4 +484,11 @@ export default [
       'An overview of the methods used to downscale coarse, global CMIP6 outputs to a higher resolution for Alaska',
     tags: ['Climate', 'CMIP6', 'Temperature'],
   },
+  {
+    slug: 'story-fire-prone-conditions',
+    title: 'Fire-Prone Conditions in Alaska',
+    blurb:
+      'Explore how temperature, humidity, precipitation, and wind patterns combine to create conditions favorable for wildfires. Compare recent years to historical climatology.',
+    tags: ['Climate', 'Wildfire', 'Temperature', 'Precipitation'],
+  },
 ] satisfies Item[]
