@@ -280,7 +280,7 @@ onUnmounted(() => {
           >
           {{ placeName }}.
           <button class="button is-link is-light" @click="clearSelectedPlace">
-            &#x21BA; Pick a new place
+            Pick a new place
           </button>
         </p>
       </div>
