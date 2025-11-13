@@ -7,86 +7,79 @@ interface Props {
   climatologyPeriodLabel: string
 }
 
+const placesStore = usePlacesStore()
+const selectedCommunity = computed<CommunityValue>(
+  () => placesStore.selectedCommunity
+)
+
 const props = defineProps<Props>()
 </script>
 
 <template>
-  <div v-if="statistics" class="statistics-panel mt-4">
-    <h5 class="title is-5">
-      {{ selectedYear }} vs {{ climatologyPeriodLabel }}
-    </h5>
-
-    <div class="columns is-multiline">
-      <div class="column is-4">
-        <div class="stat-box">
-          <span class="stat-label">Hot Days</span>
-          <span class="stat-value">{{ statistics.hotDays }}</span>
-          <span class="stat-unit">days >90th percentile</span>
-        </div>
-      </div>
-
-      <div class="column is-4">
-        <div class="stat-box">
-          <span class="stat-label">Dry Days</span>
-          <span class="stat-value">{{ statistics.dryDays }}</span>
-          <span class="stat-unit">days <10th percentile</span>
-        </div>
-      </div>
-
-      <div class="column is-4">
-        <div class="stat-box">
-          <span class="stat-label">Hot and Dry Days</span>
-          <span class="stat-value compound">{{
-            statistics.fireProneDays
-          }}</span>
-          <span class="stat-unit"></span>
+  <div v-if="statistics" class="card my-6">
+    <div class="card-content py-5">
+      <h3 class="card-title">
+        {{ selectedCommunity ? selectedCommunity.name + ',' : '' }}
+        {{ selectedYear }} <span class="jazz">vs</span>
+        {{ climatologyPeriodLabel }}
+      </h3>
+      <div class="content mt-6">
+        <div class="level">
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="subtitle">Hot Days</p>
+              <p class="title">{{ statistics.hotDays }}</p>
+              <p class="heading">days >90th percentile</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="subtitle">Dry Days</p>
+              <p class="title">{{ statistics.dryDays }}</p>
+              <p class="heading">days <10th percentile</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="subtitle">Hot and Dry Days</p>
+              <p class="title hot-dry">{{ statistics.fireProneDays }}</p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.statistics-panel {
-  background-color: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 6px;
-  border: 1px solid #dee2e6;
-}
-
-.stat-box {
-  background: white;
-  padding: 1.25rem;
-  border-radius: 4px;
+<style lang="scss" scoped>
+.card-title {
   text-align: center;
-  border: 1px solid #e0e0e0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  height: 100%;
+  font-size: 180%;
+  color: #434343;
+
+  span.jazz {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 85%;
+    display: inline-block;
+    padding-right: 0.2em;
+  }
 }
 
-.stat-label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #6c757d;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+.level-item {
+  p.subtitle {
+    text-transform: uppercase;
+    color: oklch(0.4 0.0321 231.35);
+    font-weight: 500;
+  }
+  p.title {
+    font-size: 350%;
+    font-weight: 900;
+  }
 
-.stat-value {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #2c3e50;
-  line-height: 1;
-}
-
-.stat-value.compound {
-  color: #d32f2f;
-}
-
-.stat-unit {
-  font-size: 0.75rem;
-  color: #868e96;
+  .hot-dry {
+    color: oklch(0.6952 0.2492 36.28);
+  }
 }
 </style>
