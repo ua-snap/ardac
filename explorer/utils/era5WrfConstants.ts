@@ -10,12 +10,12 @@ export const ERA5_WRF_CONFIG = {
 
 export const ERA5_CLIMATOLOGY_PERIODS = {
   '1960-1989': {
-    label: '1960-1989',
+    label: '1960&ndash;1989',
     start: 1960,
     end: 1989,
   },
   '1990-2019': {
-    label: '1990-2019',
+    label: '1990&ndash;2019',
     start: 1990,
     end: 2019,
   },

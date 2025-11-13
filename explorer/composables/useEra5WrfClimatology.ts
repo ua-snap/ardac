@@ -19,7 +19,6 @@ export interface UseEra5WrfClimatologyOptions {
 export interface UseEra5WrfClimatologyReturn {
   climatologyData: ComputedRef<Record<string, ClimatologyData>> // Climatology for each variable
   availableYears: ComputedRef<number[]> // Years available in API data
-  isCalculating: Ref<boolean> // Loading state
   error: Ref<string | null> // Error state
   hasData: ComputedRef<boolean> // Whether climatology data is available
 }
@@ -39,7 +38,7 @@ export interface UseEra5WrfClimatologyReturn {
  * const selectedYear = ref(2023)
  * const climatologyPeriod = ref('1991-2020')
  *
- * const { climatologyData, isCalculating, error } = useEra5WrfClimatology({
+ * const { climatologyData, error } = useEra5WrfClimatology({
  *   variables: ['t2_max', 't2_mean', 't2_min'],
  *   climatologyPeriod,
  *   selectedYear
@@ -53,7 +52,6 @@ export const useEra5WrfClimatology = (
   const dataStore = useDataStore()
   const endpoint = ERA5_WRF_CONFIG.endpoint
 
-  const isCalculating = ref(false)
   const error = ref<string | null>(null)
 
   // Get available years from API data
@@ -97,8 +95,6 @@ export const useEra5WrfClimatology = (
     const result: Record<string, ClimatologyData> = {}
 
     try {
-      isCalculating.value = true
-
       options.variables.forEach(variable => {
         try {
           result[variable] = calculateClimatology(
@@ -114,9 +110,7 @@ export const useEra5WrfClimatology = (
         }
       })
 
-      isCalculating.value = false
     } catch (err) {
-      isCalculating.value = false
       error.value = err instanceof Error ? err.message : 'Unknown error calculating climatology'
       console.error('Error calculating climatology:', err)
       return {}
@@ -133,7 +127,6 @@ export const useEra5WrfClimatology = (
   return {
     climatologyData,
     availableYears,
-    isCalculating,
     error,
     hasData,
   }

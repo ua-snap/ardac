@@ -20,9 +20,11 @@ const endpoint = ERA5_WRF_CONFIG.endpoint
 
 // User-controlled state
 const selectedYear = ref<number>(2023)
+// BRUCE TODO -- squint after reviewing the composable?
 const climatologyPeriod = ref<string>(ERA5_WRF_CONFIG.defaultClimatologyPeriod)
 
 // Compute available years from API data
+// BRUCE TODO -- why not hardcode this?
 const availableYears = computed(() => {
   const apiData = dataStore.apiData[endpoint]
   if (!apiData) return []
@@ -32,6 +34,7 @@ const availableYears = computed(() => {
 })
 
 // Initialize with most recent complete year when data loads
+// BRUCE TODO -- almost certainly want to hardcode this for reduced complexity demon
 watch(
   availableYears,
   years => {
@@ -77,6 +80,7 @@ const climatologyVariables: Era5WrfVariableKey[] = [
   'rh2_min',
 ]
 
+// BRUCE -- Squint!
 const { climatologyData, hasData: hasClimatologyData } = useEra5WrfClimatology({
   variables: climatologyVariables,
   climatologyPeriod,
@@ -158,30 +162,35 @@ onUnmounted(() => {
         humidity, and precipitation, we can identify periods when conditions
         were particularly favorable for wildfires. Several atmospheric
         conditions combine to influence wildfire ignition: heat, humidity, and
-        precipitation. Days that are both hot (temperature exceeds the 90th
-        percentile of the climatological normal range) and dry (humidity falls
-        below the 10th percentile of the climatological normal range)
-        simultaneously may be considered &ldquo;fire-prone&rdquo; days. High
-        temperatures and low humidity dry out vegetation while extended periods
-        without precipitation allow fuels to accumulate and become increasingly
-        flammable.
+        precipitation.
+      </p>
+      <p>
+        Days that are both hot (temperature exceeds the 90th percentile of the
+        climatological normal range) and dry (humidity falls below the 10th
+        percentile of the climatological normal range) simultaneously may be
+        considered &ldquo;fire-prone&rdquo; days. High temperatures and low
+        humidity dry out vegetation while extended periods without precipitation
+        allow fuels to accumulate and become increasingly flammable.
       </p>
       <p>
         The 2004 Alaska summer produced several instances of fire-prone
         conditions, culminating in the largest fire season on record for Alaska:
         6.6 million acres burned. The Taylor Complex, a group of several large
         fires, accounted for more than 1.7 million acres burned in eastern
-        Alaska near the Yukon border. To analyze how temperature and humidity
-        extremes drove the Taylor Complex fire behavior, set the
-        <strong>Year Selection</strong> control to 2004 and choose Tok (or
-        another nearby community or latitude/longitude location) in the location
-        selector and follow along with the narrative below. and notice how the
-        chart and count of hot and dry days respond. Afterward, experiment with
-        any fire season from <strong>1960 through 2023</strong> to see how other
-        years compare to 2004. Use the <strong>Reference Period</strong> radio
-        buttons to compare any season against either the 1960&ndash;1989 or
-        1990&ndash;2019 reference period and see how conditions deviated from
-        the climatological normals.
+        Alaska near the Yukon border.
+      </p>
+      <p>
+        To analyze how temperature and humidity extremes drove the Taylor
+        Complex fire behavior, set the <strong>Year Selection</strong> control
+        to 2004 and choose Tok (or another nearby community or
+        latitude/longitude location) in the location selector and follow along
+        with the narrative below. and notice how the chart and count of hot and
+        dry days respond. Afterward, experiment with any fire season from
+        <strong>1960 through 2023</strong> to see how other years compare to
+        2004. Use the <strong>Reference Period</strong> radio buttons to compare
+        any season against either the 1960&ndash;1989 or 1990&ndash;2019
+        reference period and see how conditions deviated from the climatological
+        normals.
       </p>
 
       <div class="mt-5">
@@ -198,19 +207,20 @@ onUnmounted(() => {
         <div v-if="latLng && apiData" class="mt-4">
           <!-- Controls -->
           <Era5WrfFireControls
-            v-model:selectedYear="selectedYear"
-            v-model:climatologyPeriod="climatologyPeriod"
+            :selectedYear="selectedYear"
+            :climatologyPeriod="climatologyPeriod"
             :availableYears="availableYears"
           />
 
           <!-- Statistics Panel -->
-          <Era5WrfFireStatisticsPanel
-            v-if="fireStatistics"
-            :statistics="fireStatistics"
-            :selectedYear="selectedYear"
-            :climatologyPeriodLabel="climatologyPeriod"
-            class="mb-5"
-          />
+          <div class="mb-6">
+            <Era5WrfFireStatisticsPanel
+              v-if="fireStatistics"
+              :statistics="fireStatistics"
+              :selectedYear="selectedYear"
+              :climatologyPeriodLabel="climatologyPeriod"
+            />
+          </div>
 
           <!-- Temperature Chart with Climatology -->
           <div class="mb-5">
@@ -307,12 +317,23 @@ onUnmounted(() => {
       <h4 class="title is-4">About the ERA5-WRF Dataset</h4>
 
       <p>
-        This data story uses the ERA5-WRF dynamically downscaled dataset, which
-        provides high-resolution (4&#8239;km) meteorological data by using the
-        Weather Research and Forecasting Model to downscale ERA5 reanalysis
-        data. The dataset covers mainland Alaska and adjacent Canada. The source
-        dataset has hourly temporal resolution, and is aggregated to a daily
-        resolution here.
+        This data story uses the ERA5-WRF dynamically downscaled dataset,
+        produced at the University of Alaska Fairbanks with funding support from
+        the USGS Alaska Climate Adaptation Science Centers (AK CASC).
+      </p>
+      <p>
+        This dataset provides high-resolution (4&#8239;km) meteorological data
+        by using the Weather Research and Forecasting Model to downscale ERA5
+        reanalysis data. The dataset covers mainland Alaska and adjacent Canada.
+        The source dataset has hourly temporal resolution, and is aggregated to
+        a daily resolution here.
+      </p>
+      <p>
+        A publication is in progress, and you can email
+        <a href="mailto:uaf-snap-data-tools@alaska.edu"
+          >uaf-snap-data-tools@alaska.edu</a
+        >
+        with any questions.
       </p>
 
       <GetAndUseData :api-url="`${runtimeConfig.public.apiUrl}/era5wrf/`">

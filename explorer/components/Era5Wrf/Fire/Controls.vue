@@ -41,15 +41,23 @@ const climatologyPeriods = ERA5_CLIMATOLOGY_PERIODS
         <div class="control">
           <label class="radio">
             <input type="radio" value="1960-1989" v-model="climatologyPeriod" />
-            {{ climatologyPeriods['1960-1989'].label }}
+            <span v-html="climatologyPeriods['1960-1989'].label"></span>
           </label>
 
           <label class="radio">
             <input type="radio" value="1990-2019" v-model="climatologyPeriod" />
-            {{ climatologyPeriods['1990-2019'].label }}
+            <span v-html="climatologyPeriods['1990-2019'].label"></span>
           </label>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.radio span {
+  display: inline-block;
+  margin-left: 0.5rem;
+  margin-right: 1.5rem;
+}
+</style>
