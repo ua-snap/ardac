@@ -202,8 +202,8 @@ onUnmounted(() => {
         <div v-if="latLng && apiData" class="mt-4">
           <!-- Controls -->
           <Era5WrfFireControls
-            :selectedYear="selectedYear"
-            :climatologyPeriod="climatologyPeriod"
+            v-model:selectedYear="selectedYear"
+            v-model:climatologyPeriod="climatologyPeriod"
             :availableYears="availableYears"
           />
 
