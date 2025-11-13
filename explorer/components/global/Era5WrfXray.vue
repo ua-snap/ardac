@@ -326,11 +326,8 @@ onUnmounted(() => {
           }}{{ latLng.lat }},
           {{ latLng.lng }}
         </h4>
+        <p>Data download is all variables, all years in the dataset.</p>
         <DownloadLinks endpoint="/era5wrf/point" />
-        <p class="mt-2">
-          Limit the response with query variables, for example
-          <code>?vars=t2_mean,rh2_mean</code>
-        </p>
       </div>
 
       <GetAndUseData
