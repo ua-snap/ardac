@@ -2,7 +2,11 @@
 import type { Data } from 'plotly.js-dist-min'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 import type { ClimatologyData } from '~/utils/era5WrfClimatology'
-import { CHART_CONFIG, ERA5_WRF_VARIABLES, ERA5_SEASONS } from '~/utils/era5WrfConstants'
+import {
+  CHART_CONFIG,
+  ERA5_WRF_VARIABLES,
+  ERA5_SEASONS,
+} from '~/utils/era5WrfConstants'
 
 interface Props {
   rh2Max: Era5WrfSeriesPoint[]
@@ -90,8 +94,13 @@ const buildChart = () => {
     // Only show mean and max climatology if not in fire season mode
     if (!props.isFireSeason) {
       // RH2 Mean climatology median
-      if (props.climatologyRh2Mean && props.climatologyRh2Mean.bands.length > 0) {
-        const filteredMeanBands = filterBandsToSeason(props.climatologyRh2Mean.bands)
+      if (
+        props.climatologyRh2Mean &&
+        props.climatologyRh2Mean.bands.length > 0
+      ) {
+        const filteredMeanBands = filterBandsToSeason(
+          props.climatologyRh2Mean.bands
+        )
         traces.push({
           x: filteredMeanBands.map(b => b.date),
           y: filteredMeanBands.map(b => b.p50),
@@ -100,13 +109,16 @@ const buildChart = () => {
           line: { color: rh2MeanVar.color, width: 1, dash: 'dot' },
           name: 'Climatology Median (Mean)',
           opacity: 0.7,
-          hovertemplate: '<b>Climatology Median</b><br>%{y:.1f}%<extra></extra>',
+          hovertemplate:
+            '<b>Climatology Median</b><br>%{y:.1f}%<extra></extra>',
         })
       }
 
       // RH2 Max climatology median
       if (props.climatologyRh2Max && props.climatologyRh2Max.bands.length > 0) {
-        const filteredMaxBands = filterBandsToSeason(props.climatologyRh2Max.bands)
+        const filteredMaxBands = filterBandsToSeason(
+          props.climatologyRh2Max.bands
+        )
         traces.push({
           x: filteredMaxBands.map(b => b.date),
           y: filteredMaxBands.map(b => b.p50),
@@ -115,7 +127,8 @@ const buildChart = () => {
           line: { color: rh2MaxVar.color, width: 1, dash: 'dot' },
           name: 'Climatology Median (Max)',
           opacity: 0.7,
-          hovertemplate: '<b>Climatology Median</b><br>%{y:.1f}%<extra></extra>',
+          hovertemplate:
+            '<b>Climatology Median</b><br>%{y:.1f}%<extra></extra>',
         })
       }
     }
@@ -143,7 +156,8 @@ const buildChart = () => {
         type: 'scatter',
         mode: 'lines',
         line: { color: rh2MaxVar.color, width: 2 },
-        hovertemplate: '<b>Max Humidity</b><br>%{x}<br>%{y:.1f}%<extra></extra>',
+        hovertemplate:
+          '<b>Max Humidity</b><br>%{x}<br>%{y:.1f}%<extra></extra>',
       },
       {
         x: props.rh2Mean.map(p => p.date),
@@ -152,7 +166,8 @@ const buildChart = () => {
         type: 'scatter',
         mode: 'lines',
         line: { color: rh2MeanVar.color, width: 2 },
-        hovertemplate: '<b>Mean Humidity</b><br>%{x}<br>%{y:.1f}%<extra></extra>',
+        hovertemplate:
+          '<b>Mean Humidity</b><br>%{x}<br>%{y:.1f}%<extra></extra>',
       },
       {
         x: props.rh2Min.map(p => p.date),
@@ -161,7 +176,8 @@ const buildChart = () => {
         type: 'scatter',
         mode: 'lines',
         line: { color: rh2MinVar.color, width: 2 },
-        hovertemplate: '<b>Min Humidity</b><br>%{x}<br>%{y:.1f}%<extra></extra>',
+        hovertemplate:
+          '<b>Min Humidity</b><br>%{x}<br>%{y:.1f}%<extra></extra>',
       }
     )
   }
@@ -171,14 +187,14 @@ const buildChart = () => {
     traces,
     {
       title: {
-        text: props.isFireSeason 
+        text: props.isFireSeason
           ? `Daily Minimum Relative Humidity<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`
           : `Daily 2m Relative Humidity<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`,
         font: { size: 24 },
       },
       xaxis: {
         title: {
-          text: props.isFireSeason ? 'Date (March 15 - October 15)' : 'Date',
+          text: props.isFireSeason ? 'Date (March 15 - October 15)' : '',
           font: { size: 18 },
           standoff: 20,
         },

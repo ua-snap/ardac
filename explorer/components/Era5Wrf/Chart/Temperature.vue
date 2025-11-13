@@ -2,7 +2,11 @@
 import type { Data } from 'plotly.js-dist-min'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 import type { ClimatologyData } from '~/utils/era5WrfClimatology'
-import { CHART_CONFIG, ERA5_WRF_VARIABLES, ERA5_SEASONS } from '~/utils/era5WrfConstants'
+import {
+  CHART_CONFIG,
+  ERA5_WRF_VARIABLES,
+  ERA5_SEASONS,
+} from '~/utils/era5WrfConstants'
 
 interface Props {
   t2Max: Era5WrfSeriesPoint[]
@@ -91,7 +95,9 @@ const buildChart = () => {
     if (!props.isFireSeason) {
       // T2 Mean climatology median
       if (props.climatologyT2Mean && props.climatologyT2Mean.bands.length > 0) {
-        const filteredMeanBands = filterBandsToSeason(props.climatologyT2Mean.bands)
+        const filteredMeanBands = filterBandsToSeason(
+          props.climatologyT2Mean.bands
+        )
         traces.push({
           x: filteredMeanBands.map(b => b.date),
           y: filteredMeanBands.map(b => b.p50),
@@ -100,13 +106,16 @@ const buildChart = () => {
           line: { color: t2MeanVar.color, width: 1, dash: 'dot' },
           name: 'Climatology Median (Mean)',
           opacity: 0.7,
-          hovertemplate: '<b>Climatology Median</b><br>%{y:.1f}°C<extra></extra>',
+          hovertemplate:
+            '<b>Climatology Median</b><br>%{y:.1f}°C<extra></extra>',
         })
       }
 
       // T2 Min climatology median
       if (props.climatologyT2Min && props.climatologyT2Min.bands.length > 0) {
-        const filteredMinBands = filterBandsToSeason(props.climatologyT2Min.bands)
+        const filteredMinBands = filterBandsToSeason(
+          props.climatologyT2Min.bands
+        )
         traces.push({
           x: filteredMinBands.map(b => b.date),
           y: filteredMinBands.map(b => b.p50),
@@ -115,7 +124,8 @@ const buildChart = () => {
           line: { color: t2MinVar.color, width: 1, dash: 'dot' },
           name: 'Climatology Median (Min)',
           opacity: 0.7,
-          hovertemplate: '<b>Climatology Median</b><br>%{y:.1f}°C<extra></extra>',
+          hovertemplate:
+            '<b>Climatology Median</b><br>%{y:.1f}°C<extra></extra>',
         })
       }
     }
@@ -131,7 +141,8 @@ const buildChart = () => {
       type: 'scatter',
       mode: 'lines',
       line: { color: t2MaxVar.color, width: 2 },
-      hovertemplate: '<b>Max Temperature</b><br>%{x}<br>%{y:.1f}°C<extra></extra>',
+      hovertemplate:
+        '<b>Max Temperature</b><br>%{x}<br>%{y:.1f}°C<extra></extra>',
     })
   } else {
     // Show all three temperature traces
@@ -143,7 +154,8 @@ const buildChart = () => {
         type: 'scatter',
         mode: 'lines',
         line: { color: t2MaxVar.color, width: 2 },
-        hovertemplate: '<b>Max Temperature</b><br>%{x}<br>%{y:.1f}°C<extra></extra>',
+        hovertemplate:
+          '<b>Max Temperature</b><br>%{x}<br>%{y:.1f}°C<extra></extra>',
       },
       {
         x: props.t2Mean.map(p => p.date),
@@ -152,7 +164,8 @@ const buildChart = () => {
         type: 'scatter',
         mode: 'lines',
         line: { color: t2MeanVar.color, width: 2 },
-        hovertemplate: '<b>Mean Temperature</b><br>%{x}<br>%{y:.1f}°C<extra></extra>',
+        hovertemplate:
+          '<b>Mean Temperature</b><br>%{x}<br>%{y:.1f}°C<extra></extra>',
       },
       {
         x: props.t2Min.map(p => p.date),
@@ -161,7 +174,8 @@ const buildChart = () => {
         type: 'scatter',
         mode: 'lines',
         line: { color: t2MinVar.color, width: 2 },
-        hovertemplate: '<b>Min Temperature</b><br>%{x}<br>%{y:.1f}°C<extra></extra>',
+        hovertemplate:
+          '<b>Min Temperature</b><br>%{x}<br>%{y:.1f}°C<extra></extra>',
       }
     )
   }
@@ -171,14 +185,14 @@ const buildChart = () => {
     traces,
     {
       title: {
-        text: props.isFireSeason 
+        text: props.isFireSeason
           ? `Daily Maximum Temperature<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`
           : `Daily 2m Temperature<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`,
         font: { size: 24 },
       },
       xaxis: {
         title: {
-          text: props.isFireSeason ? 'Date (March 15 - October 15)' : 'Date',
+          text: props.isFireSeason ? 'Date (March 15 - October 15)' : '',
           font: { size: 18 },
           standoff: 20,
         },
