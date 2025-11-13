@@ -23,15 +23,11 @@ const selectedYear = ref<number>(2023)
 // BRUCE TODO -- squint after reviewing the composable?
 const climatologyPeriod = ref<string>(ERA5_WRF_CONFIG.defaultClimatologyPeriod)
 
-// Compute available years from API data
-// BRUCE TODO -- why not hardcode this?
-const availableYears = computed(() => {
-  const apiData = dataStore.apiData[endpoint]
-  if (!apiData) return []
-  const dates = Object.keys(apiData)
-  const years = [...new Set(dates.map(d => new Date(d).getFullYear()))]
-  return years.sort((a, b) => a - b)
-})
+// Available years for ERA5-WRF data (1960-2023)
+const availableYears = Array.from(
+  { length: 2023 - 1960 + 1 },
+  (_, i) => 1960 + i
+)
 
 // Initialize with most recent complete year when data loads
 // BRUCE TODO -- almost certainly want to hardcode this for reduced complexity demon
@@ -206,8 +202,8 @@ onUnmounted(() => {
         <div v-if="latLng && apiData" class="mt-4">
           <!-- Controls -->
           <Era5WrfFireControls
-            :selectedYear="selectedYear"
-            :climatologyPeriod="climatologyPeriod"
+            v-model:selectedYear="selectedYear"
+            v-model:climatologyPeriod="climatologyPeriod"
             :availableYears="availableYears"
           />
 

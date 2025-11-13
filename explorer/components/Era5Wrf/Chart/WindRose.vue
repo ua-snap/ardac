@@ -103,7 +103,7 @@ const buildWindRose = () => {
 
   const layout: Partial<Layout> = {
     title: {
-      text: `Wind Rose - ${props.speedLabel}<br><sub>n = ${data.totalCount} values</sub>`,
+      text: `Wind Rose - ${props.speedLabel}<br>`,
       font: { size: 24 },
     },
     barmode: 'stack',
@@ -129,7 +129,7 @@ const buildWindRose = () => {
         font: { size: 12 },
       },
     },
-    margin: { t: 80, b: 40, l: 40, r: 160 },
+    margin: { t: 80, b: 40, l: 160, r: 160 },
   }
 
   $Plotly.newPlot(chartId, traces, layout, {

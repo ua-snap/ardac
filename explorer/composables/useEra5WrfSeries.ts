@@ -51,14 +51,17 @@ export const useEra5WrfSeries = (
       })
     }
 
+    // Filter dates to the requested date range
+    const dateRangeFiltered = dates.filter(
+      date => date >= startDate.value && date <= endDate.value
+    )
+
     // Build series for each variable
     variables.forEach(variable => {
-      result[variable] = dates
-        .filter(date => date >= startDate.value && date <= endDate.value)
-        .map(date => ({
-          date,
-          value: apiData.value[date]?.[variable] ?? null,
-        }))
+      result[variable] = dateRangeFiltered.map(date => ({
+        date,
+        value: apiData.value[date]?.[variable] ?? null,
+      }))
     })
 
     return result
