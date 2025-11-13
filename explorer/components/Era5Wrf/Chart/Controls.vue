@@ -10,7 +10,6 @@ const availableYears = Array.from(
   (_, i) => startYear + i
 )
 
-// When year changes, update start and end dates
 watch(
   selectedYear,
   newYear => {
