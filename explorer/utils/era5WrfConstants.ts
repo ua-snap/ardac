@@ -4,7 +4,6 @@
 
 export const ERA5_WRF_CONFIG = {
   endpoint: 'era5wrf',
-  defaultYear: '2004',
   defaultClimatologyPeriod: '1960-1989',
 } as const
 
@@ -55,7 +54,6 @@ export const CHART_CONFIG = {
     },
   },
 } as const
-
 
 export const ERA5_WRF_VARIABLES = [
   {
