@@ -129,7 +129,7 @@ const buildWindRose = () => {
         font: { size: 12 },
       },
     },
-    margin: { t: 80, b: 40, l: 40, r: 160 },
+    margin: { t: 80, b: 40, l: 160, r: 160 },
   }
 
   $Plotly.newPlot(chartId, traces, layout, {
