@@ -6,6 +6,8 @@ import {
   type WindRoseData,
 } from '~/utils/era5WrfTransforms'
 
+const chartStore = useChartStore()
+
 interface Props {
   speedSeries: Era5WrfSeriesPoint[]
   directionSeries: Era5WrfSeriesPoint[]
@@ -103,7 +105,7 @@ const buildWindRose = () => {
 
   const layout: Partial<Layout> = {
     title: {
-      text: `Wind Rose - ${props.speedLabel}<br>`,
+      text: `Wind Rose - ${props.speedLabel}<br><sub>${chartStore.getChartTitle('')}</sub>`,
       font: { size: 24 },
     },
     barmode: 'stack',
@@ -129,7 +131,7 @@ const buildWindRose = () => {
         font: { size: 12 },
       },
     },
-    margin: { t: 80, b: 40, l: 160, r: 160 },
+    margin: { t: 120, b: 40, l: 160, r: 160 },
   }
 
   $Plotly.newPlot(chartId, traces, layout, {

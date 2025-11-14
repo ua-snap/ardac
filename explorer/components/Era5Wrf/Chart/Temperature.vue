@@ -8,6 +8,8 @@ import {
   ERA5_FIRE_SEASON,
 } from '~/utils/era5WrfConstants'
 
+const chartStore = useChartStore()
+
 interface Props {
   t2Max: Era5WrfSeriesPoint[]
   t2Mean: Era5WrfSeriesPoint[]
@@ -174,8 +176,8 @@ const buildChart = () => {
     {
       title: {
         text: props.isFireSeason
-          ? `Daily Maximum Temperature<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`
-          : `Daily 2m Temperature<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`,
+          ? `Daily Maximum Temperature<br><sub>${chartStore.getChartTitle('')}</sub>`
+          : `Daily 2m Temperature<br><sub>${chartStore.getChartTitle('')}</sub>`,
         font: { size: 24 },
       },
       xaxis: {

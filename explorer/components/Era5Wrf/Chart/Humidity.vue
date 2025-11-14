@@ -8,6 +8,8 @@ import {
   ERA5_FIRE_SEASON,
 } from '~/utils/era5WrfConstants'
 
+const chartStore = useChartStore()
+
 interface Props {
   rh2Max: Era5WrfSeriesPoint[]
   rh2Mean: Era5WrfSeriesPoint[]
@@ -176,8 +178,8 @@ const buildChart = () => {
     {
       title: {
         text: props.isFireSeason
-          ? `Daily Minimum Relative Humidity<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`
-          : `Daily 2m Relative Humidity<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`,
+          ? `Daily Minimum Relative Humidity<br><sub>${chartStore.getChartTitle('')}</sub>`
+          : `Daily 2m Relative Humidity<br><sub>${chartStore.getChartTitle('')}</sub>`,
         font: { size: 24 },
       },
       xaxis: {

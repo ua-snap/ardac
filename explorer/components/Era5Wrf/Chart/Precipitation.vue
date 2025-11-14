@@ -3,6 +3,8 @@ import type { Data } from 'plotly.js-dist-min'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 import { CHART_CONFIG, ERA5_WRF_VARIABLES } from '~/utils/era5WrfConstants'
 
+const chartStore = useChartStore()
+
 interface Props {
   rainnc: Era5WrfSeriesPoint[]
   lat: number
@@ -38,7 +40,7 @@ const buildChart = () => {
     traces,
     {
       title: {
-        text: `Daily Total Precipitation<br><sub>${props.lat.toFixed(3)}°N, ${props.lng.toFixed(3)}°W</sub>`,
+        text: `Daily Total Precipitation<br><sub>${chartStore.getChartTitle('')}</sub>`,
         font: { size: 24 },
       },
       xaxis: {
