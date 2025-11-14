@@ -45,7 +45,7 @@ const buildChart = () => {
       },
       xaxis: {
         title: {
-          text: props.isFireSeason ? 'Date (March 15 - October 15)' : '',
+          text: props.isFireSeason ? 'Fire Season (March 15 - October 15)' : '',
           font: { size: 18 },
           standoff: 20,
         },
