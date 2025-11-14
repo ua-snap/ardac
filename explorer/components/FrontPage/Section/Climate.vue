@@ -5,25 +5,25 @@
     <div class="tile is-ancestor">
       <div class="tile is-parent pr-5 border-right">
         <div class="tile is-child">
-          <ItemTextPicture slug="climate-beetle-protection" />
+          <ItemTextPicture slug="story-cmip6-downscaled" />
         </div>
       </div>
 
       <div class="tile is-parent">
         <div class="tile is-child">
-          <ItemTextPicture slug="story-arctic-climate-data-node" />
+          <ItemTextPicture slug="story-fire-prone-conditions" />
         </div>
       </div>
 
       <div class="tile is-vertical is-parent">
         <div class="tile is-child border-bottom">
-          <ItemText slug="indicator-ftc-cmip6" />
+          <ItemText slug="era5-wrf-xray" />
         </div>
         <div class="tile is-child border-bottom">
-          <ItemText slug="indicator-wsdi" />
+          <ItemText slug="temperature-cmip6-downscaled" />
         </div>
         <div class="tile is-child">
-          <ItemText slug="notebook-raster-database" />
+          <ItemText slug="precipitation-cmip6-downscaled" />
         </div>
       </div>
     </div>

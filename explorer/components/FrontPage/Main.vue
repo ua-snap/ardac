@@ -14,6 +14,15 @@
 
         <ul>
           <li>
+            <ItemBrief slug="era5-wrf-xray" showTag />
+          </li>
+          <li>
+            <ItemBrief slug="temperature-cmip6-downscaled" showTag />
+          </li>
+          <li>
+            <ItemBrief slug="precipitation-cmip6-downscaled" showTag />
+          </li>
+          <li>
             <ItemBrief slug="indicator-su-cmip6" showTag />
           </li>
           <li>
