@@ -18,9 +18,9 @@
           <span>📢</span>
           <strong>What's new?</strong> Dive into the latest ARDAC updates!
           Explore the
-          <NuxtLink to="/item/era5-xray">ERA5 X-Ray module</NuxtLink> to view
-          the full <strong>ERA5 reanalysis dataset</strong> through interactive
-          maps and charts and interact with
+          <NuxtLink to="/item/era5-wrf-xray">ERA5 X-Ray module</NuxtLink> to
+          view the full <strong>ERA5 reanalysis dataset</strong> through
+          interactive maps and charts and interact with
           <strong>CMIP6 Downscaled Data</strong>, including daily
           <NuxtLink to="/item/temperature-cmip6-downscaled"
             >temperature (min/max)</NuxtLink
