@@ -22,6 +22,8 @@ const { latLng } = storeToRefs(placesStore)
 
 const endpoint = ERA5_WRF_CONFIG.endpoint
 
+const apiData = computed(() => dataStore.apiData[endpoint] ?? null)
+
 // User-controlled state
 const selectedYear = ref<number>(2023)
 
@@ -44,7 +46,7 @@ const variables: Era5WrfVariableKey[] = [
 ]
 
 // Get series data for selected year, filtered to fire season
-const { apiData, seriesByVariable } = filterEra5WrfSeries(
+const { seriesByVariable } = filterEra5WrfSeries(
   startDate,
   endDate,
   variables,
@@ -62,12 +64,11 @@ const climatologyVariables: Era5WrfVariableKey[] = [
 ]
 
 // BRUCE -- Squint! Literally pop eyeballs out
-const { climatologyData, availableYears } =
-  calculateEra5WrfClimatology(
-    climatologyVariables,
-    climatologyPeriod,
-    selectedYear
-  )
+const { climatologyData, availableYears } = calculateEra5WrfClimatology(
+  climatologyVariables,
+  climatologyPeriod,
+  selectedYear
+)
 
 // Calculate fire weather statistics
 const fireStatistics = computed(() => {

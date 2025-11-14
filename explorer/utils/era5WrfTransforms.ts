@@ -135,7 +135,6 @@ export const filterEra5WrfSeries = (
   })
 
   return {
-    apiData,
     seriesByVariable,
   }
 }
