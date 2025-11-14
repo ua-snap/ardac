@@ -367,7 +367,7 @@ test('Check footer', async ({ page }) => {
   )
 
   await page.waitForSelector(
-    'div > footer > div > p:has-text("Funding provided by the Data Management Program, Climate and Environmental Sciences Division, US Department of Energy.")'
+    'div > footer > div > p:has-text("Funding & guidance provided by the Data Management Program, Climate and Environmental Sciences Division, US Department of Energy and the USGS Alaska Climate Adaptation Science Center.")'
   )
   await page.waitForSelector(
     'div > footer > div > p.lighter:has-text("Please contact uaf-snap-data-tools@alaska.edu with questions or comments.")'
