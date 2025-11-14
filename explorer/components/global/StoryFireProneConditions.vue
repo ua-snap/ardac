@@ -29,19 +29,6 @@ const availableYears = Array.from(
   (_, i) => 1960 + i
 )
 
-// Initialize with most recent complete year when data loads
-// BRUCE TODO -- almost certainly want to hardcode this for reduced complexity demon
-watch(
-  availableYears,
-  years => {
-    if (years.length && !selectedYear.value) {
-      // Use second-to-last year (most recent complete year)
-      selectedYear.value =
-        years.length > 1 ? years[years.length - 2] : years[years.length - 1]
-    }
-  },
-  { immediate: true }
-)
 
 // Date range for selected year
 const startDate = computed(() => `${selectedYear.value}-01-01`)
