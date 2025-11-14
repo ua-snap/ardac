@@ -64,4 +64,9 @@ export default [
     image: 'Rick2_bw.png',
     blurb: `I am a longtime Alaska resident and expert in Alaska climate and weather who shares reliable climate change information through webinars and graphics.`,
   },
+  {
+    person: 'Chris Waigl',
+    image: 'chrisw.jpg',
+    blurb: `I am a data scientist studying climate impacts on ecological systems including wildfire, river ice, and vegetation in order to support decision-makers across Alaska and the Arctic.`,
+  }
 ] satisfies Bio[]

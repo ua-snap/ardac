@@ -322,6 +322,7 @@ onUnmounted(() => {
           </p>
         </template>
       </GetAndUseData>
+      <Bios :people="['Chris Waigl', 'Charlie Parr']" />
     </div>
   </section>
 </template>
