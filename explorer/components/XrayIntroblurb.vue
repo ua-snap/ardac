@@ -25,8 +25,7 @@ const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
         similar data which are peer reviewed
       </li>
       <li v-if="cmip == 6">
-        EC-Earth3-Veg, MIROC6, etc&hellip; these are the names of climate
-        models.
+        GFDL-ESM4, CESM2, etc&hellip; these are the names of climate models.
         <a href="https://doi.org/10.1016/j.envsoft.2018.03.021"
           >&#x2192; read more</a
         >
@@ -47,19 +46,21 @@ const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
         representing emissions scenarios.
       </li>
       <li v-if="cmip == 6">
-        There are up to
+        There are
         <NuxtLink to="/item/story-arctic-climate-data-node"
           >fourteen models</NuxtLink
         >
-        and four different scenarios included in this dataset. Not all models
-        have all scenarios available.
+        included in this dataset, and up to four different scenarios. Not all
+        models have all scenarios available.
       </li>
       <li>
         the spatial resolution of this dataset is
         <strong>{{ resolution }}&#8239;{{ unit }}</strong
         >.
       </li>
+      <slot name="ERA5variables" />
     </ul>
+    <slot />
   </blockquote>
 </template>
 

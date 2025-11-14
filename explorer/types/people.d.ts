@@ -13,3 +13,4 @@ type Person =
 	| 'Craig Stephenson'
 	| 'Josh Paul'
 	| 'Rick Thoman'
+	| 'Chris Waigl'

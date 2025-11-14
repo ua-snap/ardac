@@ -69,3 +69,5 @@ type Slug =
   | 'evaporation-cmip6'
   | 'places-and-polygons'
   | 'story-climate-indicators'
+  | 'era5-wrf-xray'
+  | 'story-fire-prone-conditions'

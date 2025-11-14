@@ -16,10 +16,10 @@ const year = new Date().getFullYear()
         <a href="https://uaf-iarc.org">International Arctic Research Center</a>.
       </p>
       <p>
-        Funding provided by the
+        Funding & guidance provided by the
         <a href="https://science.osti.gov/ber/Research/eessd/Data-Management"
           >Data Management Program</a
-        >, Climate and Environmental Sciences Division, US Department of Energy.
+        >, Climate and Environmental Sciences Division, US Department of Energy and the <a href="https://akcasc.org/">USGS Alaska Climate Adaptation Science Center</a>.  Thank you for helping make scientific data accessible and useful to the public!
       </p>
 
       <p class="lighter">

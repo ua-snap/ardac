@@ -280,7 +280,7 @@ onUnmounted(() => {
           >
           {{ placeName }}.
           <button class="button is-link is-light" @click="clearSelectedPlace">
-            &#x21BA; Pick a new place
+            Pick a new place
           </button>
         </p>
       </div>
@@ -292,6 +292,11 @@ onUnmounted(() => {
           <span v-if="communitiesEnabled">a community or by</span>
           lat/long</label
         >
+
+        <div class="is-size-5 mb-4">
+          <slot name="additionalInstructions" />
+        </div>
+
         <p v-if="communitiesEnabled" class="is-size-5">
           Only communities within the footprint of the data are included in this
           search.

@@ -23,12 +23,20 @@ export const useChartStore = defineStore('chart', () => {
 
   function getChartTitle(label: string): string {
     const placesStore = usePlacesStore()
-    let title = label + ' for '
+    let title = ''
+    if (label !== '') {
+      title = label + ' for '
+    }
     if (placesStore.selectedCommunity) {
-      title += placesStore.selectedCommunity.name + ' at '
+      title +=
+        placesStore.selectedCommunity.name +
+        (placesStore.selectedCommunity.alt_name
+          ? ` (${placesStore.selectedCommunity.alt_name})`
+          : '') +
+        ' at '
     }
     if (placesStore.latLng) {
-      title += placesStore.latLng.lat + ', ' + placesStore.latLng.lng
+      title += placesStore.latLng.lat + '°N, ' + placesStore.latLng.lng + '°E'
     }
     return title
   }

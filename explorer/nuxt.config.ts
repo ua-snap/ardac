@@ -152,6 +152,7 @@ export default defineNuxtConfig({
         '/item/story-beetle-climate-protection',
         '/item/summary-landfast-sea-ice',
         '/item/story-climate-indicators',
+        '/item/story-fire-prone-conditions',
         '/tag/Climate',
         '/tag/Programming',
         '/tag/Terrestrial',
