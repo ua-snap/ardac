@@ -77,7 +77,7 @@
               </div>
               <div class="tile is-parent">
                 <div class="left tile is-child">
-                  <ItemText slug="story-beetle-climate-protection" showTag />
+                  <ItemTextPicture slug="story-climate-stripes-2" showTag />
                 </div>
                 <div class="left tile is-child">
                   <ItemTextPicture slug="summary-landfast-sea-ice" showTag />
