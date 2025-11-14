@@ -59,7 +59,8 @@ export function calculatePercentiles(
     if (lower === upper) {
       result[`p${p}`] = sorted[lower]
     } else {
-      result[`p${p}`] = sorted[lower] + fraction * (sorted[upper] - sorted[lower])
+      result[`p${p}`] =
+        sorted[lower] + fraction * (sorted[upper] - sorted[lower])
     }
   })
 
@@ -249,28 +250,6 @@ export function calculateClimatology(
 }
 
 /**
- * Get available years from API data
- *
- * @param apiData - ERA5-WRF API data
- * @returns Sorted array of unique years
- */
-export function getAvailableYears(apiData: Record<string, any>): number[] {
-  if (!apiData || Object.keys(apiData).length === 0) {
-    return []
-  }
-
-  const years = new Set<number>()
-  Object.keys(apiData).forEach(dateString => {
-    const year = new Date(dateString).getFullYear()
-    years.add(year)
-  })
-
-  let k = Array.from(years).sort((a, b) => a - b)
-  console.log(k)
-  return k
-}
-
-/**
  * Get climatology value for a specific date and percentile
  *
  * Useful for comparing a single date's value against climatology
@@ -299,4 +278,3 @@ export function getClimatologyValueForDate(
   const band = climatology.bands.find(b => b.dayOfYear === doy)
   return band ? band[percentile] : null
 }
-
