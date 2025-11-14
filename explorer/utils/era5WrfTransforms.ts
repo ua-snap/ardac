@@ -47,13 +47,26 @@ export const calculateEra5WrfClimatology = (
     const result: Record<string, ClimatologyData> = {}
 
     variables.forEach(variable => {
-      result[variable] = calculateClimatology(
+      const fullClimatology = calculateClimatology(
         apiData,
         variable,
         startYear,
         endYear,
         targetYear
       )
+
+      // Filter climatology bands to only fire season (March 15 - October 15)
+      const fireSeasonBands = fullClimatology.bands.filter(band => {
+        const monthDay = band.date.slice(5)
+        return (
+          monthDay >= ERA5_FIRE_SEASON.start && monthDay <= ERA5_FIRE_SEASON.end
+        )
+      })
+
+      result[variable] = {
+        ...fullClimatology,
+        bands: fireSeasonBands,
+      }
     })
 
     return result
