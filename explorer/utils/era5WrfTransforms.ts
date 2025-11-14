@@ -9,10 +9,7 @@ import {
   ERA5_CLIMATOLOGY_PERIODS,
 } from '~/utils/era5WrfConstants'
 import type { Era5WrfVariableKey } from '~/utils/era5WrfConstants'
-import {
-  calculateClimatology,
-  getAvailableYears,
-} from '~/utils/era5WrfClimatology'
+import { calculateClimatology } from '~/utils/era5WrfClimatology'
 import type { ClimatologyData } from '~/utils/era5WrfClimatology'
 
 /**
@@ -25,13 +22,6 @@ export const calculateEra5WrfClimatology = (
 ) => {
   const dataStore = useDataStore()
   const endpoint = ERA5_WRF_CONFIG.endpoint
-
-  // Get available years from API data
-  const availableYears = computed<number[]>(() => {
-    const apiData = dataStore.apiData[endpoint]
-    if (!apiData) return []
-    return getAvailableYears(apiData)
-  })
 
   // Calculate climatology data for all variables
   const climatologyData = computed<Record<string, ClimatologyData>>(() => {
@@ -71,7 +61,6 @@ export const calculateEra5WrfClimatology = (
 
   return {
     climatologyData,
-    availableYears,
   }
 }
 

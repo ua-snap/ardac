@@ -64,7 +64,7 @@ const climatologyVariables: Era5WrfVariableKey[] = [
 ]
 
 // BRUCE -- Squint! Literally pop eyeballs out
-const { climatologyData, availableYears } = calculateEra5WrfClimatology(
+const { climatologyData } = calculateEra5WrfClimatology(
   climatologyVariables,
   climatologyPeriod,
   selectedYear
