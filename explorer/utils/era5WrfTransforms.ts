@@ -41,7 +41,6 @@ export const calculateEra5WrfClimatology = (
 
     // Validate selected year
     const targetYear = selectedYear.value
-    console.log(selectedYear.value)
 
     // Calculate climatology for each variable
     const result: Record<string, ClimatologyData> = {}

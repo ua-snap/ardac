@@ -27,7 +27,6 @@ const apiData = computed(() => dataStore.apiData[endpoint] ?? null)
 // User-controlled state
 const selectedYear = ref<number>(2023)
 
-// BRUCE TODO -- squint after reviewing the composable?
 const climatologyPeriod = ref<string>(ERA5_WRF_CONFIG.defaultClimatologyPeriod)
 
 // Date range for selected year
@@ -63,7 +62,6 @@ const climatologyVariables: Era5WrfVariableKey[] = [
   'rh2_min',
 ]
 
-// BRUCE -- Squint! Literally pop eyeballs out
 const { climatologyData } = calculateEra5WrfClimatology(
   climatologyVariables,
   climatologyPeriod,
