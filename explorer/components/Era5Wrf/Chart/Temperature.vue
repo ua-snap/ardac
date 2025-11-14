@@ -118,7 +118,6 @@ const buildChart = () => {
       }
     }
   }
-  alert(props.isFireSeason)
 
   // Add actual data traces
   // In fire season mode, only show max temperature
