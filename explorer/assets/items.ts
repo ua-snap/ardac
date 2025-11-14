@@ -489,5 +489,6 @@ export default [
     blurb:
       'Explore how temperature, humidity, precipitation, and wind patterns combine to create conditions favorable for wildfires. Compare recent years to historical climatology.',
     tags: ['Climate', 'Wildfire', 'Temperature', 'Precipitation'],
+    image: 'story-fire-prone-conditions.png',
   },
 ] satisfies Item[]
