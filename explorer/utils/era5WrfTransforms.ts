@@ -65,6 +65,8 @@ export const calculateEra5WrfClimatology = (
         targetYear
       )
     })
+
+    return result
   })
 
   return {
