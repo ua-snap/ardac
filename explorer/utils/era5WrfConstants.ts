@@ -25,12 +25,10 @@ export const ERA5_CLIMATOLOGY_PERIODS = {
   },
 } as const
 
-export const ERA5_SEASONS = {
-  fireSeasonDates: {
-    start: '03-15', // Earliest official start of fire season for AK
-    end: '10-15',
-  },
-} as const
+export const ERA5_FIRE_SEASON = {
+  start: '03-15', // Earliest official start of fire season for AK
+  end: '10-15',
+}
 
 export const CHART_CONFIG = {
   plotlyOptions: {

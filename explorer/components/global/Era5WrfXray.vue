@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getDefaultWindow } from '~/utils/era5WrfTransforms'
+import { getDefaultWindow, filterEra5WrfSeries } from '~/utils/era5WrfTransforms'
 import {
   ERA5_WRF_VARIABLES,
   ERA5_WRF_CONFIG,
@@ -50,7 +50,7 @@ const variables: Era5WrfVariableKey[] = [
 ]
 
 // Use composable for series preparation
-const { seriesByVariable } = useEra5WrfSeries(startDate, endDate, variables)
+const { seriesByVariable } = filterEra5WrfSeries(startDate, endDate, variables)
 
 // Initialize date range when data loads
 watch(

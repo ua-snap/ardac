@@ -5,7 +5,7 @@ import type { ClimatologyData } from '~/utils/era5WrfClimatology'
 import {
   CHART_CONFIG,
   ERA5_WRF_VARIABLES,
-  ERA5_SEASONS,
+  ERA5_FIRE_SEASON,
 } from '~/utils/era5WrfConstants'
 
 interface Props {
@@ -37,16 +37,6 @@ const rh2MaxVar = ERA5_WRF_VARIABLES.find(v => v.key === 'rh2_max')!
 const rh2MeanVar = ERA5_WRF_VARIABLES.find(v => v.key === 'rh2_mean')!
 const rh2MinVar = ERA5_WRF_VARIABLES.find(v => v.key === 'rh2_min')!
 
-// Helper to filter climatology bands to fire season if needed
-const filterBandsToSeason = (bands: any[]) => {
-  if (!props.isFireSeason) return bands
-  const { start, end } = ERA5_SEASONS.fireSeasonDates
-  return bands.filter(b => {
-    const monthDay = b.date.slice(5) // Extract MM-DD
-    return monthDay >= start && monthDay <= end
-  })
-}
-
 const buildChart = () => {
   const traces: Data[] = []
 
@@ -54,7 +44,7 @@ const buildChart = () => {
   if (props.showClimatology) {
     // RH2 Min climatology bands (most relevant for fire weather - low humidity)
     if (props.climatologyRh2Min && props.climatologyRh2Min.bands.length > 0) {
-      const filteredBands = filterBandsToSeason(props.climatologyRh2Min.bands)
+      const filteredBands = props.climatologyRh2Min.bands
       // 10th-90th percentile band (filled area)
       traces.push({
         x: filteredBands.map(b => b.date),
@@ -98,9 +88,8 @@ const buildChart = () => {
         props.climatologyRh2Mean &&
         props.climatologyRh2Mean.bands.length > 0
       ) {
-        const filteredMeanBands = filterBandsToSeason(
-          props.climatologyRh2Mean.bands
-        )
+        const filteredMeanBands = props.climatologyRh2Mean.bands
+
         traces.push({
           x: filteredMeanBands.map(b => b.date),
           y: filteredMeanBands.map(b => b.p50),
@@ -116,9 +105,8 @@ const buildChart = () => {
 
       // RH2 Max climatology median
       if (props.climatologyRh2Max && props.climatologyRh2Max.bands.length > 0) {
-        const filteredMaxBands = filterBandsToSeason(
-          props.climatologyRh2Max.bands
-        )
+        const filteredMaxBands = props.climatologyRh2Max.bands
+
         traces.push({
           x: filteredMaxBands.map(b => b.date),
           y: filteredMaxBands.map(b => b.p50),

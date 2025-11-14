@@ -5,7 +5,7 @@ import type { ClimatologyData } from '~/utils/era5WrfClimatology'
 import {
   CHART_CONFIG,
   ERA5_WRF_VARIABLES,
-  ERA5_SEASONS,
+  ERA5_FIRE_SEASON,
 } from '~/utils/era5WrfConstants'
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
   climatologyT2Mean?: ClimatologyData
   climatologyT2Min?: ClimatologyData
   showClimatology?: boolean
-  // Fire season filtering indicator
+  // Fire season used to label chart
   isFireSeason?: boolean
 }
 
@@ -37,16 +37,6 @@ const t2MaxVar = ERA5_WRF_VARIABLES.find(v => v.key === 't2_max')!
 const t2MeanVar = ERA5_WRF_VARIABLES.find(v => v.key === 't2_mean')!
 const t2MinVar = ERA5_WRF_VARIABLES.find(v => v.key === 't2_min')!
 
-// Helper to filter climatology bands to fire season if needed
-const filterBandsToSeason = (bands: any[]) => {
-  if (!props.isFireSeason) return bands
-  const { start, end } = ERA5_SEASONS.fireSeasonDates
-  return bands.filter(b => {
-    const monthDay = b.date.slice(5) // Extract MM-DD
-    return monthDay >= start && monthDay <= end
-  })
-}
-
 const buildChart = () => {
   const traces: Data[] = []
 
@@ -54,7 +44,7 @@ const buildChart = () => {
   if (props.showClimatology) {
     // T2 Max climatology bands
     if (props.climatologyT2Max && props.climatologyT2Max.bands.length > 0) {
-      const filteredBands = filterBandsToSeason(props.climatologyT2Max.bands)
+      const filteredBands = props.climatologyT2Max.bands
       // 10th-90th percentile band (filled area)
       traces.push({
         x: filteredBands.map(b => b.date),
@@ -95,9 +85,8 @@ const buildChart = () => {
     if (!props.isFireSeason) {
       // T2 Mean climatology median
       if (props.climatologyT2Mean && props.climatologyT2Mean.bands.length > 0) {
-        const filteredMeanBands = filterBandsToSeason(
-          props.climatologyT2Mean.bands
-        )
+        const filteredMeanBands = props.climatologyT2Mean.bands
+
         traces.push({
           x: filteredMeanBands.map(b => b.date),
           y: filteredMeanBands.map(b => b.p50),
@@ -113,9 +102,8 @@ const buildChart = () => {
 
       // T2 Min climatology median
       if (props.climatologyT2Min && props.climatologyT2Min.bands.length > 0) {
-        const filteredMinBands = filterBandsToSeason(
-          props.climatologyT2Min.bands
-        )
+        const filteredMinBands = props.climatologyT2Min.bands
+
         traces.push({
           x: filteredMinBands.map(b => b.date),
           y: filteredMinBands.map(b => b.p50),
@@ -130,6 +118,7 @@ const buildChart = () => {
       }
     }
   }
+  alert(props.isFireSeason)
 
   // Add actual data traces
   // In fire season mode, only show max temperature

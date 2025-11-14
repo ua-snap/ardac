@@ -1,7 +1,142 @@
 /**
  * ERA5-WRF data transformation utilities
- * Provides wind rose preparation and date window helpers
+ * Provides wind rose preparation, timeseries and date window helpers
  */
+
+import {
+  ERA5_WRF_CONFIG,
+  ERA5_FIRE_SEASON,
+  ERA5_CLIMATOLOGY_PERIODS,
+} from '~/utils/era5WrfConstants'
+import type { Era5WrfVariableKey } from '~/utils/era5WrfConstants'
+import {
+  calculateClimatology,
+  getAvailableYears,
+} from '~/utils/era5WrfClimatology'
+import type { ClimatologyData } from '~/utils/era5WrfClimatology'
+
+/**
+ * Calculate climatology (only needed for fire season right now)
+ */
+export const calculateEra5WrfClimatology = (
+  variables: Era5WrfVariableKey[], // Variables to calculate climatology for
+  climatologyPeriod: Ref<string>, // Climatology baseline period ('1960-1989' or '1990-2019')
+  selectedYear: Ref<number> // Year to align climatology bands to (for chart display)
+) => {
+  const dataStore = useDataStore()
+  const endpoint = ERA5_WRF_CONFIG.endpoint
+
+  // Get available years from API data
+  const availableYears = computed<number[]>(() => {
+    const apiData = dataStore.apiData[endpoint]
+    if (!apiData) return []
+    return getAvailableYears(apiData)
+  })
+
+  // Calculate climatology data for all variables
+  const climatologyData = computed<Record<string, ClimatologyData>>(() => {
+    const apiData = dataStore.apiData[endpoint]
+
+    // Return empty if no API data
+    if (!apiData || Object.keys(apiData).length === 0) {
+      return {}
+    }
+
+    // Get period from constant
+    const periodKey =
+      climatologyPeriod.value as keyof typeof ERA5_CLIMATOLOGY_PERIODS
+    const period = ERA5_CLIMATOLOGY_PERIODS[periodKey]
+
+    const { start: startYear, end: endYear } = period
+
+    // Validate selected year
+    const targetYear = selectedYear.value
+    console.log(selectedYear.value)
+
+    // Calculate climatology for each variable
+    const result: Record<string, ClimatologyData> = {}
+
+    variables.forEach(variable => {
+      result[variable] = calculateClimatology(
+        apiData,
+        variable,
+        startYear,
+        endYear,
+        targetYear
+      )
+    })
+  })
+
+  return {
+    climatologyData,
+    availableYears,
+  }
+}
+
+/**
+ * Utility function for filtering ERA5 data by date range, fire season and variable.
+ *
+ * @param startDate - ISO date string (YYYY-MM-DD)
+ * @param endDate - ISO date string (YYYY-MM-DD)
+ * @param variables - Array of ERA5-WRF variable keys to prepare
+ * @param filterToFireSeason - Whether to filter to fire season dates (default: false)
+ * @returns Object with apiData and seriesByVariable
+ */
+export const filterEra5WrfSeries = (
+  startDate: Ref<string>,
+  endDate: Ref<string>,
+  variables: Era5WrfVariableKey[],
+  filterToFireSeason = false
+) => {
+  const dataStore = useDataStore()
+  const endpoint = ERA5_WRF_CONFIG.endpoint
+
+  const apiData = computed(() => dataStore.apiData[endpoint] ?? null)
+
+  const seriesByVariable = computed(() => {
+    // Initialize empty series for all variables
+    const result: Record<string, Era5WrfSeriesPoint[]> = {}
+    variables.forEach(variable => {
+      result[variable] = []
+    })
+
+    // Return empty if no data or no date range
+    if (!apiData.value || !startDate.value || !endDate.value) {
+      return result
+    }
+
+    // API returns data in date-sorted order, which we use here.
+    let dates = Object.keys(apiData.value)
+
+    // Filter dates to the requested date range
+    dates = dates.filter(
+      date => date >= startDate.value && date <= endDate.value
+    )
+
+    // Filter to fire season if requested (March 15 - October 15)
+    if (filterToFireSeason) {
+      const { start, end } = ERA5_FIRE_SEASON
+      dates = dates.filter(date => {
+        const monthDay = date.slice(5) // Extract MM-DD from YYYY-MM-DD
+        return monthDay >= start && monthDay <= end
+      })
+    }
+
+    // Build series for each variable
+    variables.forEach(variable => {
+      result[variable] = dates.map(date => ({
+        date,
+        value: apiData.value[date]?.[variable] ?? null,
+      }))
+    })
+    return result
+  })
+
+  return {
+    apiData,
+    seriesByVariable,
+  }
+}
 
 export interface Era5WrfSeriesPoint {
   date: string
@@ -52,13 +187,11 @@ export interface WindRoseData {
 const DIRECTION_SECTORS = 8 // 8 compass directions (45° each)
 const SECTOR_SIZE = 360 / DIRECTION_SECTORS
 
-const DIRECTION_LABELS = [
-  'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW',
-]
+const DIRECTION_LABELS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
 
 // Wind speed ranges (m/s)
 const SPEED_BINS = [
-  { min: 0, max: 0.5},
+  { min: 0, max: 0.5 },
   { min: 0.5, max: 3 },
   { min: 3, max: 5 },
   { min: 5, max: 8 },

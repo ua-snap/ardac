@@ -265,7 +265,9 @@ export function getAvailableYears(apiData: Record<string, any>): number[] {
     years.add(year)
   })
 
-  return Array.from(years).sort((a, b) => a - b)
+  let k = Array.from(years).sort((a, b) => a - b)
+  console.log(k)
+  return k
 }
 
 /**

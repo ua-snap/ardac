@@ -5,6 +5,10 @@ const runtimeConfig = useRuntimeConfig()
 
 const era5wrfExtent = 'cmip6Downscaled'
 
+import {
+  filterEra5WrfSeries,
+  calculateEra5WrfClimatology,
+} from '~/utils/era5WrfTransforms'
 import { calculateFireWeatherStatistics } from '~/utils/era5WrfStatistics'
 import {
   ERA5_WRF_CONFIG,
@@ -40,11 +44,11 @@ const variables: Era5WrfVariableKey[] = [
 ]
 
 // Get series data for selected year, filtered to fire season
-const { apiData, seriesByVariable } = useEra5WrfSeries(
+const { apiData, seriesByVariable } = filterEra5WrfSeries(
   startDate,
   endDate,
   variables,
-  true
+  true // filter for fire season
 )
 
 // Calculate climatology
@@ -57,12 +61,13 @@ const climatologyVariables: Era5WrfVariableKey[] = [
   'rh2_min',
 ]
 
-// BRUCE -- Squint!
-const { climatologyData, hasData: hasClimatologyData } = useEra5WrfClimatology({
-  variables: climatologyVariables,
-  climatologyPeriod,
-  selectedYear,
-})
+// BRUCE -- Squint! Literally pop eyeballs out
+const { climatologyData, availableYears } =
+  calculateEra5WrfClimatology(
+    climatologyVariables,
+    climatologyPeriod,
+    selectedYear
+  )
 
 // Calculate fire weather statistics
 const fireStatistics = computed(() => {
@@ -206,7 +211,6 @@ onUnmounted(() => {
               :climatologyT2Max="climatologyData.t2_max"
               :climatologyT2Mean="climatologyData.t2_mean"
               :climatologyT2Min="climatologyData.t2_min"
-              :showClimatology="hasClimatologyData"
               :isFireSeason="true"
               :lat="latLng.lat"
               :lng="latLng.lng"
@@ -223,7 +227,6 @@ onUnmounted(() => {
               :climatologyRh2Max="climatologyData.rh2_max"
               :climatologyRh2Mean="climatologyData.rh2_mean"
               :climatologyRh2Min="climatologyData.rh2_min"
-              :showClimatology="hasClimatologyData"
               :isFireSeason="true"
               :lat="latLng.lat"
               :lng="latLng.lng"
