@@ -20,15 +20,9 @@ const endpoint = ERA5_WRF_CONFIG.endpoint
 
 // User-controlled state
 const selectedYear = ref<number>(2023)
+
 // BRUCE TODO -- squint after reviewing the composable?
 const climatologyPeriod = ref<string>(ERA5_WRF_CONFIG.defaultClimatologyPeriod)
-
-// Available years for ERA5-WRF data (1960-2023)
-const availableYears = Array.from(
-  { length: 2023 - 1960 + 1 },
-  (_, i) => 1960 + i
-)
-
 
 // Date range for selected year
 const startDate = computed(() => `${selectedYear.value}-01-01`)
@@ -191,7 +185,6 @@ onUnmounted(() => {
           <Era5WrfFireControls
             v-model:selectedYear="selectedYear"
             v-model:climatologyPeriod="climatologyPeriod"
-            :availableYears="availableYears"
           />
 
           <!-- Statistics Panel -->

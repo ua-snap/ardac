@@ -7,6 +7,11 @@ export const ERA5_WRF_CONFIG = {
   defaultClimatologyPeriod: '1960-1989',
 } as const
 
+export const ERA5_AVAILABLE_YEARS = Array.from(
+  { length: 2023 - 1960 + 1 },
+  (_, i) => 1960 + i
+)
+
 export const ERA5_CLIMATOLOGY_PERIODS = {
   '1960-1989': {
     label: '1960&ndash;1989',

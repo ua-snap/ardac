@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-import { ERA5_CLIMATOLOGY_PERIODS } from '~/utils/era5WrfConstants'
+import {
+  ERA5_CLIMATOLOGY_PERIODS,
+  ERA5_AVAILABLE_YEARS,
+} from '~/utils/era5WrfConstants'
 
-interface Props {
-  availableYears: number[]
-}
-
-const props = defineProps<Props>()
-
-// v-model bindings
+// Bidirectional bindings to parent component
 const selectedYear = defineModel<number>('selectedYear', { required: true })
 const climatologyPeriod = defineModel<string>('climatologyPeriod', {
   default: '1960-1989',
@@ -29,7 +26,7 @@ const climatologyPeriods = ERA5_CLIMATOLOGY_PERIODS
       <div class="control">
         <div class="select">
           <select v-model.number="selectedYear">
-            <option v-for="year in availableYears" :key="year" :value="year">
+            <option v-for="year in ERA5_AVAILABLE_YEARS" :key="year" :value="year">
               {{ year }}
             </option>
           </select>
