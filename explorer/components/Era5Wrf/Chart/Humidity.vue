@@ -2,11 +2,7 @@
 import type { Data } from 'plotly.js-dist-min'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 import type { ClimatologyData } from '~/utils/era5WrfClimatology'
-import {
-  CHART_CONFIG,
-  ERA5_WRF_VARIABLES,
-  ERA5_FIRE_SEASON,
-} from '~/utils/era5WrfConstants'
+import { CHART_CONFIG, ERA5_WRF_VARIABLES } from '~/utils/era5WrfConstants'
 
 const chartStore = useChartStore()
 
