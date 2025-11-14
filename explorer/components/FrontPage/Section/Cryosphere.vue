@@ -10,7 +10,7 @@
       </div>
       <div class="tile is-parent pr-5 border-right">
         <div class="tile is-child">
-          <ItemTextPicture slug="sea-ice-concentration" />
+          <ItemTextPicture slug="sea-ice-cmip6" />
         </div>
       </div>
       <div class="tile is-parent pr-5 border-right">

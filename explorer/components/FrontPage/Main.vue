@@ -14,6 +14,15 @@
 
         <ul>
           <li>
+            <ItemBrief slug="era5-wrf-xray" showTag />
+          </li>
+          <li>
+            <ItemBrief slug="temperature-cmip6-downscaled" showTag />
+          </li>
+          <li>
+            <ItemBrief slug="precipitation-cmip6-downscaled" showTag />
+          </li>
+          <li>
             <ItemBrief slug="indicator-su-cmip6" showTag />
           </li>
           <li>
@@ -55,12 +64,12 @@
         <div class="tile is-ancestor">
           <div class="tile is-parent is-vertical">
             <div class="tile lead is-child border-bottom">
-              <ItemTextPicture slug="story-climate-stripes-2" />
+              <ItemTextPicture slug="story-cmip6-downscaled" />
             </div>
             <div class="general">
               <div class="row tile is-parent mb-4">
                 <div class="left tile is-child">
-                  <ItemTextPicture slug="summary-landfast-sea-ice" showTag />
+                  <ItemTextPicture slug="story-fire-prone-conditions" showTag />
                 </div>
                 <div class="right tile is-child">
                   <ItemTextPicture slug="story-climate-indicators" showTag />
@@ -68,10 +77,10 @@
               </div>
               <div class="tile is-parent">
                 <div class="left tile is-child">
-                  <ItemText slug="story-beetle-climate-protection" showTag />
+                  <ItemTextPicture slug="story-climate-stripes-2" showTag />
                 </div>
-                <div class="right tile is-child">
-                  <ItemText slug="notebook-precip-poly" showTag />
+                <div class="left tile is-child">
+                  <ItemTextPicture slug="summary-landfast-sea-ice" showTag />
                 </div>
               </div>
             </div>

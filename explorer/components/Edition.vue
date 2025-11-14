@@ -1,10 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="edition">
-    &mdash; ☀️&nbsp;Edition,
-    June 2025 &mdash;
-  </div>
+  <div class="edition">&mdash; ❄️&nbsp;Edition, November 2025 &mdash;</div>
 </template>
 
 <style scoped lang="scss">
