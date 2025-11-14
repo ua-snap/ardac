@@ -60,7 +60,7 @@
             <div class="general">
               <div class="row tile is-parent mb-4">
                 <div class="left tile is-child">
-                  <ItemTextPicture slug="summary-landfast-sea-ice" showTag />
+                  <ItemTextPicture slug="story-fire-prone-conditions" showTag />
                 </div>
                 <div class="right tile is-child">
                   <ItemTextPicture slug="story-climate-indicators" showTag />
@@ -70,8 +70,8 @@
                 <div class="left tile is-child">
                   <ItemText slug="story-beetle-climate-protection" showTag />
                 </div>
-                <div class="right tile is-child">
-                  <ItemText slug="notebook-precip-poly" showTag />
+                <div class="left tile is-child">
+                  <ItemTextPicture slug="summary-landfast-sea-ice" showTag />
                 </div>
               </div>
             </div>
