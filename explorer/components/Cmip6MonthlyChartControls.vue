@@ -36,9 +36,9 @@ chartStore.labels[endpoint] = {
   models: {
     CESM2: 'CESM2',
     'CNRM-CM6-1-HR': 'CNRM-CM6-1-HR',
-    'E3SM-1-1': 'E3SM-1-1',
     'E3SM-2-0': 'E3SM-2-0',
     'EC-Earth3-Veg': 'EC-Earth3-Veg',
+    Ensemble: 'Ensemble',
     'GFDL-ESM4': 'GFDL-ESM4',
     'HadGEM3-GC31-LL': 'HadGEM3-GC31-LL',
     'HadGEM3-GC31-MM': 'HadGEM3-GC31-MM',
@@ -77,6 +77,7 @@ if (props.datasetKeys?.includes('siconc')) {
     chartStore.labels[endpoint] = {
       ...chartStore.labels[endpoint],
       models: {
+        Ensemble: 'Ensemble',
         'HadGEM3-GC31-LL': 'HadGEM3-GC31-LL',
         'HadGEM3-GC31-MM': 'HadGEM3-GC31-MM',
         MIROC6: 'MIROC6',
