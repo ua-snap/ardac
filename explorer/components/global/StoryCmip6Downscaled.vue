@@ -170,7 +170,7 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
         Raw outputs from General Circulation Models (GCMs) are helpful to get a
         glimpse into how the climate is likely to change at a global scale, but
         they have limitations. When zooming in on a particular region like
-        Alaska, for example, the data is very coarse (low resolution) and
+        Alaska, for example, the data are very coarse (low resolution) and
         difficult to relate to local communities and areas. This is where
         downscaling helps.
       </p>
