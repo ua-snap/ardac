@@ -488,7 +488,7 @@ export default [
     slug: 'story-fire-prone-conditions',
     title: 'Fire-Prone Conditions in Alaska',
     blurb:
-      'Explore how temperature, humidity, precipitation, and wind patterns combine to create conditions favorable for wildfires. Compare recent years to historical climatology.',
+      'Explore how temperature, humidity, and precipitation combine to create conditions favorable for wildfires. Compare recent years to historical climatology.',
     tags: ['Climate', 'Wildfire', 'Temperature', 'Precipitation'],
     image: 'story-fire-prone-conditions.png',
   },
