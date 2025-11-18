@@ -132,6 +132,12 @@ const buildChart = () => {
       tickangle: 45,
     })
 
+    layout.xaxis = {
+      tickmode: 'array',
+      tickvals: xTickVals,
+      ticktext: xTickLabels,
+    }
+
     const config = getConfig(chartTitle)
 
     $Plotly.newPlot(chartId.value, traces, layout, config)
