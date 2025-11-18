@@ -51,7 +51,10 @@ chartStore.labels[endpoint] = {
 // scenario if user accidentally lands on an invalid model/scenrio combination.
 const scenarioPresent = (value: string) => {
   if (apiData.value) {
-    return apiData.value[value as any][modelInput.value] != null
+    return (
+      apiData.value[modelInput.value as any] != null &&
+      apiData.value[modelInput.value as any][value as any] != null
+    )
   }
 }
 
