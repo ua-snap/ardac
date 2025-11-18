@@ -189,6 +189,7 @@ onUnmounted(() => {
           </li>
         </ul>
       </div>
+      <Bios :people="['Jeremy Littell', 'Craig Stephenson']" />
     </div>
   </section>
 </template>

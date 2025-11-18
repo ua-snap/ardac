@@ -67,6 +67,11 @@ export default [
   {
     person: 'Chris Waigl',
     image: 'chrisw.jpg',
-    blurb: `I am a data scientist studying climate impacts on ecological systems including wildfire, river ice, and vegetation in order to support decision-makers across Alaska and the Arctic.`,
+    blurb: `I am an Earth system scientist studying climate impacts on ecological systems including wildfire, river ice, and vegetation in order to support decision-makers across Alaska and the Arctic.`,
+  },
+  {
+    person: 'Jeremy Littell',
+    image: 'littell3_bw.jpg',
+    blurb: `I am a Research Ecologist focused on the role of climate and ecological drought in Alaska and other forested ecosystems who facilitates the use of climate information in planning, adaptation, and vulnerability assessment.`,
   }
 ] satisfies Bio[]

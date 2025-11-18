@@ -294,6 +294,7 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
         <NuxtLink to="/tag/CMIP6">CMIP6 topic</NuxtLink>
         page.
       </p>
+      <Bios :people="['Jeremy Littell', 'Craig Stephenson']" />
     </div>
   </section>
 </template>
