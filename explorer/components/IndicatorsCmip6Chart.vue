@@ -30,10 +30,10 @@ let chartData: any
 // Get min/max values for the selected month of CMIP6 monthly charts.
 const minMax = (chartData: any) => {
   let flatValues: number[] = []
-  Object.values(chartData).forEach((scenarios: any) => {
-    Object.values(scenarios).forEach((model: any) => {
-      if (model) {
-        Object.entries(model).forEach(([key, value]) => {
+  Object.values(chartData).forEach((models: any) => {
+    Object.values(models).forEach((scenarios: any) => {
+      if (scenarios) {
+        Object.entries(scenarios).forEach(([key, value]) => {
           if (value) {
             let indicatorObj = value as any
             let v = parseFloat(indicatorObj[props.dataKey])
@@ -59,11 +59,11 @@ const getPlotValues = (params: any) => {
 
   if (params.historical) {
     years.forEach((year: number) => {
-      values.push(chartData['historical'][params.model][year][props.dataKey])
+      values.push(chartData[params.model]['historical'][year][props.dataKey])
     })
   } else {
     years.forEach((year: number) => {
-      values.push(chartData[params.scenario][params.model][year][props.dataKey])
+      values.push(chartData[params.model][params.scenario][year][props.dataKey])
     })
   }
 
