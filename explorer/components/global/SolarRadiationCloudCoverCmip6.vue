@@ -165,7 +165,7 @@ onUnmounted(() => {
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Solar Radiation & Cloud Cover, CMIP6</h3>
-      <XrayIntroblurb resolution="100" unit="km" cmip="6" beta />
+      <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         The map below shows modeled mean downwelling shortwave and longwave flux
         and cloud area fraction (cloud cover) for the month of August in the

@@ -193,7 +193,7 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
           local scale using physical laws
         </li>
       </ul>
-
+      <Cmip6AlphaWarning />
       <p>
         Previously, we have made CMIP6 data of the non-downscaled variety
         available through ARDAC Explorer. These datasets are not strictly raw
@@ -294,6 +294,7 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
         <NuxtLink to="/tag/CMIP6">CMIP6 topic</NuxtLink>
         page.
       </p>
+      <Bios :people="['Jeremy Littell', 'Craig Stephenson']" />
     </div>
   </section>
 </template>

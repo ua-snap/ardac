@@ -100,7 +100,8 @@ onUnmounted(() => {
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Temperature, Downscaled CMIP6</h3>
-      <XrayIntroblurb resolution="4" unit="km" cmip="6" beta />
+      <Cmip6AlphaWarning />
+      <XrayIntroblurb resolution="4" unit="km" cmip="6" />
       <p class="mb-6">
         The map below shows maximum near-surface air temperature for the month
         of July and minimum near-surface air temperature for the month of
@@ -189,6 +190,7 @@ onUnmounted(() => {
           </li>
         </ul>
       </div>
+      <Bios :people="['Jeremy Littell', 'Craig Stephenson']" />
     </div>
   </section>
 </template>

@@ -14,3 +14,4 @@ type Person =
 	| 'Josh Paul'
 	| 'Rick Thoman'
 	| 'Chris Waigl'
+	| 'Jeremy Littell'
