@@ -205,7 +205,7 @@ export default defineNuxtConfig({
     head: {
       noscript: [
         {
-          children: noscriptHtml,
+          innerHTML: noscriptHtml,
         },
       ],
       title: 'Arctic Data Collaborative: ARDAC',
