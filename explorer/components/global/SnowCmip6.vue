@@ -253,7 +253,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <XrayIntroblurb resolution="100" unit="km" cmip="6" beta />
+      <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true"/>
       <h3 class="title is-3">Snow, CMIP6</h3>
       <p class="mb-6">
         The map below shows modeled snow variables for the month of March using

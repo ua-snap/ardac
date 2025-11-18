@@ -61,7 +61,7 @@ mapStore.setLegendItems(mapId, legend)
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Freeze/Thaw Cycle</h3>
-      <XrayIntroblurb resolution="100" unit="km" cmip="6" beta />
+      <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         Freeze/thaw cycle is the number of days where maximum daily temperatures
         are above freezing and minimum daily temperatures are at or below
