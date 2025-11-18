@@ -128,7 +128,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true"/>
+      <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <h3 class="title is-3">Sea Ice Concentration, CMIP6</h3>
       <p class="mb-6">
         The map below shows modeled sea ice concentration for the month of March
