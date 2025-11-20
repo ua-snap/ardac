@@ -395,7 +395,9 @@ test('Check Climate Indicators story page', async ({ page }) => {
 
   // Verify key content sections are present
   await page.waitForSelector('h4:has-text("What is a climate indicator?")')
-  await page.waitForSelector('h4:has-text("Why do we need climate indicators?")')
+  await page.waitForSelector(
+    'h4:has-text("Why do we need climate indicators?")'
+  )
 
   // Scroll down to where the first chart should be
   await page.evaluate(() => {
@@ -413,7 +415,9 @@ test('Check Climate Indicators story page', async ({ page }) => {
 
   // Wait for and verify the first chart (Cmip6MonthlyChart with dataKey="tas")
   // This chart shows "Mean Near-surface Air Temperature" and should have id="tas-chart"
-  await page.waitForSelector('#tas-chart > div.js-plotly-plot', { timeout: 60000 })
+  await page.waitForSelector('#tas-chart > div.js-plotly-plot', {
+    timeout: 60000,
+  })
   await expect(page.locator('#tas-chart > div.js-plotly-plot')).toBeVisible()
 
   // Verify the first chart has actual Plotly content with data (svg elements)
