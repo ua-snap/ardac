@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-import { getDefaultWindow, filterEra5WrfSeries } from '~/utils/era5WrfTransforms'
+import {
+  getDefaultWindow,
+  filterEra5WrfSeries,
+} from '~/utils/era5WrfTransforms'
 import {
   ERA5_WRF_VARIABLES,
   ERA5_WRF_CONFIG,
@@ -13,6 +16,7 @@ const placesStore = usePlacesStore()
 const mapStore = useMapStore()
 
 const endpoint = 'era5wrf'
+const elevationEndpoint = 'era5Elevation4km'
 const era5wrfExtent = 'cmip6Downscaled'
 
 const latLng = computed(() => placesStore.latLng)
@@ -30,6 +34,9 @@ const CHART_IDS = [
 ]
 
 const dataError = computed(() => dataStore.dataErrors[endpoint] ?? false)
+const elevationData = computed(
+  () => dataStore.apiData[elevationEndpoint] ?? null
+)
 
 // Date range state
 const startDate = ref<string>('')
@@ -85,6 +92,7 @@ const purgeAllCharts = () => {
 const fetchData = () => {
   if (!latLng.value) return
   dataStore.fetchData(endpoint)
+  dataStore.fetchData(elevationEndpoint)
 }
 
 const layers: MapLayer[] = [
@@ -188,10 +196,11 @@ onMounted(() => {
 })
 
 watch(latLng, async () => {
-  // Proactively purge all charts before data changes (following WetDaysPerYear pattern)
   purgeAllCharts()
   dataStore.apiData[endpoint] = null
   dataStore.dataErrors[endpoint] = false
+  dataStore.apiData[elevationEndpoint] = null
+  dataStore.dataErrors[elevationEndpoint] = false
   fetchData()
 })
 
@@ -199,6 +208,8 @@ onUnmounted(() => {
   purgeAllCharts()
   dataStore.apiData[endpoint] = null
   dataStore.dataErrors[endpoint] = false
+  dataStore.apiData[elevationEndpoint] = null
+  dataStore.dataErrors[elevationEndpoint] = false
 })
 </script>
 
@@ -271,6 +282,16 @@ onUnmounted(() => {
       </p>
 
       <Gimme :communities-enabled="true" :extent="era5wrfExtent" />
+
+      <div v-if="elevationData" class="notification is-info is-light mb-4">
+        <p>
+          The representative grid cell for this location has an elevation of
+          <strong
+            >{{ elevationData.elevation }} {{ elevationData.units }}</strong
+          >
+          at <strong>{{ elevationData.res }}</strong> resolution.
+        </p>
+      </div>
 
       <div v-if="latLng && apiData" class="mt-4">
         <Era5WrfChartControls
