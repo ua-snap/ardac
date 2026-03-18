@@ -285,11 +285,12 @@ onUnmounted(() => {
 
       <div v-if="elevationData" class="notification is-info is-light mb-4">
         <p>
-          The representative grid cell for this location has an elevation of
+          The representative <strong>{{ elevationData.res }}</strong> resolution
+          grid cell for this location has an elevation of
           <strong
             >{{ elevationData.elevation }} {{ elevationData.units }}</strong
           >
-          at <strong>{{ elevationData.res }}</strong> resolution.
+          .
         </p>
       </div>
 
