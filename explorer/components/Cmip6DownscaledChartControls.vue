@@ -12,7 +12,7 @@ const chartStore = useChartStore()
 
 const defaultScenario = 'ssp585'
 
-const modelInput = defineModel('model', { default: '6ModelAvg' })
+const modelInput = defineModel('model', { default: '7ModelAvg' })
 const scenarioInput = defineModel('scenario', { default: 'ssp585' })
 const baselineYearInput = defineModel('baselineYear', { default: '1965' })
 const projectedYearInput = defineModel('projectedYear', { default: '2100' })
@@ -37,7 +37,7 @@ type Cmip6DownscaledOptions = {
 // combinations are present just by looking at the data.
 const cmip6_downscaled_options: Cmip6DownscaledOptions = {
   tasmax: {
-    '6ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
+    '7ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
     'CNRM-CM6-1-HR': ['historical', 'ssp126', 'ssp585'],
     'E3SM-2-0': ['historical', 'ssp370'],
     'EC-Earth3-Veg': ['historical', 'ssp370', 'ssp585'],
@@ -51,7 +51,7 @@ const cmip6_downscaled_options: Cmip6DownscaledOptions = {
     TaiESM1: ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
   },
   tasmin: {
-    '6ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
+    '7ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
     'CNRM-CM6-1-HR': ['historical', 'ssp126', 'ssp585'],
     'E3SM-2-0': ['historical', 'ssp370'],
     'EC-Earth3-Veg': ['historical', 'ssp370', 'ssp585'],
@@ -65,7 +65,7 @@ const cmip6_downscaled_options: Cmip6DownscaledOptions = {
     TaiESM1: ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
   },
   pr: {
-    '6ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
+    '7ModelAvg': ['historical', 'ssp126', 'ssp245', 'ssp370', 'ssp585'],
     CESM2: ['historical', 'ssp126', 'ssp585'],
     'CNRM-CM6-1-HR': ['historical', 'ssp126', 'ssp585'],
     'E3SM-2-0': ['historical', 'ssp370'],
@@ -83,7 +83,7 @@ const cmip6_downscaled_options: Cmip6DownscaledOptions = {
 
 chartStore.labels[endpoint] = {
   models: {
-    '6ModelAvg': '6-Model Average',
+    '7ModelAvg': '7-Model Average',
     CESM2: 'CESM2',
     'CNRM-CM6-1-HR': 'CNRM-CM6-1-HR',
     'E3SM-2-0': 'E3SM-2-0',
