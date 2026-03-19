@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 const endpoint = 'cmip6Downscaled'
+const elevationEndpoint = 'era5Elevation4km'
 
 const placesStore = usePlacesStore()
 const mapStore = useMapStore()
@@ -9,6 +10,9 @@ const runtimeConfig = useRuntimeConfig()
 
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const elevationData = computed(
+  () => dataStore.apiData[elevationEndpoint] ?? null
+)
 
 const chartInputs = computed<Cmip6DownscaledChartInputsObj>(
   () => chartStore.inputs[endpoint] as Cmip6DownscaledChartInputsObj
@@ -91,8 +95,26 @@ const legend: Record<string, LegendItem[]> = {
 const mapId = 'tas'
 mapStore.setLegendItems(mapId, legend)
 
+const fetchElevation = () => {
+  if (!latLng.value) return
+  dataStore.fetchData(elevationEndpoint)
+}
+
+onMounted(() => {
+  fetchElevation()
+})
+
+watch(latLng, () => {
+  dataStore.apiData[elevationEndpoint] = null
+  dataStore.dataErrors[elevationEndpoint] = false
+  fetchElevation()
+})
+
 onUnmounted(() => {
   dataStore.apiData[endpoint] = null
+  dataStore.dataErrors[endpoint] = false
+  dataStore.apiData[elevationEndpoint] = null
+  dataStore.dataErrors[elevationEndpoint] = false
 })
 </script>
 
@@ -134,6 +156,17 @@ onUnmounted(() => {
       </MapBlock>
 
       <Gimme extent="cmip6Downscaled" />
+      <div v-if="elevationData" class="notification is-info is-light mb-4">
+        <p>
+          The reference elevation of the
+          <strong>{{ elevationData.res }}</strong> resolution baseline grid cell
+          used in the statistical downscaling workflow (not the native CMIP6
+          model-grid elevation) is
+          <strong
+            >{{ elevationData.elevation }} {{ elevationData.units }}</strong
+          >.
+        </p>
+      </div>
       <Cmip6DownscaledChartControls :datasetKeys="['tasmax', 'tasmin']" />
       <Cmip6DownscaledChart
         label="Maximum Near-surface Air Temperature"
