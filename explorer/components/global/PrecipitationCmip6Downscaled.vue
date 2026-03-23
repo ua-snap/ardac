@@ -19,7 +19,7 @@ const layers: MapLayer[] = [
     id: 'pr_cmip6_2000',
     title: 'August 2000, 7-Model Average',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_pr_wms',
+    wmsLayerName: 'cmip6_downscaled_pr_v2_wms',
     style: 'ardac_pr',
     legend: 'pr',
     rasdamanConfiguration: {
@@ -33,7 +33,7 @@ const layers: MapLayer[] = [
     id: 'pr_cmip6_2100',
     title: 'August 2100, 7-Model Average, SSP5-8.5',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_pr_wms',
+    wmsLayerName: 'cmip6_downscaled_pr_v2_wms',
     style: 'ardac_pr',
     legend: 'pr',
     rasdamanConfiguration: {
