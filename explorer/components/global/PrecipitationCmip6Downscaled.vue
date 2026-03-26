@@ -17,9 +17,9 @@ const chartInputs = computed<Cmip6DownscaledChartInputsObj>(
 const layers: MapLayer[] = [
   {
     id: 'pr_cmip6_2000',
-    title: 'August 2000, 6-Model Average',
+    title: 'August 2000, 7-Model Average',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_pr_wms',
+    wmsLayerName: 'cmip6_downscaled_pr_v2_wms',
     style: 'ardac_pr',
     legend: 'pr',
     rasdamanConfiguration: {
@@ -31,9 +31,9 @@ const layers: MapLayer[] = [
   },
   {
     id: 'pr_cmip6_2100',
-    title: 'August 2100, 6-Model Average, SSP5-8.5',
+    title: 'August 2100, 7-Model Average, SSP5-8.5',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_pr_wms',
+    wmsLayerName: 'cmip6_downscaled_pr_v2_wms',
     style: 'ardac_pr',
     legend: 'pr',
     rasdamanConfiguration: {
@@ -71,7 +71,7 @@ onUnmounted(() => {
       <XrayIntroblurb resolution="4" unit="km" cmip="6" />
       <p class="mb-6">
         The map below shows total precipitation for the month of August in the
-        years 2000 and 2100 using a downscaled 6-model average. The maps for the
+        years 2000 and 2100 using a downscaled 7-model average. The maps for the
         year 2100 are based on the SSP5-8.5 emissions scenario.
       </p>
 

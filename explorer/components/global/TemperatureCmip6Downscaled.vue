@@ -17,9 +17,9 @@ const chartInputs = computed<Cmip6DownscaledChartInputsObj>(
 const layers: MapLayer[] = [
   {
     id: 'tasmax_cmip6_2000',
-    title: '2000, 6-Model Average',
+    title: '2000, 7-Model Average',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmax_wms',
+    wmsLayerName: 'cmip6_downscaled_tasmax_v2_wms',
     style: 'ardac_tasmax',
     legend: 'tas',
     rasdamanConfiguration: {
@@ -31,9 +31,9 @@ const layers: MapLayer[] = [
   },
   {
     id: 'tasmax_cmip6_2100',
-    title: '2100, 6-Model Average, SSP5-8.5',
+    title: '2100, 7-Model Average, SSP5-8.5',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmax_wms',
+    wmsLayerName: 'cmip6_downscaled_tasmax_v2_wms',
     style: 'ardac_tasmax',
     legend: 'tas',
     rasdamanConfiguration: {
@@ -45,9 +45,9 @@ const layers: MapLayer[] = [
   },
   {
     id: 'tasmin_cmip6_2000',
-    title: '2000, 6-Model Average',
+    title: '2000, 7-Model Average',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmin_wms',
+    wmsLayerName: 'cmip6_downscaled_tasmin_v2_wms',
     style: 'ardac_tasmin',
     legend: 'tas',
     rasdamanConfiguration: {
@@ -59,9 +59,9 @@ const layers: MapLayer[] = [
   },
   {
     id: 'tasmin_cmip6_2100',
-    title: '2100, 6-Model Average, SSP5-8.5',
+    title: '2100, 7-Model Average, SSP5-8.5',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_downscaled_tasmin_wms',
+    wmsLayerName: 'cmip6_downscaled_tasmin_v2_wms',
     style: 'ardac_tasmin',
     legend: 'tas',
     rasdamanConfiguration: {
@@ -105,7 +105,7 @@ onUnmounted(() => {
       <p class="mb-6">
         The map below shows maximum near-surface air temperature for the month
         of July and minimum near-surface air temperature for the month of
-        January in the years 2000 and 2100 using a downscaled 6-model average.
+        January in the years 2000 and 2100 using a downscaled 7-model average.
         The maps for the year 2100 are based on the SSP5-8.5 emissions scenario.
       </p>
 
