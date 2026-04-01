@@ -3,7 +3,7 @@ name: Build and Deploy Arctic-EDS Module Notebooks
 on:
   push:
     branches:
-      - main
+      - "*"
   pull_request:
     branches:
       - "*"
