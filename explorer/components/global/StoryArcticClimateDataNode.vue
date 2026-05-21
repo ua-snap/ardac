@@ -12,7 +12,7 @@ const layers: MapLayer[] = [
     id: 'indicator_su_historical_era',
     title: '1980–2009, TaiESM1',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_indicators',
+    wmsLayerName: 'cmip6_indicators_cf_wms',
     style: 'ardac_indicator_su_historical_era',
     legend: 'summer_days',
     rasdamanConfiguration: { dim_model: 11, dim_scenario: 0 },
@@ -22,7 +22,7 @@ const layers: MapLayer[] = [
     id: 'indicator_su_midcentury_era',
     title: '2040–2069, TaiESM1, SSP5-8.5',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_indicators',
+    wmsLayerName: 'cmip6_indicators_cf_wms',
     style: 'ardac_indicator_su_midcentury_era',
     legend: 'summer_days',
     rasdamanConfiguration: { dim_model: 11, dim_scenario: 4 },
@@ -32,7 +32,7 @@ const layers: MapLayer[] = [
     id: 'indicator_su_latecentury_era',
     title: '2070–2099, TaiESM1, SSP5-8.5',
     source: 'rasdaman',
-    wmsLayerName: 'cmip6_indicators',
+    wmsLayerName: 'cmip6_indicators_cf_wms',
     style: 'ardac_indicator_su_latecentury_era',
     legend: 'summer_days',
     rasdamanConfiguration: { dim_model: 11, dim_scenario: 4 },
@@ -296,9 +296,7 @@ onMounted(() => {
             <tbody>
               <tr>
                 <td>E3SM 1.1 and E3SM 2.0</td>
-                <td>
-                  United States Department Of Energy
-                </td>
+                <td>United States Department Of Energy</td>
               </tr>
               <tr>
                 <td>CESM2</td>
