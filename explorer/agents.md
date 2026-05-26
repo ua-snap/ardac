@@ -1,61 +1,272 @@
-# ARDAC Explorer Agent Guide
+# ARDAC Explorer Agentic Coding Guide
 
-## Project Snapshot
-- Nuxt 3 SPA using Composition API + TypeScript with Pinia for state, Plotly for charts, and Leaflet for maps.
-- SSR is disabled; builds rely on client-side plugins and a prerender list for key routes.
-- Styling combines Bulma, project SCSS, and Leaflet assets.$$
+Use this guide when generating or editing code for `explorer/` in the ARDAC repo. The goal is to produce code that looks native to this codebase rather than introducing generic Nuxt/Vue patterns.
 
-## Architecture
-- Layouts assemble the shared shell (Header, Navbar, Tagbar, Footer) around routed content.
-- Domain narratives live in `components/global`, named in PascalCase derived from each item slug.
-- Static catalogue metadata sits in `assets/items.ts`, mirrored by global TypeScript definitions in `types`.
-- Plugins expose third-party libraries through `useNuxtApp()` so components stay framework-friendly.
+## Core objective
 
-## State & Data Flow
-- Pinia stores own remote calls (for example `useDataStore.fetchData`), reset intermediate state, and rely on `runtimeConfig` URLs.
-- Place, map, and chart stores expose `ref`-backed state that components consume via `storeToRefs`.
-- Components watch store-derived refs to trigger fetches and tear down data on unmount to avoid stale payloads.
+Match the existing architecture first:
+- Nuxt 3 SPA
+- Composition API
+- TypeScript
+- Pinia stores
+- Bulma + project SCSS
+- Leaflet / Plotly via Nuxt plugins
+- Metadata-driven item registry
 
-## Component Patterns
-- Use `<script setup lang="ts">`, declare props with interfaces, and share control state via `defineModel` when wrapper/controls pairs collaborate.
-- Prefer `computed` getters for derivations and early-return to guard against missing data.
-- Keep watchers focused on side-effects (fetching, rebuilding charts) and group dependencies in array form.
-- Always present fallbacks (notifications, empty states) when upstream data or user selections are absent.
+Optimize for consistency with existing code over introducing new abstractions.
 
-## Visualization Patterns
-- Plotly charts assemble trace arrays in dedicated builders and re-render via watchers while reusing shared color/config constants.
-- Heavy statistical lifting lives in `utils/era5WrfStatistics.ts`, keeping SFCs focused on presentation.
-- Controls surface climatology, percentile bands, and extremes toggles with guardrails enforced by composables.
+## Non-negotiable style rules
 
-## Mapping Patterns
-- Leaflet wiring is centralized in `useMapStore`, covering CRS setup, layer toggling, legends, and lifecycle cleanup.
-- Map-aware components defer DOM-dependent work with `nextTick` and dispose map instances on unmount.
+- Use **2-space indentation**.
+- Use **single quotes**.
+- Use **no semicolons**.
+- Keep **trailing commas** where Prettier would keep them (`es5` style).
+- Do **not** introduce a different formatter or linting style.
+- Prefer the same compact, direct style already present in the repo over “enterprise” ceremony.
 
-## Styling & UX
-- Global SCSS imports Bulma and Leaflet styles, with overrides in `assets/styles`.
-- Component styles default to scoped rules that augment Bulma classes.
-- Accessibility aids include alt text alongside catalogue imagery and informative messaging for missing selections.
+## Architectural rules
 
-## Content & Types
-- Adding catalogue items means updating slug/tag unions in `types`, appending entries in `assets/items.ts`, and creating a matching global component.
-- Bios, notebooks, and other structured narratives follow the recipes documented in the README.
+### 1) Respect the registry-driven content model
 
-## Utilities & Composables
-- Shared logic moves into utilities or composables with concise doc blocks summarizing intent and safeguards.
-- Composables stay side-effect free except for explicitly managed handlers (e.g., checkbox validation).
+ARDAC Explorer is built around a content registry:
+- `assets/items.ts` is the canonical item catalog.
+- `types/slugs.d.ts` and `types/tags.d.ts` mirror registry values as global unions.
+- Item pages resolve content components dynamically from the slug.
+- Slugs map to global component names by converting kebab-case to PascalCase.
 
-## Testing & QA
-- Automated tests are absent; rely on manual spot checks of charts, maps, and fetch error paths.
-- Verify both success and failure flows whenever touching API or visualization code.
+When adding a new item:
+1. Add the slug to `types/slugs.d.ts`
+2. Add any new tags to `types/tags.d.ts`
+3. Add the item metadata to `assets/items.ts`
+4. Create the content component in `components/global/` using PascalCase derived from the slug
+5. Add preview imagery / alt text if applicable
+6. Consider whether the item should be linked from bios / people content
 
-## Development Workflow
-- Use `nvm use lts/hydrogen` before `npm install`; start locally with `npm run dev`.
-- Configure `SNAP_API_URL`, `GEOSERVER_URL`, and `RASDAMAN_URL` when pointing at non-default services.
-- Production builds come from `npm run generate` with S3 deployment and CloudFront cache invalidation as outlined in the README.
+Do not bypass this system with ad hoc route-specific metadata.
 
-## General Guidance
-- Always beware the "complexity demon"
-- Keep long-term maintenance considerations in mind
-- Have a touch of "Grug-brain" sensibility, but don't go overboard with it.
-- Always format with `prettier`
-- Principles: KISS, YAGNI
+### 2) Keep pages thin; let stores and registries do the work
+
+Pages in this repo are usually light orchestration layers:
+- `pages/index.vue` mostly selects a layout and composes sections
+- `pages/item/[slug].vue` resolves the component from the slug
+- `pages/tag/[tag].vue` filters items and renders them in a grid
+
+Do not put large amounts of remote-fetching logic directly into pages unless there is already a page-specific precedent.
+
+### 3) Put shared state and remote fetching in Pinia stores
+
+Shared data flow belongs in stores.
+Follow the existing pattern:
+- define stores with `defineStore('name', () => { ... })`
+- keep state in `ref(...)`
+- expose small functions for fetch / transform / lifecycle operations
+- reset intermediate values before fetches when appropriate
+- read endpoints from runtime config or a centralized mapping
+
+If a component needs remote data that could be reused or coordinated with other UI state, prefer a store over component-local fetch logic.
+
+### 4) Use plugins to expose third-party libraries
+
+This repo exposes browser-heavy libraries through Nuxt plugins and consumes them with `useNuxtApp()` or store/component imports that match the existing approach.
+
+Do not invent a parallel wrapper pattern unless there is a strong repo-local reason.
+
+## File placement rules
+
+### New item content
+Place new content components in:
+- `components/global/<PascalCaseFromSlug>.vue`
+
+Examples:
+- `map-permafrost` -> `MapPermafrost.vue`
+- `story-fire-prone-conditions` -> `StoryFireProneConditions.vue`
+
+### Reusable item preview blocks
+If you need an item card / summary block, reuse the existing patterns:
+- `components/Item/Brief.vue`
+- `components/Item/Text.vue`
+- `components/Item/TextPicture.vue`
+
+Do not create a new card variant unless the existing three patterns clearly cannot support the need.
+
+### Stores
+Put shared state in the existing store domains when possible:
+- `stores/store.ts` for item catalog / filtering helpers
+- `stores/data.ts` for remote data fetches
+- `stores/map.ts` for Leaflet map lifecycle / layers / legends
+- `stores/chart.ts` for chart titles, inputs, labels, and related state
+
+Prefer extending an existing store over creating a new store with overlapping responsibility.
+
+### Utilities
+Use `utils/` for small, stateless helper functions:
+- slug conversion / validation
+- metadata helpers
+- math / chart transforms
+- domain-specific transforms that do not require app state
+
+If logic needs reactive state or network calls, it probably belongs in a store instead.
+
+## Component conventions
+
+### Script block
+Use:
+```vue
+<script lang="ts" setup>
+```
+
+Prefer concise Composition API code:
+- `const props = defineProps<...>()`
+- `const route = useRoute()`
+- `const store = useStore()`
+- `const foo = computed(() => ...)`
+- `onMounted(...)`
+- `onUnmounted(...)`
+- `watch(...)` when reacting to store-driven changes
+
+Do not reintroduce Options API patterns.
+
+### Templates
+Prefer:
+- straightforward Bulma structure
+- `NuxtLink` for internal navigation
+- explicit conditional rendering with `v-if` / `v-else`
+- simple lists / sections over over-abstracted markup
+
+The templates in this repo are generally readable and direct. Preserve that quality.
+
+### Styling
+Use:
+```vue
+<style lang="scss" scoped>
+```
+
+or an empty scoped style block if that matches the surrounding file.
+
+Prefer:
+- Bulma classes first
+- project SCSS variables / mixins second
+- small local scoped SCSS additions third
+
+Do not introduce a competing utility CSS system.
+
+## Content and metadata conventions
+
+### Items
+Each item entry should stay compact and descriptive:
+- `slug`
+- `title`
+- `blurb`
+- `tags`
+- optional `image`
+- optional `imageAlt`
+- optional `priority`
+
+Blurb text should remain short and plain. Do not add HTML to item blurbs.
+
+### Images and accessibility
+If an item includes preview imagery, always include meaningful `imageAlt`.
+If you add images in templates, supply `alt` text unless the image is purely decorative and the existing component pattern indicates otherwise.
+
+### People / bios
+If a new item is story-like, newly significant, or strongly associated with a data creator / subject-matter contributor, consider whether it should also be connected via:
+- `assets/bios.ts`
+- `types/people.d.ts`
+- `/public/images/people`
+- `pages/people.vue`
+- `Bios` or `Bio` components
+
+## Naming rules
+
+- Slugs: kebab-case
+- Global content components: PascalCase from slug
+- Stores: `useXStore`
+- Routes: rely on Nuxt file-based routing
+- Variables / functions: follow the current codebase’s plain TS naming; prefer clear nouns and verbs over clever names
+
+Do not invent inconsistent naming for the same concept across metadata, route params, and component names.
+
+## Data-fetching rules
+
+When adding a new dataset-driven view:
+1. Add or extend the endpoint mapping in the relevant store
+2. Build the request URL from runtime config + known path segments
+3. Reset pending / previous state before fetch when appropriate
+4. Capture error state in store-owned refs
+5. Let the consuming component react to store state
+
+Prefer the existing pragmatic fetch style over introducing a larger client layer unless the repo already moves in that direction.
+
+## Map and chart rules
+
+### Maps
+Map lifecycle belongs in the map store.
+Components should typically:
+- create the map on mount
+- destroy the map on unmount
+- keep the component wrapper minimal
+
+Do not let many different components each create their own custom Leaflet bootstrapping path unless that is unavoidable.
+
+### Charts
+Chart titles and input/label state already have store-level helpers.
+When adding a chart:
+- reuse chart-store title conventions
+- follow existing selector / control patterns
+- keep presentation in the component and reusable chart state in the store or utility layer
+
+## Page patterns to copy
+
+### Home page
+Use layout selection and composition of major sections.
+Keep it declarative.
+
+### Item page
+Resolve dynamic content from the slug.
+If content is missing, fail in the existing repo style with a visible warning state rather than silently breaking.
+
+### Tag page
+Filter from the item registry, then render grid content from the filtered list.
+Do not hardcode duplicated tag collections if the registry already knows the relationship.
+
+## Testing rules
+
+This repo uses Playwright for browser-level verification.
+When adding or changing user-facing behavior:
+- prefer end-to-end tests that exercise the real UI
+- use explicit navigation and selector assertions
+- verify the key visible outputs for a user flow
+- keep tests aligned with existing naming and structure in `tests/test-suite.spec.js`
+
+If your change affects a route, item page, tag page, chart visibility, map behavior, or a place-selection flow, consider adding or updating a Playwright scenario.
+
+## What not to do
+
+- Do not switch to Options API
+- Do not introduce semicolons or double-quote formatting
+- Do not add a new CSS framework
+- Do not bypass the item registry with one-off hardcoded content structures
+- Do not add a parallel fetch/client architecture unless there is a repo-wide decision to do so
+- Do not create new item preview/card types casually
+- Do not move shared map/chart/data logic out of stores into random components
+- Do not add HTML to item blurbs
+- Do not break the slug -> type -> item metadata -> global component convention
+
+## Preferred implementation checklist for new work
+
+Before writing code, ask:
+1. Is this an item/catalog/content change, a page change, a store change, or a utility change?
+2. Does the registry (`assets/items.ts` + `types/*.d.ts`) need updating?
+3. Should this behavior live in an existing store?
+4. Is there already a component pattern I can copy?
+5. Does this need Bulma + scoped SCSS only, rather than a new styling approach?
+6. Should I add or update a Playwright flow?
+
+## Golden rule
+
+When in doubt, copy an existing nearby pattern from this repo and make the smallest possible change that fits naturally into:
+- the registry model
+- the Pinia store model
+- the Bulma + scoped SCSS presentation model
+- the slug-driven routing/content model
+
