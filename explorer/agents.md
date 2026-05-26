@@ -16,13 +16,7 @@ Match the existing architecture first:
 Optimize for consistency with existing code over introducing new abstractions.
 
 ## Non-negotiable style rules
-
-- Use **2-space indentation**.
-- Use **single quotes**.
-- Use **no semicolons**.
-- Keep **trailing commas** where Prettier would keep them (`es5` style).
-- Do **not** introduce a different formatter or linting style.
-- Prefer the same compact, direct style already present in the repo over “enterprise” ceremony.
+- Honor all conventions used in the editor configuration file.
 
 ## Architectural rules
 
@@ -30,7 +24,6 @@ Optimize for consistency with existing code over introducing new abstractions.
 
 ARDAC Explorer is built around a content registry:
 - `assets/items.ts` is the canonical item catalog.
-- `types/slugs.d.ts` and `types/tags.d.ts` mirror registry values as global unions.
 - Item pages resolve content components dynamically from the slug.
 - Slugs map to global component names by converting kebab-case to PascalCase.
 
@@ -38,9 +31,10 @@ When adding a new item:
 1. Add the slug to `types/slugs.d.ts`
 2. Add any new tags to `types/tags.d.ts`
 3. Add the item metadata to `assets/items.ts`
-4. Create the content component in `components/global/` using PascalCase derived from the slug
-5. Add preview imagery / alt text if applicable
-6. Consider whether the item should be linked from bios / people content
+4. Add the item to the pre-render list in `nuxt.config.ts`
+5. Create the content component in `components/global/` using PascalCase derived from the slug
+6. Add placeholder for preview imagery and placeholder alt text if applicable, for the human developer to complete
+7. Consider whether the item should be linked from bios / people content
 
 Do not bypass this system with ad hoc route-specific metadata.
 
@@ -60,7 +54,7 @@ Follow the existing pattern:
 - define stores with `defineStore('name', () => { ... })`
 - keep state in `ref(...)`
 - expose small functions for fetch / transform / lifecycle operations
-- reset intermediate values before fetches when appropriate
+- reset intermediate values before fetches when appropriate to prevent stale data from being shown in the UI
 - read endpoints from runtime config or a centralized mapping
 
 If a component needs remote data that could be reused or coordinated with other UI state, prefer a store over component-local fetch logic.
@@ -87,7 +81,7 @@ If you need an item card / summary block, reuse the existing patterns:
 - `components/Item/Text.vue`
 - `components/Item/TextPicture.vue`
 
-Do not create a new card variant unless the existing three patterns clearly cannot support the need.
+Do not create a new card variant.
 
 ### Stores
 Put shared state in the existing store domains when possible:
@@ -128,27 +122,15 @@ Do not reintroduce Options API patterns.
 
 ### Templates
 Prefer:
-- straightforward Bulma structure
+- Do not use any class names or inline styles, Humans will do the styling.
 - `NuxtLink` for internal navigation
 - explicit conditional rendering with `v-if` / `v-else`
 - simple lists / sections over over-abstracted markup
-
+- Use plain, semantic HTML for the page structure.
 The templates in this repo are generally readable and direct. Preserve that quality.
 
 ### Styling
-Use:
-```vue
-<style lang="scss" scoped>
-```
-
-or an empty scoped style block if that matches the surrounding file.
-
-Prefer:
-- Bulma classes first
-- project SCSS variables / mixins second
-- small local scoped SCSS additions third
-
-Do not introduce a competing utility CSS system.
+Add no styling to the generated code.
 
 ## Content and metadata conventions
 
@@ -162,7 +144,7 @@ Each item entry should stay compact and descriptive:
 - optional `imageAlt`
 - optional `priority`
 
-Blurb text should remain short and plain. Do not add HTML to item blurbs.
+Blurb text should remain short and plain. Do not add HTML to item blurbs. Blurbs should be written in a science communication, journalistic style, and not exceed 200 characters.
 
 ### Images and accessibility
 If an item includes preview imagery, always include meaningful `imageAlt`.
@@ -214,16 +196,15 @@ When adding a chart:
 - reuse chart-store title conventions
 - follow existing selector / control patterns
 - keep presentation in the component and reusable chart state in the store or utility layer
+- reference existing implemenations extensively to keep the same code style between different chart implementations
 
 ## Page patterns to copy
 
 ### Home page
-Use layout selection and composition of major sections.
-Keep it declarative.
+Never edit the home page.
 
 ### Item page
 Resolve dynamic content from the slug.
-If content is missing, fail in the existing repo style with a visible warning state rather than silently breaking.
 
 ### Tag page
 Filter from the item registry, then render grid content from the filtered list.
@@ -243,8 +224,9 @@ If your change affects a route, item page, tag page, chart visibility, map behav
 ## What not to do
 
 - Do not switch to Options API
-- Do not introduce semicolons or double-quote formatting
+- Do not introduce code that is not controlled the editor config dotfile.
 - Do not add a new CSS framework
+- Do not write any CSS, add any class names to elements, or write any SCSS.
 - Do not bypass the item registry with one-off hardcoded content structures
 - Do not add a parallel fetch/client architecture unless there is a repo-wide decision to do so
 - Do not create new item preview/card types casually
@@ -259,14 +241,12 @@ Before writing code, ask:
 2. Does the registry (`assets/items.ts` + `types/*.d.ts`) need updating?
 3. Should this behavior live in an existing store?
 4. Is there already a component pattern I can copy?
-5. Does this need Bulma + scoped SCSS only, rather than a new styling approach?
-6. Should I add or update a Playwright flow?
+5. Should I add or update a Playwright test?
 
 ## Golden rule
 
 When in doubt, copy an existing nearby pattern from this repo and make the smallest possible change that fits naturally into:
 - the registry model
 - the Pinia store model
-- the Bulma + scoped SCSS presentation model
 - the slug-driven routing/content model
 
