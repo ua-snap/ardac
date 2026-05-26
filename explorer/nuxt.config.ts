@@ -153,6 +153,7 @@ export default defineNuxtConfig({
         '/item/summary-landfast-sea-ice',
         '/item/story-climate-indicators',
         '/item/story-fire-prone-conditions',
+        '/item/story-cold-snap-1989',
         '/tag/Climate',
         '/tag/Programming',
         '/tag/Terrestrial',

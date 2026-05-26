@@ -492,4 +492,13 @@ export default [
     tags: ['Climate', 'Wildfire', 'Temperature', 'Precipitation'],
     image: 'story-fire-prone-conditions.png',
   },
+  {
+    slug: 'story-cold-snap-1989',
+    title: '1989 Alaska Cold Snap',
+    blurb:
+      'Historic January 1989 cold snap impacts Alaska communities, compared with ERA5-WRF downscaled reanalysis temperatures across the state.',
+    tags: ['Climate', 'Temperature'],
+    image: 'story-cold-snap-1989.png',
+    imageAlt: 'Placeholder preview for the 1989 Alaska Cold Snap data story',
+  },
 ] satisfies Item[]

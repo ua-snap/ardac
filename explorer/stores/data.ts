@@ -64,8 +64,26 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
+  const fetchEra5WrfPoint = async (lat: number, lng: number) => {
+    const url =
+      runtimeConfig.public.apiUrl + endpoints.era5wrf + lat + '/' + lng
+
+    try {
+      const response = await fetch(url)
+      const data = await response.json()
+      if (response.status === 200) {
+        return data
+      }
+    } catch (error) {
+      return null
+    }
+
+    return null
+  }
+
   return {
     fetchData,
+    fetchEra5WrfPoint,
     apiData,
     dataErrors,
   }
