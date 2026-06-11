@@ -171,7 +171,7 @@ const buildChart = () => {
       r: 30,
       b: 60,
     },
-    hovermode: 'closest',
+    hovermode: false,
     legend: {
       traceorder: 'normal',
     },
