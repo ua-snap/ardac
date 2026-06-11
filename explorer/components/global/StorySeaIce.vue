@@ -2,10 +2,12 @@
 const runtimeConfig = useRuntimeConfig()
 
 const selectedModel = ref<string>('MIROC6')
-const selectedScenario = ref<string>('ssp585')
+const selectedScenario = ref<string>('ssp370')
 
 // CMIP6 Monthly data for the heatmap - structured by model -> scenario -> date
 const siconData = ref<Record<string, any> | null>(null)
+// Historical sea ice concentration data (1850-2025)
+const historicalData = ref<Record<string, number> | null>(null)
 const isLoadingHeatmapData = ref(false)
 const heatmapDataError = ref(false)
 
@@ -24,25 +26,35 @@ const availableScenarios = [
   { value: 'ssp585', label: 'SSP5-8.5' },
 ]
 
-// Fetch CMIP6 monthly sea ice concentration data for the heatmap
-// The heatmap uses a specific point in the Beaufort Sea (81.5, -147)
+// Fetch both historical and CMIP6 data for the heatmap
+// The heatmap uses a specific point in the Beaufort Sea (71, -143)
 const fetchHeatmapData = async () => {
   isLoadingHeatmapData.value = true
   heatmapDataError.value = false
 
-  const lat = 81.5
-  const lng = -147
-  const url = `${runtimeConfig.public.apiUrl}/cmip6/point/${lat}/${lng}?vars=siconc`
+  const lat = 71
+  const lng = -143
 
   try {
-    const response = await fetch(url)
-    const data = await response.json()
+    // Fetch historical observations (1850-2025)
+    const historicalUrl = `${runtimeConfig.public.apiUrl}/seaice/point/${lat}/${lng}/`
+    const historicalResponse = await fetch(historicalUrl)
+    const historicalDataJson = await historicalResponse.json()
 
-    if (response.status === 200) {
-      siconData.value = data
+    // Fetch CMIP6 model data
+    const cmip6Url = `${runtimeConfig.public.apiUrl}/cmip6/point/${lat}/${lng}?vars=siconc`
+    const cmip6Response = await fetch(cmip6Url)
+    const cmip6DataJson = await cmip6Response.json()
+
+    if (historicalResponse.status === 200 && cmip6Response.status === 200) {
+      historicalData.value = historicalDataJson
+      siconData.value = cmip6DataJson
     } else {
       heatmapDataError.value = true
-      console.error('Error fetching heatmap data:', response.status)
+      console.error('Error fetching heatmap data:', {
+        historical: historicalResponse.status,
+        cmip6: cmip6Response.status,
+      })
     }
   } catch (error) {
     heatmapDataError.value = true
@@ -63,25 +75,18 @@ onMounted(() => {
     <div class="content clamp is-size-5">
       <h3 class="title is-3">Sea Ice in Alaska: A Story of Change</h3>
 
-      <p>
-        Sea ice is a critical component of Alaska's marine ecosystems and an
-        essential resource for coastal communities that depend on it for
-        subsistence hunting, transportation, and coastal protection. As Arctic
-        temperatures rise, the extent, thickness, and duration of sea ice have
-        undergone dramatic changes, with profound implications for both the
-        environment and the people who call Alaska home.
-      </p>
-
       <!-- Sea Ice Concentration Heatmap -->
       <div class="box mt-5 mb-5">
-        <h5 class="title is-5">Future Sea Ice Projections: Decadal Averages</h5>
+        <h5 class="title is-5">Sea Ice Projections: Decadal Averages</h5>
         <p class="mb-4">
           This heatmap displays decadal average sea ice concentration by month
-          for a point location in the Beaufort Sea (81.5°N, -147°E). Select
-          different climate models and emission scenarios to explore how
-          projected conditions vary across models and future pathways. The "ice
-          year" begins in September and runs through the following August,
-          reflecting the natural cycle of sea ice formation and melt.
+          for a point location in the Beaufort Sea (71°N, -143°E). The chart
+          combines historical observations (1950-2025) with climate model
+          projections (2026-2100). Select different climate models and emission
+          scenarios to explore how projected conditions vary across models and
+          future pathways. The "ice year" begins in September and runs through
+          the following August, reflecting the natural cycle of sea ice
+          formation and melt.
         </p>
 
         <div class="field is-horizontal mb-4">
@@ -138,6 +143,7 @@ onMounted(() => {
           :model="selectedModel"
           :scenario="selectedScenario"
           :apiData="siconData"
+          :historicalData="historicalData"
         />
       </div>
 

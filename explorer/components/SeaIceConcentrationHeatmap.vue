@@ -8,6 +8,8 @@ const props = defineProps<{
   scenario: string
   // The full CMIP6 siconc API response, keyed by model -> scenario -> "YYYY-MM".
   apiData: Record<string, any> | null
+  // Historical sea ice concentration data (1850-2025), keyed by "YYYY-MM" -> value
+  historicalData: Record<string, number> | null
 }>()
 
 const { $Plotly } = useNuxtApp()
@@ -20,7 +22,7 @@ const chartId = computed<string>(
 const validChart = ref<boolean>(true)
 
 // The year a decade begins. We average each calendar month across the ten
-// years in the decade. 1950s through 2090s (2090–2099) covers 1950–2100.
+// years in the decade. 1950s through 2090s covers 1950–2099.
 const decadeStarts: number[] = [
   1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020, 2030, 2040, 2050, 2060, 2070,
   2080, 2090,
@@ -45,38 +47,56 @@ const iceYearMonths: { num: string; label: string }[] = [
   { num: '08', label: 'Aug' },
 ]
 
-// The last year of historical data; later years come from the SSP scenario.
-const lastHistoricalYear = 2014
+// The last year of historical observations; later years come from model projections
+const lastHistoricalYear = 2025
 
 // Average the monthly siconc values across a single decade for one month.
 const decadalAverage = (monthNum: string, startYear: number): number | null => {
-  if (!props.apiData || !props.apiData[props.model]) {
-    return null
-  }
-
-  const modelData = props.apiData[props.model]
   let sum = 0
   let count = 0
 
-  for (let year = startYear; year <= startYear + 9; year++) {
-    const scenarioKey =
-      year <= lastHistoricalYear ? 'historical' : props.scenario
-    const scenarioData = modelData[scenarioKey]
-    if (!scenarioData) continue
+  // For the 2020s decade, only use historical data (2020-2025)
+  // to avoid mixing observational and model data
+  const decadeEndYear = startYear + 9
+  const endYear =
+    startYear <= lastHistoricalYear && decadeEndYear > lastHistoricalYear
+      ? lastHistoricalYear
+      : decadeEndYear
 
-    const entry = scenarioData[`${year}-${monthNum}`]
-    const value = entry?.siconc
-    if (value === null || value === undefined) continue
+  for (let year = startYear; year <= endYear; year++) {
+    let value: number | null | undefined = null
 
-    sum += value
-    count++
+    // Use historical observations for years 1950-2025
+    if (year <= lastHistoricalYear && props.historicalData) {
+      const key = `${year}-${monthNum}`
+      value = props.historicalData[key]
+    }
+    // Use CMIP6 model data for years after 2025
+    else if (props.apiData && props.apiData[props.model]) {
+      const modelData = props.apiData[props.model]
+      const scenarioKey = year <= 2014 ? 'historical' : props.scenario
+      const scenarioData = modelData[scenarioKey]
+      if (scenarioData) {
+        const entry = scenarioData[`${year}-${monthNum}`]
+        value = entry?.siconc
+      }
+    }
+
+    if (value !== null && value !== undefined) {
+      sum += value
+      count++
+    }
   }
 
   return count > 0 ? sum / count : null
 }
 
 const buildChart = () => {
-  if (!props.apiData || !props.apiData[props.model]) {
+  // Need at least one data source
+  if (
+    !props.historicalData &&
+    (!props.apiData || !props.apiData[props.model])
+  ) {
     validChart.value = false
     return
   }
@@ -124,7 +144,11 @@ const buildChart = () => {
 
   const titleText =
     'Decadal Mean Sea Ice Concentration<br>' +
-    `<span style="font-size:14px">${props.model}, ${props.scenario.toUpperCase()} (81.5, -147)</span>`
+    `<span style="font-size:14px">Historical Obs (1950-2025) + ${props.model} ${props.scenario.toUpperCase()} (2026-2100) at 71°N, 143°W</span>`
+
+  // Find the index where historical data ends and projections begin
+  // Historical ends in 2025 (in the 2020s), projections start in 2026 (2030s)
+  const historicalEndIndex = decadeStarts.findIndex(start => start === 2020)
 
   const layout: Partial<Layout> = {
     title: {
@@ -141,6 +165,21 @@ const buildChart = () => {
       type: 'category',
       showgrid: false,
     },
+    shapes: [
+      {
+        type: 'line',
+        xref: 'x',
+        yref: 'paper',
+        x0: historicalEndIndex + 0.5,
+        y0: 0,
+        x1: historicalEndIndex + 0.5,
+        y1: 1,
+        line: {
+          color: 'black',
+          width: 2,
+        },
+      },
+    ],
     margin: { t: 70 },
   }
 
@@ -161,12 +200,12 @@ const purgeChart = () => {
 }
 
 watch(
-  () => [props.apiData, props.scenario],
+  () => [props.apiData, props.historicalData, props.model, props.scenario],
   async () => {
     purgeChart()
     validChart.value = true
     await nextTick()
-    if (props.apiData) {
+    if (props.historicalData || props.apiData) {
       buildChart()
     }
   },
@@ -174,7 +213,7 @@ watch(
 )
 
 onMounted(() => {
-  if (props.apiData) {
+  if (props.historicalData || props.apiData) {
     nextTick(() => buildChart())
   }
 })
