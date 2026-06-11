@@ -175,7 +175,7 @@ const buildChart = () => {
   const traces: Data[] = [
     {
       type: 'bar',
-      name: 'Active Layer',
+      name: 'Not Permafrost',
       x: years,
       y: permafrosttopSeries,
       marker: {
@@ -346,7 +346,7 @@ onUnmounted(() => {
         <img src="assets/images/permafrost_chart_prudhoe_area.png" />
       </figure>
 
-      <h4>Fairbanks area, south of Tanana River (64.77, -147.79)</h4>
+      <h4>Fairbanks area, south of Tanana River (64.67, -147.79)</h4>
 
       <figure class="image">
         <img src="assets/images/permafrost_chart_fairbanks_area.png" />
