@@ -493,8 +493,8 @@ export default [
     image: 'story-fire-prone-conditions.png',
   },
   {
-    slug: 'story-permafrost-through-time',
-    title: 'Permafrost Through Time',
+    slug: 'story-permafrost-isnt-permanent',
+    title: "Permafrost Isn't Permanent!",
     blurb: '',
     tags: ['Permafrost'],
   },

@@ -281,7 +281,43 @@ onUnmounted(() => {
 <template>
   <section class="section">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">Permafrost Depth Through Time</h3>
+      <h3 class="title is-3">Permafrost isn't permanent!</h3>
+
+      <p>Permafrost means different things to different people.</p>
+
+      <p>
+        Geoscientists may be interested in frozen ground at depths of up to
+        hundreds of meters. Engineers concerned with building homes, septic
+        systems, roads, and other infrastructure are more concerned with tens of
+        meters depth. But for those traveling across the land for subsistence or
+        recreational use, or for ecologists or farmers, the most important story
+        occurs close to the surface, in the upper two meters.
+      </p>
+      <p>
+        Soils near the surface may freeze in the winter, but also thaw in the
+        summer. We refer to the maximum annual depth of thaw as the “active
+        layer”.
+      </p>
+      <p>
+        In some cases, the bottom of the active layer is the top of the
+        permafrost. But in many cases, due to ongoing climate change, there is a
+        layer of unfrozen ground, talik, where deeper permafrost still exists.
+      </p>
+      <p>
+        With a warming climate, the thickness of the active layer is expected to
+        increase over time, sometimes dramatically.
+      </p>
+      <p class="mb-6">
+        Changes in the active layer have huge impacts on vegetation, because the
+        active layer determines rooting depth and soil drainage. Some plants
+        require deeper rooting depths and warmer, less saturated soils. Where
+        the active layer is very shallow (less than half a meter), trees cannot
+        grow and tundra or shrubs dominate. Where the top of the permafrost is
+        half a meter to one meter, shrubs and black spruce tend to dominate.
+        Where the active layer is deeper than one meter, a broader range of
+        forest species can thrive.
+      </p>
+
       <MapBlock :mapId="mapId" crs="EPSG:3338" class="mb-6">
         <template v-slot:layers>
           <MapLayer
@@ -295,6 +331,23 @@ onUnmounted(() => {
           </MapLayer>
         </template>
       </MapBlock>
+
+      <p>
+        In this data story we explore the trends in active layer thickness over
+        time at three locations, which represent three common ecological types
+        in Alaska. We use data derived from the GIPL 2.0 model to construct the
+        three plots below. You can also enter your own location to see active
+        layer changes in your area.
+      </p>
+
+      <h4>Prudhoe Area, north slope tussock tundra</h4>
+
+      <h4>Fairbanks area, south of Tanana River</h4>
+
+      <h4>Anchorage Bicentennial Park</h4>
+
+      <h3>Now choose your own location!</h3>
+
       <Gimme />
       <div v-if="latLng && apiData">
         <p>
