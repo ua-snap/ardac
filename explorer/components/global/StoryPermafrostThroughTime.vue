@@ -203,6 +203,9 @@ watch(latLng, async () => {
     $Plotly.purge(chartId)
     dataStore.apiData[endpoint] = null
     await fetchPermafrostData()
+  } else {
+    $Plotly.purge(chartId)
+    dataStore.apiData[endpoint] = null
   }
 })
 
@@ -223,7 +226,6 @@ onUnmounted(() => {
       <h3 class="title is-3">Permafrost Depth Through Time</h3>
 
       <Gimme />
-
       <div v-if="latLng && apiData">
         <p>
           This chart shows the evolution of permafrost depth from
