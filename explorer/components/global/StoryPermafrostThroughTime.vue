@@ -152,7 +152,7 @@ const buildChart = () => {
     barmode: 'stack',
     bargap: 0,
     title: {
-      text: `Permafrost Depth Through Time<br><sub>${modelKey}, ${scenarioKey}</sub>`,
+      text: `Permafrost Depth Through Time`,
       font: { size: 16 },
     },
     xaxis: {
