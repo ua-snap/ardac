@@ -136,13 +136,6 @@ export default [
     tags: ['Cryosphere', 'Sea Ice'],
   },
   {
-    slug: 'notebook-sea-ice-traffic',
-    title: 'Marine Vessel Traffic and Sea Ice Concentration',
-    blurb:
-      'Learn how to combine Arctic marine vessel traffic with historical sea ice concentration data',
-    tags: ['Cryosphere', 'Programming', 'Sea Ice'],
-  },
-  {
     slug: 'places-and-polygons',
     title: 'Places & Polygons: Geographic Lenses for Arctic Data',
     blurb:

@@ -250,6 +250,29 @@ export const useMapStore = defineStore('map', () => {
     addLegend(layerObj.mapId, layer.legend)
   }
 
+  // Enable user location selection by clicking on the map
+  function enableUserLocationSelection(mapId: string) {
+    // Wait for map to be created if it doesn't exist yet
+    const checkAndEnable = () => {
+      if (!maps[mapId]) {
+        // Try again after a short delay
+        setTimeout(checkAndEnable, 100)
+        return
+      }
+
+      const placesStore = usePlacesStore()
+
+      maps[mapId].on('click', (e: L.LeafletMouseEvent) => {
+        placesStore.latLng = {
+          lat: parseFloat(e.latlng.lat.toFixed(4)),
+          lng: parseFloat(e.latlng.lng.toFixed(4)),
+        }
+      })
+    }
+
+    checkAndEnable()
+  }
+
   return {
     toggleLayer,
     activeLayers,
@@ -257,6 +280,7 @@ export const useMapStore = defineStore('map', () => {
     setLegendItems,
     destroy,
     addLegend,
+    enableUserLocationSelection,
   }
 })
 

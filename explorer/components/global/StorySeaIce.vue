@@ -1,16 +1,29 @@
 <script lang="ts" setup>
 const runtimeConfig = useRuntimeConfig()
 const mapStore = useMapStore()
+const placesStore = usePlacesStore()
+const dataStore = useDataStore()
 
 const selectedModel = ref<string>('MIROC6')
 const selectedScenario = ref<string>('ssp370')
 
 // CMIP6 Monthly data for the heatmap - structured by model -> scenario -> date
 const siconData = ref<Record<string, any> | null>(null)
-// Historical sea ice concentration data (1850-2025)
+// Historical sea ice concentration data (1950-2025)
 const historicalData = ref<Record<string, number> | null>(null)
 const isLoadingHeatmapData = ref(false)
 const heatmapDataError = ref(false)
+
+// Track if user has selected a location
+const latLng = computed(() => placesStore.latLng)
+
+// Function to clear the selected location and return to map
+const clearLocation = () => {
+  placesStore.latLng = undefined
+  siconData.value = null
+  historicalData.value = null
+  heatmapDataError.value = false
+}
 
 // Available models and scenarios for the heatmap
 const availableModels = [
@@ -26,6 +39,25 @@ const availableScenarios = [
   { value: 'ssp370', label: 'SSP3-7.0' },
   { value: 'ssp585', label: 'SSP5-8.5' },
 ]
+
+// Interactive map layer for location selection (2050 CMIP6)
+const interactiveMapLayer: MapLayer = {
+  id: 'sea_ice_interactive_2050',
+  title: 'March 2050, MIROC6, SSP3-7.0',
+  source: 'rasdaman',
+  wmsLayerName: 'cmip6_monthly_cf_wms',
+  style: 'ardac_siconc',
+  legend: 'siconc',
+  default: true,
+  rasdamanConfiguration: {
+    dim_model: 8,
+    dim_scenario: 3,
+    time: 36598,
+  },
+  coastline: true,
+}
+
+const interactiveMapId = 'sea_ice_story_interactive'
 
 // Historical sea ice concentration map layers (March)
 const historicalLayers: MapLayer[] = [
@@ -133,6 +165,9 @@ const projectionLegend: Record<string, LegendItem[]> = {
   ],
 }
 
+// Set legend for interactive map
+mapStore.setLegendItems(interactiveMapId, projectionLegend)
+
 // Combine all map layers (historical + projections)
 const allLayers = [...historicalLayers, ...projectionLayers]
 
@@ -146,14 +181,19 @@ const mapId = 'sea_ice_story_maps'
 
 mapStore.setLegendItems(mapId, combinedLegend)
 
-// Fetch both historical and CMIP6 data for the heatmap
-// The heatmap uses a specific point in the Beaufort Sea (71, -143)
+// Fetch both historical and CMIP6 data for the heatmap based on selected location
 const fetchHeatmapData = async () => {
+  if (!latLng.value) {
+    return
+  }
+
   isLoadingHeatmapData.value = true
   heatmapDataError.value = false
+  siconData.value = null
+  historicalData.value = null
 
-  const lat = 71
-  const lng = -143
+  const lat = latLng.value.lat
+  const lng = latLng.value.lng
 
   try {
     // Fetch historical observations (1950-2025)
@@ -184,9 +224,39 @@ const fetchHeatmapData = async () => {
   }
 }
 
-// Fetch data on mount
+// Initialize the interactive map with layer and click handler
+const initializeInteractiveMap = () => {
+  nextTick(() => {
+    // Load the interactive layer on the map
+    mapStore.toggleLayer({
+      layer: interactiveMapLayer,
+      mapId: interactiveMapId,
+    })
+    // Enable clicking to select location
+    mapStore.enableUserLocationSelection(interactiveMapId)
+  })
+}
+
+// Watch for location changes
+watch(latLng, async (newVal, oldVal) => {
+  if (newVal) {
+    // Location selected - fetch data
+    await fetchHeatmapData()
+  } else if (oldVal && !newVal) {
+    // Location cleared - reinitialize map after it's recreated
+    initializeInteractiveMap()
+  }
+})
+
+// Enable map clicking for location selection
 onMounted(() => {
-  fetchHeatmapData()
+  initializeInteractiveMap()
+})
+
+// Clear data when component unmounts
+onUnmounted(() => {
+  siconData.value = null
+  historicalData.value = null
 })
 </script>
 
@@ -229,76 +299,104 @@ onMounted(() => {
         </template>
       </MapBlock>
 
-      <!-- Sea Ice Concentration Heatmap -->
-      <h4 class="title is-4 mt-5">
-        Decadal Averages: Historical Observations and Model Projections
-      </h4>
-      <p class="mb-4">
-        This heatmap displays decadal average sea ice concentration by month for
-        a point location in the Beaufort Sea (71°N, -143°E). The chart combines
-        historical observations (1950-2025) with climate model projections
-        (2026-2100). Select different climate models and emission scenarios to
-        explore how projected conditions vary across models and future pathways.
-        The "ice year" begins in September and runs through the following
-        August, reflecting the natural cycle of sea ice formation and melt.
-      </p>
+      <!-- Interactive Map for Location Selection -->
+      <div v-if="!latLng">
+        <h4 class="title is-4 mt-5">Explore Sea Ice by Location</h4>
+        <p class="mb-4">
+          Click on the map below to select a location and view decadal average
+          sea ice concentration for that point. The map shows projected sea ice
+          concentration for March 2050 using the MIROC6 model under the SSP3-7.0
+          scenario.
+        </p>
 
-      <div class="field is-horizontal mb-4">
-        <div class="field-body">
-          <div class="field">
-            <label class="label">Climate Model</label>
-            <div class="control">
-              <div class="select is-fullwidth">
-                <select v-model="selectedModel">
-                  <option
-                    v-for="model in availableModels"
-                    :key="model"
-                    :value="model"
-                  >
-                    {{ model }}
-                  </option>
-                </select>
+        <Map
+          :mapId="interactiveMapId"
+          crs="EPSG:3572"
+          class="mb-6 interactive-map"
+        />
+      </div>
+
+      <!-- Sea Ice Concentration Heatmap -->
+      <div v-if="latLng">
+        <div class="mb-4">
+          <button class="button is-link is-light" @click="clearLocation">
+            ← Pick a different location
+          </button>
+        </div>
+
+        <h4 class="title is-4 mt-5">
+          Decadal Averages for {{ latLng.lat }}, {{ latLng.lng }}
+        </h4>
+        <p class="mb-4">
+          This heatmap displays decadal average sea ice concentration by month
+          for the selected location. The chart combines historical observations
+          (1950-2025) with climate model projections (2026-2100). Select
+          different climate models and emission scenarios to explore how
+          projected conditions vary across models and future pathways. The "ice
+          year" begins in September and runs through the following August,
+          reflecting the natural cycle of sea ice formation and melt.
+        </p>
+
+        <div class="field is-horizontal mb-4">
+          <div class="field-body">
+            <div class="field">
+              <label class="label">Climate Model</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select v-model="selectedModel">
+                    <option
+                      v-for="model in availableModels"
+                      :key="model"
+                      :value="model"
+                    >
+                      {{ model }}
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="field">
-            <label class="label">Emission Scenario</label>
-            <div class="control">
-              <div class="select is-fullwidth">
-                <select v-model="selectedScenario">
-                  <option
-                    v-for="scenario in availableScenarios"
-                    :key="scenario.value"
-                    :value="scenario.value"
-                  >
-                    {{ scenario.label }}
-                  </option>
-                </select>
+            <div class="field">
+              <label class="label">Emission Scenario</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select v-model="selectedScenario">
+                    <option
+                      v-for="scenario in availableScenarios"
+                      :key="scenario.value"
+                      :value="scenario.value"
+                    >
+                      {{ scenario.label }}
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div v-if="isLoadingHeatmapData" class="notification is-info is-light">
+          Loading sea ice concentration data...
+        </div>
+
+        <div
+          v-else-if="heatmapDataError"
+          class="notification is-warning is-light"
+        >
+          Unable to load sea ice concentration data for this location. Please
+          select a different location on the map.
+        </div>
+
+        <SeaIceConcentrationHeatmap
+          v-else-if="siconData && historicalData"
+          :model="selectedModel"
+          :scenario="selectedScenario"
+          :apiData="siconData"
+          :historicalData="historicalData"
+        />
       </div>
 
-      <div v-if="isLoadingHeatmapData" class="notification is-info is-light">
-        Loading sea ice concentration data...
-      </div>
-
-      <div
-        v-else-if="heatmapDataError"
-        class="notification is-warning is-light"
-      >
-        Unable to load sea ice concentration data. Please try again later.
-      </div>
-
-      <SeaIceConcentrationHeatmap
-        v-else
-        :model="selectedModel"
-        :scenario="selectedScenario"
-        :apiData="siconData"
-        :historicalData="historicalData"
-      />
+      <Bios :people="['Andy Mahoney']" />
     </div>
   </section>
 </template>
@@ -306,5 +404,13 @@ onMounted(() => {
 <style scoped>
 .notification {
   margin-top: 1rem;
+}
+
+.interactive-map {
+  cursor: pointer;
+}
+
+.interactive-map :deep(.map) {
+  cursor: pointer;
 }
 </style>
