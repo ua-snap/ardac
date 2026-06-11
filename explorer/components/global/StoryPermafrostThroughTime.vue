@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import type { Data, Layout, Config } from 'plotly.js-dist-min'
+
+const { $Plotly } = useNuxtApp()
+
 let endpoint = 'https://earthmaps.io/permafrost/point/gipl/63.0628/-146.1627'
 
 // Default selections
@@ -8,6 +12,8 @@ let scenarioKey = 'RCP 8.5'
 let years: number[] = []
 let permafrosttopSeries: number[] = []
 let permafrostbaseSeries: number[] = []
+
+const chartId = 'top-base-chart'
 
 const extractTimeSeriesData = async () => {
   try {
@@ -55,40 +61,122 @@ const buildChart = () => {
   console.log('Years:', years)
   console.log('Permafrost Top Series:', permafrosttopSeries)
   console.log('Permafrost Base Series:', permafrostbaseSeries)
+
+  if (years.length === 0) {
+    console.error('No data available to build chart')
+    return
+  }
+
+  // Calculate the thickness of the permafrost layer (base - top)
+  const thicknesses = years.map((_, i) =>
+    Math.max(permafrostbaseSeries[i] - permafrosttopSeries[i], 0)
+  )
+
+  // Create stacked bar chart with two traces:
+  // 1. Invisible trace to offset to permafrosttop depth
+  // 2. Visible trace showing the permafrost layer thickness
+  const traces: Data[] = [
+    {
+      type: 'bar',
+      name: 'Offset to top',
+      x: years,
+      y: permafrosttopSeries,
+      marker: {
+        color: 'rgba(0,0,0,0)',
+      },
+      hoverinfo: 'skip',
+      showlegend: false,
+    },
+    {
+      type: 'bar',
+      name: 'Permafrost layer',
+      x: years,
+      y: thicknesses,
+      marker: {
+        color: '#1f78b4',
+      },
+      customdata: years.map((year, i) => [
+        permafrosttopSeries[i],
+        permafrostbaseSeries[i],
+        thicknesses[i],
+      ]),
+      hovertemplate:
+        '<b>Year %{x}</b><br>' +
+        'Top depth: %{customdata[0]:.2f} m<br>' +
+        'Base depth: %{customdata[1]:.2f} m<br>' +
+        'Thickness: %{customdata[2]:.2f} m<extra></extra>',
+    },
+  ]
+
+  const layout: Partial<Layout> = {
+    barmode: 'stack',
+    title: {
+      text: `Permafrost Depth Through Time<br><sub>${modelKey}, ${scenarioKey}</sub>`,
+      font: { size: 16 },
+    },
+    xaxis: {
+      title: 'Year',
+      tickmode: 'linear',
+      dtick: 10,
+    },
+    yaxis: {
+      title: 'Depth (meters)',
+      autorange: 'reversed',
+    },
+    margin: {
+      t: 70,
+      l: 65,
+      r: 30,
+      b: 60,
+    },
+    hovermode: 'closest',
+  }
+
+  const config: Partial<Config> = {
+    responsive: true,
+    displaylogo: false,
+    toImageButtonOptions: {
+      format: 'png',
+      filename: 'permafrost-depth-through-time',
+      height: 600,
+      width: 1200,
+    },
+  }
+
+  $Plotly.newPlot(chartId, traces, layout, config)
 }
 
 onMounted(async () => {
   await extractTimeSeriesData()
   buildChart()
 })
+
+onUnmounted(() => {
+  try {
+    $Plotly.purge(chartId)
+  } catch {
+    // Chart may not exist
+  }
+})
 </script>
 
 <template>
   <section class="section">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">Permafrost Time Series Data Extraction</h3>
+      <h3 class="title is-3">Permafrost Depth Through Time</h3>
       <p>
-        This component downloads permafrost data from
-        <a :href="endpoint" target="_blank" rel="noopener noreferrer"
-          >Earthmaps GIPL model</a
-        >
-        for coordinates 63.0628°N, 146.1627°W and extracts the
-        <code>permafrosttop</code> and <code>permafrostbase</code> variables
-        into time series arrays.
+        This chart shows the evolution of permafrost depth from
+        {{ years[0] || '...' }} to {{ years[years.length - 1] || '...' }} using
+        the {{ modelKey }} model under the {{ scenarioKey }} emissions scenario.
       </p>
-      <p>
-        <strong>Check your browser's developer console</strong> (F12 or
-        Cmd+Option+I) to see the extracted data arrays and statistics.
-      </p>
-      <div class="notification is-info">
-        <strong>Data extracted for:</strong>
-        <ul>
-          <li>Model: {{ modelKey }}</li>
-          <li>Scenario: {{ scenarioKey }}</li>
-        </ul>
-      </div>
+      <div :id="chartId" class="story-chart"></div>
     </div>
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.story-chart {
+  min-height: 500px;
+  margin: 2rem 0;
+}
+</style>
