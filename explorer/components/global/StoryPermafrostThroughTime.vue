@@ -29,6 +29,9 @@ const fetchPermafrostData = async () => {
 
   try {
     console.log('Fetching data from:', url)
+    dataStore.apiData[endpoint] = null
+    dataStore.dataErrors[endpoint] = false
+
     let payload = await $fetch<any>(url)
 
     // Validate the data structure
@@ -38,10 +41,12 @@ const fetchPermafrostData = async () => {
 
     // Store in dataStore
     dataStore.apiData[endpoint] = payload
+    dataStore.dataErrors[endpoint] = false
     console.log('Data stored in dataStore')
   } catch (error) {
     console.error('Error fetching permafrost data:', error)
     dataStore.apiData[endpoint] = null
+    dataStore.dataErrors[endpoint] = true
     throw error
   }
 }
@@ -73,7 +78,12 @@ const extractTimeSeriesData = () => {
 
       if (Number.isFinite(top) && Number.isFinite(base)) {
         years.push(year)
-        permafrosttopSeries.push(top)
+
+        if (top == 0 && base == 0) {
+          permafrosttopSeries.push(2)
+        } else {
+          permafrosttopSeries.push(top)
+        }
         permafrostbaseSeries.push(base)
       }
     })
@@ -97,26 +107,14 @@ const buildChart = () => {
   }
 
   // Calculate the thickness of the permafrost layer (base - top)
-  const thicknesses = years.map((_, i) =>
+  const thicknesses = years.map((_, i) => {
     Math.max(permafrostbaseSeries[i] - permafrosttopSeries[i], 0)
-  )
+  })
 
   // Create stacked bar chart with two traces:
   // 1. Green trace showing active layer (0 to permafrosttop)
   // 2. Blue trace showing the permafrost layer thickness
   const traces: Data[] = [
-    {
-      type: 'bar',
-      name: 'Active Layer',
-      x: years,
-      y: permafrosttopSeries,
-      marker: {
-        color: '#2ca02c',
-      },
-      hovertemplate:
-        '<b>Year %{x}</b><br>' +
-        'Active layer depth: %{y:.2f} m<extra></extra>',
-    },
     {
       type: 'bar',
       name: 'Permafrost Layer',
@@ -135,6 +133,18 @@ const buildChart = () => {
         'Top depth: %{customdata[0]:.2f} m<br>' +
         'Base depth: %{customdata[1]:.2f} m<br>' +
         'Thickness: %{customdata[2]:.2f} m<extra></extra>',
+    },
+    {
+      type: 'bar',
+      name: 'Active Layer',
+      x: years,
+      y: permafrosttopSeries,
+      marker: {
+        color: '#2ca02c',
+      },
+      hovertemplate:
+        '<b>Year %{x}</b><br>' +
+        'Active layer depth: %{y:.2f} m<extra></extra>',
     },
   ]
 
@@ -195,6 +205,7 @@ watch(latLng, async () => {
 
 onUnmounted(() => {
   try {
+    dataStore.dataErrors[endpoint] = false
     $Plotly.purge(chartId)
   } catch {
     // Chart may not exist
@@ -207,8 +218,10 @@ onUnmounted(() => {
   <section class="section">
     <div class="content clamp is-size-5">
       <h3 class="title is-3">Permafrost Depth Through Time</h3>
+
       <Gimme />
-      <div v-if="latLng && years.length > 0">
+
+      <div v-if="latLng && apiData">
         <p>
           This chart shows the evolution of permafrost depth from
           {{ years[0] }} to {{ years[years.length - 1] }} using the

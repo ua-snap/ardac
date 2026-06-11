@@ -271,6 +271,8 @@ onUnmounted(() => {
 
 <template>
   <div class="my-3">
+    {{ placeIsSelected }}
+    {{ nothingButErrors }}
     <div v-show="placeIsSelected && !nothingButErrors" class="selected-place">
       <div class="content is-size-5">
         <p>
