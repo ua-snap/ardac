@@ -107,14 +107,26 @@ const buildChart = () => {
   }
 
   // Calculate the thickness of the permafrost layer (base - top)
-  const thicknesses = years.map((_, i) => {
+  const thicknesses = years.map((_, i) =>
     Math.max(permafrostbaseSeries[i] - permafrosttopSeries[i], 0)
-  })
+  )
 
   // Create stacked bar chart with two traces:
   // 1. Green trace showing active layer (0 to permafrosttop)
   // 2. Blue trace showing the permafrost layer thickness
   const traces: Data[] = [
+    {
+      type: 'bar',
+      name: 'Active Layer',
+      x: years,
+      y: permafrosttopSeries,
+      marker: {
+        color: '#2ca02c',
+      },
+      hovertemplate:
+        '<b>Year %{x}</b><br>' +
+        'Active layer depth: %{y:.2f} m<extra></extra>',
+    },
     {
       type: 'bar',
       name: 'Permafrost Layer',
@@ -133,18 +145,6 @@ const buildChart = () => {
         'Top depth: %{customdata[0]:.2f} m<br>' +
         'Base depth: %{customdata[1]:.2f} m<br>' +
         'Thickness: %{customdata[2]:.2f} m<extra></extra>',
-    },
-    {
-      type: 'bar',
-      name: 'Active Layer',
-      x: years,
-      y: permafrosttopSeries,
-      marker: {
-        color: '#2ca02c',
-      },
-      hovertemplate:
-        '<b>Year %{x}</b><br>' +
-        'Active layer depth: %{y:.2f} m<extra></extra>',
     },
   ]
 
