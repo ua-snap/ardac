@@ -172,6 +172,9 @@ const buildChart = () => {
       b: 60,
     },
     hovermode: 'closest',
+    legend: {
+      traceorder: 'normal',
+    },
   }
 
   const config: Partial<Config> = {
