@@ -89,7 +89,7 @@ const buildChart = () => {
     },
     {
       type: 'bar',
-      name: 'Permafrost layer',
+      name: 'Permafrost Layer',
       x: years,
       y: thicknesses,
       marker: {
@@ -121,7 +121,8 @@ const buildChart = () => {
     },
     yaxis: {
       title: 'Depth (meters)',
-      autorange: 'reversed',
+      autorange: false,
+      range: [2, 0],
     },
     margin: {
       t: 70,
