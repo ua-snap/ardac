@@ -1,5 +1,60 @@
 <script setup lang="ts">
 import type { Data, Layout, Config } from 'plotly.js-dist-min'
+const mapStore = useMapStore()
+
+const layers: MapLayer[] = [
+  {
+    id: 'permafrost_thickness_top_early',
+    title: 'Active layer thickness, 2021–2039, GFDL CM3, RCP 8.5',
+    source: 'rasdaman',
+    wmsLayerName: 'crrel_gipl_outputs_nc',
+    style: 'ardac_permafrost_top_earlycentury_era',
+    legend: 'permafrost_top',
+    coastline: true,
+    default: true,
+  },
+  {
+    id: 'permafrost_thickness_top_mid',
+    title: 'Active layer thickness, 2040–2069, GFDL CM3, RCP 8.5',
+    source: 'rasdaman',
+    wmsLayerName: 'crrel_gipl_outputs_nc',
+    style: 'ardac_permafrost_top_midcentury_era',
+    legend: 'permafrost_top',
+    coastline: true,
+    default: true,
+  },
+  {
+    id: 'permafrost_change_top',
+    title: 'Change in active layer thickness',
+    source: 'rasdaman',
+    wmsLayerName: 'crrel_gipl_outputs_nc',
+    style: 'permafrost_change_top',
+    legend: 'permafrost_depth_delta',
+    coastline: true,
+    default: true,
+  },
+]
+
+const legend: Record<string, LegendItem[]> = {
+  permafrost_top: [
+    { color: '#ffffcc', label: '&ge;0m, &lt;100m' },
+    { color: '#a1dab4', label: '&ge;100m, &lt;200m' },
+    { color: '#41b6c4', label: '&ge;200m, &lt;300m' },
+    { color: '#2c7fb8', label: '&ge;300m, &lt;400m' },
+    { color: '#253494', label: '&ge;400m' },
+  ],
+  permafrost_depth_delta: [
+    { color: '#8c510a', label: '&lt;-4.1m' },
+    { color: '#bf812d', label: '&ge;-4.1m, &lt;-2.1m' },
+    { color: '#dfc27d', label: '&ge;-2.1m, &lt;-0.6m' },
+    { color: '#f6e8c3', label: '&ge;-0.6m, &lt;-0.1m' },
+    { color: '#f5f5f5', label: '0m' },
+    { color: '#c7eae5', label: '&ge;-0.1m, &lt;0.1m' },
+    { color: '#80cdc1', label: '&ge;0.1m, &lt;0.6m' },
+    { color: '#35978f', label: '&ge;0.6m, &lt;2.1m' },
+    { color: '#01665e', label: '&ge;2.1m' },
+  ],
+}
 
 const { $Plotly } = useNuxtApp()
 const dataStore = useDataStore()
@@ -8,6 +63,9 @@ const placesStore = usePlacesStore()
 const endpoint = 'permafrost'
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
 const apiData = computed<any>(() => dataStore.apiData[endpoint])
+
+const mapId = 'permafrost_data_story'
+mapStore.setLegendItems(mapId, legend)
 
 // Default selections
 let modelKey = '5ModelAvg'
@@ -224,6 +282,19 @@ onUnmounted(() => {
   <section class="section">
     <div class="content clamp is-size-5">
       <h3 class="title is-3">Permafrost Depth Through Time</h3>
+      <MapBlock :mapId="mapId" crs="EPSG:3338" class="mb-6">
+        <template v-slot:layers>
+          <MapLayer
+            v-for="layer in layers"
+            :mapId="mapId"
+            :layer="layer"
+            :key="layer.id"
+            :default="layer.default"
+          >
+            <template v-slot:title>{{ layer.title }}</template>
+          </MapLayer>
+        </template>
+      </MapBlock>
       <Gimme />
       <div v-if="latLng && apiData">
         <p>
@@ -240,7 +311,6 @@ onUnmounted(() => {
 
 <style scoped>
 .story-chart {
-  min-height: 500px;
   margin: 2rem 0;
 }
 </style>
