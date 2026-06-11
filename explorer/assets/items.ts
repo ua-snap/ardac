@@ -492,4 +492,11 @@ export default [
     tags: ['Climate', 'Wildfire', 'Temperature', 'Precipitation'],
     image: 'story-fire-prone-conditions.png',
   },
+  {
+    slug: 'story-sea-ice',
+    title: 'Sea Ice in Alaska: A Story of Change',
+    blurb:
+      'Explore patterns, trends, and impacts of sea ice change in Alaska waters. Understand seasonal variations and what these changes mean for coastal communities.',
+    tags: ['Sea Ice', 'Cryosphere', 'Climate'],
+  },
 ] satisfies Item[]
