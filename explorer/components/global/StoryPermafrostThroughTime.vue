@@ -111,6 +111,7 @@ const buildChart = () => {
 
   const layout: Partial<Layout> = {
     barmode: 'stack',
+    bargap: 0,
     title: {
       text: `Permafrost Depth Through Time<br><sub>${modelKey}, ${scenarioKey}</sub>`,
       font: { size: 16 },
