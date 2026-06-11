@@ -2,9 +2,12 @@
 import type { Data, Layout, Config } from 'plotly.js-dist-min'
 
 const { $Plotly } = useNuxtApp()
+const dataStore = useDataStore()
 const placesStore = usePlacesStore()
 
+const endpoint = 'permafrost'
 const latLng = computed<LatLngValue>(() => placesStore.latLng)
+const apiData = computed<any>(() => dataStore.apiData[endpoint])
 
 // Default selections
 let modelKey = '5ModelAvg'
@@ -16,52 +19,66 @@ let permafrostbaseSeries: number[] = []
 
 const chartId = 'top-base-chart'
 
-const extractTimeSeriesData = async () => {
+const fetchPermafrostData = async () => {
   if (!latLng.value) {
     console.log('No location selected yet')
     return
   }
 
-  const endpoint = `https://earthmaps.io/permafrost/point/gipl/${latLng.value.lat}/${latLng.value.lng}`
+  const url = `https://earthmaps.io/permafrost/point/gipl/${latLng.value.lat}/${latLng.value.lng}`
 
   try {
-    console.log('Fetching data from:', endpoint)
-    let payload = await $fetch<any>(endpoint)
+    console.log('Fetching data from:', url)
+    let payload = await $fetch<any>(url)
 
     // Validate the data structure
     if (!payload || !payload[modelKey]) {
       throw new Error('Unexpected data structure from Earthmaps API')
     }
 
-    let modelSeries = payload[modelKey] as Record<string, Record<string, any>>
-
-    // Clear and populate the outer scope arrays
-    years = []
-    permafrosttopSeries = []
-    permafrostbaseSeries = []
-
-    // Extract yearly data for the selected scenario
-    Object.keys(modelSeries)
-      .map(year => Number(year))
-      .filter(year => Number.isFinite(year))
-      .sort((a, b) => a - b)
-      .forEach(year => {
-        let values = modelSeries[String(year)]?.[scenarioKey]
-        let top = Number(values?.permafrosttop)
-        let base = Number(values?.permafrostbase)
-
-        if (Number.isFinite(top) && Number.isFinite(base)) {
-          years.push(year)
-          permafrosttopSeries.push(top)
-          permafrostbaseSeries.push(base)
-        }
-      })
-
-    console.log('Data extracted:', years.length, 'years')
+    // Store in dataStore
+    dataStore.apiData[endpoint] = payload
+    console.log('Data stored in dataStore')
   } catch (error) {
     console.error('Error fetching permafrost data:', error)
+    dataStore.apiData[endpoint] = null
     throw error
   }
+}
+
+const extractTimeSeriesData = () => {
+  if (!apiData.value || !apiData.value[modelKey]) {
+    return
+  }
+
+  let modelSeries = apiData.value[modelKey] as Record<
+    string,
+    Record<string, any>
+  >
+
+  // Clear and populate the outer scope arrays
+  years = []
+  permafrosttopSeries = []
+  permafrostbaseSeries = []
+
+  // Extract yearly data for the selected scenario
+  Object.keys(modelSeries)
+    .map(year => Number(year))
+    .filter(year => Number.isFinite(year))
+    .sort((a, b) => a - b)
+    .forEach(year => {
+      let values = modelSeries[String(year)]?.[scenarioKey]
+      let top = Number(values?.permafrosttop)
+      let base = Number(values?.permafrostbase)
+
+      if (Number.isFinite(top) && Number.isFinite(base)) {
+        years.push(year)
+        permafrosttopSeries.push(top)
+        permafrostbaseSeries.push(base)
+      }
+    })
+
+  console.log('Data extracted:', years.length, 'years')
 }
 
 const buildChart = () => {
@@ -161,14 +178,18 @@ const buildChart = () => {
   $Plotly.newPlot(chartId, traces, layout, config)
 }
 
+watch(apiData, () => {
+  if (apiData.value) {
+    extractTimeSeriesData()
+    buildChart()
+  }
+})
+
 watch(latLng, async () => {
   if (latLng.value) {
     $Plotly.purge(chartId)
-    years = []
-    permafrosttopSeries = []
-    permafrostbaseSeries = []
-    await extractTimeSeriesData()
-    buildChart()
+    dataStore.apiData[endpoint] = null
+    await fetchPermafrostData()
   }
 })
 
@@ -178,6 +199,7 @@ onUnmounted(() => {
   } catch {
     // Chart may not exist
   }
+  dataStore.apiData[endpoint] = null
 })
 </script>
 
@@ -195,7 +217,7 @@ onUnmounted(() => {
         </p>
       </div>
     </div>
-    <div id="top-base-chart" class="story-chart"></div>
+    <div :id="chartId" class="story-chart"></div>
   </section>
 </template>
 
