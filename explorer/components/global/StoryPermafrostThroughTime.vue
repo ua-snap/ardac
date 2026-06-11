@@ -2,8 +2,9 @@
 import type { Data, Layout, Config } from 'plotly.js-dist-min'
 
 const { $Plotly } = useNuxtApp()
+const placesStore = usePlacesStore()
 
-let endpoint = 'https://earthmaps.io/permafrost/point/gipl/63.0628/-146.1627'
+const latLng = computed<LatLngValue>(() => placesStore.latLng)
 
 // Default selections
 let modelKey = '5ModelAvg'
@@ -16,6 +17,13 @@ let permafrostbaseSeries: number[] = []
 const chartId = 'top-base-chart'
 
 const extractTimeSeriesData = async () => {
+  if (!latLng.value) {
+    console.log('No location selected yet')
+    return
+  }
+
+  const endpoint = `https://earthmaps.io/permafrost/point/gipl/${latLng.value.lat}/${latLng.value.lng}`
+
   try {
     console.log('Fetching data from:', endpoint)
     let payload = await $fetch<any>(endpoint)
@@ -57,6 +65,10 @@ const extractTimeSeriesData = async () => {
 }
 
 const buildChart = () => {
+  if (!latLng.value) {
+    return
+  }
+
   console.log('Building chart with data:')
   console.log('Years:', years)
   console.log('Permafrost Top Series:', permafrosttopSeries)
@@ -149,9 +161,15 @@ const buildChart = () => {
   $Plotly.newPlot(chartId, traces, layout, config)
 }
 
-onMounted(async () => {
-  await extractTimeSeriesData()
-  buildChart()
+watch(latLng, async () => {
+  if (latLng.value) {
+    $Plotly.purge(chartId)
+    years = []
+    permafrosttopSeries = []
+    permafrostbaseSeries = []
+    await extractTimeSeriesData()
+    buildChart()
+  }
 })
 
 onUnmounted(() => {
@@ -167,13 +185,17 @@ onUnmounted(() => {
   <section class="section">
     <div class="content clamp is-size-5">
       <h3 class="title is-3">Permafrost Depth Through Time</h3>
-      <p>
-        This chart shows the evolution of permafrost depth from
-        {{ years[0] || '...' }} to {{ years[years.length - 1] || '...' }} using
-        the {{ modelKey }} model under the {{ scenarioKey }} emissions scenario.
-      </p>
-      <div :id="chartId" class="story-chart"></div>
+      <Gimme />
+      <div v-if="latLng && years.length > 0">
+        <p>
+          This chart shows the evolution of permafrost depth from
+          {{ years[0] }} to {{ years[years.length - 1] }} using the
+          {{ modelKey }} model under the {{ scenarioKey }} emissions scenario
+          for {{ latLng.lat }}, {{ latLng.lng }}.
+        </p>
+      </div>
     </div>
+    <div id="top-base-chart" class="story-chart"></div>
   </section>
 </template>
 
