@@ -492,4 +492,10 @@ export default [
     tags: ['Climate', 'Wildfire', 'Temperature', 'Precipitation'],
     image: 'story-fire-prone-conditions.png',
   },
+  {
+    slug: 'story-permafrost-through-time',
+    title: 'Permafrost Through Time',
+    blurb: '',
+    tags: ['Permafrost'],
+  },
 ] satisfies Item[]

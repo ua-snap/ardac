@@ -71,3 +71,4 @@ type Slug =
   | 'story-climate-indicators'
   | 'era5-wrf-xray'
   | 'story-fire-prone-conditions'
+  | 'story-permafrost-through-time'
