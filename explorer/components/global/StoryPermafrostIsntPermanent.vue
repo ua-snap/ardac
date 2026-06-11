@@ -206,11 +206,20 @@ const buildChart = () => {
     },
   ]
 
+  const communityName =
+    (placesStore as any)?.communityName ||
+    (placesStore as any)?.community?.name ||
+    (placesStore as any)?.selectedCommunity?.name ||
+    (placesStore as any)?.place?.name
+  const locationLabel =
+    communityName ||
+    `${latLng.value.lat.toFixed(2)}, ${latLng.value.lng.toFixed(2)}`
+
   const layout: Partial<Layout> = {
     barmode: 'stack',
     bargap: 0,
     title: {
-      text: `Permafrost Depth Through Time`,
+      text: `Permafrost Depth Through Time (${locationLabel})`,
       font: { size: 16 },
     },
     xaxis: {
@@ -235,16 +244,7 @@ const buildChart = () => {
     },
   }
 
-  const config: Partial<Config> = {
-    responsive: true,
-    displaylogo: false,
-    toImageButtonOptions: {
-      format: 'png',
-      filename: 'permafrost-depth-through-time',
-      height: 600,
-      width: 1200,
-    },
-  }
+  let config = getConfig('permafrost-depth-over-time')
 
   $Plotly.newPlot(chartId, traces, layout, config)
 }
@@ -340,11 +340,23 @@ onUnmounted(() => {
         layer changes in your area.
       </p>
 
-      <h4>Prudhoe Area, north slope tussock tundra</h4>
+      <h4>Prudhoe Area, north slope tussock tundra (69.92, -148.53)</h4>
 
-      <h4>Fairbanks area, south of Tanana River</h4>
+      <figure class="image">
+        <img src="assets/images/permafrost_chart_prudhoe_area.png" />
+      </figure>
 
-      <h4>Anchorage Bicentennial Park</h4>
+      <h4>Fairbanks area, south of Tanana River (64.77, -147.79)</h4>
+
+      <figure class="image">
+        <img src="assets/images/permafrost_chart_fairbanks_area.png" />
+      </figure>
+
+      <h4>Anchorage Bicentennial Park (61.16, -149.76)</h4>
+
+      <figure class="image">
+        <img src="assets/images/permafrost_chart_anchorage.png" />
+      </figure>
 
       <h3>Now choose your own location!</h3>
 
@@ -353,8 +365,7 @@ onUnmounted(() => {
         <p>
           This chart shows the evolution of permafrost depth from
           {{ years[0] }} to {{ years[years.length - 1] }} using the
-          {{ modelKey }} model under the {{ scenarioKey }} emissions scenario
-          for {{ latLng.lat }}, {{ latLng.lng }}.
+          {{ modelKey }} model under the {{ scenarioKey }} emissions scenario.
         </p>
       </div>
       <div :id="chartId" class="story-chart"></div>
