@@ -73,19 +73,20 @@ const buildChart = () => {
   )
 
   // Create stacked bar chart with two traces:
-  // 1. Invisible trace to offset to permafrosttop depth
-  // 2. Visible trace showing the permafrost layer thickness
+  // 1. Green trace showing active layer (0 to permafrosttop)
+  // 2. Blue trace showing the permafrost layer thickness
   const traces: Data[] = [
     {
       type: 'bar',
-      name: 'Offset to top',
+      name: 'Active Layer',
       x: years,
       y: permafrosttopSeries,
       marker: {
-        color: 'rgba(0,0,0,0)',
+        color: '#2ca02c',
       },
-      hoverinfo: 'skip',
-      showlegend: false,
+      hovertemplate:
+        '<b>Year %{x}</b><br>' +
+        'Active layer depth: %{y:.2f} m<extra></extra>',
     },
     {
       type: 'bar',
