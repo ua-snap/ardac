@@ -224,7 +224,6 @@ onUnmounted(() => {
   <section class="section">
     <div class="content clamp is-size-5">
       <h3 class="title is-3">Permafrost Depth Through Time</h3>
-
       <Gimme />
       <div v-if="latLng && apiData">
         <p>
@@ -234,8 +233,8 @@ onUnmounted(() => {
           for {{ latLng.lat }}, {{ latLng.lng }}.
         </p>
       </div>
+      <div :id="chartId" class="story-chart"></div>
     </div>
-    <div :id="chartId" class="story-chart"></div>
   </section>
 </template>
 
