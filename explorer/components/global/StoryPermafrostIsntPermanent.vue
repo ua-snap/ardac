@@ -5,7 +5,7 @@ const mapStore = useMapStore()
 const layers: MapLayer[] = [
   {
     id: 'permafrost_thickness_top_early',
-    title: 'Active layer thickness, 2021–2039, GFDL CM3, RCP 8.5',
+    title: 'Depth to top of permafrost, 2021–2039, GFDL CM3, RCP 8.5',
     source: 'rasdaman',
     wmsLayerName: 'crrel_gipl_outputs_nc',
     style: 'ardac_permafrost_top_earlycentury_era',
@@ -15,7 +15,7 @@ const layers: MapLayer[] = [
   },
   {
     id: 'permafrost_thickness_top_mid',
-    title: 'Active layer thickness, 2040–2069, GFDL CM3, RCP 8.5',
+    title: 'Depth to top of permafrost, 2040–2069, GFDL CM3, RCP 8.5',
     source: 'rasdaman',
     wmsLayerName: 'crrel_gipl_outputs_nc',
     style: 'ardac_permafrost_top_midcentury_era',
@@ -25,7 +25,7 @@ const layers: MapLayer[] = [
   },
   {
     id: 'permafrost_change_top',
-    title: 'Change in active layer thickness',
+    title: 'Change in depth to top of permafrost',
     source: 'rasdaman',
     wmsLayerName: 'crrel_gipl_outputs_nc',
     style: 'permafrost_change_top',
@@ -284,23 +284,40 @@ onUnmounted(() => {
       <h3 class="title is-3">Permafrost isn't permanent!</h3>
 
       <p>
-        Permafrost means permanently frozen ground – but in a warming climate,
-        most permafrost is actually in a state of change.
+        Permafrost means permanently frozen ground, but in a warming climate,
+        most permafrost is actually in a state of change. Permafrost – and its
+        thaw – affects people in different ways, depending on how they use the
+        land. Regardless of the presence or absence of permafrost, surface soils
+        may freeze in the winter, then thaw in the summer. This layer that
+        changes states annually is called the “active layer”.
       </p>
-      <p>
-        Regardless of the presence or absence of permafrost, surface soils may
-        freeze in the winter, then thaw in the summer.
-      </p>
-      <p>
-        This layer that changes states annually is called the “active layer”.
-      </p>
+
       <p>
         With warmer summers, the thickness of the active layer in permafrost
-        soils is expected to increase over time.
+        soils is expected to increase over time. Climate warming is also causing
+        the formation of an unfrozen layer between the active layer and deeper
+        permafrost, known as “talik”. The combined depth of the active layer and
+        the talik layer is the depth to permafrost. This is generally
+        increasing, often dramatically.
       </p>
       <p>
-        Climate warming is also causing the formation of an unfrozen layer
-        between the active layer and deeper permafrost, known as “talik”.
+        Although seasonal depth of surface freezing is important in many
+        contexts, e.g. safe travel over frozen ground, it is not explored in
+        this tool. Overall, the impacts of permafrost thaw tend to be greatest
+        when permafrost is shallow.
+      </p>
+
+      <h4 class="title is-4">How can models look into the future?</h4>
+      <p>
+        The Geophysical Institute Permafrost Lab developed a model, called
+        GIPL2.0, that links their own models of permafrost and ground
+        temperature to long&ndash;term future climate conditions. This lets us
+        look at how the thickness of the depth to the of permafrost might change
+        in the future.
+      </p>
+      <p>
+        Use the map below to see the depth to the top of permafrost, and places
+        where this thickness could going to change more rapidly than others.
       </p>
 
       <MapBlock :mapId="mapId" crs="EPSG:3338" class="mb-6">
@@ -316,93 +333,76 @@ onUnmounted(() => {
           </MapLayer>
         </template>
       </MapBlock>
-
-      <p>
-        The combined depth of the active layer and the talik layer is the depth
-        to permafrost. This is generally increasing, often dramatically.
-      </p>
-      <p>
-        Although seasonal depth of surface freezing is important in many
-        contexts, e.g. safe travel over frozen ground, it is not explored in
-        this tool.
-      </p>
-      <p>
-        Permafrost – and its thaw – affects people in different ways, depending
-        on how they use the land. Overall, the impacts of permafrost thaw tend
-        to be greatest when permafrost is shallow.
-      </p>
+      <h3 class="title is-3">Near-surface changes matter most</h3>
       <p>
         Geoscientists may be interested in frozen ground at depths of up to
-        hundreds of meters.
+        hundreds of meters. Engineers concerned with building homes, septic
+        systems, roads, and other infrastructure are more concerned with tens of
+        meters depth. But for those traveling across the land for subsistence or
+        recreational use, or for ecologists or farmers, the most important story
+        occurs close to the surface, in the upper two meters. Impacts of thaw
+        are also dependent on moisture content of the soil. Thaw can lead to
+        collapse (thermokarst) and erosion when soils are very wet or contain
+        ice lenses.
       </p>
-      <p>
-        Engineers concerned with building homes, septic systems, roads, and
-        other infrastructure are more concerned with tens of meters depth.
-      </p>
-      <p>
-        But for those traveling across the land for subsistence or recreational
-        use, or for ecologists or farmers, the most important story occurs close
-        to the surface, in the upper two meters.
-      </p>
-      <p>
-        Impacts of thaw are also dependent on moisture content of the soil. Thaw
-        can lead to collapse (thermokarst) and erosion when soils are very wet
-        or contain ice lenses.
-      </p>
+
       <p>
         Changes in the depth to permafrost have huge impacts on vegetation,
         because the active layer determines rooting depth and soil drainage.
         Some plants require deeper rooting depths and warmer, less saturated
-        soils.
+        soils. Where the permafrost is very shallow (less than half a meter),
+        trees cannot grow and tundra or shrubs dominate. Where the top of the
+        permafrost is half a meter to one meter, shrubs and black spruce tend to
+        dominate. Where the permafrost is deeper than one meter, a broader range
+        of forest species can thrive.
       </p>
-      <p>
-        Where the permafrost is very shallow (less than half a meter), trees
-        cannot grow and tundra or shrubs dominate.
-      </p>
-      <p>
-        Where the top of the permafrost is half a meter to one meter, shrubs and
-        black spruce tend to dominate.
-      </p>
-      <p>
-        Where the permafrost is deeper than one meter, a broader range of forest
-        species can thrive.
-      </p>
+
       <p>
         In this data story we explore the trends in the depth to permafrost over
         time at three locations, which represent three common ecological types
-        in Alaska.
-      </p>
-      <p>
-        We use data derived from the GIPL 2.0 model to construct the three plots
-        below. You can also enter your own location to see active layer changes
-        in your area.
+        in Alaska. We use data derived from the GIPL 2.0 model to construct the
+        three plots below. You can also enter your own location to see active
+        layer changes in your area.
       </p>
 
-      <h4>Shrub Tussock Tundra</h4>
+      <h3 class="title is-3">
+        How does vegetation look different in places with different depths to
+        the top of permafrost?
+      </h3>
 
-      <p>Prudhoe Bay area, permafrost generally within 50cm.</p>
+      <h4 class="title is-4">Shrub Tussock Tundra</h4>
+
+      <p>Prudhoe Bay area, permafrost generally less than 100cm.</p>
+
+      <figure class="image">
+        <img src="assets/images/tussocks.jpeg" />
+      </figure>
 
       <figure class="image">
         <img src="assets/images/permafrost_chart_prudhoe_area.png" />
       </figure>
 
-      <h4>Black Spruce Lowland Forest</h4>
+      <h4 class="title is-4">Black Spruce Lowland Forest</h4>
 
-      <p>Fairbanks area, permafrost generally within 100cm.</p>
-
+      <p>Fairbanks area, permafrost generally within 100-200cm.</p>
+      <figure class="image">
+        <img src="assets/images/black_spruce.png" />
+      </figure>
       <figure class="image">
         <img src="assets/images/permafrost_chart_fairbanks_area.png" />
       </figure>
 
-      <h4>White Spruce Upland Forest</h4>
+      <h4 class="title is-4">White Spruce Upland Forest</h4>
 
       <p>Anchorage area, permafrost absent or greater than 200cm.</p>
-
+      <figure class="image">
+        <img src="assets/images/birch-veg-permafrost.jpg" />
+      </figure>
       <figure class="image">
         <img src="assets/images/permafrost_chart_anchorage.png" />
       </figure>
 
-      <h3>Now choose your own location!</h3>
+      <h3 class="title is-3">Now choose your own location!</h3>
 
       <Gimme />
       <div v-if="latLng && apiData">
