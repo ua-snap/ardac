@@ -6,7 +6,6 @@ import {
   COLD_SNAP_START_DATE,
   type ColdSnapCommunity,
 } from '~/utils/coldSnap1989Communities'
-import { filterEra5WrfSeriesForWindowFahrenheit } from '~/utils/coldSnap1989Transforms'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 
 const dataStore = useDataStore()
@@ -54,6 +53,33 @@ interface CommunitySeries {
   t2Max: Era5WrfSeriesPoint[]
 }
 
+type Era5WrfPointData = Record<
+  string,
+  Record<string, number | null | undefined>
+>
+
+const celsiusToFahrenheit = (value: number | null): number | null =>
+  value === null ? null : (value * 9) / 5 + 32
+
+const buildColdSnapSeries = (
+  apiData: Era5WrfPointData
+): Record<string, Era5WrfSeriesPoint[]> => {
+  const dates = Object.keys(apiData)
+    .filter(date => date >= COLD_SNAP_START_DATE && date <= COLD_SNAP_END_DATE)
+    .sort()
+
+  return {
+    t2_min: dates.map(date => ({
+      date,
+      value: celsiusToFahrenheit(apiData[date]?.t2_min ?? null),
+    })),
+    t2_max: dates.map(date => ({
+      date,
+      value: celsiusToFahrenheit(apiData[date]?.t2_max ?? null),
+    })),
+  }
+}
+
 const isLoading = ref(true)
 
 const getCommunity = (id: string): ColdSnapCommunity | undefined =>
@@ -65,15 +91,12 @@ const communitySeriesById = computed<Record<string, CommunitySeries>>(() => {
   const seriesById: Record<string, CommunitySeries> = {}
 
   COLD_SNAP_COMMUNITIES.forEach(community => {
-    const apiData = dataStore.apiData[communityKey(community.id)] ?? null
+    const apiData = dataStore.apiData[
+      communityKey(community.id)
+    ] as Era5WrfPointData | null
     if (!apiData) return
 
-    const series = filterEra5WrfSeriesForWindowFahrenheit(
-      apiData,
-      COLD_SNAP_START_DATE,
-      COLD_SNAP_END_DATE,
-      ['t2_min', 't2_max']
-    )
+    const series = buildColdSnapSeries(apiData)
 
     seriesById[community.id] = {
       t2Min: series.t2_min,
