@@ -6,10 +6,7 @@ import {
   COLD_SNAP_START_DATE,
   type ColdSnapCommunity,
 } from '~/utils/coldSnap1989Communities'
-import {
-  filterEra5WrfSeriesForWindowFahrenheit,
-  type Era5WrfPointData,
-} from '~/utils/coldSnap1989Transforms'
+import { filterEra5WrfSeriesForWindowFahrenheit } from '~/utils/coldSnap1989Transforms'
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 
 const dataStore = useDataStore()
@@ -57,15 +54,38 @@ interface CommunitySeries {
   t2Max: Era5WrfSeriesPoint[]
 }
 
-const communitySeries = ref<Record<string, CommunitySeries>>({})
-const communityErrors = ref<Record<string, boolean>>({})
 const isLoading = ref(true)
 
 const getCommunity = (id: string): ColdSnapCommunity | undefined =>
   COLD_SNAP_COMMUNITIES.find(community => community.id === id)
 
+const communityKey = (id: string) => `era5wrf-${id}`
+
+const communitySeriesById = computed<Record<string, CommunitySeries>>(() => {
+  const seriesById: Record<string, CommunitySeries> = {}
+
+  COLD_SNAP_COMMUNITIES.forEach(community => {
+    const apiData = dataStore.apiData[communityKey(community.id)] ?? null
+    if (!apiData) return
+
+    const series = filterEra5WrfSeriesForWindowFahrenheit(
+      apiData,
+      COLD_SNAP_START_DATE,
+      COLD_SNAP_END_DATE,
+      ['t2_min', 't2_max']
+    )
+
+    seriesById[community.id] = {
+      t2Min: series.t2_min,
+      t2Max: series.t2_max,
+    }
+  })
+
+  return seriesById
+})
+
 const getSeries = (id: string): CommunitySeries | undefined =>
-  communitySeries.value[id]
+  communitySeriesById.value[id]
 
 const purgeAllCharts = () => {
   COLD_SNAP_CHART_IDS.forEach(chartId => {
@@ -82,33 +102,15 @@ const purgeAllCharts = () => {
 
 const loadCommunityData = async () => {
   isLoading.value = true
-  communitySeries.value = {}
-  communityErrors.value = {}
 
   await Promise.all(
-    COLD_SNAP_COMMUNITIES.map(async community => {
-      const apiData = (await dataStore.fetchEra5WrfPoint(
-        community.latitude,
-        community.longitude
-      )) as Era5WrfPointData | null
-
-      if (!apiData) {
-        communityErrors.value[community.id] = true
-        return
-      }
-
-      const series = filterEra5WrfSeriesForWindowFahrenheit(
-        apiData,
-        COLD_SNAP_START_DATE,
-        COLD_SNAP_END_DATE,
-        ['t2_min', 't2_max']
-      )
-
-      communitySeries.value[community.id] = {
-        t2Min: series.t2_min,
-        t2Max: series.t2_max,
-      }
-    })
+    COLD_SNAP_COMMUNITIES.map(community =>
+      dataStore.fetchData('era5wrf', '', {
+        lat: community.latitude,
+        lng: community.longitude,
+        key: communityKey(community.id),
+      })
+    )
   )
 
   isLoading.value = false
