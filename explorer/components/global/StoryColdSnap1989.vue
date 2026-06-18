@@ -771,7 +771,7 @@ onUnmounted(() => {
         </template>
       </GetAndUseData>
 
-      <Bios :people="['Rick Thoman']" />
+      <Bios :people="['Anjali Shah', 'Rick Thoman']" />
     </div>
   </section>
 </template>
