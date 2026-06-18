@@ -9,44 +9,8 @@ import {
 import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 
 const dataStore = useDataStore()
-const mapStore = useMapStore()
 const runtimeConfig = useRuntimeConfig()
 const { $Plotly } = useNuxtApp()
-
-const mapId = 'cold-snap-1989-maps'
-
-const coldSnapLayers: MapLayer[] = [
-  {
-    id: 'cold_snap_jan27',
-    title: 'Daily Min 2m Temperature: January 27, 1989',
-    source: 'rasdaman',
-    wmsLayerName: 'era5_4km_daily_t2_min',
-    style: 'ardac_t2_min_daily',
-    legend: 'era5_cold',
-    rasdamanConfiguration: { time: '1989-01-27T00:00:00.000Z' },
-  },
-  {
-    id: 'cold_snap_jan28',
-    title: 'Daily Min 2m Temperature: January 28, 1989',
-    source: 'rasdaman',
-    wmsLayerName: 'era5_4km_daily_t2_min',
-    style: 'ardac_t2_min_daily',
-    legend: 'era5_cold',
-    rasdamanConfiguration: { time: '1989-01-28T00:00:00.000Z' },
-  },
-]
-
-const legend: Record<string, LegendItem[]> = {
-  era5_cold: [
-    { color: '#3b4cc0', label: '&lt;-40°C' },
-    { color: '#9bb2e8', label: '-40°C to -20°C' },
-    { color: '#f7f7f7', label: '-20°C to 0°C' },
-    { color: '#fcbba1', label: '0°C to 15°C' },
-    { color: '#d6604d', label: '&ge;15°C' },
-  ],
-}
-
-mapStore.setLegendItems(mapId, legend)
 
 interface CommunitySeries {
   t2Min: Era5WrfSeriesPoint[]
@@ -718,17 +682,6 @@ onUnmounted(() => {
         may appear pinched or stretched when WRF output is vizualized directly
         without reprojecting.
       </p>
-
-      <MapBlock :mapId="mapId" class="mb-6">
-        <template v-slot:layers>
-          <MapLayer :mapId="mapId" :layer="coldSnapLayers[0]" default>
-            <template v-slot:title>{{ coldSnapLayers[0].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="coldSnapLayers[1]">
-            <template v-slot:title>{{ coldSnapLayers[1].title }}</template>
-          </MapLayer>
-        </template>
-      </MapBlock>
 
       <h4 class="title is-4">Conclusion + Outro</h4>
 
