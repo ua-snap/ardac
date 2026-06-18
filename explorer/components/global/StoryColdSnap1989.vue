@@ -702,24 +702,6 @@ onUnmounted(() => {
         model projections.
       </p>
 
-      <h4 class="title is-4">Offramps, Get + Use</h4>
-
-      <ul>
-        <li>
-          <a href="https://uaf-accap.org/projects/extreme-events-library/"
-            >ACCAP Extreme Event Library</a
-          >
-        </li>
-        <li>
-          <NuxtLink to="/item/era5-wrf-xray">ERA5-WRF Xray</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/item/temperature-cmip6-downscaled"
-            >CMIP6 Downscaled Temp X-ray</NuxtLink
-          >
-        </li>
-      </ul>
-
       <GetAndUseData :api-url="`${runtimeConfig.public.apiUrl}/era5wrf/`">
         <template #preamble>
           <p>
@@ -727,6 +709,22 @@ onUnmounted(() => {
             selected variables.
           </p>
         </template>
+        <li>
+          <a href="https://uaf-accap.org/projects/extreme-events-library/"
+            >ACCAP Extreme Event Library</a
+          >
+        </li>
+        <li>
+          <NuxtLink to="/item/era5-wrf-xray"
+            >ERA5-WRF: High Resolution Dynamically Downscaled
+            Reanalysis</NuxtLink
+          >
+        </li>
+        <li>
+          <NuxtLink to="/item/temperature-cmip6-downscaled"
+            >Temperature, CMIP6 Downscaled</NuxtLink
+          >
+        </li>
       </GetAndUseData>
 
       <Bios :people="['Anjali Shah', 'Rick Thoman']" />
