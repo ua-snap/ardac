@@ -24,6 +24,9 @@ const chartId = props.chartId
 const t2MaxVar = ERA5_WRF_VARIABLES.find(v => v.key === 't2_max')!
 const t2MinVar = ERA5_WRF_VARIABLES.find(v => v.key === 't2_min')!
 
+const formatLng = (lng: number) =>
+  lng < 0 ? `${Math.abs(lng)}°W` : `${lng}°E`
+
 const buildChart = () => {
   if (!props.t2Min.length && !props.t2Max.length) return
 
@@ -56,8 +59,8 @@ const buildChart = () => {
   props.annotations?.forEach(annotation => {
     shapes.push({
       type: 'line',
-      x0: annotation.date ?? props.t2Min[0]?.date,
-      x1: annotation.date ?? props.t2Max[props.t2Max.length - 1]?.date,
+      x0: props.t2Min[0]?.date,
+      x1: props.t2Max[props.t2Max.length - 1]?.date,
       y0: annotation.valueF,
       y1: annotation.valueF,
       line: {
@@ -89,7 +92,7 @@ const buildChart = () => {
     traces,
     {
       title: {
-        text: `${props.communityName}<br><sub>Daily Min/Max 2 m Temperature, Jan 1 – Apr 1, 1989 (${props.lat}°N, ${props.lng}°E)</sub>`,
+        text: `${props.communityName}<br><sub>Daily Min/Max 2 m Temperature, Jan 1 – Apr 1, 1989 (${props.lat}°N, ${formatLng(props.lng)})</sub>`,
         font: { size: 24 },
       },
       xaxis: {
