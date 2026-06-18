@@ -568,14 +568,7 @@ onMounted(loadCommunityData)
         instruments were present to record an observation?
       </p>
 
-      <p>
-        The answer to this question is derived with
-        <a
-          href="https://colab.research.google.com/drive/1IRonKg1p3bX_jAoBjmKWYRkxR06SuH50?usp=sharing"
-          >the following</a
-        >
-        steps:
-      </p>
+      <p>An answer to this question can be derived with the following steps:</p>
 
       <ul>
         <li>
