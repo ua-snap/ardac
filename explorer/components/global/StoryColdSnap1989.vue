@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {
-  COLD_SNAP_CHART_IDS,
   COLD_SNAP_COMMUNITIES,
   COLD_SNAP_END_DATE,
   COLD_SNAP_START_DATE,
@@ -10,7 +9,6 @@ import type { Era5WrfSeriesPoint } from '~/utils/era5WrfTransforms'
 
 const dataStore = useDataStore()
 const runtimeConfig = useRuntimeConfig()
-const { $Plotly } = useNuxtApp()
 
 interface CommunitySeries {
   t2Min: Era5WrfSeriesPoint[]
@@ -74,19 +72,6 @@ const communitySeriesById = computed<Record<string, CommunitySeries>>(() => {
 const getSeries = (id: string): CommunitySeries | undefined =>
   communitySeriesById.value[id]
 
-const purgeAllCharts = () => {
-  COLD_SNAP_CHART_IDS.forEach(chartId => {
-    try {
-      const element = document.getElementById(chartId)
-      if (element && element.hasChildNodes()) {
-        $Plotly.purge(chartId)
-      }
-    } catch (error) {
-      console.debug(`Chart purge skipped for ${chartId}:`, error)
-    }
-  })
-}
-
 const loadCommunityData = async () => {
   isLoading.value = true
 
@@ -104,10 +89,6 @@ const loadCommunityData = async () => {
 }
 
 onMounted(loadCommunityData)
-
-onUnmounted(() => {
-  purgeAllCharts()
-})
 </script>
 
 <template>
