@@ -130,12 +130,12 @@ onUnmounted(() => {
 
       <p>
         In this ARDAC data story we use the historic 1989 Cold Snap as a lens
-        for understanding how extreme weather events impact Alaska, and to
-        understand how downscaled climate reanalysis data can be used to ask new
-        questions about extreme weather. This data story is a collaboration
-        between the Scenarios Network for Alaska and Arctic Planning (SNAP) and
-        the Alaska Center for Climate Assessment and Preparedness (ACCAP) that
-        integrates work from the ACCAP
+        for understanding how extreme weather events impact Alaska and how
+        downscaled climate reanalysis data can be used to ask new questions
+        about extreme weather. This data story is a collaboration between the
+        Scenarios Network for Alaska and Arctic Planning (SNAP) and the Alaska
+        Center for Climate Assessment and Preparedness (ACCAP) that integrates
+        work from the ACCAP
         <a href="https://uaf-accap.org/projects/extreme-events-library/"
           >Historic Extreme Events Library</a
         >
@@ -197,7 +197,7 @@ onUnmounted(() => {
       <h4 class="title is-4">Record breaking cold</h4>
 
       <p>
-        The 1989 Cold Snap rivals other cold spells in the 20th century,and
+        The 1989 Cold Snap rivals other cold spells in the 20th century, and
         remains the most severe on record for much of western Alaska. For
         central and eastern Alaska, cold snaps in 1947, 1961, 1971, and 1975
         were similar in duration with even lower temperatures. Across Southeast
@@ -220,13 +220,11 @@ onUnmounted(() => {
         Environment &amp; Climate Change Canada
       </p>
 
-      <h4 class="title is-4">Community specific impacts and extremes</h4>
-
       <div v-if="isLoading" class="notification is-info is-light">
         Loading ERA5-WRF temperature data for Alaska communities…
       </div>
 
-      <h4 class="title is-4">Community Impacts</h4>
+      <h4 class="title is-4">Community impacts</h4>
 
       <p>
         <strong>Nome</strong>: Pipes froze at the elementary school and St.
@@ -281,7 +279,7 @@ onUnmounted(() => {
       />
 
       <p>
-        <strong>Ft. Wainright</strong>: Brim Frost &rsquo;89, a military
+        <strong>Ft. Wainwright</strong>: Brim Frost &rsquo;89, a military
         training exercise, was held during the snap and a C-130 plane crashed.
         Eight participating Canadian military personnel died.
       </p>
@@ -329,13 +327,13 @@ onUnmounted(() => {
         class="mb-5"
       />
 
-      <h4 class="title is-4">Community Extremes</h4>
+      <h4 class="title is-4">Community extremes</h4>
 
       <p>
         <strong>Tanana</strong> reported the lowest official temperature of
-        <strong>-76&deg;F</strong> on January 27th. There were
-        <strong>17 straight days</strong> of daytime high temperatures in Tanana
-        of <strong>-40&deg;F</strong> or lower.
+        <strong>-76&deg;F</strong> on January 27th. For
+        <strong>17 consecutive days</strong>, Tanana's daytime high temperature
+        remained <strong>-40&deg;F</strong> or colder.
       </p>
       <Era5WrfColdSnapCommunityChart
         v-if="getSeries('tanana')"
@@ -351,9 +349,9 @@ onUnmounted(() => {
 
       <p>
         <strong>Anchorage</strong> recorded the lowest daytime high temperature
-        on record of <strong>-19 &deg;F</strong> on January 28th. Police
-        reported car batteries dying and pipes freezing. Firefighters responded
-        to furnace fires and fires started in attempts to thaw pipes. Numerous
+        on record of <strong>-19&deg;F</strong> on January 28th. Police reported
+        car batteries dying and pipes freezing. Firefighters responded to
+        furnace fires and fires started in attempts to thaw pipes. Numerous
         flights were delayed at the airport.
       </p>
       <Era5WrfColdSnapCommunityChart
@@ -433,13 +431,14 @@ onUnmounted(() => {
         class="mb-5"
       />
 
-      <h4 class="title is-4">Downscaled Reanalysis vs. Observed</h4>
+      <h4 class="title is-4">Downscaled reanalysis vs. observations</h4>
 
       <p>
         How well does the ERA5-WRF 4km product capture extreme temperature
-        minima? You&rsquo;ll notice in these charts that there are differences
-        between the observed temperatures and those found in the reanalysis.
-        This result should be expected because of spatial resolution, etc.
+        minima? Notice in the charts that there are differences between the
+        observed temperatures and those found in the reanalysis. The difference
+        is expected because a single grid cell value represents conditions for a
+        4 km by 4 km area whereas a station observation is a point measurement.
       </p>
 
       <table class="table is-fullwidth is-striped">
@@ -562,16 +561,16 @@ onUnmounted(() => {
         >, may or may not represent extreme values. This preliminary analysis,
         based on a limited number of communities, indicates that the
         observational temperature extrema and those extracted from the ERA5-WRF
-        reanalysis agree within about 1 &deg;F on average (the reanalysis being
+        reanalysis agree within about 1&deg;F on average (the reanalysis being
         slightly warmer), although the spread (standard deviation) is
-        substantial: &plusmn;8 &deg;F across the different communities. A more
-        rigorous comparison would likely include more communities, involve a
-        more detailed examination of the residuals, as well as an analysis of
-        how the more &ldquo;normal&rdquo; temperature regimes (e.g., January
-        1990) may influence the differences between the observations and
-        reanalysis. Is the reanalysis equally skilled at reconstructing cold
-        snaps and more climatically normal winter conditions? Or do the biases
-        shift in magnitude and direction?
+        substantial: &plusmn;8&deg;F across the different communities. A more
+        rigorous comparison would include more communities, a more detailed
+        examination of the residuals, and an analysis of how the more
+        &ldquo;normal&rdquo; temperature regimes (e.g., January 1990) influence
+        the differences between the observations and reanalysis. Is the
+        reanalysis equally skilled at reconstructing cold snaps and more
+        climatically normal winter conditions? Or do the biases shift in
+        magnitude and direction?
       </p>
 
       <p>
@@ -625,17 +624,17 @@ onUnmounted(() => {
 
       <p>
         January 27, 1989 coldest temperature:
-        <strong>-85.7 &deg;F at 62.9588, -154.6568</strong>
+        <strong>-85.7&deg;F at 62.9588, -154.6568</strong>
       </p>
 
       <p>
         January 28, 1989 coldest temperature:
-        <strong>-84.2 &deg;F at 60.9892, -154.2449</strong>
+        <strong>-84.2&deg;F at 60.9892, -154.2449</strong>
       </p>
 
       <p>
         Each of these temperatures would shatter Alaska&rsquo;s all time
-        observed cold record of -80 &deg;F (<a
+        observed cold record of -80&deg;F (<a
           href="https://www.gi.alaska.edu/alaska-science-forum/alaskas-all-time-cold-record-turns-50"
           >recorded at Prospect Creek Camp, January 21, 1971</a
         >) -- but could it really have been that cold in 1989? Remember, these
@@ -644,21 +643,21 @@ onUnmounted(() => {
 
       <p>
         The location of the absolute coldest reanalysis temperature on January
-        27 (<strong>-85.7 &deg;F)</strong> is about 30 miles east of McGrath,
-        which has a recorded low temperature of <strong>-75 &deg;F</strong> on
+        27 (<strong>-85.7&deg;F</strong>) is about 30 miles east of McGrath,
+        which has a recorded low temperature of <strong>-75&deg;F</strong> on
         the same date (Table 1). If one were to apply the delta for McGrath from
-        Table 1 (<strong>4.8F)</strong> to the
-        <strong>-85.7 &deg;F</strong> value found in the reanalysis, the cold is
-        still record breaking, but only just (-<strong>80.9 &deg;F).</strong>
+        Table 1 (<strong>4.8&deg;F</strong>) to the
+        <strong>-85.7&deg;F</strong> value found in the reanalysis, the cold is
+        still record breaking, but only just (<strong>-80.9&deg;F</strong>).
       </p>
 
       <p>
         The absolute coldest reanalysis temperature for January 28
-        <strong>(-84.4&deg;F)</strong> is perhaps more intriguing because the
+        (<strong>-84.2&deg;F</strong>) is perhaps more intriguing because the
         location of its occurrence is near Telaquana Lake, about 45 miles
         southeast of Lime Village. The geography is interesting because of the
         proximity to the mountains and glaciers of Lake Clark National Park - is
-        it possible that the 9 km spatial resolution of the downscaled
+        it possible that the 4 km spatial resolution of the downscaled
         reanalysis grid cell is encapsulating the influence of higher elevation
         terrain and conditions? However, the extreme cold temperatures at
         Dillingham and King Salmon (Table 1) about 150 miles southward suggest
@@ -678,28 +677,27 @@ onUnmounted(() => {
         distorted in WRF datasets because the data are defined on the native WRF
         projected grid rather than on a more familiar cartographic projection.
         WRF projections often assume a spherical Earth, while other geospatial
-        data commonlyuse ellipsoidal datums such as WGS84 or NAD83 and so Alaska
-        may appear pinched or stretched when WRF output is vizualized directly
-        without reprojecting.
+        data commonly use ellipsoidal datums such as WGS84 or NAD83 and so
+        Alaska may appear pinched or stretched when WRF output is visualized
+        directly without reprojecting.
       </p>
 
-      <h4 class="title is-4">Conclusion + Outro</h4>
+      <h4 class="title is-4">Conclusion and future directions</h4>
 
       <p>
-        Future research directions might include the estimation of cold-weather
-        risk and impacts in Alaska where weather observations are sparse, but
-        infrastructure development may occur in the near future. The 1989 Cold
-        Snap is a historic extreme that also presents a natural &ldquo;stress
-        test&rdquo; for the usage of gridded climate data in locations where
-        observations are sparse and future infrastructure decisions are
-        consequential: a condition that describes most of Alaska. And because
-        downscaled climate model projections use this same baseline data,
+        One possible future research directions is the estimation of
+        cold-weather risk and impacts in Alaska where weather observations are
+        sparse and infrastructure development may be on the horizon. The 1989
+        Cold Snap is a historic extreme that also serves as a natural
+        &ldquo;stress test&rdquo; for the usage of gridded climate data. And
+        because downscaled climate model projections use the same baseline data,
         analysis can extend from &ldquo;where was it cold in 1989&rdquo; to
         &ldquo;where might infrastructure cold weather risk persist into the
-        future, even as the Alaska climate warms?&rdquo; There is a research
-        pathway for remote areas to link historical events to future risk
-        assessment via historical climate reconstructions and downscaled climate
-        model projections.
+        future, even as the Alaska climate warms?&rdquo; The analysis here is
+        preliminary, but points to a potential research pathway for remote
+        regions: linking historical extremes to future risk assessment through
+        historical climate reconstructions and downscaled climate model
+        projections.
       </p>
 
       <GetAndUseData :api-url="`${runtimeConfig.public.apiUrl}/era5wrf/`">
