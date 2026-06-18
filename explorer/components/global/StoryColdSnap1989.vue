@@ -157,21 +157,25 @@ onUnmounted(() => {
           alt="Ice fog as seen from UAF Campus"
         />
       </figure>
-      <p>Ice fog as seen from UAF Campus, Photo credit: UAF</p>
-
-      <h4 class="title is-4">Data Story Intro</h4>
-
       <p>
-        In this data story we use the historic 1989 Cold Snap as a lens for
-        understanding how extreme weather events impact Alaska, and to
-        understand how downscaled climate reanalysis data can be used to ask new
-        questions about extreme weather…
+        Ice fog as seen from University of Alaska Fairbanks campus, Photo
+        credit: UAF
       </p>
+
+      <h4 class="title is-4">Introduction</h4>
+
       <p>
-        This data story integrates work from the ACCAP
+        In this ARDAC data story we use the historic 1989 Cold Snap as a lens
+        for understanding how extreme weather events impact Alaska, and to
+        understand how downscaled climate reanalysis data can be used to ask new
+        questions about extreme weather. This data story is a collaboration
+        between the Scenarios Network for Alaska and Arctic Planning (SNAP) and
+        the Alaska Center for Climate Assessment and Preparedness (ACCAP) that
+        integrates work from the ACCAP
         <a href="https://uaf-accap.org/projects/extreme-events-library/"
           >Historic Extreme Events Library</a
-        >, SNAP, Dynamical Downscalers, etc…. Big awesome collab yay IARC
+        >
+        with a high-resolution dynamically downscaled ERA5 reanalysis dataset.
       </p>
 
       <p>
