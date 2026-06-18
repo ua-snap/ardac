@@ -496,9 +496,9 @@ export default [
     slug: 'story-cold-snap-1989',
     title: '1989 Alaska Cold Snap',
     blurb:
-      'Historic January 1989 cold snap impacts Alaska communities, compared with ERA5-WRF downscaled reanalysis temperatures across the state.',
+      'Learn about how the historic January 1989 cold snap impacted Alaska communities, and how ERA5-WRF downscaled reanalysis temperature data can be used to ask new questions about extreme weather.',
     tags: ['Climate', 'Temperature'],
     image: 'story-cold-snap-1989.png',
-    imageAlt: 'Placeholder preview for the 1989 Alaska Cold Snap data story',
+    imageAlt: 'Preview image for the 1989 Alaska Cold Snap data story',
   },
 ] satisfies Item[]
