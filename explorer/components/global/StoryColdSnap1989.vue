@@ -265,9 +265,9 @@ onUnmounted(() => {
       <h4 class="title is-4">Community Impacts</h4>
 
       <p>
-        <strong>Nome</strong>: Pipes froze at the elementary school and St
+        <strong>Nome</strong>: Pipes froze at the elementary school and St.
         Joseph Catholic Church. Nome Joint Utilities diluted #2 diesel fuel with
-        #1 fuel gallon for better flow in the extreme cold.
+        #1 fuel for better flow in the extreme cold.
       </p>
       <Era5WrfColdSnapCommunityChart
         v-if="getSeries('nome')"
@@ -702,21 +702,22 @@ onUnmounted(() => {
         is plausible.
       </p>
 
+      <figure class="image">
+        <video controls preload="metadata">
+          <source src="/videos/cold-snap-migration.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </figure>
       <p>
-        The southward migration of the cold is
-        <a
-          href="https://drive.google.com/file/d/1pY4bGxOIIWZmAbAjyhG6r3fjNnAISca-/view?usp=drive_link"
-          >illustrated in the downscaled reanalysis data</a
-        >.
+        Hourly ERA5-WRF downscaled reanalysis data illustrates the migration of
+        the 1989 Cold Snap across Alaska. Note that Alaska often appears
+        distorted in WRF datasets because the data are defined on the native WRF
+        projected grid rather than on a more familiar cartographic projection.
+        WRF projections often assume a spherical Earth, while other geospatial
+        data commonlyuse ellipsoidal datums such as WGS84 or NAD83 and so Alaska
+        may appear pinched or stretched when WRF output is vizualized directly
+        without reprojecting.
       </p>
-      <p>
-        Another candidate: the raw hourly data for a week around the cold snap:
-        <a
-          href="https://drive.google.com/file/d/1TUMdI47-8u3bvpbowlC7adbNgX2Ki81N/view?usp=drive_link"
-          >https://drive.google.com/file/d/1TUMdI47-8u3bvpbowlC7adbNgX2Ki81N/view?usp=drive_link</a
-        >
-      </p>
-      <p>These data are not reprojected yet, which is why AK looks so weird.</p>
 
       <MapBlock :mapId="mapId" class="mb-6">
         <template v-slot:layers>
