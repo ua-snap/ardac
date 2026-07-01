@@ -265,13 +265,13 @@ onMounted(loadCommunityData)
         Eight participating Canadian military personnel died.
       </p>
       <Era5WrfColdSnapCommunityChart
-        v-if="getSeries('ft-wainright')"
-        :community-name="getCommunity('ft-wainright')!.name"
-        :t2-min="getSeries('ft-wainright')!.t2Min"
-        :t2-max="getSeries('ft-wainright')!.t2Max"
-        :lat="getCommunity('ft-wainright')!.latitude"
-        :lng="getCommunity('ft-wainright')!.longitude"
-        chart-id="cold-snap-ft-wainright"
+        v-if="getSeries('ft-wainwright')"
+        :community-name="getCommunity('ft-wainwright')!.name"
+        :t2-min="getSeries('ft-wainwright')!.t2Min"
+        :t2-max="getSeries('ft-wainwright')!.t2Max"
+        :lat="getCommunity('ft-wainwright')!.latitude"
+        :lng="getCommunity('ft-wainwright')!.longitude"
+        chart-id="cold-snap-ft-wainwright"
         class="mb-5"
       />
 

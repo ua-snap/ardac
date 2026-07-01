@@ -53,8 +53,8 @@ export const COLD_SNAP_COMMUNITIES: ColdSnapCommunity[] = [
     longitude: -147.716,
   },
   {
-    id: 'ft-wainright',
-    name: 'Ft. Wainright',
+    id: 'ft-wainwright',
+    name: 'Ft. Wainwright',
     latitude: 64.8278,
     longitude: -147.6429,
   },
