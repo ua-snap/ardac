@@ -77,6 +77,6 @@ export default [
   {
     person: 'Anjali Shah',
     image: 'shah_bw.png',
-    blurb: `I am a PhD student at Woods Hole Oceanographic Institution and a former Fellow at the Alaska Center for Climate Assessment and Preparedness (ACCAP). My research combines earth science and applied mathematics to better understand how healthy ecosystems meet community needs.`,
+    blurb: `I am a PhD student at Woods Hole Oceanographic Institution and a former Fellow at the Alaska Center for Climate Assessment and Preparedness (ACCAP). My research combines earth science and applied mathematics to better understand how healthy ecosytems meet community needs.`,
   }
 ] satisfies Bio[]
