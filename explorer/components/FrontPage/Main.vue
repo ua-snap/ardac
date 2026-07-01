@@ -14,6 +14,9 @@
 
         <ul>
           <li>
+            <ItemBrief slug="story-cold-snap-1989" showTag />
+          </li>
+          <li>
             <ItemBrief slug="era5-wrf-xray" showTag />
           </li>
           <li>
@@ -80,7 +83,7 @@
                   <ItemTextPicture slug="story-climate-stripes-2" showTag />
                 </div>
                 <div class="left tile is-child">
-                  <ItemTextPicture slug="summary-landfast-sea-ice" showTag />
+                  <ItemTextPicture slug="story-cold-snap-1989" showTag />
                 </div>
               </div>
             </div>
