@@ -73,5 +73,10 @@ export default [
     person: 'Jeremy Littell',
     image: 'littell3_bw.jpg',
     blurb: `I am a Research Ecologist focused on the role of climate and ecological drought in Alaska and other forested ecosystems who facilitates the use of climate information in planning, adaptation, and vulnerability assessment.`,
+  },
+  {
+    person: 'Anjali Shah',
+    image: 'shah_bw.png',
+    blurb: `I am a PhD student at Woods Hole Oceanographic Institution and a former Fellow at the Alaska Center for Climate Assessment and Preparedness (ACCAP). My research combines earth science and applied mathematics to better understand how healthy ecosytems meet community needs.`,
   }
 ] satisfies Bio[]

@@ -13,7 +13,7 @@
         <li><ItemBrief slug="lightning-climatology" /></li>
       </ul>
     </Bio>
-    
+
     <Bio person="Bruce Crevensten">
       <ul>
         <li><ItemBrief slug="story-arctic-climate-data-node" /></li>
@@ -31,7 +31,7 @@
         <li><ItemBrief slug="landfast-sea-ice" /></li>
       </ul>
     </Bio>
-    
+
     <Bio person="Nancy Fresco">
       <ul>
         <li><ItemBrief slug="story-beetle-climate-protection" /></li>
@@ -46,7 +46,7 @@
         <li><ItemBrief slug="landfast-sea-ice" /></li>
       </ul>
     </Bio>
-    
+
     <Bio person="Josh Paul">
       <ul>
         <li><ItemBrief slug="notebook-corporation-hdd" /></li>
@@ -78,12 +78,17 @@
       </ul>
     </Bio>
 
+    <Bio person="Anjali Shah">
+      <ul>
+        <li><ItemBrief slug="story-cold-snap-1989" /></li>
+      </ul>
+    </Bio>
+
     <Bio person="John Walsh">
       <ul>
         <li><ItemBrief slug="sea-ice-concentration" /></li>
       </ul>
     </Bio>
-   
   </div>
 </template>
 

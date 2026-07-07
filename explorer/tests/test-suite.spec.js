@@ -77,6 +77,26 @@ test('Check Climate Stripes story page', async ({ page }) => {
   await expect(page.locator('#chart > div > div')).toBeVisible()
 })
 
+test('Check 1989 Cold Snap story page', async ({ page }) => {
+  await page.goto(url)
+  await page.setViewportSize({ width: 1728, height: 1078 })
+  await page.waitForSelector('h1:has-text("Arctic Data Collaborative")')
+  await page.click('div.tagbar > ul > li > a:has-text("Climate")')
+  await page.waitForTimeout(500)
+  await expect(page.locator('h2')).toHaveText('Climate')
+
+  await page.click('a:has-text("1989 Alaska Cold Snap")')
+
+  await expect(page.locator('section > div > h3')).toHaveText(
+    '1989 Alaska Cold Snap'
+  )
+
+  await expect(page.locator('figure > img').first()).toBeVisible()
+
+  await expect(page.locator('table >> text=Nome')).toBeVisible()
+  await expect(page.locator('table >> text=-54°F')).toBeVisible()
+})
+
 test('Check Climate tag -> Summer Days page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })

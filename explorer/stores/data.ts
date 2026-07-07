@@ -34,18 +34,21 @@ export const useDataStore = defineStore('data', () => {
   const apiData: Ref<Record<string, any>> = ref({})
   const dataErrors: Ref<Record<string, boolean>> = ref({})
 
-  const fetchData = async (dataset: string, params: string = '') => {
-    if (placesStore.latLng === undefined) {
+  const fetchData = async (
+    dataset: string,
+    params: string = '',
+    options: { lat?: number; lng?: number; key?: string } = {}
+  ) => {
+    const lat = options.lat ?? placesStore.latLng?.lat
+    const lng = options.lng ?? placesStore.latLng?.lng
+
+    if (lat === undefined || lng === undefined) {
       return // do not try
     }
-    apiData.value[dataset] = null
-    dataErrors.value[dataset] = false
-    let url =
-      runtimeConfig.public.apiUrl +
-      endpoints[dataset] +
-      placesStore.latLng.lat +
-      '/' +
-      placesStore.latLng.lng
+    const storeKey = options.key ?? dataset
+    apiData.value[storeKey] = null
+    dataErrors.value[storeKey] = false
+    let url = runtimeConfig.public.apiUrl + endpoints[dataset] + lat + '/' + lng
 
     if (params) {
       url += params
@@ -55,12 +58,12 @@ export const useDataStore = defineStore('data', () => {
       const response = await fetch(url)
       const data = await response.json()
       if (response.status === 200) {
-        apiData.value[dataset] = data
+        apiData.value[storeKey] = data
       } else {
-        dataErrors.value[dataset] = true
+        dataErrors.value[storeKey] = true
       }
     } catch (error) {
-      dataErrors.value[dataset] = true
+      dataErrors.value[storeKey] = true
     }
   }
 

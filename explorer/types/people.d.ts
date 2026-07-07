@@ -15,3 +15,4 @@ type Person =
 	| 'Rick Thoman'
 	| 'Chris Waigl'
 	| 'Jeremy Littell'
+	| 'Anjali Shah'
