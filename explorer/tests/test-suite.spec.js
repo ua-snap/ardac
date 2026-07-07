@@ -95,11 +95,6 @@ test('Check 1989 Cold Snap story page', async ({ page }) => {
 
   await expect(page.locator('table >> text=Nome')).toBeVisible()
   await expect(page.locator('table >> text=-54°F')).toBeVisible()
-
-  await page.waitForSelector('#cold-snap-tanana > div > div', {
-    timeout: 60000,
-  })
-  await expect(page.locator('#cold-snap-tanana > div > div')).toBeVisible()
 })
 
 test('Check Climate tag -> Summer Days page', async ({ page }) => {

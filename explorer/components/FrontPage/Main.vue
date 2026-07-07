@@ -67,12 +67,12 @@
         <div class="tile is-ancestor">
           <div class="tile is-parent is-vertical">
             <div class="tile lead is-child border-bottom">
-              <ItemTextPicture slug="story-cmip6-downscaled" />
+              <ItemTextPicture slug="story-cold-snap-1989" />
             </div>
             <div class="general">
               <div class="row tile is-parent mb-4">
                 <div class="left tile is-child">
-                  <ItemTextPicture slug="story-fire-prone-conditions" showTag />
+                  <ItemTextPicture slug="story-cmip6-downscaled" showTag />
                 </div>
                 <div class="right tile is-child">
                   <ItemTextPicture slug="story-climate-indicators" showTag />
@@ -83,7 +83,7 @@
                   <ItemTextPicture slug="story-climate-stripes-2" showTag />
                 </div>
                 <div class="left tile is-child">
-                  <ItemTextPicture slug="story-cold-snap-1989" showTag />
+                  <ItemTextPicture slug="story-fire-prone-conditions" showTag />
                 </div>
               </div>
             </div>
