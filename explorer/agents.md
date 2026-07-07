@@ -122,7 +122,7 @@ Do not reintroduce Options API patterns.
 
 ### Templates
 Prefer:
-- Do not use any class names or inline styles, Humans will do the styling.
+- Prefer existing Bulma/project class patterns; avoid introducing one-off classes or inline styles unless necessary.
 - `NuxtLink` for internal navigation
 - explicit conditional rendering with `v-if` / `v-else`
 - simple lists / sections over over-abstracted markup
