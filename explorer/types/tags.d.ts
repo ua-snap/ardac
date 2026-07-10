@@ -17,4 +17,4 @@ type Tag =
   | 'Solar Radiation'
   | 'Snow'
   | 'Story'
-
+  | 'Observation'

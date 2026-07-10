@@ -31,6 +31,7 @@ type Slug =
   | 'permafrost-base-top'
   | 'permafrost-talik'
   | 'map-permafrost'
+  | 'cusp-permafrost-observations'
   | 'notebook-perm-obs-temp'
   | 'indicator-r10mm'
   | 'indicator-cwd'
