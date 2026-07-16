@@ -6,6 +6,7 @@ interface Props {
   extent?: Extent
   ocean?: boolean
   communitiesEnabled?: boolean
+  showLoadIndicator?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
   extent: null,
   ocean: false,
   communitiesEnabled: true,
+  showLoadIndicator: true,
 })
 
 let bbox = props.bbox
@@ -322,7 +324,7 @@ onUnmounted(() => {
       <p class="help" v-html="fieldMessage" />
     </div>
   </div>
-  <LoadIndicator />
+  <LoadIndicator v-if="props.showLoadIndicator" />
 </template>
 
 <style lang="scss" scoped>

@@ -201,6 +201,8 @@ export default defineNuxtConfig({
       apiUrl: process.env.SNAP_API_URL || 'https://earthmaps.io',
       rasdamanUrl:
         process.env.RASDAMAN_URL || 'https://maps.earthmaps.io/rasdaman/ows',
+      cuspWfsUrl:
+        process.env.CUSP_WFS_URL || 'https://gs.earthmaps.io/geoserver/cusp/wfs',
     },
   },
   app: {

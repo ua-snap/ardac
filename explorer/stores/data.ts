@@ -33,6 +33,16 @@ export const useDataStore = defineStore('data', () => {
   // data we will get from the API for different ARDAC items.
   const apiData: Ref<Record<string, any>> = ref({})
   const dataErrors: Ref<Record<string, boolean>> = ref({})
+  const cuspObservations: Ref<CuspObservationFeatureCollection | null> =
+    ref(null)
+  const cuspObservationsLoading = ref(false)
+  const cuspObservationsError = ref<string | null>(null)
+
+  function clearCuspObservations() {
+    cuspObservations.value = null
+    cuspObservationsLoading.value = false
+    cuspObservationsError.value = null
+  }
 
   const fetchData = async (
     dataset: string,
@@ -67,9 +77,58 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
+  async function fetchCuspObservations() {
+    const location = placesStore.latLng
+
+    clearCuspObservations()
+
+    if (!location) return
+
+    const halfBoxDegrees = 0.25
+    const minLat = location.lat - halfBoxDegrees
+    const minLng = location.lng - halfBoxDegrees
+    const maxLat = location.lat + halfBoxDegrees
+    const maxLng = location.lng + halfBoxDegrees
+
+    const searchParams = new URLSearchParams({
+      service: 'WFS',
+      version: '2.0.0',
+      request: 'GetFeature',
+      typeNames: 'cusp:cusp_observations',
+      outputFormat: 'application/json',
+      count: '100',
+      CQL_FILTER: `BBOX(geom,${minLat},${minLng},${maxLat},${maxLng})`,
+    })
+
+    cuspObservationsLoading.value = true
+
+    try {
+      const response = await fetch(
+        `${runtimeConfig.public.cuspWfsUrl}?${searchParams}`
+      )
+
+      if (!response.ok) {
+        throw new Error(`CUSP request failed with status ${response.status}`)
+      }
+
+      cuspObservations.value =
+        (await response.json()) as CuspObservationFeatureCollection
+    } catch {
+      cuspObservationsError.value =
+        'Unable to load nearby CUSP observations. Please try another location.'
+    } finally {
+      cuspObservationsLoading.value = false
+    }
+  }
+
   return {
     fetchData,
     apiData,
     dataErrors,
+    cuspObservations,
+    cuspObservationsLoading,
+    cuspObservationsError,
+    clearCuspObservations,
+    fetchCuspObservations,
   }
 })

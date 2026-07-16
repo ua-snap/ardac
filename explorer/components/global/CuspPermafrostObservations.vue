@@ -1,6 +1,73 @@
 <script lang="ts" setup>
+import cuspSources from '~/assets/cuspSources'
 const mapStore = useMapStore()
+const placesStore = usePlacesStore()
+const dataStore = useDataStore()
 
+const latLng = computed(() => placesStore.latLng)
+
+watch(latLng, () => {
+  dataStore.fetchCuspObservations()
+})
+
+onUnmounted(() => {
+  dataStore.clearCuspObservations()
+})
+
+const cuspObservations = computed(() => dataStore.cuspObservations)
+const cuspObservationsError = computed(() => dataStore.cuspObservationsError)
+
+const observations = computed(() => cuspObservations.value?.features ?? [])
+const nearbyObservationCount = computed(
+  () => cuspObservations.value?.numberMatched ?? 0
+)
+const sourceSummary = computed(() => {
+  const counts = new Map<string | null, number>()
+
+  observations.value.forEach(observation => {
+    const source = observation.properties.source
+    counts.set(source, (counts.get(source) ?? 0) + 1)
+  })
+
+  return Array.from(counts, ([source, count]) => ({ source, count })).sort(
+    (a, b) => b.count - a.count
+  )
+})
+
+const displayedSourceSummary = computed(() => sourceSummary.value.slice(0, 5))
+function displayObservationValue(value: string | number | null) {
+  if (value === null || value === '') {
+    return 'Not reported'
+  }
+
+  return value
+}
+function getSourceCitation(source: string | null) {
+  if (!source) return undefined
+
+  return cuspSources[source]
+}
+
+function formatSourceCitation(source: string | null) {
+  const citation = getSourceCitation(source)
+
+  if (!citation) return undefined
+
+  const publisher =
+    citation.publisher ??
+    citation.institution ??
+    citation.journal ??
+    citation.howpublished
+
+  return [
+    citation.author,
+    citation.year && `(${citation.year})`,
+    citation.title,
+    publisher,
+  ]
+    .filter(Boolean)
+    .join('. ')
+}
 const layers: MapLayer[] = [
   {
     id: 'cusp_pf_observed',
@@ -67,6 +134,141 @@ mapStore.setLegendItems(mapId, legend)
           </MapLayer>
         </template>
       </MapBlock>
+      <h4 class="title is-4">Find observations near a place</h4>
+      <p class="mb-6">
+        Choose a community or enter coordinates to view CUSP observations near
+        that location. The nearby search area is a 0.5° by 0.5° box centered on
+        the selected point.
+      </p>
+      <Gimme
+        :bbox="[-171.63023, 9.16667, 177.2, 83.09]"
+        :show-load-indicator="false"
+      />
+      <p v-if="cuspObservationsError">
+        {{ cuspObservationsError }}
+      </p>
+      <template v-else-if="cuspObservations">
+        <p v-if="nearbyObservationCount === 0">
+          No CUSP observations were found near this location.
+        </p>
+        <template v-else>
+          <p>
+            {{ nearbyObservationCount }} CUSP observations were found near this
+            location.
+            <span v-if="nearbyObservationCount > observations.length">
+              Showing the first {{ observations.length }} records.
+            </span>
+          </p>
+          <h5>Sources in displayed records</h5>
+          <ul>
+            <li
+              v-for="sourceSummaryEntry in displayedSourceSummary"
+              :key="sourceSummaryEntry.source ?? 'not-reported'"
+            >
+              <strong v-if="sourceSummaryEntry.source">
+                CUSP source: <code>{{ sourceSummaryEntry.source }}</code>
+              </strong>
+              <strong v-else>CUSP source not reported</strong>
+              — {{ sourceSummaryEntry.count }} records
+              <br />
+              <small v-if="formatSourceCitation(sourceSummaryEntry.source)">
+                {{ formatSourceCitation(sourceSummaryEntry.source) }}
+              </small>
+            </li>
+          </ul>
+          <p v-if="sourceSummary.length > displayedSourceSummary.length">
+            Additional source datasets are represented in the table below.
+          </p>
+          <table>
+            <caption>
+              CUSP observations near the selected location; source citations
+              appear above.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Source / site</th>
+                <th scope="col">Date</th>
+                <th scope="col">Method</th>
+                <th scope="col">Permafrost observation</th>
+                <th scope="col">Depth information</th>
+                <th scope="col">Quality flags</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="observation in observations"
+                :key="observation.properties.cusp_obs_id ?? observation.id"
+              >
+                <td>
+                  <code>
+                    {{ displayObservationValue(observation.properties.source) }}
+                  </code>
+                  <br />
+                  <small>
+                    Site:
+                    {{
+                      displayObservationValue(observation.properties.site_id)
+                    }}
+                  </small>
+                </td>
+                <td>
+                  {{
+                    displayObservationValue(
+                      observation.properties.observation_date
+                    )
+                  }}
+                </td>
+                <td>
+                  {{
+                    displayObservationValue(observation.properties.method_label)
+                  }}
+                </td>
+                <td>
+                  {{
+                    displayObservationValue(
+                      observation.properties.pf_observed_label
+                    )
+                  }}
+                </td>
+                <td>
+                  Thaw:
+                  {{
+                    displayObservationValue(
+                      observation.properties.thaw_depth_cm
+                    )
+                  }}
+                  <br />
+                  Permafrost:
+                  {{
+                    displayObservationValue(observation.properties.pf_depth_cm)
+                  }}
+                  <br />
+                  Limit:
+                  {{
+                    displayObservationValue(observation.properties.obs_limit_cm)
+                  }}
+                </td>
+                <td>
+                  {{
+                    displayObservationValue(
+                      observation.properties.quality_flags
+                    )
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </template>
+      </template>
+      <h4 class="title is-4">Contribute to CUSP</h4>
+      <p>
+        CUSP grows through community contributions. If you have near-surface
+        permafrost observations, including unpublished data, or know of a public
+        dataset that is not included, please
+        <a href="https://jonschwenk.github.io/cusp/contributing/">
+          suggest a dataset or learn how to contribute to CUSP </a
+        >.
+      </p>
       <h4 class="title is-4">CUSP Usage Caveats</h4>
       <p class="mb-6">
         CUSP brings many source datasets into one shared format. That makes the

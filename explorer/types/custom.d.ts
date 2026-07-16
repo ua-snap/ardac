@@ -116,6 +116,45 @@ interface Cmip6DownscaledChartInputs {
   projectedYear: string
 }
 
+interface CuspObservation {
+  cusp_obs_id: string | null
+  source: string | null
+  site_id: string | null
+  observation_date: string | null
+  obs_month: number | null
+  method: string | null
+  method_label: string | null
+  pf_observed: number | null
+  pf_observed_label: string | null
+  thaw_depth_cm: number | null
+  pf_depth_cm: number | null
+  obs_limit_cm: number | null
+  has_thaw_depth: boolean | null
+  has_pf_depth: boolean | null
+  has_obs_limit: boolean | null
+  quality_flags: string | null
+}
+
+interface CuspObservationFeature {
+  type: 'Feature'
+  id: string
+  geometry: {
+    type: 'Point'
+    coordinates: [number, number]
+  }
+  geometry_name: 'geom'
+  properties: CuspObservation
+}
+
+interface CuspObservationFeatureCollection {
+  type: 'FeatureCollection'
+  features: CuspObservationFeature[]
+  totalFeatures: number
+  numberMatched: number
+  numberReturned: number
+  timeStamp: string
+}
+
 type LatLngValue = LatLng | undefined
 
 type PlaceType = 'community' | 'latLng' | undefined
