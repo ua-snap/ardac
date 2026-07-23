@@ -95,17 +95,29 @@ onMounted(loadCommunityData)
   <section class="section">
     <div class="content clamp is-size-5">
       <h3 class="title is-3">1989 Alaska Cold Snap</h3>
-
+      <p class="is-size-4">
+        This data story is a collaboration between the Scenarios Network for
+        Alaska and Arctic Planning (SNAP) and the Alaska Center for Climate
+        Assessment and Preparedness (ACCAP) that integrates work from the ACCAP
+        <a href="https://uaf-accap.org/projects/extreme-events-library/"
+          >Historic Extreme Events Library</a
+        >
+        with a
+        <NuxtLink to="/item/era5-wrf-xray"
+          >high-resolution dynamically downscaled ERA5 reanalysis
+          dataset</NuxtLink
+        >.
+      </p>
       <figure class="image">
         <img
           src="assets/images/ColdSnap1989/hero-ice-fog-uaf.png"
           alt="Ice fog as seen from UAF Campus"
         />
+        <figcaption>
+          Ice fog as seen from University of Alaska Fairbanks campus, Photo
+          credit: UAF
+        </figcaption>
       </figure>
-      <p>
-        Ice fog as seen from University of Alaska Fairbanks campus, Photo
-        credit: UAF
-      </p>
 
       <h4 class="title is-4">Introduction</h4>
 
@@ -113,14 +125,7 @@ onMounted(loadCommunityData)
         In this ARDAC data story we use the historic 1989 Cold Snap as a lens
         for understanding how extreme weather events impact Alaska and how
         downscaled climate reanalysis data can be used to ask new questions
-        about extreme weather. This data story is a collaboration between the
-        Scenarios Network for Alaska and Arctic Planning (SNAP) and the Alaska
-        Center for Climate Assessment and Preparedness (ACCAP) that integrates
-        work from the ACCAP
-        <a href="https://uaf-accap.org/projects/extreme-events-library/"
-          >Historic Extreme Events Library</a
-        >
-        with a high-resolution dynamically downscaled ERA5 reanalysis dataset.
+        about extreme weather.
       </p>
 
       <p>
@@ -194,12 +199,12 @@ onMounted(loadCommunityData)
           src="assets/images/ColdSnap1989/record-cold-map.png"
           alt="Map of temperatures in Alaskan communities during 1989 cold snap with record cold labels in blue: Nome, Unalakleet, Galena, Tanana, Manley Hot Springs, McGrath, Palmer, Dillingham, King Salmon, Kodiak"
         />
+        <figcaption>
+          Record breaking low temperatures around Alaska (blue) during the 1989
+          Cold Snap. Created by Rick Thoman (ACCAP). Data Source: NOAA NCEI,
+          Environment &amp; Climate Change Canada
+        </figcaption>
       </figure>
-      <p>
-        Record breaking low temperatures around Alaska (blue) during the 1989
-        Cold Snap. Created by Rick Thoman (ACCAP). Data Source: NOAA NCEI,
-        Environment &amp; Climate Change Canada
-      </p>
 
       <div v-if="isLoading" class="notification is-info is-light">
         Loading ERA5-WRF temperature data for Alaska communities…
@@ -699,7 +704,7 @@ onMounted(loadCommunityData)
         </li>
       </GetAndUseData>
 
-      <Bios :people="['Anjali Shah', 'Rick Thoman']" />
+      <Bios :people="['Anjali Shah', 'Rick Thoman', 'Charlie Parr']" />
     </div>
   </section>
 </template>
