@@ -19,9 +19,8 @@
           <strong>What's new?</strong> Dive into the latest ARDAC updates! Read
           about
           <NuxtLink to="/item/story-cold-snap-1989"
-            >the historic 1989 Cold Snap
-          </NuxtLink>
-          This data story uses the
+            >the historic 1989 Cold Snap</NuxtLink
+          >&mdash;this data story uses the
           <NuxtLink to="/item/era5-wrf-xray"
             >dynamically downscaled ERA5</NuxtLink
           >
