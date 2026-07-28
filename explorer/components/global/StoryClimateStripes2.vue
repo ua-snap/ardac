@@ -8,7 +8,7 @@ const { $Plotly, $_ } = useNuxtApp()
 import type { Data, ColorBar } from 'plotly.js-dist-min'
 
 interface ExtendedColorBar extends ColorBar {
-  orientation?: 'h' | 'v'
+  orientation: 'h' | 'v'
 }
 
 const apiData = computed<Record<string, any>>(() => dataStore.apiData[endpoint])
