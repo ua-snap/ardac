@@ -398,3 +398,61 @@ test('Check footer', async ({ page }) => {
     `div > footer > div > p:nth-child(4):has-text("Copyright © ${currentYear} University of Alaska Fairbanks. All rights reserved. The University of Alaska is an Equal Opportunity/Equal Access Employer and Educational Institution. The University is committed to a policy of non-discrimination against individuals on the basis of any legally protected status.")`
   )
 })
+
+test('Check Climate Indicators story page', async ({ page }) => {
+  await page.goto(url + '/item/story-climate-indicators')
+  await page.setViewportSize({ width: 1728, height: 1078 })
+
+  // Wait for the page title to load
+  await page.waitForSelector(
+    'h3:has-text("Climate Indicators: Making More Meaning from Data")'
+  )
+
+  // Verify the page heading
+  await expect(page.locator('section > div > h3')).toHaveText(
+    'Climate Indicators: Making More Meaning from Data'
+  )
+
+  // Verify key content sections are present
+  await page.waitForSelector('h4:has-text("What is a climate indicator?")')
+  await page.waitForSelector(
+    'h4:has-text("Why do we need climate indicators?")'
+  )
+
+  // Scroll down to where the first chart should be
+  await page.evaluate(() => {
+    window.scrollTo(0, 800)
+  })
+
+  // Wait for the chart control components to render (these trigger data fetching)
+  // The controls are only visible when latLng and apiData are available
+  await page.waitForSelector('#model', { timeout: 60000 })
+  await expect(page.locator('#model')).toBeVisible()
+
+  // Verify scenario and month selectors are present
+  await expect(page.locator('#scenario')).toBeVisible()
+  await expect(page.locator('#month')).toBeVisible()
+
+  // Wait for and verify the first chart (Cmip6MonthlyChart with dataKey="tas")
+  // This chart shows "Mean Near-surface Air Temperature" and should have id="tas-chart"
+  await page.waitForSelector('#tas-chart > div.js-plotly-plot', {
+    timeout: 60000,
+  })
+  await expect(page.locator('#tas-chart > div.js-plotly-plot')).toBeVisible()
+
+  // Verify the first chart has actual Plotly content with data (svg elements)
+  await expect(page.locator('#tas-chart svg.main-svg')).toBeVisible()
+
+  // Scroll down to where the second chart should be
+  await page.evaluate(() => {
+    window.scrollTo(0, 1600)
+  })
+
+  // Wait for and verify the second chart (IndicatorsCmip6Chart with dataKey="dw")
+  // This chart shows "Deep winter days" indicator and has id="chart"
+  await page.waitForSelector('#chart > div.js-plotly-plot', { timeout: 60000 })
+  await expect(page.locator('#chart > div.js-plotly-plot')).toBeVisible()
+
+  // Verify the second chart has actual Plotly content with data (svg elements)
+  await expect(page.locator('#chart svg.main-svg')).toBeVisible()
+})
