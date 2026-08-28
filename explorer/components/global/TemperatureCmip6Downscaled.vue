@@ -100,7 +100,6 @@ onUnmounted(() => {
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Temperature, Downscaled CMIP6</h3>
-      <Cmip6AlphaWarning />
       <XrayIntroblurb resolution="4" unit="km" cmip="6" />
       <p class="mb-6">
         The map below shows maximum near-surface air temperature for the month
