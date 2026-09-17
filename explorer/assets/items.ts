@@ -486,11 +486,20 @@ export default [
   },
   {
     slug: 'story-fire-prone-conditions',
-    title: 'Fire-Prone Conditions in Alaska',
+    title: 'Fire Weather Has More Than One Future',
     blurb:
-      'Explore how temperature, humidity, and precipitation combine to create conditions favorable for wildfires. Compare recent years to historical climatology.',
-    tags: ['Climate', 'Wildfire', 'Temperature', 'Precipitation'],
+      'Compare six fire-weather indices across ERA5 and four CMIP6 models to see how Alaska projections diverge under the same high-emissions pathway.',
+    tags: [
+      'Climate',
+      'Wildfire',
+      'CMIP6',
+      'Temperature',
+      'Precipitation',
+      'Wind',
+    ],
     image: 'story-fire-prone-conditions.png',
+    imageAlt:
+      'Flames moving through black spruce and low vegetation in an Alaska boreal forest',
   },
   {
     slug: 'story-cold-snap-1989',

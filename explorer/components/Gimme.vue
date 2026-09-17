@@ -255,8 +255,8 @@ const nothingButErrors = computed(() => {
 
 const dataStore = useDataStore()
 const dataErrors = computed<Record<string, boolean>>(() => dataStore.dataErrors)
-watch(nothingButErrors, async () => {
-  if (nothingButErrors) {
+watch(nothingButErrors, async hasOnlyErrors => {
+  if (hasOnlyErrors) {
     fieldMessage.value = ERROR_MESSAGES.DATA_LOAD_FAILED
   } else {
     fieldMessage.value = ''

@@ -26,6 +26,7 @@ const endpoints: Record<string, string> = {
   vegType: '/alfresco/veg_type/local/',
   wetDaysPerYear: '/wet_days_per_year/all/point/',
   era5wrf: '/era5wrf/point/',
+  fireWeather: '/fire_weather/point/',
 }
 
 export const useDataStore = defineStore('data', () => {
@@ -33,6 +34,7 @@ export const useDataStore = defineStore('data', () => {
   // data we will get from the API for different ARDAC items.
   const apiData: Ref<Record<string, any>> = ref({})
   const dataErrors: Ref<Record<string, boolean>> = ref({})
+  const dataLoading: Ref<Record<string, boolean>> = ref({})
 
   const fetchData = async (
     dataset: string,
@@ -48,6 +50,7 @@ export const useDataStore = defineStore('data', () => {
     const storeKey = options.key ?? dataset
     apiData.value[storeKey] = null
     dataErrors.value[storeKey] = false
+    dataLoading.value[storeKey] = true
     let url = runtimeConfig.public.apiUrl + endpoints[dataset] + lat + '/' + lng
 
     if (params) {
@@ -64,6 +67,8 @@ export const useDataStore = defineStore('data', () => {
       }
     } catch (error) {
       dataErrors.value[storeKey] = true
+    } finally {
+      dataLoading.value[storeKey] = false
     }
   }
 
@@ -71,5 +76,6 @@ export const useDataStore = defineStore('data', () => {
     fetchData,
     apiData,
     dataErrors,
+    dataLoading,
   }
 })

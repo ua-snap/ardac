@@ -171,6 +171,46 @@ test('Check Wildfire tag -> Flammability page', async ({ page }) => {
   await expect(page.locator('#chart > div > div')).toBeVisible()
 })
 
+test('Check Wildfire tag -> Fire Weather story', async ({ page }) => {
+  await page.goto(url)
+  await page.setViewportSize({ width: 1728, height: 1078 })
+  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
+  await page.click('div.tagbar > ul > li > a:has-text("Wildfire")')
+  await page.waitForTimeout(500)
+  await expect(page.locator('h2')).toHaveText('Wildfire')
+
+  await page.click('a:has-text("Fire Weather Has More Than One Future")')
+  await expect(page.locator('section > div > h3')).toHaveText(
+    'Fire Weather Has More Than One Future'
+  )
+
+  await page.fill('#gimme', 'Fairbanks')
+  await page.click('#autoComplete_result_0')
+  await expect(page.locator('#fire-weather-variable')).toBeVisible()
+  await expect(page.locator('#fire-weather-period')).toBeVisible()
+  await expect(page.locator('#fire-weather-danger-days-chart')).toBeVisible({
+    timeout: 120000,
+  })
+  await expect(page.locator('#fire-weather-seasonal-chart')).toBeVisible({
+    timeout: 120000,
+  })
+  await expect(
+    page.getByText('the four-model median for high through extreme')
+  ).toBeVisible()
+
+  await page.selectOption('#fire-weather-variable', 'dc')
+  await expect(page.locator('#fire-weather-seasonal-chart')).toContainText(
+    'Drought Code: seasonal pattern',
+    { timeout: 120000 }
+  )
+
+  await page.selectOption('#fire-weather-period', 'midcentury')
+  await expect(page.locator('#fire-weather-seasonal-chart')).toContainText(
+    '2040–2069 GCM median',
+    { timeout: 120000 }
+  )
+})
+
 test('Check Cryosphere tag -> Sea Ice Concentration page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
