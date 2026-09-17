@@ -119,6 +119,7 @@ interface Cmip6DownscaledChartInputs {
 interface CuspObservation {
   cusp_obs_id: string | null
   source: string | null
+  citation: string | null
   site_id: string | null
   observation_date: string | null
   obs_month: number | null
@@ -133,6 +134,7 @@ interface CuspObservation {
   has_pf_depth: boolean | null
   has_obs_limit: boolean | null
   quality_flags: string | null
+  release_version: string | null
 }
 
 interface CuspObservationFeature {
@@ -146,6 +148,11 @@ interface CuspObservationFeature {
   properties: CuspObservation
 }
 
+interface CuspQualityFlagDefinition {
+  category: string
+  description: string
+}
+
 interface CuspObservationFeatureCollection {
   type: 'FeatureCollection'
   features: CuspObservationFeature[]
@@ -153,6 +160,7 @@ interface CuspObservationFeatureCollection {
   numberMatched: number
   numberReturned: number
   timeStamp: string
+  quality_flag_definitions: Record<string, CuspQualityFlagDefinition>
 }
 
 type LatLngValue = LatLng | undefined

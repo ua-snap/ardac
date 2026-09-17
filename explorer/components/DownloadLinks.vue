@@ -2,6 +2,7 @@
 interface Props {
   endpoint: string
   variables?: string
+  includeCommunity?: boolean
 }
 
 const props = defineProps<Props>()
@@ -42,7 +43,7 @@ const csvUrl = computed(() => {
   if (!jsonUrl.value) return ''
   let url = jsonUrl.value
 
-  if (selectedCommunity.value) {
+  if (props.includeCommunity !== false && selectedCommunity.value) {
     url +=
       (url.includes('?') ? '&' : '?') +
       'community=' +

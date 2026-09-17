@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import cuspSources from '~/assets/cuspSources'
 const mapStore = useMapStore()
 const placesStore = usePlacesStore()
 const dataStore = useDataStore()
@@ -21,20 +20,50 @@ const observations = computed(() => cuspObservations.value?.features ?? [])
 const nearbyObservationCount = computed(
   () => cuspObservations.value?.numberMatched ?? 0
 )
+const qualityFlagDefinitions = computed(
+  () => cuspObservations.value?.quality_flag_definitions ?? {}
+)
+
+const representativeObservations = computed(() => {
+  const observationsBySource = new Map<string, CuspObservationFeature>()
+
+  observations.value.forEach(observation => {
+    const source = observation.properties.source ?? 'not-reported'
+
+    if (!observationsBySource.has(source)) {
+      observationsBySource.set(source, observation)
+    }
+  })
+
+  return Array.from(observationsBySource.values())
+})
+
+interface CuspSourceSummaryEntry {
+  source: string | null
+  citation: string | null
+  count: number
+}
+
 const sourceSummary = computed(() => {
-  const counts = new Map<string | null, number>()
+  const summaries = new Map<string, CuspSourceSummaryEntry>()
 
   observations.value.forEach(observation => {
     const source = observation.properties.source
-    counts.set(source, (counts.get(source) ?? 0) + 1)
+    const citation = observation.properties.citation
+    const key = source ?? citation ?? 'not-reported'
+    const existingSummary = summaries.get(key)
+
+    if (existingSummary) {
+      existingSummary.count += 1
+      return
+    }
+
+    summaries.set(key, { source, citation, count: 1 })
   })
 
-  return Array.from(counts, ([source, count]) => ({ source, count })).sort(
-    (a, b) => b.count - a.count
-  )
+  return Array.from(summaries.values()).sort((a, b) => b.count - a.count)
 })
 
-const displayedSourceSummary = computed(() => sourceSummary.value.slice(0, 5))
 function displayObservationValue(value: string | number | null) {
   if (value === null || value === '') {
     return 'Not reported'
@@ -42,31 +71,26 @@ function displayObservationValue(value: string | number | null) {
 
   return value
 }
-function getSourceCitation(source: string | null) {
-  if (!source) return undefined
 
-  return cuspSources[source]
+function displayDepthValue(value: string | number | null) {
+  const displayValue = displayObservationValue(value)
+
+  return displayValue === 'Not reported' ? displayValue : `${displayValue} cm`
 }
 
-function formatSourceCitation(source: string | null) {
-  const citation = getSourceCitation(source)
+function qualityFlagDetails(value: string | null) {
+  if (!value) return []
 
-  if (!citation) return undefined
-
-  const publisher =
-    citation.publisher ??
-    citation.institution ??
-    citation.journal ??
-    citation.howpublished
-
-  return [
-    citation.author,
-    citation.year && `(${citation.year})`,
-    citation.title,
-    publisher,
-  ]
-    .filter(Boolean)
-    .join('. ')
+  return value
+    .split(';')
+    .map(code => code.trim())
+    .filter(code => code !== '')
+    .map(code => ({
+      code,
+      description:
+        qualityFlagDefinitions.value[code]?.description ??
+        'Description not available.',
+    }))
 }
 const layers: MapLayer[] = [
   {
@@ -116,13 +140,14 @@ mapStore.setLegendItems(mapId, legend)
       <CollabIntroblurb
         collaborator="Los Alamos National Lab"
         vector_geom_type="point"
-        feature_count_floor="230,000"
+        feature_count_floor="70,000"
       />
       <p class="mb-6">
-        CUSP is a data synthesis for near-surface permafrost, active-layer,
-        thaw-depth, and related field observations. CUSP brings many published
-        and field datasets into one documented table with source citations and
-        tools that make the data corpus easier to use, build, and extend.
+        CUSP is a data synthesis product for near-surface permafrost,
+        active-layer, thaw depth, and related field observations. CUSP brings
+        many published and field datasets into one documented table with source
+        citations and tools that make the data corpus easier to use, build, and
+        extend.
       </p>
       <MapBlock :mapId="mapId" class="mb-6">
         <template v-slot:layers>
@@ -134,11 +159,10 @@ mapStore.setLegendItems(mapId, legend)
           </MapLayer>
         </template>
       </MapBlock>
-      <h4 class="title is-4">Find observations near a place</h4>
+
       <p class="mb-6">
-        Choose a community or enter coordinates to view CUSP observations near
-        that location. The nearby search area is a 0.5° by 0.5° box centered on
-        the selected point.
+        Choose a community or enter coordinates to view CUSP observations within
+        a 0.5° by 0.5° box centered on that location.
       </p>
       <Gimme
         :bbox="[-171.63023, 9.16667, 177.2, 83.09]"
@@ -154,110 +178,154 @@ mapStore.setLegendItems(mapId, legend)
         <template v-else>
           <p>
             {{ nearbyObservationCount }} CUSP observations were found near this
-            location.
-            <span v-if="nearbyObservationCount > observations.length">
-              Showing the first {{ observations.length }} records.
-            </span>
+            location. Showing one example observation for each unique data
+            source.
           </p>
-          <h5>Sources in displayed records</h5>
-          <ul>
-            <li
-              v-for="sourceSummaryEntry in displayedSourceSummary"
-              :key="sourceSummaryEntry.source ?? 'not-reported'"
-            >
-              <strong v-if="sourceSummaryEntry.source">
-                CUSP source: <code>{{ sourceSummaryEntry.source }}</code>
-              </strong>
-              <strong v-else>CUSP source not reported</strong>
-              — {{ sourceSummaryEntry.count }} records
-              <br />
-              <small v-if="formatSourceCitation(sourceSummaryEntry.source)">
-                {{ formatSourceCitation(sourceSummaryEntry.source) }}
-              </small>
-            </li>
-          </ul>
-          <p v-if="sourceSummary.length > displayedSourceSummary.length">
-            Additional source datasets are represented in the table below.
-          </p>
-          <table>
-            <caption>
-              CUSP observations near the selected location; source citations
-              appear above.
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Source / site</th>
-                <th scope="col">Date</th>
-                <th scope="col">Method</th>
-                <th scope="col">Permafrost observation</th>
-                <th scope="col">Depth information</th>
-                <th scope="col">Quality flags</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="observation in observations"
-                :key="observation.properties.cusp_obs_id ?? observation.id"
+          <section>
+            <h5>Attribution for displayed records</h5>
+            <p>
+              Cite CUSP and each original source listed below when using these
+              records. Citations come directly from the CUSP record whenever
+              available. See the
+              <a
+                href="https://jonschwenk.github.io/cusp/user/data-use-and-attribution/"
               >
-                <td>
-                  <code>
-                    {{ displayObservationValue(observation.properties.source) }}
-                  </code>
-                  <br />
-                  <small>
-                    Site:
+                CUSP attribution guidance
+              </a>
+              for the complete citation requirements.
+            </p>
+            <ul>
+              <li
+                v-for="sourceSummaryEntry in sourceSummary"
+                :key="
+                  sourceSummaryEntry.source ??
+                  sourceSummaryEntry.citation ??
+                  'not-reported'
+                "
+              >
+                <strong v-if="sourceSummaryEntry.source">
+                  CUSP source: <code>{{ sourceSummaryEntry.source }}</code>
+                </strong>
+                <strong v-else>CUSP source not reported</strong>
+                — {{ sourceSummaryEntry.count }} records
+                <br />
+                <small v-if="sourceSummaryEntry.citation">
+                  <strong>Original source citation:</strong>
+                  {{ sourceSummaryEntry.citation }}
+                </small>
+                <small v-else>
+                  <strong>Original source citation:</strong> Not reported.
+                </small>
+              </li>
+            </ul>
+          </section>
+          <br />
+          <section aria-labelledby="cusp-observation-preview">
+
+            <h5 id="cusp-observation-preview">Example CUSP observations</h5>
+            <p id="cusp-observation-preview-description">
+              One record per data source is displayed in this preview. To
+              download the data near this location, use the download links below
+              the table.
+            </p>
+            <table
+              aria-labelledby="cusp-observation-preview"
+              aria-describedby="cusp-observation-preview-description"
+            >
+              <thead>
+                <tr>
+                  <th scope="col">Source / site</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Method</th>
+                  <th scope="col">Permafrost observation</th>
+                  <th scope="col">Depth information</th>
+                  <th scope="col">Quality flags</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="observation in representativeObservations"
+                  :key="observation.properties.cusp_obs_id ?? observation.id"
+                >
+                  <td>
+                    <code>
+                      {{
+                        displayObservationValue(observation.properties.source)
+                      }}
+                    </code>
+                    <br />
+                    <small>
+                      Site:
+                      {{
+                        displayObservationValue(observation.properties.site_id)
+                      }}
+                    </small>
+                  </td>
+                  <td>
                     {{
-                      displayObservationValue(observation.properties.site_id)
+                      displayObservationValue(
+                        observation.properties.observation_date
+                      )
                     }}
-                  </small>
-                </td>
-                <td>
-                  {{
-                    displayObservationValue(
-                      observation.properties.observation_date
-                    )
-                  }}
-                </td>
-                <td>
-                  {{
-                    displayObservationValue(observation.properties.method_label)
-                  }}
-                </td>
-                <td>
-                  {{
-                    displayObservationValue(
-                      observation.properties.pf_observed_label
-                    )
-                  }}
-                </td>
-                <td>
-                  Thaw:
-                  {{
-                    displayObservationValue(
-                      observation.properties.thaw_depth_cm
-                    )
-                  }}
-                  <br />
-                  Permafrost:
-                  {{
-                    displayObservationValue(observation.properties.pf_depth_cm)
-                  }}
-                  <br />
-                  Limit:
-                  {{
-                    displayObservationValue(observation.properties.obs_limit_cm)
-                  }}
-                </td>
-                <td>
-                  {{
-                    displayObservationValue(
-                      observation.properties.quality_flags
-                    )
-                  }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td>
+                    {{
+                      displayObservationValue(
+                        observation.properties.method_label
+                      )
+                    }}
+                  </td>
+                  <td>
+                    {{
+                      displayObservationValue(
+                        observation.properties.pf_observed_label
+                      )
+                    }}
+                  </td>
+                  <td>
+                    Thaw:
+                    {{
+                      displayDepthValue(observation.properties.thaw_depth_cm)
+                    }}
+                    <br />
+                    Permafrost:
+                    {{ displayDepthValue(observation.properties.pf_depth_cm) }}
+                    <br />
+                    Limit:
+                    {{ displayDepthValue(observation.properties.obs_limit_cm) }}
+                  </td>
+                  <td>
+                    <template
+                      v-if="
+                        qualityFlagDetails(observation.properties.quality_flags)
+                          .length
+                      "
+                    >
+                      <div
+                        v-for="qualityFlag in qualityFlagDetails(
+                          observation.properties.quality_flags
+                        )"
+                        :key="qualityFlag.code"
+                      >
+                        <code>{{ qualityFlag.code }}</code> —
+                        {{ qualityFlag.description }}
+                      </div>
+                    </template>
+                    <template v-else>Not reported</template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <section>
+            <h4 class="title is-4">Get &amp; use CUSP observations</h4>
+            <p>
+              Download all the selected nearby CUSP records as CSV or GeoJSON.
+              Both formats include source citations; CSV also includes explicit
+              longitude and latitude columns and quality-flag descriptions.
+            </p>
+            <DownloadLinks endpoint="/cusp/point" :include-community="false" />
+          </section>
         </template>
       </template>
       <h4 class="title is-4">Contribute to CUSP</h4>
@@ -291,8 +359,7 @@ mapStore.setLegendItems(mapId, legend)
         local grids to widely separated field sites). The method and source
         information are meant to help users keep those differences visible
         during analysis. CUSP includes quality flags: compact caveat codes which
-        can be used to exclude data with specific such as geophysics-inferred
-        observations.
+        identify specific caveats, such as geophysics-inferred observations.
       </p>
       <h5 class="title is-5">Interpretation During Processing</h5>
       <p class="mb-6">
@@ -337,18 +404,7 @@ mapStore.setLegendItems(mapId, legend)
         varies by source. Some records may represent a plot, transect, grid
         cell, field site, or sampling area rather than a precisely surveyed
         point. This matters when joining CUSP to environmental rasters,
-        especially coarse climate, soil, or surface water layers. Dense
-        Sampling: Some CUSP sources contain many observations in a very small
-        area. Those records are valuable, but they can overweight a local field
-        site in analyses that assume independent or evenly distributed
-        observations. The aggregation guide describes one way to create spatial
-        and temporal summaries when that is more appropriate for your use case.
-      </p>
-      <h5 class="title is-5">Attribution: Permafrost observations</h5>
-      <p class="mb-6">
-        Permafrost observations are costly in time and money. If you use CUSP,
-        please cite CUSP and the original datasets or publications behind the
-        records you used.
+        especially coarse climate, soil, or surface water layers.
       </p>
     </div>
   </section>

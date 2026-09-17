@@ -84,27 +84,11 @@ export const useDataStore = defineStore('data', () => {
 
     if (!location) return
 
-    const halfBoxDegrees = 0.25
-    const minLat = location.lat - halfBoxDegrees
-    const minLng = location.lng - halfBoxDegrees
-    const maxLat = location.lat + halfBoxDegrees
-    const maxLng = location.lng + halfBoxDegrees
-
-    const searchParams = new URLSearchParams({
-      service: 'WFS',
-      version: '2.0.0',
-      request: 'GetFeature',
-      typeNames: 'cusp:cusp_observations',
-      outputFormat: 'application/json',
-      count: '100',
-      CQL_FILTER: `BBOX(geom,${minLat},${minLng},${maxLat},${maxLng})`,
-    })
-
     cuspObservationsLoading.value = true
 
     try {
       const response = await fetch(
-        `${runtimeConfig.public.cuspWfsUrl}?${searchParams}`
+        `${runtimeConfig.public.apiUrl}/cusp/point/${location.lat}/${location.lng}`
       )
 
       if (!response.ok) {
