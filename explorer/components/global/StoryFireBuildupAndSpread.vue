@@ -22,7 +22,7 @@ interface LocationOption {
 
 const locationOptions: LocationOption[] = [
   {
-    label: 'Tanana Zone South',
+    label: 'Tanana Zone-South',
     bui: tananaZoneSouthBui,
     isi: tananaZoneSouthIsi,
   },
@@ -38,7 +38,7 @@ const locationOptions: LocationOption[] = [
   },
 ]
 
-const selectedLocation = ref<string>('Tanana Zone South')
+const selectedLocation = ref<string>('Tanana Zone-South')
 
 const currentLocation = computed<LocationOption>(
   () =>
