@@ -72,3 +72,4 @@ type Slug =
   | 'era5-wrf-xray'
   | 'story-fire-prone-conditions'
   | 'story-cold-snap-1989'
+  | 'story-fire-buildup-and-spread'

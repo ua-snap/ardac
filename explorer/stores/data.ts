@@ -26,6 +26,7 @@ const endpoints: Record<string, string> = {
   vegType: '/alfresco/veg_type/local/',
   wetDaysPerYear: '/wet_days_per_year/all/point/',
   era5wrf: '/era5wrf/point/',
+  fireWeather: '/fire_weather/point/',
 }
 
 export const useDataStore = defineStore('data', () => {

@@ -501,4 +501,11 @@ export default [
     image: 'story-cold-snap-1989.png',
     imageAlt: 'Preview image for the 1989 Alaska Cold Snap data story',
   },
+  {
+    slug: 'story-fire-buildup-and-spread',
+    title: 'Fire Buildup and Spread',
+    blurb:
+      'Explore how the Buildup Index (BUI) and Initial Spread Index (ISI) are projected to change across the fire season in Alaska.',
+    tags: ['Climate', 'Wildfire', 'Temperature', 'Precipitation'],
+  },
 ] satisfies Item[]
