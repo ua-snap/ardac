@@ -2,25 +2,32 @@
 """
 Regenerate the CFFDRS demo JSON files in assets/cffdrs_demo/.
 
-For each fire management Predictive Service Area (PSA) polygon below, this
-"cookie-cuts" the SNAP Rasdaman CMIP6 BUI and ISI coverages (axes: model,
-time, lat, lon), then averages:
+For each area below (a HUC-8 watershed, a fire management Predictive
+Service Area (PSA) polygon, and a community point), this "cookie-cuts" the
+SNAP Rasdaman CMIP6 BUI and ISI coverages (axes: model, time, lat, lon),
+then averages:
 
-  * spatially over every grid cell whose center falls inside the polygon,
+  * spatially over every grid cell whose center falls inside the polygon
+    (or, for the community point, the single nearest grid cell),
   * over model-axis positions 0-3,
-  * over every year 2070-2099,
+  * over every year in each period in PERIODS below,
 
 for each calendar day from Apr 1 to Oct 31. The time axis is an integer
 index of days on a 365-day calendar starting 1980-04-01; see
 DATA_FIRST_YEAR / DAYS_PER_YEAR below. Output is one JSON file per
-polygon and index, keyed "MM-DD", values rounded to 4 decimals:
+area, index and period, keyed "MM-DD", values rounded to 2 decimals:
 
-  tanana_zone_south_bui_2070_2099.json   {"04-01": 5.8961, ...}
+  huc8_19030304_bui_1980_2020.json   {"04-01": 5.86, ...}
 
-By default it downloads each year's fire season with GetCoverage (60 requests
-in total, cached between runs) and averages locally. --server-side instead
-tries to run the whole calculation inside Rasdaman with one WCPS query per
-polygon and index (experimental).
+A HUC-8 boundary is either fetched live from earthmaps.io/boundary/area/<id>
+or read from the local areas shapefile/geojson (see --polygons), a PSA
+boundary is always read from that same file, and a community's coordinates
+are fetched from earthmaps.io/places/communities.
+
+By default it downloads each year's fire season with GetCoverage (cached
+between runs) and averages locally. --server-side instead tries to run the
+whole calculation inside Rasdaman with one WCPS query per area and index
+(experimental).
 
 Before writing, the script compares its results against the JSON files
 already in the output directory and prints the largest difference, so you
@@ -29,7 +36,8 @@ can confirm it reproduces the earlier numbers.
 Requirements (Python 3.9+):
   pip install requests numpy pandas xarray netCDF4 geopandas shapely
 
-It needs network access to zeus.snap.uaf.edu (UAF network / VPN).
+It needs network access to zeus.snap.uaf.edu (UAF network / VPN), and to
+earthmaps.io for the HUC-8 boundary and community coordinates.
 
 Usage (run from the repo root):
   python scripts/cffdrs_demo.py --dry-run     # compare only, write nothing
@@ -55,14 +63,36 @@ import requests
 import xarray as xr
 
 WCS_URL = "https://zeus.snap.uaf.edu/rasdaman/ows"
+EARTHMAPS_URL = "https://earthmaps.io"
 COVERAGES = {"bui": "cmip6_bui", "isi": "cmip6_isi"}
 
-# PSANAME in alaska_allPSAs.shp -> output file slug
-PSAS = {
-    "Tanana Zone-South": "tanana_zone_south",
-    "Tanana Valley-West": "tanana_valley_west",
-    "Tanana Valley-East": "tanana_valley_east",
-}
+# The areas to average over, in output order. Each is a HUC-8 watershed
+# (boundary fetched live from earthmaps.io, kind "huc8", or read from
+# --polygons by its "HUC8" property, kind "huc8_file"), a PSANAME found in
+# --polygons (kind "psa"), or a community (coordinates fetched from
+# earthmaps.io, kind "community") reduced to its single nearest grid cell.
+AREAS = [
+    {"kind": "huc8", "slug": "huc8_19030304", "huc_id": "19030304"},
+    {"kind": "huc8_file", "slug": "huc8_19080306", "huc_id": "19080306"},
+    {"kind": "psa", "slug": "bristol_bay_and_ak_peninsula",
+     "psaname": "Bristol Bay And AK Peninsula"},
+    {"kind": "community", "slug": "igiugig", "community_id": "AK162"},
+    {"kind": "community", "slug": "fairbanks", "community_id": "AK124"},
+    {"kind": "psa", "slug": "tanana_zone_south", "psaname": "Tanana Zone-South"},
+    {"kind": "psa", "slug": "tanana_valley_west", "psaname": "Tanana Valley-West"},
+    {"kind": "psa", "slug": "tanana_valley_east", "psaname": "Tanana Valley-East"},
+    {"kind": "psa", "slug": "middle_yukon", "psaname": "Middle Yukon"},
+    {"kind": "psa", "slug": "lower_yukon", "psaname": "Lower Yukon"},
+    {"kind": "psa", "slug": "kuskokwim_valley", "psaname": "Kuskokwim Valley"},
+    {"kind": "psa", "slug": "tanana_zone_north", "psaname": "Tanana Zone-North"},
+    {"kind": "psa", "slug": "upper_yukon_valley", "psaname": "Upper Yukon Valley"},
+]
+
+# (slug, first year, last year) of each temporal average to produce.
+PERIODS = [
+    ("historical", 1980, 2020),
+    ("mid_century", 2040, 2069),
+]
 
 SEASON_START = "04-01"
 SEASON_END = "10-31"
@@ -81,7 +111,7 @@ BBOX_PAD_DEG = 0.5  # margin of cells fetched around the polygons
 SIMPLIFY_DEG = 0.01  # polygon simplification for WCPS clip (keeps queries small)
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_POLYGONS = HERE / "cffdrs_demo_psas.geojson"
+DEFAULT_POLYGONS = HERE / "cffdrs_demo_areas.geojson"
 DEFAULT_OUT = HERE.parent.parent / "explorer" / "assets" / "cffdrs_demo"
 DEFAULT_CACHE = Path(tempfile.gettempdir()) / "cffdrs_demo_cache"
 
@@ -147,6 +177,45 @@ def uses_0_360(info):
     return hi > 180
 
 
+# --------------------------------------------------------------------------
+# Area geometries
+# --------------------------------------------------------------------------
+
+def fetch_huc8_geometry(huc_id):
+    """(Multi)Polygon boundary of a HUC-8 watershed from earthmaps.io."""
+    import shapely.geometry
+
+    r = requests.get(f"{EARTHMAPS_URL}/boundary/area/{huc_id}", timeout=60)
+    r.raise_for_status()
+    return shapely.geometry.shape(r.json()["geometry"])
+
+
+def fetch_community_point(community_id):
+    """(lat, lon) of a community from earthmaps.io/places/communities."""
+    r = requests.get(f"{EARTHMAPS_URL}/places/communities", timeout=60)
+    r.raise_for_status()
+    for place in r.json():
+        if place.get("id") == community_id:
+            return float(place["latitude"]), float(place["longitude"])
+    sys.exit(f"community {community_id!r} not found at {r.url}")
+
+
+def load_geometry_from_file(path, prop, value):
+    """Polygon/MultiPolygon boundary matching prop == value in a local areas file."""
+    import geopandas as gpd
+
+    gdf = gpd.read_file(path)
+    gdf = gdf[gdf[prop] == value].to_crs(4326)
+    if gdf.empty:
+        sys.exit(f"{prop} == {value!r} not found in {path}")
+    return gdf.geometry.iloc[0]
+
+
+def load_psa_geometry(path, psaname):
+    """Polygon/MultiPolygon boundary of one PSANAME from the areas shapefile/geojson."""
+    return load_geometry_from_file(path, "PSANAME", psaname)
+
+
 def season_index_range(year):
     """First and last time-axis index of the given year's Apr 1 - Oct 31 season."""
     i0 = (year - DATA_FIRST_YEAR) * DAYS_PER_YEAR
@@ -160,7 +229,8 @@ def season_index_range(year):
 def get_year(coverage_id, year, bbox, cache_dir, time_subset):
     """Download one fire season of one coverage for the bbox, as a Dataset."""
     tag = re.sub(r"[^0-9,-]", "", time_subset(year)).replace(",", "_")
-    cache = cache_dir / f"{coverage_id}_{year}_{tag}.nc"
+    bbox_tag = "_".join(f"{v:.3f}" for v in bbox)
+    cache = cache_dir / f"{coverage_id}_{year}_{tag}_{bbox_tag}.nc"
     if cache.exists():
         return xr.open_dataset(cache).load()
 
@@ -189,7 +259,8 @@ def get_year(coverage_id, year, bbox, cache_dir, time_subset):
 # Zonal statistics
 # --------------------------------------------------------------------------
 
-def polygon_masks(polys, ds):
+def area_masks(polys, points, ds):
+    """{slug: boolean (lat, lon) DataArray}, one per polygon and point area."""
     import shapely
 
     lat, lon = AXES["lat"], AXES["lon"]
@@ -202,6 +273,14 @@ def polygon_masks(polys, ds):
         if not inside.any():
             sys.exit(f"No grid-cell centers fall inside {name}")
         print(f"  {name}: {int(inside.sum())} grid cells")
+        masks[name] = xr.DataArray(inside, dims=(lat, lon), coords={lat: lats, lon: lons})
+    for name, (point_lat, point_lon) in points.items():
+        lat_idx = int(np.argmin(np.abs(lats - point_lat)))
+        lon_idx = int(np.argmin(np.abs(lons - point_lon)))
+        inside = np.zeros((len(lats), len(lons)), dtype=bool)
+        inside[lat_idx, lon_idx] = True
+        print(f"  {name}: 1 grid cell (nearest to lat={point_lat:.4f}, lon={point_lon:.4f}: "
+              f"lat={lats[lat_idx]:.4f}, lon={lons[lon_idx]:.4f})")
         masks[name] = xr.DataArray(inside, dims=(lat, lon), coords={lat: lats, lon: lons})
     return masks
 
@@ -216,11 +295,11 @@ def pick_data_var(ds):
              + ", ".join(f"{n} {v.dims} {v.dtype}" for n, v in ds.data_vars.items()))
 
 
-def season_means(coverage_id, info, polys, years, bbox, cache_dir, time_subset):
-    """{psa_name: pd.Series indexed "MM-DD"} of the multi-year daily mean."""
+def season_means(coverage_id, info, polys, points, years, bbox, cache_dir, time_subset):
+    """{area_slug: pd.Series indexed "MM-DD"} of the multi-year daily mean."""
     lat, lon, t, m = AXES["lat"], AXES["lon"], AXES["time"], AXES["model"]
     days = pd.date_range(f"2001-{SEASON_START}", f"2001-{SEASON_END}").strftime("%m-%d")
-    per_year = {psa: [] for psa in polys}
+    per_year = {area: [] for area in [*polys, *points]}
     masks = None
 
     for year in years:
@@ -235,17 +314,17 @@ def season_means(coverage_id, info, polys, years, bbox, cache_dir, time_subset):
             sys.exit(f"{year}: expected {len(days)} days on {t}, got {da.sizes[t]}")
         if masks is None:
             print()
-            masks = polygon_masks(polys, ds)
+            masks = area_masks(polys, points, ds)
 
-        for psa, mask in masks.items():
+        for area, mask in masks.items():
             zonal = da.where(mask).mean(dim=[lat, lon], skipna=True)  # (model, time)
             zonal = zonal.mean(dim=m, skipna=True)                     # (time,)
-            per_year[psa].append(zonal.values)
+            per_year[area].append(zonal.values)
     print()
 
     return {
-        psa: pd.Series(np.nanmean(np.vstack(arrs), axis=0), index=days)
-        for psa, arrs in per_year.items()
+        area: pd.Series(np.nanmean(np.vstack(arrs), axis=0), index=days)
+        for area, arrs in per_year.items()
     }
 
 
@@ -354,15 +433,15 @@ def server_side_means(coverage_id, polys, lat_first, first_index, n_years, cache
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--start-year", type=int, default=2070)
-    ap.add_argument("--end-year", type=int, default=2099)
     ap.add_argument("--polygons", type=Path, default=DEFAULT_POLYGONS,
-                    help="GeoJSON/shapefile with a PSANAME field (e.g. alaska_allPSAs.shp)")
+                    help="GeoJSON/shapefile with a PSANAME field for PSA areas and/or "
+                         "a HUC8 field for locally-stored HUC-8 areas")
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
     ap.add_argument("--cache", type=Path, default=DEFAULT_CACHE)
     method = ap.add_mutually_exclusive_group()
     method.add_argument("--server-side", dest="method", action="store_const",
-                        const="server", help="compute in Rasdaman via WCPS (experimental)")
+                        const="server", help="compute in Rasdaman via WCPS (experimental; "
+                                              "polygon areas only)")
     method.add_argument("--download", dest="method", action="store_const",
                         const="download", help="download each year and average locally (default)")
     ap.set_defaults(method="download")
@@ -375,8 +454,6 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--describe", action="store_true")
     args = ap.parse_args()
-
-    import geopandas as gpd
 
     infos = {var: describe(cov) for var, cov in COVERAGES.items()}
     for var, info in infos.items():
@@ -393,89 +470,118 @@ def main():
                   f"{DATA_LAST_YEAR}-10-31 would have {expected}. Check the dry-run "
                   f"comparison before trusting the output.")
 
-    if not (DATA_FIRST_YEAR <= args.start_year <= args.end_year <= DATA_LAST_YEAR):
-        sys.exit(f"Years must be within {DATA_FIRST_YEAR}-{DATA_LAST_YEAR}")
+    for _, start_year, end_year in PERIODS:
+        if not (DATA_FIRST_YEAR <= start_year <= end_year <= DATA_LAST_YEAR):
+            sys.exit(f"Period {start_year}-{end_year} must be within "
+                     f"{DATA_FIRST_YEAR}-{DATA_LAST_YEAR}")
 
-    def time_subset(year):
-        return "{},{}".format(*season_index_range(year))
+    print("\nFetching area boundaries...")
+    polys, points = {}, {}
+    for area in AREAS:
+        if area["kind"] == "huc8":
+            print(f"  {area['slug']}: fetching HUC-8 {area['huc_id']} from earthmaps.io ...",
+                  end=" ", flush=True)
+            polys[area["slug"]] = fetch_huc8_geometry(area["huc_id"])
+            print("done")
+        elif area["kind"] == "huc8_file":
+            polys[area["slug"]] = load_geometry_from_file(args.polygons, "HUC8", area["huc_id"])
+        elif area["kind"] == "psa":
+            polys[area["slug"]] = load_psa_geometry(args.polygons, area["psaname"])
+        elif area["kind"] == "community":
+            print(f"  {area['slug']}: fetching community {area['community_id']} "
+                  "from earthmaps.io ...", end=" ", flush=True)
+            points[area["slug"]] = fetch_community_point(area["community_id"])
+            print(f"done {points[area['slug']]}")
+        else:
+            sys.exit(f"Unknown area kind {area['kind']!r}")
 
-    print(f"\n{args.start_year}-04-01 = time index {season_index_range(args.start_year)[0]}, "
-          f"{args.end_year}-10-31 = time index {season_index_range(args.end_year)[1]}")
-
-    gdf = gpd.read_file(args.polygons)
-    gdf = gdf[gdf["PSANAME"].isin(PSAS)].to_crs(4326)
-    missing = set(PSAS) - set(gdf["PSANAME"])
-    if missing:
-        sys.exit(f"PSAs not found in {args.polygons}: {missing}")
     if uses_0_360(infos["bui"]):
-        gdf = gdf.set_geometry(gdf.geometry.translate(xoff=360))
-    polys = dict(zip(gdf["PSANAME"], gdf.geometry))
-    minx, miny, maxx, maxy = gdf.total_bounds
-    bbox = (minx - BBOX_PAD_DEG, miny - BBOX_PAD_DEG, maxx + BBOX_PAD_DEG, maxy + BBOX_PAD_DEG)
+        import shapely.affinity
+        polys = {slug: shapely.affinity.translate(geom, xoff=360) for slug, geom in polys.items()}
+        points = {slug: (lat, lon + 360) for slug, (lat, lon) in points.items()}
 
-    years = range(args.start_year, args.end_year + 1)
+    lons = [x for geom in polys.values() for x in (geom.bounds[0], geom.bounds[2])] + \
+           [lon for _, lon in points.values()]
+    lats = [y for geom in polys.values() for y in (geom.bounds[1], geom.bounds[3])] + \
+           [lat for lat, _ in points.values()]
+    bbox = (min(lons) - BBOX_PAD_DEG, min(lats) - BBOX_PAD_DEG,
+            max(lons) + BBOX_PAD_DEG, max(lats) + BBOX_PAD_DEG)
+
     args.cache.mkdir(parents=True, exist_ok=True)
-    tag = f"{args.start_year}_{args.end_year}"
 
-    results = {}
-    if args.method == "server":
-        labels = infos["bui"].get("labels") or list(infos["bui"]["axes"])
-        lat_first = labels.index(AXES["lat"]) < labels.index(AXES["lon"])
-        wcps_polys = {
-            psa: (g.simplify(args.simplify, preserve_topology=True) if args.simplify else g)
-            for psa, g in polys.items()
-        }
-        first_index = season_index_range(args.start_year)[0]
-        n_years = args.end_year - args.start_year + 1
-        if args.print_query:
-            psa, g = next(iter(wcps_polys.items()))
-            print(f"\n# {psa}\n" + wcps_query(COVERAGES["bui"], wkt_rings(g, lat_first),
-                                               first_index, n_years))
-            return
-        for psa, g in wcps_polys.items():
-            print(f"{psa}: {len(g.exterior.coords) if g.geom_type == 'Polygon' else '?'} "
-                  f"vertices after simplifying to {args.simplify} deg")
-        for var, cov in COVERAGES.items():
-            print(f"\nWCPS {cov} {args.start_year}-{args.end_year}, "
-                  f"model {MODEL_POSITIONS[0]}-{MODEL_POSITIONS[1]}")
-            results[var] = server_side_means(cov, wcps_polys, lat_first, first_index,
-                                             n_years, args.cache)
-    else:
-        for var, cov in COVERAGES.items():
-            print(f"\nFetching {cov} {args.start_year}-{args.end_year}, "
-                  f"model {MODEL_POSITIONS[0]}-{MODEL_POSITIONS[1]}")
-            results[var] = season_means(cov, infos[var], polys, years, bbox, args.cache,
-                                        time_subset)
+    for period_slug, start_year, end_year in PERIODS:
+        print(f"\n=== {period_slug}: {start_year}-{end_year} ===")
+        years = range(start_year, end_year + 1)
+        tag = f"{start_year}_{end_year}"
 
-    print("\nMax |new - existing JSON|:")
-    for var in results:
-        for psa, slug in PSAS.items():
-            path = args.out / f"{slug}_{var}_{tag}.json"
-            if not path.exists():
-                print(f"  {path.name}: (no existing file)")
-                continue
-            old = pd.Series(json.loads(path.read_text()))
-            new = results[var][psa].round(4)
-            diff = (new - old.reindex(new.index)).abs()
-            print(f"  {path.name}: {diff.max():.4f} (mean {diff.mean():.4f})")
+        def time_subset(year):
+            return "{},{}".format(*season_index_range(year))
 
-    if args.dry_run:
-        print("\n--dry-run: nothing written")
-        return
+        print(f"{start_year}-04-01 = time index {season_index_range(start_year)[0]}, "
+              f"{end_year}-10-31 = time index {season_index_range(end_year)[1]}")
 
-    bad = [f"{PSAS[psa]}_{var}" for var in results for psa in PSAS
-           if results[var][psa].isna().any()]
-    if bad:
-        sys.exit(f"\nNot writing: NaN days in {', '.join(bad)} (NaN isn't valid JSON). "
-                 f"Try without --server-side, which skips missing cells locally.")
+        results = {}
+        if args.method == "server":
+            if points:
+                sys.exit(f"--server-side does not support point areas ({', '.join(points)}); "
+                         "use the default download mode")
+            labels = infos["bui"].get("labels") or list(infos["bui"]["axes"])
+            lat_first = labels.index(AXES["lat"]) < labels.index(AXES["lon"])
+            wcps_polys = {
+                slug: (g.simplify(args.simplify, preserve_topology=True) if args.simplify else g)
+                for slug, g in polys.items()
+            }
+            first_index = season_index_range(start_year)[0]
+            n_years = end_year - start_year + 1
+            if args.print_query:
+                slug, g = next(iter(wcps_polys.items()))
+                print(f"\n# {slug}\n" + wcps_query(COVERAGES["bui"], wkt_rings(g, lat_first),
+                                                   first_index, n_years))
+                return
+            for slug, g in wcps_polys.items():
+                print(f"{slug}: {len(g.exterior.coords) if g.geom_type == 'Polygon' else '?'} "
+                      f"vertices after simplifying to {args.simplify} deg")
+            for var, cov in COVERAGES.items():
+                print(f"\nWCPS {cov} {start_year}-{end_year}, "
+                      f"model {MODEL_POSITIONS[0]}-{MODEL_POSITIONS[1]}")
+                results[var] = server_side_means(cov, wcps_polys, lat_first, first_index,
+                                                 n_years, args.cache)
+        else:
+            for var, cov in COVERAGES.items():
+                print(f"\nFetching {cov} {start_year}-{end_year}, "
+                      f"model {MODEL_POSITIONS[0]}-{MODEL_POSITIONS[1]}")
+                results[var] = season_means(cov, infos[var], polys, points, years, bbox,
+                                            args.cache, time_subset)
 
-    for var in results:
-        for psa, slug in PSAS.items():
-            path = args.out / f"{slug}_{var}_{tag}.json"
-            data = {day: round(float(v), 4) for day, v in results[var][psa].items()}
-            # json.dumps(indent=1), no trailing newline: matches the original files
-            path.write_text(json.dumps(data, indent=1))
-            print("wrote", path)
+        print("\nMax |new - existing JSON|:")
+        for var in results:
+            for area in AREAS:
+                slug = area["slug"]
+                path = args.out / f"{slug}_{var}_{tag}.json"
+                if not path.exists():
+                    print(f"  {path.name}: (no existing file)")
+                    continue
+                old = pd.Series(json.loads(path.read_text()))
+                new = results[var][slug].round(4)
+                diff = (new - old.reindex(new.index)).abs()
+                print(f"  {path.name}: {diff.max():.4f} (mean {diff.mean():.4f})")
+
+        if args.dry_run:
+            print("\n--dry-run: nothing written")
+            continue
+
+        for var in results:
+            for area in AREAS:
+                slug = area["slug"]
+                path = args.out / f"{slug}_{var}_{tag}.json"
+                if results[var][slug].isna().any():
+                    print(f"  skipping {path.name}: no valid (non-NaN) data for this area "
+                          "in the coverage")
+                    continue
+                data = {day: round(float(v), 2) for day, v in results[var][slug].items()}
+                # json.dumps(indent=1), no trailing newline: matches the original files
+                path.write_text(json.dumps(data, indent=1))
+                print("wrote", path)
 
 
 if __name__ == "__main__":
