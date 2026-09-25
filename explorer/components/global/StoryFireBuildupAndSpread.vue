@@ -44,6 +44,14 @@ import fairbanksBuiProjected from '~/assets/cffdrs_demo/fairbanks_bui_2040_2069.
 import fairbanksIsiProjected from '~/assets/cffdrs_demo/fairbanks_isi_2040_2069.json'
 import fairbanksBuiHistorical from '~/assets/cffdrs_demo/fairbanks_bui_1980_2020.json'
 import fairbanksIsiHistorical from '~/assets/cffdrs_demo/fairbanks_isi_1980_2020.json'
+import mcgrathBuiProjected from '~/assets/cffdrs_demo/mcgrath_bui_2040_2069.json'
+import mcgrathIsiProjected from '~/assets/cffdrs_demo/mcgrath_isi_2040_2069.json'
+import mcgrathBuiHistorical from '~/assets/cffdrs_demo/mcgrath_bui_1980_2020.json'
+import mcgrathIsiHistorical from '~/assets/cffdrs_demo/mcgrath_isi_1980_2020.json'
+import stonyRiverBuiProjected from '~/assets/cffdrs_demo/huc8_19030405_bui_2040_2069.json'
+import stonyRiverIsiProjected from '~/assets/cffdrs_demo/huc8_19030405_isi_2040_2069.json'
+import stonyRiverBuiHistorical from '~/assets/cffdrs_demo/huc8_19030405_bui_1980_2020.json'
+import stonyRiverIsiHistorical from '~/assets/cffdrs_demo/huc8_19030405_isi_1980_2020.json'
 
 const { $Plotly } = useNuxtApp()
 
@@ -174,6 +182,22 @@ const locationOptions: LocationOption[] = [
     fairbanksIsiProjected,
     fairbanksBuiHistorical,
     fairbanksIsiHistorical
+  ),
+  areaLocation(
+    'McGrath',
+    'Community',
+    mcgrathBuiProjected,
+    mcgrathIsiProjected,
+    mcgrathBuiHistorical,
+    mcgrathIsiHistorical
+  ),
+  areaLocation(
+    'Stony River',
+    'HUC-8 19030405',
+    stonyRiverBuiProjected,
+    stonyRiverIsiProjected,
+    stonyRiverBuiHistorical,
+    stonyRiverIsiHistorical
   ),
 ].sort((a, b) => a.label.localeCompare(b.label))
 

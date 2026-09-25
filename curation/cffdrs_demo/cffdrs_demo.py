@@ -74,10 +74,12 @@ COVERAGES = {"bui": "cmip6_bui", "isi": "cmip6_isi"}
 AREAS = [
     {"kind": "huc8", "slug": "huc8_19030304", "huc_id": "19030304"},
     {"kind": "huc8_file", "slug": "huc8_19080306", "huc_id": "19080306"},
+    {"kind": "huc8", "slug": "huc8_19030405", "huc_id": "19030405"},
     {"kind": "psa", "slug": "bristol_bay_and_ak_peninsula",
      "psaname": "Bristol Bay And AK Peninsula"},
     {"kind": "community", "slug": "igiugig", "community_id": "AK162"},
     {"kind": "community", "slug": "fairbanks", "community_id": "AK124"},
+    {"kind": "community", "slug": "mcgrath", "community_id": "AK241"},
     {"kind": "psa", "slug": "tanana_zone_south", "psaname": "Tanana Zone-South"},
     {"kind": "psa", "slug": "tanana_valley_west", "psaname": "Tanana Valley-West"},
     {"kind": "psa", "slug": "tanana_valley_east", "psaname": "Tanana Valley-East"},
