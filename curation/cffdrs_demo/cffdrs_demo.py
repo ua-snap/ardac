@@ -69,8 +69,10 @@ COVERAGES = {"bui": "cmip6_bui", "isi": "cmip6_isi"}
 # The areas to average over, in output order. Each is a HUC-8 watershed
 # (boundary fetched live from earthmaps.io, kind "huc8", or read from
 # --polygons by its "HUC8" property, kind "huc8_file"), a PSANAME found in
-# --polygons (kind "psa"), or a community (coordinates fetched from
-# earthmaps.io, kind "community") reduced to its single nearest grid cell.
+# --polygons (kind "psa"), any other earthmaps.io /boundary/area/<id>
+# polygon such as a protected area or First Nation traditional territory
+# (kind "boundary"), or a community (coordinates fetched from earthmaps.io,
+# kind "community") reduced to its single nearest grid cell.
 AREAS = [
     {"kind": "huc8", "slug": "huc8_19030304", "huc_id": "19030304"},
     {"kind": "huc8_file", "slug": "huc8_19080306", "huc_id": "19080306"},
@@ -88,6 +90,9 @@ AREAS = [
     {"kind": "psa", "slug": "kuskokwim_valley", "psaname": "Kuskokwim Valley"},
     {"kind": "psa", "slug": "tanana_zone_north", "psaname": "Tanana Zone-North"},
     {"kind": "psa", "slug": "upper_yukon_valley", "psaname": "Upper Yukon Valley"},
+    {"kind": "boundary", "slug": "fntt11", "area_id": "FNTT11"},
+    {"kind": "boundary", "slug": "bcpa82", "area_id": "BCPA82"},
+    {"kind": "community", "slug": "yellowknife", "community_id": "NT46"},
 ]
 
 # (slug, first year, last year) of each temporal average to produce.
@@ -183,11 +188,12 @@ def uses_0_360(info):
 # Area geometries
 # --------------------------------------------------------------------------
 
-def fetch_huc8_geometry(huc_id):
-    """(Multi)Polygon boundary of a HUC-8 watershed from earthmaps.io."""
+def fetch_boundary_geometry(area_id):
+    """(Multi)Polygon boundary of any earthmaps.io /boundary/area/<id> area
+    (HUC-8 watershed, protected area, First Nation traditional territory, etc.)."""
     import shapely.geometry
 
-    r = requests.get(f"{EARTHMAPS_URL}/boundary/area/{huc_id}", timeout=60)
+    r = requests.get(f"{EARTHMAPS_URL}/boundary/area/{area_id}", timeout=60)
     r.raise_for_status()
     return shapely.geometry.shape(r.json()["geometry"])
 
@@ -273,8 +279,18 @@ def area_masks(polys, points, ds):
     for name, geom in polys.items():
         inside = shapely.contains_xy(geom, xx, yy)
         if not inside.any():
-            sys.exit(f"No grid-cell centers fall inside {name}")
-        print(f"  {name}: {int(inside.sum())} grid cells")
+            # Polygon smaller than a grid cell (e.g. a small park): fall back
+            # to the single nearest grid cell to its centroid, same as a
+            # community point.
+            centroid = geom.centroid
+            lat_idx = int(np.argmin(np.abs(lats - centroid.y)))
+            lon_idx = int(np.argmin(np.abs(lons - centroid.x)))
+            inside[lat_idx, lon_idx] = True
+            print(f"  {name}: 0 grid cells contain a center; falling back to nearest "
+                  f"cell to centroid (lat={centroid.y:.4f}, lon={centroid.x:.4f}): "
+                  f"lat={lats[lat_idx]:.4f}, lon={lons[lon_idx]:.4f}")
+        else:
+            print(f"  {name}: {int(inside.sum())} grid cells")
         masks[name] = xr.DataArray(inside, dims=(lat, lon), coords={lat: lats, lon: lons})
     for name, (point_lat, point_lon) in points.items():
         lat_idx = int(np.argmin(np.abs(lats - point_lat)))
@@ -483,7 +499,12 @@ def main():
         if area["kind"] == "huc8":
             print(f"  {area['slug']}: fetching HUC-8 {area['huc_id']} from earthmaps.io ...",
                   end=" ", flush=True)
-            polys[area["slug"]] = fetch_huc8_geometry(area["huc_id"])
+            polys[area["slug"]] = fetch_boundary_geometry(area["huc_id"])
+            print("done")
+        elif area["kind"] == "boundary":
+            print(f"  {area['slug']}: fetching boundary {area['area_id']} from earthmaps.io ...",
+                  end=" ", flush=True)
+            polys[area["slug"]] = fetch_boundary_geometry(area["area_id"])
             print("done")
         elif area["kind"] == "huc8_file":
             polys[area["slug"]] = load_geometry_from_file(args.polygons, "HUC8", area["huc_id"])

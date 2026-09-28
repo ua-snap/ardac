@@ -52,6 +52,18 @@ import stonyRiverBuiProjected from '~/assets/cffdrs_demo/huc8_19030405_bui_2040_
 import stonyRiverIsiProjected from '~/assets/cffdrs_demo/huc8_19030405_isi_2040_2069.json'
 import stonyRiverBuiHistorical from '~/assets/cffdrs_demo/huc8_19030405_bui_1980_2020.json'
 import stonyRiverIsiHistorical from '~/assets/cffdrs_demo/huc8_19030405_isi_1980_2020.json'
+import teslinTlingitBuiProjected from '~/assets/cffdrs_demo/fntt11_bui_2040_2069.json'
+import teslinTlingitIsiProjected from '~/assets/cffdrs_demo/fntt11_isi_2040_2069.json'
+import teslinTlingitBuiHistorical from '~/assets/cffdrs_demo/fntt11_bui_1980_2020.json'
+import teslinTlingitIsiHistorical from '~/assets/cffdrs_demo/fntt11_isi_1980_2020.json'
+import boyaLakeParkBuiProjected from '~/assets/cffdrs_demo/bcpa82_bui_2040_2069.json'
+import boyaLakeParkIsiProjected from '~/assets/cffdrs_demo/bcpa82_isi_2040_2069.json'
+import boyaLakeParkBuiHistorical from '~/assets/cffdrs_demo/bcpa82_bui_1980_2020.json'
+import boyaLakeParkIsiHistorical from '~/assets/cffdrs_demo/bcpa82_isi_1980_2020.json'
+import yellowknifeBuiProjected from '~/assets/cffdrs_demo/yellowknife_bui_2040_2069.json'
+import yellowknifeIsiProjected from '~/assets/cffdrs_demo/yellowknife_isi_2040_2069.json'
+import yellowknifeBuiHistorical from '~/assets/cffdrs_demo/yellowknife_bui_1980_2020.json'
+import yellowknifeIsiHistorical from '~/assets/cffdrs_demo/yellowknife_isi_1980_2020.json'
 
 const { $Plotly } = useNuxtApp()
 
@@ -198,6 +210,30 @@ const locationOptions: LocationOption[] = [
     stonyRiverIsiProjected,
     stonyRiverBuiHistorical,
     stonyRiverIsiHistorical
+  ),
+  areaLocation(
+    'Teslin Tlingit Council Traditional Territory',
+    'First Nation',
+    teslinTlingitBuiProjected,
+    teslinTlingitIsiProjected,
+    teslinTlingitBuiHistorical,
+    teslinTlingitIsiHistorical
+  ),
+  areaLocation(
+    'Boya Lake Park',
+    'Protected Area',
+    boyaLakeParkBuiProjected,
+    boyaLakeParkIsiProjected,
+    boyaLakeParkBuiHistorical,
+    boyaLakeParkIsiHistorical
+  ),
+  areaLocation(
+    'Yellowknife',
+    'Community',
+    yellowknifeBuiProjected,
+    yellowknifeIsiProjected,
+    yellowknifeBuiHistorical,
+    yellowknifeIsiHistorical
   ),
 ].sort((a, b) => a.label.localeCompare(b.label))
 
