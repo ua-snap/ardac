@@ -657,7 +657,7 @@ onMounted(() => {
         </div>
       </div>
       <p v-if="daysAboveThresholdCount !== null" class="mb-3">
-        <strong>{{ daysAboveThresholdCount }}</strong> days are above both the
+        <strong>{{ daysAboveThresholdCount }}</strong> projected days are above both the
         {{ selectedThreshold }} BUI and ISI thresholds.
       </p>
       <div id="chart-bui" class="mb-4"></div>
