@@ -67,7 +67,7 @@
         <div class="tile is-ancestor">
           <div class="tile is-parent is-vertical">
             <div class="tile lead is-child border-bottom">
-              <ItemTextPicture slug="story-cold-snap-1989" />
+              <ItemTextPicture slug="story-fire-buildup-and-spread" />
             </div>
             <div class="general">
               <div class="row tile is-parent mb-4">
