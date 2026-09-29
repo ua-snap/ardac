@@ -141,6 +141,7 @@ mapStore.setLegendItems(mapId, legend)
         collaborator="Los Alamos National Lab"
         vector_geom_type="point"
         feature_count_floor="70,000"
+        contribute-url="https://jonschwenk.github.io/cusp/contributing/"
       />
       <p class="mb-6">
         CUSP is a data synthesis product for near-surface permafrost,
@@ -149,6 +150,24 @@ mapStore.setLegendItems(mapId, legend)
         citations and tools that make the data corpus easier to use, build, and
         extend.
       </p>
+      <section
+        class="notification is-info is-light mb-6"
+        aria-labelledby="cusp-full-download"
+      >
+        <h4 id="cusp-full-download" class="title is-4">
+          Download the complete CUSP dataset
+        </h4>
+        <p>
+          Get the full CUSP bundle including all observations and supporting
+          files from the Zenodo open data repository.
+        </p>
+        <a
+          class="button is-info is-medium"
+          href="https://doi.org/10.5281/zenodo.22802355"
+        >
+          Download the whole CUSP dataset on Zenodo
+        </a>
+      </section>
       <MapBlock :mapId="mapId" class="mb-6">
         <template v-slot:layers>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
@@ -221,7 +240,6 @@ mapStore.setLegendItems(mapId, legend)
           </section>
           <br />
           <section aria-labelledby="cusp-observation-preview">
-
             <h5 id="cusp-observation-preview">Example CUSP observations</h5>
             <p id="cusp-observation-preview-description">
               One record per data source is displayed in this preview. To
