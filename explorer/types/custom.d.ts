@@ -122,7 +122,6 @@ interface CuspObservation {
   citation: string | null
   site_id: string | null
   observation_date: string | null
-  obs_month: number | null
   method: string | null
   method_label: string | null
   pf_observed: number | null
