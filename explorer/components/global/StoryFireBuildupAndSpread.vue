@@ -652,11 +652,10 @@ onMounted(() => {
     <div class="content clamp center is-size-5">
       <h3 class="title is-3">Fire Buildup and Spread</h3>
       <p>
-        This is a demo of the Buildup Index (BUI) and Initial Spread Index (ISI)
-        &mdash; two components of the Canadian Forest Fire Weather Index System
-        &mdash; projected to change across the fire season (April through
-        October) for the {{ currentLocationName }} zone. Values shown are 3-day
-        rolling averages.
+        This is a demo of the Buildup Index (BUI) and Initial Spread Index (ISI),
+        two components of the Canadian Forest Fire Weather Index System that
+        are projected to change across the fire season (April through October).
+        Values shown are 3-day rolling averages.
       </p>
       <p>
         BUI is a measure of how much fuel &mdash; like dead leaves, moss, and
