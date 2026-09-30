@@ -270,24 +270,62 @@ const thresholdOptions: ThresholdOption[] = [
 const selectedThreshold = ref<string>('Moderate')
 
 // Days (sorted, "MM-DD") present in both data sets where BUI and ISI are
-// both at or above the given threshold's low-end values.
-const daysAboveThreshold = (option: ThresholdOption): string[] => {
-  const { bui, isi } = currentLocation.value
+// both at or above the given threshold's low-end values. Uses the current
+// location's projected data unless other BUI/ISI data is passed in.
+const daysAboveThreshold = (
+  option: ThresholdOption,
+  bui: Record<string, number> = currentLocation.value.bui,
+  isi: Record<string, number> = currentLocation.value.isi
+): string[] => {
   const days = Object.keys(bui)
     .filter(day => day in isi)
     .sort()
   return days.filter(day => bui[day] >= option.bui && isi[day] >= option.isi)
 }
 
+const projectedYearsLabel = computed<string>(() =>
+  (currentLocation.value.projectedYears ?? PROJECTED_YEARS).replace('/', '–')
+)
+const historicalYearsLabel = computed<string>(() =>
+  (currentLocation.value.historicalYears ?? '').replace('/', '–')
+)
+
 // Count of days where both BUI and ISI are at or above the selected
-// threshold's low-end values.
-const daysAboveThresholdCount = computed<number | null>(() => {
+// threshold's low-end values, for the projected period and (if the location
+// has one) the historical period.
+const daysAboveThresholdCounts = computed<{
+  projected: number
+  historical: number | null
+} | null>(() => {
   const option = thresholdOptions.find(o => o.label === selectedThreshold.value)
   if (!option) {
     return null
   }
 
-  return daysAboveThreshold(option).length
+  const { buiHistorical, isiHistorical } = currentLocation.value
+  return {
+    projected: daysAboveThreshold(option).length,
+    historical:
+      buiHistorical && isiHistorical
+        ? daysAboveThreshold(option, buiHistorical, isiHistorical).length
+        : null,
+  }
+})
+
+// Change in that count from the historical period to the projected period,
+// as prose: "24 more days", "1 fewer day", or "the same number of days".
+const daysAboveThresholdChange = computed<string | null>(() => {
+  const counts = daysAboveThresholdCounts.value
+  if (!counts || counts.historical === null) {
+    return null
+  }
+
+  const change = counts.projected - counts.historical
+  if (change === 0) {
+    return 'the same number of days'
+  }
+  const days = Math.abs(change)
+  return `${days} ${change > 0 ? 'more' : 'fewer'} ${days === 1 ? 'day' : 'days'}`
 })
 
 interface DaySeries {
@@ -467,8 +505,8 @@ const buildChart = () => {
   const historicalBui = location.buiHistorical ? buildSeries(location.buiHistorical) : null
   const historicalIsi = location.isiHistorical ? buildSeries(location.isiHistorical) : null
 
-  const projectedYearsLabel = (location.projectedYears ?? PROJECTED_YEARS).replace('/', '–')
-  const historicalYearsLabel = (location.historicalYears ?? '').replace('/', '–')
+  const projectedYears = projectedYearsLabel.value
+  const historicalYears = historicalYearsLabel.value
   const option = thresholdOptions.find(o => o.label === selectedThreshold.value)
   const overlayBui = option
     ? buildIndexOverlay(option, option.bui, buiColor)
@@ -481,10 +519,10 @@ const buildChart = () => {
   // legend distinguishes them so the title just names the index and location.
   const buiTitle = historicalBui
     ? `Buildup Index (BUI)<br />${location.label}`
-    : `Buildup Index (BUI): Projected (${projectedYearsLabel})<br />${location.label}`
+    : `Buildup Index (BUI): Projected (${projectedYears})<br />${location.label}`
   const isiTitle = historicalIsi
     ? `Initial Spread Index (ISI)<br />${location.label}`
-    : `Initial Spread Index (ISI): Projected (${projectedYearsLabel})<br />${location.label}`
+    : `Initial Spread Index (ISI): Projected (${projectedYears})<br />${location.label}`
 
   const legend = {
     orientation: 'h',
@@ -503,10 +541,10 @@ const buildChart = () => {
     buildIndexTraces(
       'Buildup Index (BUI)',
       projectedBui,
-      projectedYearsLabel,
+      projectedYears,
       buiColor,
       historicalBui,
-      historicalYearsLabel,
+      historicalYears,
       buiHistoricalColor,
       '%{y:.1f}<extra></extra>'
     ),
@@ -541,10 +579,10 @@ const buildChart = () => {
     buildIndexTraces(
       'Initial Spread Index (ISI)',
       projectedIsi,
-      projectedYearsLabel,
+      projectedYears,
       isiColor,
       historicalIsi,
-      historicalYearsLabel,
+      historicalYears,
       isiHistoricalColor,
       '%{y:.2f}<extra></extra>'
     ),
@@ -656,9 +694,22 @@ onMounted(() => {
           </select>
         </div>
       </div>
-      <p v-if="daysAboveThresholdCount !== null" class="mb-3">
-        <strong>{{ daysAboveThresholdCount }}</strong> projected days are above both the
-        {{ selectedThreshold }} BUI and ISI thresholds.
+      <p
+        v-if="daysAboveThresholdCounts && daysAboveThresholdChange"
+        class="mb-3"
+      >
+        Compared to the modeled baseline ({{ historicalYearsLabel }}), the
+        {{ projectedYearsLabel }} projection has
+        <strong>{{ daysAboveThresholdChange }}</strong> above both the
+        {{ selectedThreshold }} BUI and ISI thresholds (<strong>{{
+          daysAboveThresholdCounts.projected
+        }}</strong>
+        projected vs. <strong>{{ daysAboveThresholdCounts.historical }}</strong>
+        baseline).
+      </p>
+      <p v-else-if="daysAboveThresholdCounts" class="mb-3">
+        <strong>{{ daysAboveThresholdCounts.projected }}</strong> projected days
+        are above both the {{ selectedThreshold }} BUI and ISI thresholds.
       </p>
       <div id="chart-bui" class="mb-4"></div>
       <div id="chart-isi"></div>
