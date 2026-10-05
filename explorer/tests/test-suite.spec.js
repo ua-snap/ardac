@@ -348,6 +348,35 @@ test('Check Temperature tag -> Temperature, CMIP6 page', async ({ page }) => {
   await expect(page.locator('#tasmin-chart')).toBeVisible()
 })
 
+test('Check Temperature tag -> Alaska Statewide Temperature Index page', async ({
+  page,
+}) => {
+  await page.goto(url)
+  await page.setViewportSize({ width: 1728, height: 1078 })
+  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
+  await page
+    .locator('div.tagbar > ul:nth-child(1) > li.more')
+    .click({ noWaitAfter: true })
+  await page.waitForSelector('div.tagbar > ul > li > a:has-text("Temperature")')
+
+  await page.click('div.tagbar > ul > li > a:has-text("Temperature")')
+  await page.waitForTimeout(500)
+  await expect(page.locator('h2')).toHaveText('Temperature')
+
+  await page.click('a:has(h3:text-is("Alaska Statewide Temperature Index"))')
+
+  await expect(page.locator('section > div > h3')).toHaveText(
+    'Alaska Statewide Temperature Index'
+  )
+
+  await expect(
+    page.locator('#statewide-temperature-index-chart .main-svg').first()
+  ).toBeVisible()
+  await expect(
+    page.locator('a:has-text("Download the daily index as CSV")')
+  ).toBeVisible()
+})
+
 test('Check CMIP6 tag -> Precipitation, CMIP6 page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
