@@ -25,6 +25,7 @@ endpoints:
 | GEOSERVER_URL        | https://gs.earthmaps.io/geoserver/wms  |
 | RASDAMAN_URL         | https://maps.earthmaps.io/rasdaman/ows |
 | SNAP_API_URL         | https://earthmaps.io                   |
+| ACIS_URL             | https://data.rcc-acis.org/MultiStnData |
 
 ## Development
 

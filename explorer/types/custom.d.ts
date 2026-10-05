@@ -116,6 +116,22 @@ interface Cmip6DownscaledChartInputs {
   projectedYear: string
 }
 
+interface AcisMultiStationData {
+  data: {
+    meta: {
+      sids: string[]
+      name: string
+    }
+    data: [string, string][]
+  }[]
+}
+
+interface StatewideTemperatureIndexDay {
+  date: string
+  dailyIndex: number
+  count: number
+}
+
 type LatLngValue = LatLng | undefined
 
 type PlaceType = 'community' | 'latLng' | undefined
