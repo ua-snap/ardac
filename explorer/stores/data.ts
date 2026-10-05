@@ -77,8 +77,13 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
+  // Incremented on every request so a slow response for a previous location
+  // can't overwrite the results for the current one.
+  let cuspRequestId = 0
+
   async function fetchCuspObservations() {
     const location = placesStore.latLng
+    const requestId = ++cuspRequestId
 
     clearCuspObservations()
 
@@ -90,18 +95,30 @@ export const useDataStore = defineStore('data', () => {
       const response = await fetch(
         `${runtimeConfig.public.apiUrl}/cusp/point/${location.lat}/${location.lng}`
       )
+      if (requestId !== cuspRequestId) return
+
+      if (response.status >= 400 && response.status < 500) {
+        cuspObservationsError.value =
+          'CUSP observations are not available for this location. Try a location within the area covered by the map above.'
+        return
+      }
 
       if (!response.ok) {
         throw new Error(`CUSP request failed with status ${response.status}`)
       }
 
-      cuspObservations.value =
+      const observations =
         (await response.json()) as CuspObservationFeatureCollection
+      if (requestId !== cuspRequestId) return
+      cuspObservations.value = observations
     } catch {
+      if (requestId !== cuspRequestId) return
       cuspObservationsError.value =
-        'Unable to load nearby CUSP observations. Please try another location.'
+        'The CUSP data service is not responding right now. Please try again later.'
     } finally {
-      cuspObservationsLoading.value = false
+      if (requestId === cuspRequestId) {
+        cuspObservationsLoading.value = false
+      }
     }
   }
 
