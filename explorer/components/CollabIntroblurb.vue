@@ -29,7 +29,7 @@ defineProps([
     </ul>
     <a
       v-if="contributeUrl"
-      class="button is-info is-medium mt-3"
+      class="button is-info is-light mt-3"
       :href="contributeUrl"
     >
       Contribute to this dataset

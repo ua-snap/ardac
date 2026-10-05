@@ -377,6 +377,67 @@ test('Check CMIP6 tag -> Precipitation, CMIP6 page', async ({ page }) => {
   await expect(page.locator('#pr-chart')).toBeVisible()
 })
 
+test('Check CUSP permafrost observations page', async ({ page }) => {
+  // Stub the CUSP API so this test does not depend on live data.
+  await page.route('**/cusp/point/**', route =>
+    route.fulfill({
+      json: {
+        type: 'FeatureCollection',
+        numberMatched: 1284,
+        numberReturned: 1,
+        features: [
+          {
+            type: 'Feature',
+            id: 'test.1',
+            geometry: { type: 'Point', coordinates: [-147.72, 64.84] },
+            properties: {
+              cusp_obs_id: 'test-1',
+              source: 'test_source',
+              citation: 'Test citation.',
+              site_id: 'TEST-SITE',
+              observation_date: '2019-08-21',
+              method_label: 'Soil Pit',
+              pf_observed_label: 'No permafrost observed',
+              thaw_depth_cm: null,
+              pf_depth_cm: null,
+              obs_limit_cm: 150,
+              quality_flags: null,
+            },
+          },
+        ],
+        quality_flag_definitions: {},
+      },
+    })
+  )
+
+  await page.goto(url + '/item/cusp-permafrost-observations')
+  await page.setViewportSize({ width: 1728, height: 1078 })
+
+  await expect(page.locator('section > div > h3')).toHaveText(
+    'The CommUnity near-Surface Permafrost (CUSP) Dataset'
+  )
+  await expect(page.locator('a:has-text("Download from Zenodo")')).toBeVisible()
+  await expect(page.locator('.layer.active')).toHaveText(
+    /Permafrost Observed\?/
+  )
+
+  await page.fill('#gimme', '64.84, -147.72')
+  await page.click('button:has-text("Get data for")')
+
+  await expect(page.locator('#cusp-nearby-observations')).toHaveText(
+    'CUSP observations near 64.84, -147.72'
+  )
+  await expect(
+    page.locator('p:has-text("1,284 CUSP observations were found")')
+  ).toBeVisible()
+  await expect(page.locator('table td:has-text("Limit: 150 cm")')).toBeVisible()
+  await expect(page.locator('a[href="#cusp-presence-absence"]')).toBeVisible()
+  await expect(page.locator('a:has-text("Download as CSV")')).toBeVisible()
+  await expect(
+    page.locator('code:has-text("test_source")').last()
+  ).toBeVisible()
+})
+
 test('Check footer', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
