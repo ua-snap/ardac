@@ -14,6 +14,25 @@ var legendControls: { [index: string]: any } = {}
 // Legend items for each map, keyed like `maps` var above.
 var legendItems: { [index: string]: any } = {}
 
+// Clickable point markers, keyed like `maps` var above, then by point ID
+var pointMarkers: { [index: string]: Record<string, L.CircleMarker> } = {}
+
+const pointStyle = {
+  radius: 5,
+  color: '#fff',
+  weight: 1,
+  fillColor: 'rgb(80, 80, 80)',
+  fillOpacity: 0.9,
+}
+
+const selectedPointStyle = {
+  radius: 10,
+  color: '#000',
+  weight: 2,
+  fillColor: 'rgb(207, 38, 47)',
+  fillOpacity: 1,
+}
+
 import {
   tileLayer,
   latLng,
@@ -128,6 +147,65 @@ export const useMapStore = defineStore('map', () => {
     if (maps[mapId]) {
       maps[mapId].remove()
     }
+    delete pointMarkers[mapId]
+  }
+
+  // Add a clickable marker for each point, with the point label as tooltip,
+  // and zoom the map to fit all points.
+  function addPoints(
+    mapId: string,
+    points: MapPoint[],
+    onClick: (id: string) => void
+  ) {
+    pointMarkers[mapId] = {}
+    points.forEach(point => {
+      pointMarkers[mapId][point.id] = $L
+        .circleMarker([point.lat, point.lng], pointStyle)
+        .bindTooltip(point.label)
+        .on('click', () => onClick(point.id))
+        .addTo(maps[mapId])
+    })
+
+    // Fit to the projected extent of the points rather than a lat/lng
+    // bounding box, which is skewed in conic projections and wraps around
+    // the globe for points across the antimeridian (western Aleutians).
+    // The default max bounds would pull the view off center, so remove them.
+    const map = maps[mapId]
+    map.setMaxBounds(null)
+    const zoom = map.getZoom()
+    const projected = points.map(point =>
+      map.project(latLng(point.lat, point.lng), zoom)
+    )
+    const pointBounds = $L.bounds(projected)
+    const mapSize = map.getSize()
+    const pointsSize = pointBounds.getSize()
+    const scale =
+      0.9 * Math.min(mapSize.x / pointsSize.x, mapSize.y / pointsSize.y)
+    // Not finite if the points don't fit within the map's zoom levels.
+    const fitZoom = map.getScaleZoom(scale, zoom)
+
+    // If the points don't fit at the minimum zoom, zoom out as far as
+    // possible and center on the average point position, which keeps the
+    // most points in view.
+    if (Number.isFinite(fitZoom)) {
+      map.setView(map.unproject(pointBounds.getCenter(), zoom), fitZoom)
+    } else {
+      const centroid = projected
+        .reduce((sum, point) => sum.add(point), $L.point(0, 0))
+        .divideBy(projected.length)
+      map.setView(map.unproject(centroid, zoom), map.getMinZoom())
+    }
+  }
+
+  // Highlight the point matching `id`, and reset the others.
+  function selectPoint(mapId: string, id: string) {
+    Object.entries(pointMarkers[mapId] ?? {}).forEach(([pointId, marker]) => {
+      if (pointId === id) {
+        marker.setStyle(selectedPointStyle).bringToFront()
+      } else {
+        marker.setStyle(pointStyle)
+      }
+    })
   }
 
   // `legends` is an object with keys corresponding to the name of the
@@ -257,6 +335,8 @@ export const useMapStore = defineStore('map', () => {
     setLegendItems,
     destroy,
     addLegend,
+    addPoints,
+    selectPoint,
   }
 })
 
