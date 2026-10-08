@@ -67,8 +67,28 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
+  // Fetch a static JSON file bundled with the app in the `public` folder,
+  // for datasets that are not served by the API.
+  const fetchStaticData = async (path: string, key: string) => {
+    apiData.value[key] = null
+    dataErrors.value[key] = false
+
+    try {
+      const response = await fetch(path)
+      const data = await response.json()
+      if (response.status === 200) {
+        apiData.value[key] = data
+      } else {
+        dataErrors.value[key] = true
+      }
+    } catch (error) {
+      dataErrors.value[key] = true
+    }
+  }
+
   return {
     fetchData,
+    fetchStaticData,
     apiData,
     dataErrors,
   }

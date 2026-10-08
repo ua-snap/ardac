@@ -377,6 +377,58 @@ test('Check CMIP6 tag -> Precipitation, CMIP6 page', async ({ page }) => {
   await expect(page.locator('#pr-chart')).toBeVisible()
 })
 
+test('Check Climate tag -> Historical Winds at Alaska Airports page', async ({
+  page,
+}) => {
+  await page.goto(url)
+  await page.setViewportSize({ width: 1728, height: 1078 })
+  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
+  await page.click('div.tagbar > ul > li > a:has-text("Climate")')
+  await page.waitForTimeout(500)
+  await expect(page.locator('h2')).toHaveText('Climate')
+
+  await page.click('a:has-text("Historical Winds at Alaska Airports")')
+
+  await expect(page.locator('section > div > h3')).toHaveText(
+    'Historical Winds at Alaska Airports'
+  )
+
+  await expect(page.locator('#airport-winds-map')).toBeVisible()
+  await expect(page.locator('#airport')).toHaveValue('PAFA')
+  await expect(
+    page.locator('#airport-winds-rose .main-svg').first()
+  ).toBeVisible()
+  await expect(
+    page.locator('#airport-winds-rose >> text=Fairbanks International Airport')
+  ).toBeVisible()
+  await expect(
+    page.locator('#airport-winds-monthly-roses .main-svg').first()
+  ).toBeVisible()
+  await expect(
+    page.locator('#airport-winds-crosswind .main-svg').first()
+  ).toBeVisible()
+  await expect(
+    page.locator('#airport-winds-energy .main-svg').first()
+  ).toBeVisible()
+  await expect(
+    page.locator('#airport-winds-decade-roses .main-svg').first()
+  ).toBeVisible()
+  await expect(
+    page.locator('#airport-winds-change-rose .main-svg').first()
+  ).toBeVisible()
+
+  await page.selectOption('#airport', 'PAKH')
+  await expect(
+    page.locator('#airport-winds-rose >> text=Akhiok Airport')
+  ).toBeVisible()
+  await expect(
+    page.locator(
+      'div:text-is("Akhiok Airport does not have sufficient data for this comparison.")'
+    )
+  ).toBeVisible()
+  await expect(page.locator('#airport-winds-change-rose')).toHaveCount(0)
+})
+
 test('Check footer', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })

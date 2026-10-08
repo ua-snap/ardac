@@ -50,6 +50,13 @@ interface MapLayerInstance {
   layer: MapLayer
 }
 
+interface MapPoint {
+  id: string
+  label: string
+  lat: number
+  lng: number
+}
+
 interface LegendItem {
   color: string
   label: string

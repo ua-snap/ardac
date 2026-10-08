@@ -154,6 +154,7 @@ export default defineNuxtConfig({
         '/item/story-climate-indicators',
         '/item/story-fire-prone-conditions',
         '/item/story-cold-snap-1989',
+        '/item/airport-winds',
         '/tag/Climate',
         '/tag/Programming',
         '/tag/Terrestrial',
