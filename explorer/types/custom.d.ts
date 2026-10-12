@@ -134,3 +134,9 @@ type Cmip6MonthlyChartInputsObj = Cmip6MonthlyChartInputs | undefined
 
 type Cmip6DownscaledChartLabelsObj = Cmip6DownscaledChartLabels | undefined
 type Cmip6DownscaledChartInputsObj = Cmip6DownscaledChartInputs | undefined
+
+interface Window {
+  umami?: {
+    track: (name: string, data?: Record<string, string>) => void
+  }
+}
