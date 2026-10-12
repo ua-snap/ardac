@@ -54,9 +54,9 @@ const getFlagEmoji = (countryCode: string) => {
 <template>
   <section class="section">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">
+      <h2 class="title is-3">
         Places & Polygons: Geographic Lenses for Arctic Data
-      </h3>
+      </h2>
 
       <h3 class="title is-4">Why Geographic Context Matters</h3>
       <p>
@@ -360,6 +360,11 @@ const getFlagEmoji = (countryCode: string) => {
 </template>
 
 <style lang="scss" scoped>
+// Keep space above the section headings.
+.content h3.title.is-4:not(:first-child) {
+  margin-top: 1.3333em;
+}
+
 table caption {
   caption-side: bottom;
   text-align: left;

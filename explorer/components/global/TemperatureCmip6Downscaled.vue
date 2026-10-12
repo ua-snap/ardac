@@ -99,7 +99,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Temperature, Downscaled CMIP6</h3>
+      <h2 class="title is-3">Temperature, Downscaled CMIP6</h2>
       <Cmip6AlphaWarning />
       <XrayIntroblurb resolution="4" unit="km" cmip="6" />
       <p class="mb-6">
@@ -111,9 +111,9 @@ onUnmounted(() => {
 
       <MapBlock :mapId="mapId" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             July Maximum Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
@@ -121,9 +121,9 @@ onUnmounted(() => {
             <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             January Minimum Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer :mapId="mapId" :layer="layers[2]">
             <template v-slot:title>{{ layers[2].title }}</template>
           </MapLayer>
@@ -149,10 +149,10 @@ onUnmounted(() => {
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download downscaled CMIP6 temperature data for {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <ul>
           <li>
             <a

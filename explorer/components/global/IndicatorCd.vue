@@ -72,7 +72,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Cold Day Threshold</h3>
+      <h2 class="title is-3">Cold Day Threshold</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The cold day threshold is the temperature at which only five days in a
@@ -115,12 +115,12 @@ mapStore.setLegendItems(mapId, legend)
       <IndicatorsChart label="Cold day threshold" units="&deg;C" dataKey="cd" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download cold day threshold data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle cold day threshold data with other
           climate indicators. Cold day threshold uses the "cd" identifier.

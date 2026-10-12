@@ -204,6 +204,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      htmlAttrs: { lang: 'en' },
       noscript: [
         {
           children: noscriptHtml,

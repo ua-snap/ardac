@@ -17,7 +17,7 @@ let item = store.itemBySlug(props.slug)
       <figure v-if="item.image" class="image is-5by4">
         <img
           :src="'/previews/' + item.image"
-          :alt="item.imageAlt"
+          :alt="item.imageAlt || ''"
           class="mb-4"
         />
       </figure>
@@ -32,7 +32,11 @@ let item = store.itemBySlug(props.slug)
     <h3 class="title is-4" v-html="item.title"></h3>
     <p v-html="item.blurb" class="mb-4" />
     <figure v-if="item.image" class="image is-5by4">
-      <img :src="'/previews/' + item.image" :alt="item.imageAlt" class="mb-4" />
+      <img
+        :src="'/previews/' + item.image"
+        :alt="item.imageAlt || ''"
+        class="mb-4"
+      />
     </figure>
   </div>
 </template>

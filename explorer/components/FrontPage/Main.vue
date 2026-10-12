@@ -2,6 +2,7 @@
 
 <template>
   <section class="section">
+    <h2 class="is-sr-only">Featured</h2>
     <div class="columns">
       <div class="briefs column is-3 pr-5 border-right">
         <div class="content is-size-5 hello">
@@ -114,7 +115,7 @@
             </li>
           </ul>
           <hr />
-          <h4 class="title is-4">Get involved!</h4>
+          <h3 class="title is-4">Get involved!</h3>
           <p>
             You can help build this! Do you have an idea for a data story? Do
             you create datasets? We would love to hear your ideas!

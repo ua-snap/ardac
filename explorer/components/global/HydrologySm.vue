@@ -131,7 +131,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Soil Moisture</h3>
+      <h2 class="title is-3">Soil Moisture</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows the mean monthly soil moisture for soil layers
@@ -200,12 +200,12 @@ onUnmounted(() => {
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download soil moisture data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle soil moisture data with other
           hydrology data. Soil moisture uses the "sm1" (layer 1), "sm2" (layer

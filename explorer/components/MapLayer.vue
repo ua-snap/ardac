@@ -32,8 +32,13 @@ onMounted(() => {
 <template>
   <div
     @click="toggleLayer"
+    @keydown.enter.prevent="toggleLayer"
+    @keydown.space.prevent="toggleLayer"
     class="layer tile is-ancestor is-parent"
     :class="{ active: active }"
+    role="button"
+    tabindex="0"
+    :aria-pressed="active"
   >
     <span class="tile is-child layer-wrapper">
       <div class="layer-title">
@@ -42,7 +47,7 @@ onMounted(() => {
       <div class="subtext"><slot name="subtext"></slot></div>
     </span>
     <span class="tile is-child active-pointer">
-      <div v-if="active">&#x25b6;</div>
+      <div v-if="active" aria-hidden="true">&#x25b6;</div>
     </span>
   </div>
 </template>

@@ -246,7 +246,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Wet Days Per Year</h3>
+      <h2 class="title is-3">Wet Days Per Year</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         A wet day is defined as a day with precipitation accumulation greater
@@ -288,12 +288,12 @@ onUnmounted(() => {
       <Gimme extent="blockyAlaska" />
       <div id="chart"></div>
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download wet days per year data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/wet_days_per_year/all/point" />
       </div>
       <GetAndUseData

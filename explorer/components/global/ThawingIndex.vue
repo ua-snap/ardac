@@ -54,7 +54,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Thawing Index</h3>
+      <h2 class="title is-3">Thawing Index</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The thawing index is the number of degree days above freezing per year.
@@ -94,12 +94,12 @@ mapStore.setLegendItems(mapId, legend)
       <DegreeDaysChart endpoint="thawingIndex" label="Thawing index" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download thawing index data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/degree_days/thawing_index" />
       </div>
       <GetAndUseDataDegreeDays :presentInEds="true">

@@ -204,9 +204,9 @@ watch([latLng, modelInput, scenarioInput], async () => {
       </div>
     </div>
     <div class="parameter mb-5">
-      <label for="year" class="label">Baseline Year:</label>
+      <label for="baseline-year" class="label">Baseline Year:</label>
       <div class="select mb-5 mr-3">
-        <select id="year" v-model="baselineYearInput">
+        <select id="baseline-year" v-model="baselineYearInput">
           <option v-for="year in chartLabels.baselineYears" :value="year">
             {{ year }}
           </option>
@@ -214,9 +214,9 @@ watch([latLng, modelInput, scenarioInput], async () => {
       </div>
     </div>
     <div class="parameter mb-5">
-      <label for="year" class="label">Projected Year:</label>
+      <label for="projected-year" class="label">Projected Year:</label>
       <div class="select">
-        <select id="year" v-model="projectedYearInput">
+        <select id="projected-year" v-model="projectedYearInput">
           <option v-for="year in chartLabels.projectedYears" :value="year">
             {{ year }}
           </option>

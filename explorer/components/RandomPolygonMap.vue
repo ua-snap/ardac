@@ -134,10 +134,19 @@ onBeforeUnmount(() => {
 
     <div v-if="isMapVisible && feature && geometry" class="mt-4">
       <h4 class="title is-5">{{ headerLabel }}</h4>
-      <div :id="mapId" class="map-element"></div>
+      <div
+        :id="mapId"
+        class="map-element"
+        role="region"
+        :aria-label="'Map of ' + headerLabel"
+      ></div>
     </div>
 
-    <div v-if="error" class="notification is-danger is-light mt-4">
+    <div
+      v-if="error"
+      class="notification is-danger is-light mt-4"
+      role="alert"
+    >
       Argh! Something went wrong. Try again later!
     </div>
   </div>

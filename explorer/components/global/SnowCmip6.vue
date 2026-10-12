@@ -254,7 +254,7 @@ mapStore.setLegendItems(mapId, legend)
   <section class="section xray">
     <div class="content is-size-5">
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
-      <h3 class="title is-3">Snow, CMIP6</h3>
+      <h2 class="title is-3">Snow, CMIP6</h2>
       <p class="mb-6">
         The map below shows modeled snow variables for the month of March using
         the MIROC6 model at 25-year intervals from 1950&ndash;2100. Intervals
@@ -263,7 +263,7 @@ mapStore.setLegendItems(mapId, legend)
 
       <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">Precipitation as Snow</h4>
+          <h3 class="title is-4 mb-3">Precipitation as Snow</h3>
           <MapLayer
             v-for="layer in prsn_layers"
             :mapId="mapId"
@@ -273,7 +273,7 @@ mapStore.setLegendItems(mapId, legend)
           >
             <template v-slot:title>{{ layer.title }}</template>
           </MapLayer>
-          <h4 class="title is-4 mb-3">Snow Water Equivalent</h4>
+          <h3 class="title is-4 mb-3">Snow Water Equivalent</h3>
           <MapLayer
             v-for="layer in snw_layers"
             :mapId="mapId"
@@ -313,12 +313,12 @@ mapStore.setLegendItems(mapId, legend)
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download CMIP6 snow data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/cmip6/point" variables="prsn,snw" />
       </div>
     </div>

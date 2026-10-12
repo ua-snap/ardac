@@ -63,7 +63,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Talik Thickness</h3>
+      <h2 class="title is-3">Talik Thickness</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows talik thickness for three eras using the GFDL CM3
@@ -100,12 +100,12 @@ onUnmounted(() => {
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download talik thickness data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle talik thickness data with other
           permafrost data. Talik thickness uses the "talikthickness" identifier.

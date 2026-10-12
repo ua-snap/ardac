@@ -374,7 +374,7 @@ onUnmounted(() => {
 <template>
   <section class="section">
     <div class="content clamp center is-size-5">
-      <h3 class="title is-3">Climate Stripes: What Might the Future Hold?</h3>
+      <h2 class="title is-3">Climate Stripes: What Might the Future Hold?</h2>
 
       <p>
         How much has your town or region already warmed? How does that change
@@ -413,11 +413,12 @@ onUnmounted(() => {
         one past…and several futures.
       </p>
 
-      <h4>Using the past to help visualize the future</h4>
+      <h3 class="title is-4">Using the past to help visualize the future</h3>
 
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory2/fairbanks_projected_climate_stripes.png"
+          alt="Climate stripes of temperature change for Fairbanks, Alaska from the EC-Earth3-Veg model. Historical stripes from 1900 are followed by four rows of projections to 2100, one per scenario from SSP1-2.6 to SSP5-8.5, with the higher scenarios turning deeper red and purple."
         />
       </figure>
 
@@ -460,7 +461,7 @@ onUnmounted(() => {
         like where you live?
       </p>
 
-      <h4>Try for yourself!</h4>
+      <h3 class="title is-4">Try for yourself!</h3>
 
       <p>
         This module will let you create historical + projected climate stripes

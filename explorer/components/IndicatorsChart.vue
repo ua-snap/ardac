@@ -185,7 +185,7 @@ onUnmounted(() => {
 <template>
   <Gimme extent="mizukami" />
   <div v-if="latLng && apiData">
-    <div class="control mb-5">
+    <div class="control mb-5" role="radiogroup" aria-label="Scenario">
       <label class="radio mr-3">
         <input
           type="radio"

@@ -26,7 +26,7 @@ const props = defineProps({
 
 <template>
   <div class="get-and-use-data">
-    <h4 class="title is-4 mt-6">Get &amp; use this data</h4>
+    <h3 class="title is-4 mt-6">Get &amp; use this data</h3>
     <slot name="preamble"></slot>
     <div class="content is-size-5">
       <ul>

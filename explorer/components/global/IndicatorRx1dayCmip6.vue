@@ -60,7 +60,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Maximum 1-day Precipitation, CMIP6</h3>
+      <h2 class="title is-3">Maximum 1-day Precipitation, CMIP6</h2>
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         The map below shows the 30-year mean of CMIP6 maximum 1-day
@@ -103,12 +103,12 @@ mapStore.setLegendItems(mapId, legend)
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download maximum 1-day precipitation data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle maximum 1-day precipitation data
           with other climate indicators. Maximum 1-day precipitation uses the

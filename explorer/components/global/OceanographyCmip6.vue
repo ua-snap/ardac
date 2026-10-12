@@ -104,7 +104,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Oceanography, CMIP6</h3>
+      <h2 class="title is-3">Oceanography, CMIP6</h2>
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         The map below shows modeled mean sea level pressure and surface
@@ -115,7 +115,7 @@ onUnmounted(() => {
 
       <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">Sea Level Pressure</h4>
+          <h3 class="title is-4 mb-3">Sea Level Pressure</h3>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
@@ -123,7 +123,7 @@ onUnmounted(() => {
             <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">Surface Temperature</h4>
+          <h3 class="title is-4 mb-3">Surface Temperature</h3>
           <MapLayer :mapId="mapId" :layer="layers[2]">
             <template v-slot:title>{{ layers[2].title }}</template>
           </MapLayer>
@@ -155,12 +155,12 @@ onUnmounted(() => {
       <Cmip6MonthlyChart label="Surface Temperature" units="°C" dataKey="ts" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download CMIP6 sea level pressure and surface temperature data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/cmip6/point" variables="psl,ts" />
       </div>
     </div>

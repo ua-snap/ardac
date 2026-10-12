@@ -440,9 +440,9 @@ const data: any = {
 <template>
   <section class="section">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">Climate Protection from Spruce Beetles</h3>
+      <h2 class="title is-3">Climate Protection from Spruce Beetles</h2>
       <p class="mb-6"></p>
-      <h4>Introduction</h4>
+      <h3 class="title is-4">Introduction</h3>
       <p>
         Spruce beetles are small insects that play a significant role in
         Alaska's forests, infesting white spruce, Sitka spruce, and Lutz spruce.
@@ -452,7 +452,7 @@ const data: any = {
         researchers to delve deeper into understanding the factors influencing
         these outbreaks.
       </p>
-      <h4>The Beetle Life Cycle and Climate Connection</h4>
+      <h3 class="title is-4">The Beetle Life Cycle and Climate Connection</h3>
       <p>
         Spruce beetles have a lifecycle closely tied to climate conditions.
         Adult beetles typically fly to new trees in the spring where females
@@ -472,10 +472,13 @@ const data: any = {
       </p>
 
       <figure class="image">
-        <img src="assets/images/beetle_voltinism.png" />
+        <img
+          src="assets/images/beetle_voltinism.png"
+          alt="Diagram of the spruce beetle life cycle: an egg becomes an adult beetle either within one year (univoltine) or over two years with a winter in between (semivoltine)."
+        />
       </figure>
 
-      <h4>Modeling Spruce Beetle Outbreaks</h4>
+      <h3 class="title is-4">Modeling Spruce Beetle Outbreaks</h3>
 
       <p>
         To better understand and predict spruce beetle outbreaks, researchers
@@ -558,7 +561,7 @@ const data: any = {
         </table>
       </div>
 
-      <h4>Implications for Forest Management</h4>
+      <h3 class="title is-4">Implications for Forest Management</h3>
       <p>
         Understanding the factors driving spruce beetle outbreaks is essential
         for effective forest management and conservation efforts. By identifying
@@ -568,7 +571,7 @@ const data: any = {
         practices can help maintain the health and resilience of Alaska's
         forests in the face of changing climate conditions.
       </p>
-      <h4>Conclusion</h4>
+      <h3 class="title is-4">Conclusion</h3>
       <p>
         Spruce beetle outbreaks pose significant challenges to Alaska's forests,
         but through interdisciplinary research and advanced modeling techniques

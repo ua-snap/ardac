@@ -20,8 +20,12 @@ const anyDataErrors = computed(() => {
 </script>
 
 <template>
-  <div v-if="placesStore.latLng && !anyApiData && !anyDataErrors">
-    <p>Hang on, this could take a few minutes!</p>
-    <progress class="progress" />
+  <!-- The status region stays in the page so screen readers announce the
+       message when it appears. -->
+  <div role="status">
+    <div v-if="placesStore.latLng && !anyApiData && !anyDataErrors">
+      <p>Hang on, this could take a few minutes!</p>
+      <progress class="progress" aria-label="Loading data" />
+    </div>
   </div>
 </template>

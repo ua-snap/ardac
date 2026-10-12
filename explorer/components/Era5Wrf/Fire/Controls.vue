@@ -22,10 +22,12 @@ const climatologyPeriods = ERA5_CLIMATOLOGY_PERIODS
     </p>
 
     <div class="field">
-      <label class="label">Select a year, 1960&ndash;2023</label>
+      <label class="label" for="fire-year"
+        >Select a year, 1960&ndash;2023</label
+      >
       <div class="control">
         <div class="select">
-          <select v-model.number="selectedYear">
+          <select id="fire-year" v-model.number="selectedYear">
             <option v-for="year in ERA5_AVAILABLE_YEARS" :key="year" :value="year">
               {{ year }}
             </option>
@@ -34,8 +36,12 @@ const climatologyPeriods = ERA5_CLIMATOLOGY_PERIODS
       </div>
 
       <div class="field mt-4">
-        <label class="label">30-year baseline</label>
-        <div class="control">
+        <span id="fire-baseline-label" class="label">30-year baseline</span>
+        <div
+          class="control"
+          role="radiogroup"
+          aria-labelledby="fire-baseline-label"
+        >
           <label class="radio">
             <input type="radio" value="1960-1989" v-model="climatologyPeriod" />
             <span v-html="climatologyPeriods['1960-1989'].label"></span>

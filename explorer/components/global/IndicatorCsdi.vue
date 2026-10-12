@@ -72,7 +72,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Cold Spell Duration Index</h3>
+      <h2 class="title is-3">Cold Spell Duration Index</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The cold spell duration index is the annual count of occurrences of at
@@ -120,12 +120,12 @@ mapStore.setLegendItems(mapId, legend)
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download cold spell duration index data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle cold spell duration index data
           with other climate indicators. Cold spell duration index uses the

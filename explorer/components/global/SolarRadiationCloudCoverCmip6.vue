@@ -164,7 +164,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Solar Radiation & Cloud Cover, CMIP6</h3>
+      <h2 class="title is-3">Solar Radiation & Cloud Cover, CMIP6</h2>
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         The map below shows modeled mean downwelling shortwave and longwave flux
@@ -175,7 +175,7 @@ onUnmounted(() => {
 
       <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">Downwelling Shortwave Flux</h4>
+          <h3 class="title is-4 mb-3">Downwelling Shortwave Flux</h3>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
@@ -183,7 +183,7 @@ onUnmounted(() => {
             <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">Downwelling Longwave Flux</h4>
+          <h3 class="title is-4 mb-3">Downwelling Longwave Flux</h3>
           <MapLayer :mapId="mapId" :layer="layers[2]">
             <template v-slot:title>{{ layers[2].title }}</template>
           </MapLayer>
@@ -191,7 +191,7 @@ onUnmounted(() => {
             <template v-slot:title>{{ layers[3].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">Cloud Area Fraction (Cloud Cover)</h4>
+          <h3 class="title is-4 mb-3">Cloud Area Fraction (Cloud Cover)</h3>
           <MapLayer :mapId="mapId" :layer="layers[4]">
             <template v-slot:title>{{ layers[4].title }}</template>
           </MapLayer>
@@ -242,13 +242,13 @@ onUnmounted(() => {
       <Cmip6MonthlyChart label="Cloud Area Fraction" units="%" dataKey="clt" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download CMIP6 downwelling flux, upward heat flux, and cloud area
           fraction data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks
           endpoint="/cmip6/point"
           variables="rsds,rlds,hfss,hfls,clt"

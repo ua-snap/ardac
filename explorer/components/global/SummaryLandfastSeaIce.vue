@@ -52,7 +52,10 @@ mapStore.setLegendItems(mapId, legend)
     <div class="clamp">
       <h2 class="title is-2">Landfast Sea Ice</h2>
       <figure class="image">
-        <img src="/previews/ARC18_Landfast_Fig2.jpg" />
+        <img
+          src="/previews/ARC18_Landfast_Fig2.jpg"
+          alt="Community members traveling by snowmobile on landfast sea ice near Utqiaġvik, Alaska."
+        />
         <figcaption>
           Two community members returning by snowmobile from a flaw lead at the
           seaward edge of the landfast ice near Utqiaġvik, Alaska.
@@ -95,7 +98,7 @@ mapStore.setLegendItems(mapId, legend)
 
     <div class="clamp">
       <div class="content is-size-5">
-        <h4 class="title is-4">Summarizing ice edge data</h4>
+        <h3 class="title is-4">Summarizing ice edge data</h3>
         <p>
           This data visualization summarizes the position of the seaward
           landfast ice edge (SLIE) for the Beaufort Sea region. Each month of
@@ -114,7 +117,7 @@ mapStore.setLegendItems(mapId, legend)
           typical extent of landfast ice.
         </p>
 
-        <h4 class="title is-4">The consequences of a changing ice regime</h4>
+        <h3 class="title is-4">The consequences of a changing ice regime</h3>
 
         <p>
           <strong>
@@ -148,7 +151,7 @@ mapStore.setLegendItems(mapId, legend)
           the Beaufort region for the 2014-2023 ice era.
         </p>
 
-        <h4 class="title is-4">Bringing diverse data together</h4>
+        <h3 class="title is-4">Bringing diverse data together</h3>
 
         <p>
           The data explored here are a novel assemblage of several data sources
@@ -173,7 +176,7 @@ mapStore.setLegendItems(mapId, legend)
         </p>
       </div>
       <div class="references content">
-        <h4 class="title is-4">References</h4>
+        <h3 class="title is-4">References</h3>
         <blockquote>
           Mahoney, A., Eicken, H., Shapiro, L., & Graves, A. (2005). Defining
           and locating the seaward landfast ice edge in northern Alaska. In 18th

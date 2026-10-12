@@ -125,7 +125,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Temperature, CMIP6</h3>
+      <h2 class="title is-3">Temperature, CMIP6</h2>
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         The map below shows modeled mean near-surface air temperature for the
@@ -137,9 +137,9 @@ onUnmounted(() => {
 
       <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             July Mean Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
@@ -147,9 +147,9 @@ onUnmounted(() => {
             <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             July Maximum Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer :mapId="mapId" :layer="layers[2]">
             <template v-slot:title>{{ layers[2].title }}</template>
           </MapLayer>
@@ -157,9 +157,9 @@ onUnmounted(() => {
             <template v-slot:title>{{ layers[3].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             January Minimum Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer :mapId="mapId" :layer="layers[4]">
             <template v-slot:title>{{ layers[4].title }}</template>
           </MapLayer>
@@ -202,12 +202,12 @@ onUnmounted(() => {
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download CMIP6 temperature data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/cmip6/point" variables="tas,tasmax,tasmin" />
       </div>
     </div>

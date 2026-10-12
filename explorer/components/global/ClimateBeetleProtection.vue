@@ -97,7 +97,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Climate Protection from Spruce Beetles</h3>
+      <h2 class="title is-3">Climate Protection from Spruce Beetles</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows the 30-year mean of climate protection from spruce
@@ -167,12 +167,12 @@ onUnmounted(() => {
             </select>
           </div>
         </div>
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Climate protection from spruce beetles for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }}, {{ latLng.lng }} with
           {{ snowpackLabels[snowpackInput].toLowerCase() }} snowpack
-        </h4>
+        </h3>
         <table class="mb-6">
           <tr>
             <th>Model</th>
@@ -219,12 +219,12 @@ onUnmounted(() => {
             </td>
           </tr>
         </table>
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download climate protection from spruce beetles data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/beetles/point" />
       </div>
       <GetAndUseDataBeetle />

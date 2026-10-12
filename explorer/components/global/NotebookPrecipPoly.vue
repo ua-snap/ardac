@@ -61,9 +61,12 @@
         </li>
       </ul>
       <p>Example output from this notebook:</p>
-      <img src="/public/precip-poly.png" />
+      <img
+        src="/public/precip-poly.png"
+        alt="A map of May–October average cumulative precipitation for the Chena River Basin, 2000–2003, marking the Chena River gauge and Fairbanks, above four time series charts."
+      />
     </div>
-    <h4 class="title is-4">Use &amp; access this code</h4>
+    <h3 class="title is-4">Use &amp; access this code</h3>
     <div class="content is-size-5">
       <ul>
         <li>

@@ -66,7 +66,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Precipitation, Downscaled CMIP6</h3>
+      <h2 class="title is-3">Precipitation, Downscaled CMIP6</h2>
       <Cmip6AlphaWarning />
       <XrayIntroblurb resolution="4" unit="km" cmip="6" />
       <p class="mb-6">
@@ -96,10 +96,10 @@ onUnmounted(() => {
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download downscaled CMIP6 precipitation data for {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <ul>
           <li>
             <a

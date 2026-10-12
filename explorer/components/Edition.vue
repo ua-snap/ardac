@@ -1,7 +1,9 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="edition">&mdash; ☀️&nbsp;Edition, July 2026 &mdash;</div>
+  <div class="edition">
+    &mdash; <span aria-hidden="true">☀️</span>&nbsp;Edition, July 2026 &mdash;
+  </div>
 </template>
 
 <style scoped lang="scss">

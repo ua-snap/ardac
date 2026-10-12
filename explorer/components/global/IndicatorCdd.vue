@@ -72,7 +72,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Consecutive Dry Days</h3>
+      <h2 class="title is-3">Consecutive Dry Days</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         Consecutive dry days are the number of the most consecutive days with at
@@ -115,12 +115,12 @@ mapStore.setLegendItems(mapId, legend)
       <IndicatorsChart label="Consecutive dry days" dataKey="cdd" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download consecutive dry days data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle consecutive dry days data with
           other climate indicators. Consecutive dry days uses the "cdd"

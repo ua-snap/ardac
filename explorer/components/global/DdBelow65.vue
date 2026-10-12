@@ -54,7 +54,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Degree Days Below 65&deg;F</h3>
+      <h2 class="title is-3">Degree Days Below 65&deg;F</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         Degree days below 65&deg;F, also known as heating degree days, are used
@@ -99,12 +99,12 @@ mapStore.setLegendItems(mapId, legend)
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download degree days below 65&deg;F data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/degree_days/heating" />
       </div>
       <GetAndUseDataDegreeDays :presentInEds="true" />

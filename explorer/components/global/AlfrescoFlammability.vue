@@ -169,7 +169,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Flammability</h3>
+      <h2 class="title is-3">Flammability</h2>
       <XrayIntroblurb resolution="1" unit="km" cmip="5" />
       <p class="mb-6">
         Flammability is defined as the percentage of times a pixel at a
@@ -236,11 +236,11 @@ onUnmounted(() => {
       </div>
       <div id="chart"></div>
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download flammability data for
           {{ apiData['huc_id'] }}, the HUC-12 enclosing {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           Note that the values returned from the following URLs are the same
           data used to compute the flammability percentage in the maps and

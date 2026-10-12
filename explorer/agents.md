@@ -147,8 +147,16 @@ Each item entry should stay compact and descriptive:
 Blurb text should remain short and plain. Do not add HTML to item blurbs. Blurbs should be written in a science communication, journalistic style, and not exceed 200 characters.
 
 ### Images and accessibility
-If an item includes preview imagery, always include meaningful `imageAlt`.
-If you add images in templates, supply `alt` text unless the image is purely decorative and the existing component pattern indicates otherwise.
+The site targets WCAG 2.1 Level AA. When adding or editing content:
+
+- If an item includes preview imagery, always include meaningful `imageAlt`.
+- If you add images in templates, always include an `alt` attribute: describe the image, or use `alt=""` if it is purely decorative.
+- Headings follow the document outline, and their size comes from Bulma classes rather than the tag. The site name is the only `h1`. An item's title is `<h2 class="title is-3">`, its sections are `<h3 class="title is-4">`, and so on. Do not skip levels.
+- Every form control needs a `<label>` whose `for` matches the control's `id`, and IDs must be unique on the page. Give a group of radio buttons `role="radiogroup"` and a label.
+- Use `<button>` or a link for anything clickable. Do not put `@click` on a `div`, `li`, or `span` without also making it focusable and operable from the keyboard.
+- Do not rely on color alone. Links in running text are underlined by the global styles, and text needs a 4.5:1 contrast ratio against its background.
+- Charts get their accessible name from the Plotly layout title (see `plugins/plotly.client.ts`), so give every chart a descriptive title.
+- Mark decorative emoji with `aria-hidden="true"`.
 
 ### People / bios
 If a new item is story-like, newly significant, or strongly associated with a data creator / subject-matter contributor, consider whether it should also be connected via:

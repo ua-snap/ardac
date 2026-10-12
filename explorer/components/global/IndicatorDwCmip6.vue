@@ -60,7 +60,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Deep Winter Days, CMIP6</h3>
+      <h2 class="title is-3">Deep Winter Days, CMIP6</h2>
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         Deep winter days are the number of days per year that are below
@@ -99,12 +99,12 @@ mapStore.setLegendItems(mapId, legend)
       <IndicatorsCmip6Chart label="Deep winter days" dataKey="dw" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download deep winter days data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle deep winter days data with other
           climate indicators. Deep winter days use the "dw" identifier.
