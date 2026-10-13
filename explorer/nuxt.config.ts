@@ -182,9 +182,12 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
+          // Bulma 1.0.4 and Vite's Sass integration still use features that
+          // newer Dart Sass releases warn about on every compile.
+          silenceDeprecations: ['legacy-js-api', 'if-function', 'import'],
           additionalData: `
             @use "~/assets/styles/_variables.scss" as *;
-            @import "~/node_modules/bulma/sass/utilities/mixins.sass";
+            @use "~/assets/styles/_bulma-setup.scss" as *;
           `,
         },
       },

@@ -4,36 +4,32 @@
   <section class="section">
     <div class="columns">
       <div class="featured column is-8 pr-5">
-        <div class="tile is-ancestor">
-          <div class="tile is-parent is-vertical">
-            <div class="tile lead is-child border-bottom">
-              <ItemTextPicture slug="cusp-permafrost-observations" />
+        <div class="lead block border-bottom">
+          <ItemTextPicture slug="cusp-permafrost-observations" />
+        </div>
+        <div class="general">
+          <div class="row columns is-gapless p-3 mb-4">
+            <div class="left column">
+              <ItemTextPicture slug="story-cold-snap-1989" showTag />
             </div>
-            <div class="general">
-              <div class="row tile is-parent mb-4">
-                <div class="left tile is-child">
-                  <ItemTextPicture slug="story-cold-snap-1989" showTag />
-                </div>
-                <div class="right tile is-child">
-                  <ItemTextPicture slug="story-cmip6-downscaled" showTag />
-                </div>
-              </div>
-              <div class="row tile is-parent mb-4">
-                <div class="left tile is-child">
-                  <ItemTextPicture slug="story-climate-indicators" showTag />
-                </div>
-                <div class="left tile is-child">
-                  <ItemTextPicture slug="story-climate-stripes-2" showTag />
-                </div>
-              </div>
-              <div class="tile is-parent">
-                <div class="left tile is-child">
-                  <ItemTextPicture slug="story-fire-prone-conditions" showTag />
-                </div>
-                <div class="left tile is-child">
-                  <ItemTextPicture slug="summary-landfast-sea-ice" showTag />
-                </div>
-              </div>
+            <div class="right column">
+              <ItemTextPicture slug="story-cmip6-downscaled" showTag />
+            </div>
+          </div>
+          <div class="row columns is-gapless p-3 mb-4">
+            <div class="left column">
+              <ItemTextPicture slug="story-climate-indicators" showTag />
+            </div>
+            <div class="left column">
+              <ItemTextPicture slug="story-climate-stripes-2" showTag />
+            </div>
+          </div>
+          <div class="columns is-gapless p-3">
+            <div class="left column">
+              <ItemTextPicture slug="story-fire-prone-conditions" showTag />
+            </div>
+            <div class="left column">
+              <ItemTextPicture slug="summary-landfast-sea-ice" showTag />
             </div>
           </div>
         </div>
@@ -142,17 +138,17 @@
 }
 
 @media (min-width: 769px) {
-  .tile.row {
+  .row {
     border-bottom: 1px dashed $gray-lighter;
   }
 
-  .general .tile.left {
+  .general .left {
     &:deep(.item) {
       padding-right: 1rem;
       border-right: 1px dashed $gray-lighter;
     }
   }
-  .general .tile.right {
+  .general .right {
     margin-left: 1rem !important;
   }
 }
@@ -167,7 +163,7 @@
     // shape than the 5:4 used for other items to keep it from filling
     // the screen.
     figure.image {
-      padding-top: 50%;
+      aspect-ratio: 2 / 1;
       img {
         object-fit: cover;
       }

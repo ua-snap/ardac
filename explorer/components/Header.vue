@@ -14,7 +14,7 @@
     font-weight: 800;
     line-height: 0.9;
     font-size: 5rem;
-    @include until($desktop) {
+    @include touch {
       font-size: 2.75rem;
     }
   }

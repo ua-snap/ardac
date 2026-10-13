@@ -123,6 +123,8 @@ Do not reintroduce Options API patterns.
 ### Templates
 Prefer:
 - Prefer existing Bulma/project class patterns; avoid introducing one-off classes or inline styles unless necessary.
+- The site uses Bulma 1. Its `tile` classes no longer exist: lay out with `columns` / `column`, and add the project's `stack` class to a column whose items should share its height.
+- Bulma's Sass variables are set in `assets/styles/_bulma-setup.scss` and at the top of `assets/styles/main.scss`. Those files also pin Bulma 0.9's look, so check there before overriding a Bulma default somewhere else.
 - `NuxtLink` for internal navigation
 - explicit conditional rendering with `v-if` / `v-else`
 - simple lists / sections over over-abstracted markup
