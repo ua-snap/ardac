@@ -82,6 +82,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: [
+        '/item/cusp-permafrost-observations',
         '/item/indicator-su',
         '/item/indicator-dw',
         '/item/indicator-hd',

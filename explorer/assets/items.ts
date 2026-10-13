@@ -501,4 +501,13 @@ export default [
     image: 'story-cold-snap-1989.png',
     imageAlt: 'Preview image for the 1989 Alaska Cold Snap data story',
   },
+  {
+    slug: 'cusp-permafrost-observations',
+    title: 'CUSP: CommUnity near-Surface Permafrost Observations',
+    blurb:
+      'Learn about the CUSP data synthesis for near-surface permafrost, active-layer, thaw-depth, and related field observations. CUSP brings many published and field datasets into one documented table, with source citations and tools that make the synthesis easier to check, rebuild, and extend.',
+    tags: ['Permafrost', 'Cryosphere', 'Observation', 'Terrestrial'],
+    image: 'permafrost-soil-pit_skip-walker_USPA.jpg',
+    imageAlt: 'Preview image for CUSP',
+  },
 ] satisfies Item[]
