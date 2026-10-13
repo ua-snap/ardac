@@ -16,15 +16,14 @@
         </p>
         <p class="trumpet is-size-4">
           <span>📢</span>
-          <strong>What's new?</strong> Dive into the latest ARDAC updates! Read
-          about
-          <NuxtLink to="/item/story-cold-snap-1989"
-            >the historic 1989 Cold Snap</NuxtLink
-          >&mdash;this data story uses the
-          <NuxtLink to="/item/era5-wrf-xray"
-            >dynamically downscaled ERA5</NuxtLink
-          >
-          dataset to make the historical record come alive with reanalysis data.
+          <strong>What&rsquo;s new?</strong> Explore more than 70,000 field
+          observations of permafrost, active layer and thaw depth in
+          <strong
+            ><NuxtLink to="/item/cusp-permafrost-observations"
+              >CUSP: the CommUnity near-Surface Permafrost dataset</NuxtLink
+            ></strong
+          >, a community-built dataset that you can map, query by place, and
+          download.
         </p>
       </div>
     </section>
