@@ -15,7 +15,9 @@
   $button-weight: 400,
   $button-padding-horizontal: calc(1em + 1px),
   $notification-padding: 1.25rem 2.5rem 1.25rem 1.5rem,
-  $message-body-radius: 4px
+  $message-body-radius: 4px,
+  $message-header-padding: 0.75em 1em,
+  $message-header-weight: 700
 );
 
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Patrick+Hand&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
@@ -54,6 +56,15 @@ code {
 
 .message-body {
   border-width: 0 0 0 4px;
+}
+
+.message.is-warning {
+  .message-header {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .message-body {
+    color: #946c00;
+  }
 }
 
 // A subtitle sat close under its title, including inside .content.

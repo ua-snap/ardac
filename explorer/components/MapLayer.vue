@@ -30,18 +30,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    @click="toggleLayer"
-    class="layer tile is-ancestor is-parent"
-    :class="{ active: active }"
-  >
-    <span class="tile is-child layer-wrapper">
+  <div @click="toggleLayer" class="layer" :class="{ active: active }">
+    <span class="layer-wrapper">
       <div class="layer-title">
         <slot name="title">{{ layer.title }}</slot>
       </div>
       <div class="subtext"><slot name="subtext"></slot></div>
     </span>
-    <span class="tile is-child active-pointer">
+    <span class="active-pointer">
       <div v-if="active">&#x25b6;</div>
     </span>
   </div>
@@ -52,7 +48,17 @@ onMounted(() => {
   line-height: 1.2;
   font-size: 1.25rem;
   cursor: pointer;
-  padding-right: 0;
+
+  // The negative margins let the highlight of the active layer extend past
+  // the text, while the text stays lined up with the content around it.
+  margin: -0.75rem -0.75rem 0.75rem;
+  padding: 0.75rem 0 0.75rem 0.75rem;
+  &:last-child {
+    margin-bottom: -0.75rem;
+  }
+  @include tablet {
+    display: flex;
+  }
 
   &.active {
     font-weight: 600;
@@ -60,7 +66,8 @@ onMounted(() => {
   }
 
   .layer-wrapper {
-    flex-basis: 80%;
+    display: block;
+    flex: 1 1 80%;
   }
 
   .subtext {
@@ -72,6 +79,7 @@ onMounted(() => {
 
   .active-pointer {
     display: flex;
+    flex: 1 1 0;
     align-items: center;
     font-size: 125%;
   }

@@ -234,26 +234,22 @@
         and striking.
       </p>
       <p>It also allows people to see the effect in their specific place.</p>
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <div class="tile is-child">
-            <p>My Region</p>
-            <img
-              src="assets/images/ClimateStripesStory1/ArcticStripesWaterisStripes.png"
-            />
-          </div>
-          <div class="tile is-child">
-            <p>My State</p>
-            <img
-              src="assets/images/ClimateStripesStory1/AKStripesAKShaped.png"
-            />
-          </div>
-          <div class="tile is-child">
-            <p>My City</p>
-            <img
-              src="assets/images/ClimateStripesStory1/Fairbanks Climate Stripes 2022-01 (square).png"
-            />
-          </div>
+      <div class="columns is-gapless">
+        <div class="column">
+          <p>My Region</p>
+          <img
+            src="assets/images/ClimateStripesStory1/ArcticStripesWaterisStripes.png"
+          />
+        </div>
+        <div class="column">
+          <p>My State</p>
+          <img src="assets/images/ClimateStripesStory1/AKStripesAKShaped.png" />
+        </div>
+        <div class="column">
+          <p>My City</p>
+          <img
+            src="assets/images/ClimateStripesStory1/Fairbanks Climate Stripes 2022-01 (square).png"
+          />
         </div>
       </div>
       <p>
