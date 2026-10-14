@@ -158,6 +158,8 @@ The site targets WCAG 2.1 Level AA. When adding or editing content:
 - Charts get their accessible name from the Plotly layout title (see `plugins/plotly.client.ts`), so give every chart a descriptive title.
 - Mark decorative emoji with `aria-hidden="true"`.
 
+To check your changes, follow the `a11y-check` skill (`.claude/skills/a11y-check/SKILL.md` at the repo root): a pa11y-ci scan using `explorer/.pa11yci.cjs`, plus the manual checks a scanner can't do.
+
 ### People / bios
 If a new item is story-like, newly significant, or strongly associated with a data creator / subject-matter contributor, consider whether it should also be connected via:
 - `assets/bios.ts`
