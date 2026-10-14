@@ -7,6 +7,7 @@ const endpoints: Record<string, string> = {
   flammability: '/alfresco/flammability/local/',
   beetles: '/beetles/point/',
   cmip6Downscaled: '/cmip6_downscaled/point/',
+  cmip6DaysAboveThreshold: '/cmip6_dynamic_indicators/days_above_threshold/',
   cmip6Monthly: '/cmip6/point/',
   indicatorsCmip6: '/indicators/cmip6/point/',
   degreeDaysBelow0: '/degree_days/below_zero/',

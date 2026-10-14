@@ -216,9 +216,10 @@ export const useMapStore = defineStore('map', () => {
     }
 
     let wmsUrl =
-      layer.source == 'rasdaman'
+      layer.wmsUrl ??
+      (layer.source == 'rasdaman'
         ? config.public.rasdamanUrl
-        : config.public.geoserverUrl
+        : config.public.geoserverUrl)
 
     layerObjects[layerObj.mapId] = tileLayer.wms(wmsUrl, layerConfiguration)
     maps[layerObj.mapId]?.addLayer(layerObjects[layerObj.mapId])

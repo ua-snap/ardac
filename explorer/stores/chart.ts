@@ -9,6 +9,7 @@ export const useChartStore = defineStore('chart', () => {
       | PermafrostChartLabelsObj
       | IndicatorsCmip6ChartLabelsObj
       | Cmip6DownscaledChartLabelsObj
+      | Cmip6DaysAboveThresholdChartLabelsObj
     >
   > = ref({})
   let inputs: Ref<
@@ -18,6 +19,7 @@ export const useChartStore = defineStore('chart', () => {
       | PermafrostChartInputsObj
       | IndicatorsCmip6ChartInputsObj
       | Cmip6DownscaledChartInputsObj
+      | Cmip6DaysAboveThresholdChartInputsObj
     >
   > = ref({})
 
@@ -51,6 +53,7 @@ export const useChartStore = defineStore('chart', () => {
     year?: string
     duration?: string
     returnInterval?: string
+    threshold?: string
   }): string {
     const params = [
       options.model && `Model: ${options.model}`,
@@ -61,6 +64,7 @@ export const useChartStore = defineStore('chart', () => {
       options.year && `${options.year}`,
       options.duration && `Duration: ${options.duration}`,
       options.returnInterval && `Return Interval: ${options.returnInterval}`,
+      options.threshold && `Threshold: ${options.threshold}`,
     ]
       .filter(Boolean) // remove undefined values
       .join(', ')

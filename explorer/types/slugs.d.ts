@@ -44,6 +44,7 @@ type Slug =
   | 'temperature-cmip5'
   | 'temperature-cmip6'
   | 'temperature-cmip6-downscaled'
+  | 'summer-days-downscaled-cmip6'
   | 'notebook-era5-cds-api'
   | 'elevation'
   | 'notebook-fmz-flammability'

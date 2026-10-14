@@ -377,6 +377,40 @@ test('Check CMIP6 tag -> Precipitation, CMIP6 page', async ({ page }) => {
   await expect(page.locator('#pr-chart')).toBeVisible()
 })
 
+test('Check CMIP6 tag -> Summer Days, Downscaled CMIP6 page', async ({
+  page,
+}) => {
+  await page.goto(url)
+  await page.setViewportSize({ width: 1728, height: 1078 })
+  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
+  await page.locator('div.tagbar > ul > li.more').click({ noWaitAfter: true })
+  await page.waitForSelector('div.tagbar > ul > li > a:has-text("CMIP6")')
+
+  await page.click('div.tagbar > ul > li > a:has-text("CMIP6")')
+  await page.waitForTimeout(500)
+  await expect(page.locator('h2')).toHaveText('CMIP6')
+
+  await page.click('a:has(h3:text-is("Summer Days, Downscaled CMIP6"))')
+
+  await expect(page.locator('section > div > h3')).toHaveText(
+    'Summer Days, Downscaled CMIP6'
+  )
+
+  await expect(page.locator('#gimme')).toBeVisible()
+  await page.fill('#gimme', 'Fairbanks')
+  await page.click('#autoComplete_result_0')
+  await page.waitForSelector('button:has-text("Pick a new place")')
+  await expect(page.locator('#threshold')).toHaveValue('25')
+  await expect(page.locator('#model')).toBeVisible()
+  await expect(page.locator('table')).toBeVisible()
+  await expect(page.locator('caption')).toContainText('Threshold: 25°C')
+  await expect(page.locator('table tbody tr')).not.toHaveCount(0)
+
+  await page.fill('#threshold', '20')
+  await page.press('#threshold', 'Enter')
+  await expect(page.locator('caption')).toContainText('Threshold: 20°C')
+})
+
 test('Check footer', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })

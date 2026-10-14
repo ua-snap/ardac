@@ -128,6 +128,7 @@ export default defineNuxtConfig({
         '/item/temperature-cmip5',
         '/item/temperature-cmip6',
         '/item/temperature-cmip6-downscaled',
+        '/item/summer-days-downscaled-cmip6',
         '/item/notebook-era5-cds-api',
         '/item/elevation',
         '/item/notebook-fmz-flammability',

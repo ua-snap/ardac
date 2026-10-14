@@ -307,6 +307,15 @@ export default [
     tags: ['Temperature', 'CMIP6'],
   },
   {
+    slug: 'summer-days-downscaled-cmip6',
+    title: 'Summer Days, Downscaled CMIP6',
+    blurb:
+      'How many days per year could top your temperature threshold? Downscaled climate models project summer day counts for any location, past to late century.',
+    tags: ['Climate', 'CMIP6'],
+    image: 'PLACEHOLDER-summer-days-downscaled-cmip6.jpg',
+    imageAlt: 'PLACEHOLDER: describe the preview image.',
+  },
+  {
     slug: 'precipitation-cmip6-downscaled',
     title: 'Precipitation, CMIP6 Downscaled',
     blurb:

@@ -36,6 +36,7 @@ interface MapLayer {
   title: string
   subtext?: string
   source?: 'rasdaman' | undefined
+  wmsUrl?: string
   wmsLayerName: string
   style: string
   default?: boolean
@@ -116,6 +117,15 @@ interface Cmip6DownscaledChartInputs {
   projectedYear: string
 }
 
+interface Cmip6DaysAboveThresholdChartLabels {
+  scenarios: Record<string, string>
+}
+
+interface Cmip6DaysAboveThresholdChartInputs {
+  model: string
+  threshold: number
+}
+
 type LatLngValue = LatLng | undefined
 
 type PlaceType = 'community' | 'latLng' | undefined
@@ -134,6 +144,13 @@ type Cmip6MonthlyChartInputsObj = Cmip6MonthlyChartInputs | undefined
 
 type Cmip6DownscaledChartLabelsObj = Cmip6DownscaledChartLabels | undefined
 type Cmip6DownscaledChartInputsObj = Cmip6DownscaledChartInputs | undefined
+
+type Cmip6DaysAboveThresholdChartLabelsObj =
+  | Cmip6DaysAboveThresholdChartLabels
+  | undefined
+type Cmip6DaysAboveThresholdChartInputsObj =
+  | Cmip6DaysAboveThresholdChartInputs
+  | undefined
 
 interface Window {
   umami?: {
