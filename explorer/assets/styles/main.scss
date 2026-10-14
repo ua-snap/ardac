@@ -22,6 +22,50 @@ a:hover {
   text-decoration: underline;
 }
 
+// Links inside running text are underlined so they can be told apart from
+// the surrounding text without relying on color.
+.content,
+.introblurb,
+.message-body,
+.notification,
+footer {
+  a:not(.button):not(.tag) {
+    text-decoration: underline;
+  }
+}
+
+// Bulma's dark text on light info backgrounds is only 3.9:1.
+.notification.is-info.is-light,
+.tag.is-info.is-light,
+.button.is-info.is-light {
+  color: darken($info, 10%);
+}
+
+// Plotly's modebar buttons are made keyboard focusable in
+// plugins/plotly.client.ts; show where focus is.
+.modebar-btn:focus-visible {
+  outline: 2px solid $info;
+  outline-offset: 2px;
+}
+
+// The skip link moves focus here; it's not something to interact with.
+main:focus {
+  outline: none;
+}
+
+// Heading tags follow the document outline (h1 site name, h2 page title,
+// h3 sections...) while their size comes from Bulma's title classes. These
+// keep Bulma's .content spacing tied to the size class rather than the tag.
+.content {
+  h2.title.is-3:not(:first-child) {
+    margin-top: 1.3333em;
+  }
+  h3.title.is-4:not(:first-child),
+  h4.title.is-5:not(:first-child) {
+    margin-top: 0;
+  }
+}
+
 @media (min-width: 769px) {
   .border-left {
     border-left: 1px dashed $gray-lighter;

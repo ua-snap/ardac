@@ -54,7 +54,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Degree Days Below 0&deg;F</h3>
+      <h2 class="title is-3">Degree Days Below 0&deg;F</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows the 30-year mean of degree days below 0&deg;F for
@@ -97,12 +97,12 @@ mapStore.setLegendItems(mapId, legend)
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download degree days below 0&deg;F data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/degree_days/below_zero" />
       </div>
       <GetAndUseDataDegreeDays />

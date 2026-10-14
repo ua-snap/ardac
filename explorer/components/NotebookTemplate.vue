@@ -1,16 +1,28 @@
 <script lang="ts" setup>
 const props = defineProps(['jupyterlabUrl', 'githubUrl'])
+
+// Code blocks scroll sideways when they're too wide, so make them focusable
+// to allow scrolling with the keyboard.
+const notebook = ref()
+onMounted(() => {
+  notebook.value.querySelectorAll('pre').forEach((pre: HTMLElement) => {
+    pre.setAttribute('tabindex', '0')
+  })
+})
 </script>
 
 <template>
   <section class="section">
     <div class="columns">
-      <div class="column is-three-quarters notebook content is-size-5">
+      <div
+        ref="notebook"
+        class="column is-three-quarters notebook content is-size-5"
+      >
         <div class="message">
           <div class="message-body content is-size-5">
-            <span class="robot">🤖</span> This article describes using the
-            <strong>Python programming language</strong> to access, process and
-            visualize data.<span class="is-hidden-mobile">
+            <span class="robot" aria-hidden="true">🤖</span> This article
+            describes using the <strong>Python programming language</strong> to
+            access, process and visualize data.<span class="is-hidden-mobile">
               Access working code and downloads from the sidebar to the
               right.</span
             >
@@ -20,7 +32,7 @@ const props = defineProps(['jupyterlabUrl', 'githubUrl'])
       </div>
       <div class="column">
         <div class="actions border-left pl-5">
-          <h4 class="title is-4">Use this code</h4>
+          <h3 class="title is-4">Use this code</h3>
           <div class="is-size-5">
             <ul>
               <li>
@@ -44,6 +56,9 @@ const props = defineProps(['jupyterlabUrl', 'githubUrl'])
 </template>
 
 <style scoped lang="scss">
+.actions a {
+  text-decoration: underline;
+}
 .robot {
   font-size: 2rem;
   vertical-align: baseline;
@@ -51,7 +66,7 @@ const props = defineProps(['jupyterlabUrl', 'githubUrl'])
   margin-right: 0.35rem;
 }
 :deep(*) {
-  h1 {
+  h2 {
     font-size: 1.65rem;
   }
   h3 {

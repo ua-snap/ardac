@@ -13,6 +13,8 @@ $gray: #64686a;
 $gray-darker: #34383a;
 
 $link: #2727c7;
+// Darker than Bulma's default so white button text meets WCAG AA contrast.
+$info: #2d6da3;
 $highlight: #b7ffaf;
 $text: hsl(0, 0%, 23%);
 

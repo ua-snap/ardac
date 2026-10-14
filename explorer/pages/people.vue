@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+useHead({ title: 'People' })
+</script>
 
 <template>
   <div class="section">

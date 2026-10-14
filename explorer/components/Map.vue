@@ -9,6 +9,21 @@ const props = defineProps<{
 
 let crs = props.crs || 'EPSG:3338'
 
+// Describe the map by the layer it's currently showing.
+const { activeLayers } = storeToRefs(mapStore)
+const mapLabel = computed(() => {
+  let layer = activeLayers.value[props.mapId]
+  if (!layer) {
+    return 'Map'
+  }
+  // Layer titles and subtext can contain markup.
+  let text = [layer.title, layer.subtext]
+    .filter(part => part)
+    .join(', ')
+    .replace(/<[^>]*>/g, '')
+  return 'Map of ' + text
+})
+
 onMounted(() => {
   mapStore.create(props.mapId, crs)
 })
@@ -19,7 +34,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :id="mapId" :crs="crs" class="map"></div>
+  <div
+    :id="mapId"
+    :crs="crs"
+    class="map"
+    role="region"
+    :aria-label="mapLabel"
+  ></div>
 </template>
 
 <style lang="scss" scoped>

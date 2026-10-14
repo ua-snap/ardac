@@ -63,7 +63,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Glacier Melt</h3>
+      <h2 class="title is-3">Glacier Melt</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows the 30-year mean annual glacier melt for three eras
@@ -96,12 +96,12 @@ onUnmounted(() => {
       <HydrologyChart label="Glacier melt" units="㎜" dataKey="glacier_melt" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download glacier melt data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle glacier melt data with other
           hydrology data. Glacier melt uses the "glacier_melt" identifier.

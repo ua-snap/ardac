@@ -129,7 +129,7 @@ mapStore.setLegendItems(mapId, legend)
   <section class="section xray">
     <div class="content is-size-5">
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
-      <h3 class="title is-3">Sea Ice Concentration, CMIP6</h3>
+      <h2 class="title is-3">Sea Ice Concentration, CMIP6</h2>
       <p class="mb-6">
         The map below shows modeled sea ice concentration for the month of March
         using the MIROC6 model at 25-year intervals from 1950&ndash;2100.
@@ -177,12 +177,12 @@ mapStore.setLegendItems(mapId, legend)
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download CMIP6 sea ice concentration data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/cmip6/point" variables="siconc" />
       </div>
     </div>

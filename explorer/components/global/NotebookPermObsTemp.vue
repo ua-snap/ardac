@@ -10,7 +10,7 @@
         <div class="prompt input_prompt"></div>
         <div class="inner_cell">
           <div class="text_cell_render border-box-sizing rendered_html">
-            <h1
+            <h2
               id="Combining-Permafrost-Observations-with-Modeled-Historical-Air-Temperature-Data-from-SNAP-Data-API"
             >
               Combining Permafrost Observations with Modeled Historical Air
@@ -19,7 +19,7 @@
                 href="#Combining-Permafrost-Observations-with-Modeled-Historical-Air-Temperature-Data-from-SNAP-Data-API"
                 >¶</a
               >
-            </h1>
+            </h2>
             <p>
               This notebook demonstrates how to take a set of monthly
               observations at a known sampling location and query the SNAP Data

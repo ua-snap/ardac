@@ -77,9 +77,9 @@ watch([latLng, modelInput, scenarioInput], async () => {
 <template>
   <div v-if="latLng && chartLabels && apiData">
     <div class="parameter">
-      <label for="model" class="label">Model:</label>
+      <label for="indicator-model" class="label">Model:</label>
       <div class="select mb-5 mr-3">
-        <select v-model="modelInput">
+        <select id="indicator-model" v-model="modelInput">
           <option
             v-for="(label, value) in chartLabels.models"
             :key="value"
@@ -91,9 +91,9 @@ watch([latLng, modelInput, scenarioInput], async () => {
       </div>
     </div>
     <div class="parameter">
-      <label for="scenario" class="label">Scenario:</label>
+      <label for="indicator-scenario" class="label">Scenario:</label>
       <div class="select">
-        <select v-model="scenarioInput">
+        <select id="indicator-scenario" v-model="scenarioInput">
           <option
             v-for="(label, value) in chartLabels.scenarios"
             :key="value"

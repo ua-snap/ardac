@@ -72,7 +72,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Heavy Precipitation Days</h3>
+      <h2 class="title is-3">Heavy Precipitation Days</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         Heavy precipitation days are the number of days in a year with at least
@@ -115,12 +115,12 @@ mapStore.setLegendItems(mapId, legend)
       <IndicatorsChart label="Heavy precipitation days" dataKey="r10mm" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download heavy precipitation days data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle heavy precipitation days data with
           other climate indicators. Heavy precipitation days uses the "r10mm"

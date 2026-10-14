@@ -8,6 +8,7 @@ const store = useStore()
 
 // Get stuff filtered/prioritized
 let tag = route.params.tag as Tag
+useHead({ title: tag })
 let filteredItems: Item[] = items.filter((item: Item) =>
   item.tags?.includes(tag)
 )
@@ -48,9 +49,9 @@ for (let row = 0; row < store.sortedFilteredItems.length / 4; row++) {
   <section class="section">
     <div class="container">
       <h2 class="title is-3">{{ tag }}</h2>
-      <h3 class="subtitle is-4">
+      <p class="subtitle is-4">
         Showing all matching items ({{ filteredItemsCount }})
-      </h3>
+      </p>
       <div v-for="row in gridItems" class="tile is-ancestor">
         <div class="tile is-parent">
           <div

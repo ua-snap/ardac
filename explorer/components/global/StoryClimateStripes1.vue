@@ -1,17 +1,18 @@
 <template>
   <section class="section">
     <div class="content clamp center is-size-5">
-      <h3 class="title is-3">
+      <h2 class="title is-3">
         Climate Stripes: Understanding Variability and Scale
-      </h3>
+      </h2>
       <p>
         Climate stripes. Warming stripes. Color bars. You&rsquo;ve seen them on
         walls and on stickers and on shirts and protest signs but….
       </p>
-      <h4>What are they and where do they come from?</h4>
+      <h3 class="title is-4">What are they and where do they come from?</h3>
       <p>
         <img
           src="assets/images/ClimateStripesStory1/ClimateStripesCollage.jpg"
+          alt="Collage of climate stripes in everyday places: a ‘Warming Stripes of Anchorage’ mural on a building, two people looking at a striped wall, and a tumbler with an Alaska stripes design."
           style="width: 100%"
         />
       </p>
@@ -41,9 +42,9 @@
         else can we learn from these stripes by looking just a tiny bit closer?
       </p>
 
-      <h4 class="title is-4">
+      <h3 class="title is-4">
         Similar trends are apparent over different temperature ranges
-      </h4>
+      </h3>
 
       <p>
         Here&rsquo;s a climate stripes graphic using gridded modeled historical
@@ -54,6 +55,7 @@
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory1/Utqiagvik Climate Stripes 2022.png"
+          alt="Climate stripes for Utqiaġvik, Alaska."
         />
       </figure>
 
@@ -65,6 +67,7 @@
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory1/Metlakatla_stripes_2023_cropped.png"
+          alt="Climate stripes for Metlakatla, Alaska."
         />
       </figure>
 
@@ -84,19 +87,25 @@
       </p>
       <p>...a shorter snow-machining season in Maine...</p>
       <figure class="image">
-        <img src="assets/images/ClimateStripesStory1/ME-tavg.png" />
+        <img
+          src="assets/images/ClimateStripesStory1/ME-tavg.png"
+          alt="Climate stripes for Maine, shifting from mostly blue in earlier years to mostly red in recent years."
+        />
       </figure>
       <p>
         ...but 100&deg;F+ summer days in Arizona straining the power
         grid&hellip;
       </p>
       <figure class="image">
-        <img src="assets/images/ClimateStripesStory1/AZ-tavg.png" />
+        <img
+          src="assets/images/ClimateStripesStory1/AZ-tavg.png"
+          alt="Climate stripes for Arizona."
+        />
       </figure>
 
-      <h4 class="title is-4">
+      <h3 class="title is-4">
         Year-to-year variation is obvious, but trends are pronounced
-      </h4>
+      </h3>
 
       <p>
         Okay, let&rsquo;s stick closer to home. Alaska&rsquo;s state capitol,
@@ -108,6 +117,7 @@
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory1/Juneau Climate Stripes 2022.png"
+          alt="Climate stripes for Juneau, Alaska."
         />
       </figure>
       <p>
@@ -127,7 +137,7 @@
       </p>
       <p>The world is messy and our data should reflect that.</p>
 
-      <h4 class="title is-4">Variation is smoothed by scale</h4>
+      <h3 class="title is-4">Variation is smoothed by scale</h3>
       <p>
         As humans we&rsquo;re only ever in one place at any given time, so the
         climate stripes of your home community feel powerful. You remember that
@@ -149,6 +159,7 @@
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory1/AnchorageMuni_ERA5_stripes_2023_cropped.png"
+          alt="Climate stripes for the Municipality of Anchorage."
         />
       </figure>
       <p>
@@ -159,7 +170,10 @@
         perspective.
       </p>
       <figure class="image">
-        <img src="assets/images/ClimateStripesStory1/CookInletMap.jpg" />
+        <img
+          src="assets/images/ClimateStripesStory1/CookInletMap.jpg"
+          alt="Map of southcentral Alaska with the Cook Inlet climate division outlined in red."
+        />
       </figure>
       <p>
         The &ldquo;Cook Inlet Climate Division&rdquo; encompasses most of the
@@ -176,6 +190,7 @@
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory1/CookInlet_ERA5_2023_cropped.png"
+          alt="Climate stripes for the Cook Inlet climate division."
         />
       </figure>
       <p>
@@ -190,6 +205,7 @@
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory1/Alaska Climate Stripes 2022 (1).png"
+          alt="Climate stripes for the state of Alaska."
         />
       </figure>
       <p>
@@ -207,6 +223,7 @@
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory1/ClimateStripes_Arctic_2022.png"
+          alt="Climate stripes for the Arctic."
         />
       </figure>
       <p>
@@ -218,6 +235,7 @@
       <figure class="image">
         <img
           src="assets/images/ClimateStripesStory1/GLOBE---1850-2023-MO.png"
+          alt="Climate stripes for the globe, 1850–2023."
         />
       </figure>
       <p>
@@ -226,7 +244,9 @@
         don&rsquo;t handle global data.
       </p>
 
-      <h4>The power, and shortcomings, of a good climate graphic</h4>
+      <h3 class="title is-4">
+        The power, and shortcomings, of a good climate graphic
+      </h3>
       <p>
         Overall the Climate Stripes graphics for points and for regions are a
         powerful tool. They are (mostly) colorblind-friendly and simply show the
@@ -240,18 +260,21 @@
             <p>My Region</p>
             <img
               src="assets/images/ClimateStripesStory1/ArcticStripesWaterisStripes.png"
+              alt="Circular map of the Arctic with climate stripes filling the ocean."
             />
           </div>
           <div class="tile is-child">
             <p>My State</p>
             <img
               src="assets/images/ClimateStripesStory1/AKStripesAKShaped.png"
+              alt="Climate stripes filling the outline of Alaska."
             />
           </div>
           <div class="tile is-child">
             <p>My City</p>
             <img
               src="assets/images/ClimateStripesStory1/Fairbanks Climate Stripes 2022-01 (square).png"
+              alt="Climate stripes for Fairbanks, Alaska, in a square format."
             />
           </div>
         </div>

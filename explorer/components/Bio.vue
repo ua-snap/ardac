@@ -22,7 +22,7 @@ const bio = bios.find(i => {
         />
       </figure>
       <div class="tile is-child is-align-content-center pl-5">
-        <h4 class="mb-1">{{ bio?.person }}</h4>
+        <h3 class="title is-4 mb-1">{{ bio?.person }}</h3>
         <p v-html="bio?.blurb"></p>
       </div>
       <div v-if="$slots.default" class="tile is-child">

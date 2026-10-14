@@ -143,16 +143,21 @@ onBeforeUnmount(() => {
     <div v-if="isMapVisible && location" class="mt-4">
       <div class="map-header">
         <h4 class="title is-5">{{ headerLabel }}</h4>
-        <h5 class="subtitle is-6">
+        <p class="subtitle is-6">
           {{ location.latitude.toFixed(4) }}&deg;N,
           <span v-html="locationLongitudeDisplay"></span>
-        </h5>
+        </p>
       </div>
 
-      <div :id="mapId" class="map-element"></div>
+      <div
+        :id="mapId"
+        class="map-element"
+        role="region"
+        :aria-label="'Map of ' + headerLabel"
+      ></div>
     </div>
 
-    <div v-if="error" class="notification is-danger is-light mt-4">
+    <div v-if="error" class="notification is-danger is-light mt-4" role="alert">
       Argh! Something went wrong. Try again later!
     </div>
   </div>

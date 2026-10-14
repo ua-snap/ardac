@@ -135,7 +135,7 @@ onUnmounted(() => {
 <template>
   <section class="section">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">Fire-Prone Conditions in Alaska</h3>
+      <h2 class="title is-3">Fire-Prone Conditions in Alaska</h2>
 
       <p>
         Explore daily weather conditions using the high-resolution ERA5-WRF
@@ -174,7 +174,7 @@ onUnmounted(() => {
       </p>
 
       <div class="mt-5">
-        <h4 class="title is-4">Fire-Prone Conditions</h4>
+        <h3 class="title is-4">Fire-Prone Conditions</h3>
 
         <Gimme :communities-enabled="true" :extent="era5wrfExtent">
           <template v-slot:additionalInstructions>
@@ -248,9 +248,9 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <h4 class="title is-4 mt-6">
+      <h3 class="title is-4 mt-6">
         Taylor Complex 2004: Heat, Drying, and Rapid Expansion
-      </h4>
+      </h3>
       <p>
         The Taylor Complex and related 2004 fires demonstrate how overlapping
         extremes drive fire behavior. In June the daily maximum temperatures
@@ -292,7 +292,7 @@ onUnmounted(() => {
         conditions differ across Alaska for different fire seasons.
       </p>
 
-      <h4 class="title is-4">About the ERA5-WRF Dataset</h4>
+      <h3 class="title is-4">About the ERA5-WRF Dataset</h3>
 
       <p>
         This data story uses the ERA5-WRF dynamically downscaled dataset,

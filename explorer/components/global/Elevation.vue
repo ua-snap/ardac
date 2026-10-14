@@ -59,7 +59,7 @@ onUnmounted(() => {
 <template>
   <section class="section">
     <div class="content is-size-5">
-      <h3 class="title is-3">Elevation</h3>
+      <h2 class="title is-3">Elevation</h2>
       <XrayIntroblurb resolution="1" unit="km" />
       <p class="mb-6">
         The map below shows minimum, mean, and maximum elevation at a resolution
@@ -90,9 +90,9 @@ onUnmounted(() => {
       <Gimme extent="elevation" class="mb-5" />
 
       <div v-if="latLng && apiData">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Elevation for {{ latLng.lat }}, {{ latLng.lng }}
-        </h4>
+        </h3>
 
         <table class="elevation mb-6">
           <tr>
@@ -112,11 +112,11 @@ onUnmounted(() => {
             <td>{{ apiData['max'] }}m</td>
           </tr>
         </table>
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download elevation data for
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <ul>
           <li>
             <a

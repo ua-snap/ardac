@@ -135,7 +135,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Precipitation, CMIP6</h3>
+      <h2 class="title is-3">Precipitation, CMIP6</h2>
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         The map below shows modeled total precipitation for the month of August
@@ -170,12 +170,12 @@ onUnmounted(() => {
       <Cmip6MonthlyChart label="Precipitation" units="㎜" dataKey="pr" />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download CMIP6 precipitation data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/cmip6/point" variables="pr" />
       </div>
     </div>

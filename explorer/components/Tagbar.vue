@@ -2,12 +2,12 @@
 // true if "see all" is expanded
 const expanded = ref(false)
 const expandedText = computed(() => {
-  return expanded.value === false ? '&#x2192; see all' : '&#x2715; close'
+  return expanded.value === false ? '\u2192 see all' : '\u2715 close'
 })
 </script>
 
 <template>
-  <div class="tagbar">
+  <nav class="tagbar" aria-label="Topics">
     <ul>
       <li>
         <NuxtLink
@@ -44,9 +44,18 @@ const expandedText = computed(() => {
           >Permafrost</NuxtLink
         >
       </li>
-      <li @click="expanded = !expanded" class="more" v-html="expandedText"></li>
+      <li class="more">
+        <button
+          type="button"
+          :aria-expanded="expanded"
+          aria-controls="tagbar-more"
+          @click="expanded = !expanded"
+        >
+          {{ expandedText }}
+        </button>
+      </li>
     </ul>
-    <ul v-show="expanded">
+    <ul id="tagbar-more" v-show="expanded">
       <li>
         <NuxtLink
           to="/tag/Hydrology"
@@ -90,7 +99,7 @@ const expandedText = computed(() => {
         >
       </li>
     </ul>
-  </div>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
@@ -111,8 +120,15 @@ const expandedText = computed(() => {
         color: $link !important;
       }
     }
-    &.more {
+    &.more button {
+      // Looks like the other tagbar entries, but is a real button so it
+      // works from the keyboard.
+      padding: 0;
+      border: none;
+      background: none;
+      font: inherit;
       font-weight: 300;
+      color: $black;
       &:hover {
         cursor: pointer;
         transition: 0.3s;

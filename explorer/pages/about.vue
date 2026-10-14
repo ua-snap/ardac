@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+useHead({ title: 'About' })
+</script>
 
 <template>
   <div class="section">
@@ -21,7 +23,7 @@
         submissions by putting the supporting infrastructure at their
         fingertips.
       </p>
-      <div class="title is-4">ARDAC brings people and data together</div>
+      <h3 class="title is-4">ARDAC brings people and data together</h3>
       <p>
         We are making data more usable and alive for
         people who need it. ARDAC has been constructed
@@ -31,7 +33,7 @@
           >Data Management Program</a
         >, US Department of Energy.
       </p>
-      <div class="title is-4">License</div>
+      <h3 class="title is-4">License</h3>
       <p>
         Unless otherwise specified by source providers, all data available
         through this tool are available through the
@@ -39,7 +41,7 @@
           >Creative Commons Attribution 4.0 International (CC by 4.0).</a
         >
       </p>
-      <div class="title is-4">Rasdaman raster database</div>
+      <h3 class="title is-4">Rasdaman raster database</h3>
       <p>
         This tool uses the <a href="http://www.rasdaman.org/">rasdaman</a> array
         database management system. This technology enables our team to store,

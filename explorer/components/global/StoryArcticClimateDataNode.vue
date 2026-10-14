@@ -175,7 +175,7 @@ onMounted(() => {
               >Chinook compute cluster</a
             >. This allows for fast access and scratch space for working with
             data.
-            <a href="#beegeefs">&#x2192; read more about ACDN storage</a>
+            <a href="#acdn">&#x2192; read more about ACDN storage</a>
           </li>
           <li>
             <strong
@@ -619,7 +619,8 @@ onMounted(() => {
         </figure>
         <p>
           Many of SNAP&rsquo;s datasets are available as Rasdaman coverages. See
-          <a href="#replacethis">this notebook</a> for a tutorial on how to use
+          <NuxtLink to="/item/notebook-raster-database">this notebook</NuxtLink>
+          for a tutorial on how to use
           these services in your own work.
         </p>
       </div>

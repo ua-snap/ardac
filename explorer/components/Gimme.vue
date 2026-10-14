@@ -54,6 +54,14 @@ const placeSelectionType: Ref<PlaceType> = ref(undefined) // community | latLng
 const selectedCommunityName = ref('') // i.e. Fairbanks, etc
 const inputValue = ref('') // input value for autocompleter
 const gimmeInput = ref() // DOM element of #gimme
+const newPlaceButton = ref() // DOM element of "Pick a new place" button
+
+// The search field is hidden once a place is chosen, which would drop
+// keyboard focus back to the top of the page. Keep it here instead.
+const focusNewPlaceButton = async () => {
+  await nextTick()
+  newPlaceButton.value?.focus()
+}
 
 onMounted(() => {
   let placeHolderText: string
@@ -164,6 +172,7 @@ onMounted(() => {
       selectedCommunityName.value += ', ' + community.region
     }
     selectedCommunityName.value += ', ' + community.country
+    focusNewPlaceButton()
   })
 })
 
@@ -226,6 +235,7 @@ function setLatLng() {
   placesStore.latLng = parsedLatLng.value
   placeIsSelected.value = true
   placeSelectionType.value = 'latLng'
+  focusNewPlaceButton()
 }
 
 async function clearSelectedPlace() {
@@ -274,12 +284,19 @@ onUnmounted(() => {
     <div v-show="placeIsSelected && !nothingButErrors" class="selected-place">
       <div class="content is-size-5">
         <p>
-          Showing data for
-          <span v-if="props.ocean && communitiesEnabled"
-            >an ocean location near</span
+          <span id="gimme-selected-place">
+            Showing data for
+            <span v-if="props.ocean && communitiesEnabled"
+              >an ocean location near</span
+            >
+            {{ placeName }}.
+          </span>
+          <button
+            ref="newPlaceButton"
+            class="button is-link is-light"
+            aria-describedby="gimme-selected-place"
+            @click="clearSelectedPlace"
           >
-          {{ placeName }}.
-          <button class="button is-link is-light" @click="clearSelectedPlace">
             Pick a new place
           </button>
         </p>
@@ -287,7 +304,7 @@ onUnmounted(() => {
     </div>
     <div v-show="!placeIsSelected || nothingButErrors" class="field">
       <div class="control">
-        <label class="label is-size-4"
+        <label class="label is-size-4" for="gimme"
           >Get data for
           <span v-if="communitiesEnabled">a community or by</span>
           lat/long</label
@@ -310,7 +327,12 @@ onUnmounted(() => {
           <strong>Communities are not available for this dataset.</strong>
           Please choose a lat/long coordinate.
         </p>
-        <input id="gimme" v-model="inputValue" ref="gimmeInput" />
+        <input
+          id="gimme"
+          v-model="inputValue"
+          ref="gimmeInput"
+          aria-describedby="gimme-help"
+        />
         <button
           v-if="latLngIsValid"
           @click="setLatLng"
@@ -319,7 +341,7 @@ onUnmounted(() => {
           Get data for {{ parsedLatLng?.lat }}, {{ parsedLatLng?.lng }}
         </button>
       </div>
-      <p class="help" v-html="fieldMessage" />
+      <p id="gimme-help" class="help" role="status" v-html="fieldMessage" />
     </div>
   </div>
   <LoadIndicator />
@@ -342,6 +364,17 @@ onUnmounted(() => {
 
 #gimme {
   background-image: none;
+  max-width: 100%;
+  // The autocomplete library's defaults are too faint and hide the focus ring.
+  border-color: #767676;
+  color: $text;
+  &::placeholder {
+    color: #6b6b6b;
+  }
+  &:focus-visible {
+    outline: 2px solid $link;
+    outline-offset: 2px;
+  }
 }
 
 .help {

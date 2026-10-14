@@ -346,9 +346,11 @@ const addCircumpolarPlaces = (mapId: string) => {
         className: 'label',
         html: `<div style="white-space: nowrap; margin-left: 15px; margin-top: -4px; font-size: 13px;">${feature.properties.name}</div>`,
       })
-      $L.marker((layer as L.Marker).getLatLng(), { icon: label }).addTo(
-        maps[mapId]
-      )
+      $L.marker((layer as L.Marker).getLatLng(), {
+        icon: label,
+        interactive: false,
+        keyboard: false,
+      }).addTo(maps[mapId])
     },
   })
   circumpolarPlaces.addTo(maps[mapId])

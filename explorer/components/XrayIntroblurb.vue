@@ -5,7 +5,7 @@ const props = defineProps(['resolution', 'unit', 'cmip', 'beta'])
 <template>
   <blockquote class="introblurb">
     <p>
-      <span class="robot">🔬</span> This is a
+      <span class="robot" aria-hidden="true">🔬</span> This is a
       <strong>dataset x-ray</strong> which lets you view <em>maps</em>, get
       <em>charts</em>, and <em>drill</em> into this dataset to get a CSV of data
       for a place.

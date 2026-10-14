@@ -205,7 +205,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">Dynamically Downscaled ERA5</h3>
+      <h2 class="title is-3">Dynamically Downscaled ERA5</h2>
       <XrayIntroblurb resolution="4" unit="km">
         <template #ERA5variables>
           <li>
@@ -224,7 +224,7 @@ onUnmounted(() => {
                     class="mt-2"
                   >
                     {{ variable.label }}
-                    <span class="has-text-grey">({{ variable.unit }})</span>
+                    <span class="has-text-grey-dark">({{ variable.unit }})</span>
                   </li>
                 </ul>
               </div>
@@ -320,12 +320,12 @@ onUnmounted(() => {
       </div>
 
       <div v-if="latLng && apiData" class="download-block mt-4">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download ERA5-WRF data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : ''
           }}{{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>Data download is all variables, all years in the dataset.</p>
         <DownloadLinks endpoint="/era5wrf/point" />
       </div>

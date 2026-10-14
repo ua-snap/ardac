@@ -27,10 +27,10 @@ onUnmounted(() => {
 <template>
   <section class="section">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">
+      <h2 class="title is-3">
         Climate Indicators: Making More Meaning from Data
-      </h3>
-      <h4>What is a climate indicator?</h4>
+      </h2>
+      <h3 class="title is-4">What is a climate indicator?</h3>
       <p>
         A climate indicator is a value intended to represent a specific aspect
         of the climate, such as the number of very cold days expected per year. 
@@ -50,7 +50,7 @@ onUnmounted(() => {
       </p>
     </div>
     <div class="content clamp is-size-5">
-      <h4>Why do we need climate indicators?</h4>
+      <h3 class="title is-4">Why do we need climate indicators?</h3>
       <p>
         Climate models are complex datasets that may contain dozens of variables
         and millions of data points. To derive meaningful information from these
@@ -97,7 +97,7 @@ onUnmounted(() => {
       <IndicatorsCmip6Chart label="Deep winter days" dataKey="dw" />
     </div>
     <div class="content clamp is-size-5">
-      <h4>What makes a good climate indictator?</h4>
+      <h3 class="title is-4">What makes a good climate indictator?</h3>
       <p>
         The quality of any indicator depends on the user. For example, the air
         temperature indicator above may be quite useful in the context of
@@ -114,7 +114,7 @@ onUnmounted(() => {
       </ul>
     </div>
     <div class="content clamp is-size-5">
-      <h4>How does SNAP develop regionally-relevant climate indicators?</h4>
+      <h3 class="title is-4">How does SNAP develop regionally-relevant climate indicators?</h3>
       <p>
         With input from scientists, community members, and a wide variety of
         user groups, SNAP has calculated a set of climate indicators that are
@@ -130,7 +130,7 @@ onUnmounted(() => {
         time provide highly valuable information without requiring any
         downloads or preprocessing of large and complex climate datasets.
       </p>
-      <h5>SNAP's climate indicators include:</h5>
+      <h4 class="title is-5">SNAP's climate indicators include:</h4>
       <dl>
         <dt><strong>hd</strong></dt>
         <dd>
@@ -194,7 +194,7 @@ onUnmounted(() => {
       </dl>
     </div>
     <div class="content clamp is-size-5">
-      <h4>Where do I find climate indicator data?</h4>
+      <h3 class="title is-4">Where do I find climate indicator data?</h3>
       <p>There are multiple ways to access the climate indicators data.</p>
       <ul>
         <li>
@@ -224,7 +224,7 @@ onUnmounted(() => {
       </ul>
     </div>
     <div class="content clamp is-size-5">
-      <h4>Can I suggest an indicator?</h4>
+      <h3 class="title is-4">Can I suggest an indicator?</h3>
       <p>
         Of course! If there is a useful indicator missing from our collection,
         we'd like to know about it. Send us your ideas for a climate indicator 
@@ -236,12 +236,12 @@ onUnmounted(() => {
       </p>
     </div>
     <div class="content clamp is-size-5">
-      <h4>Read more about indicators</h4>
-      <p>
+      <h3 class="title is-4">Read more about indicators</h3>
+      <ul>
         <li><a href="https://www.epa.gov/climate-indicators">Climate Change Indicators in the United States</a> (U.S. Environmental Protection Agency)</li>
         <li>Fifth National Climate Assessment, <a href="https://nca2023.globalchange.gov/chapter/appendix-4/">Appendix 4: Indicators</a></li>
         <li>Climdex Project <a href="https://www.climdex.org/learn/indices/">Indices</a></li>
-      </p>
+      </ul>
     </div>
   </section>
 </template>

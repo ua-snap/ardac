@@ -1,14 +1,19 @@
 <script lang="ts" setup></script>
 
 <template>
-  <HeaderBanner />
-  <Navbar />
-  <Edition />
-  <div class="container is-fullhd">
-    <Header />
-    <Tagbar />
+  <SkipLink />
+  <header>
+    <HeaderBanner />
+    <Navbar />
+    <Edition />
+    <div class="container is-fullhd">
+      <Header />
+      <Tagbar />
+    </div>
+  </header>
+  <main id="main-content" class="container is-fullhd" tabindex="-1">
     <slot />
-  </div>
+  </main>
   <Footer />
 </template>
 

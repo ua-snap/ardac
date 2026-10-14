@@ -1,28 +1,47 @@
+<script lang="ts" setup>
+// The menu is collapsed behind the burger button on narrow screens.
+const menuOpen = ref(false)
+const route = useRoute()
+watch(
+	() => route.path,
+	() => {
+		menuOpen.value = false
+	}
+)
+</script>
+
 <template>
-	<nav class="navbar" role="navigation" aria-label="main navigation">
+	<nav class="navbar" aria-label="Main">
 		<div class="navbar-brand">
 			<NuxtLink class="navbar-item" to="/">
 				<img
 					src="~/assets/images/ardac-green-logo.svg"
+					alt="ARDAC home"
 					width="112"
 					height="28"
 				/>
 			</NuxtLink>
 
-			<a
-				role="button"
+			<button
+				type="button"
 				class="navbar-burger"
-				aria-label="menu"
-				aria-expanded="false"
-				data-target="navbarBasicExample"
+				:class="{ 'is-active': menuOpen }"
+				aria-label="Menu"
+				:aria-expanded="menuOpen"
+				aria-controls="navbar-menu"
+				@click="menuOpen = !menuOpen"
 			>
 				<span aria-hidden="true"></span>
 				<span aria-hidden="true"></span>
 				<span aria-hidden="true"></span>
-			</a>
+			</button>
 		</div>
 
-		<div id="navbarBasicExample" class="navbar-menu">
+		<div
+			id="navbar-menu"
+			class="navbar-menu"
+			:class="{ 'is-active': menuOpen }"
+		>
 			<div class="navbar-start">
 				<NuxtLink class="navbar-item" to="/">Home</NuxtLink>
 				<NuxtLink class="navbar-item" to="/about">About</NuxtLink>

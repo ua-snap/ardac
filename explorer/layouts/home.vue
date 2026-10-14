@@ -1,11 +1,16 @@
 <script lang="ts" setup></script>
 
 <template>
-  <HeaderBanner />
-  <Navbar />
-  <Edition />
-  <div class="container is-fullhd">
-    <Header />
+  <SkipLink />
+  <header>
+    <HeaderBanner />
+    <Navbar />
+    <Edition />
+    <div class="container is-fullhd">
+      <Header />
+    </div>
+  </header>
+  <main id="main-content" class="container is-fullhd" tabindex="-1">
     <section class="section">
       <div class="content">
         <p class="is-size-3">
@@ -15,7 +20,7 @@
           support research in the North.
         </p>
         <p class="trumpet is-size-4">
-          <span>📢</span>
+          <span aria-hidden="true">📢</span>
           <strong>What's new?</strong> Dive into the latest ARDAC updates! Read
           about
           <NuxtLink to="/item/story-cold-snap-1989"
@@ -30,7 +35,7 @@
     </section>
     <Tagbar />
     <slot />
-  </div>
+  </main>
   <Footer />
 </template>
 

@@ -94,7 +94,7 @@ onMounted(loadCommunityData)
 <template>
   <section class="section">
     <div class="content clamp is-size-5">
-      <h3 class="title is-3">1989 Alaska Cold Snap</h3>
+      <h2 class="title is-3">1989 Alaska Cold Snap</h2>
       <p class="is-size-4">
         This data story is a collaboration between the Scenarios Network for
         Alaska and Arctic Planning (SNAP) and the Alaska Center for Climate
@@ -119,7 +119,7 @@ onMounted(loadCommunityData)
         </figcaption>
       </figure>
 
-      <h4 class="title is-4">Introduction</h4>
+      <h3 class="title is-4">Introduction</h3>
 
       <p>
         In this ARDAC data story we use the historic 1989 Cold Snap as a lens
@@ -143,7 +143,7 @@ onMounted(loadCommunityData)
         temperatures dipped to the -80s&deg;F.
       </p>
 
-      <h4 class="title is-4">Weather woes</h4>
+      <h3 class="title is-4">Weather woes</h3>
 
       <p>
         The 1989 Cold Snap began in mid-January when high pressure air extended
@@ -155,7 +155,7 @@ onMounted(loadCommunityData)
         early February.
       </p>
 
-      <h4 class="title is-4">Disaster declared</h4>
+      <h3 class="title is-4">Disaster declared</h3>
 
       <ul>
         <li>
@@ -180,7 +180,7 @@ onMounted(loadCommunityData)
         </li>
       </ul>
 
-      <h4 class="title is-4">Record breaking cold</h4>
+      <h3 class="title is-4">Record breaking cold</h3>
 
       <p>
         The 1989 Cold Snap rivals other cold spells in the 20th century, and
@@ -206,11 +206,11 @@ onMounted(loadCommunityData)
         </figcaption>
       </figure>
 
-      <div v-if="isLoading" class="notification is-info is-light">
+      <div v-if="isLoading" class="notification is-info is-light" role="status">
         Loading ERA5-WRF temperature data for Alaska communities…
       </div>
 
-      <h4 class="title is-4">Community impacts</h4>
+      <h3 class="title is-4">Community impacts</h3>
 
       <p>
         <strong>Nome</strong>: Pipes froze at the elementary school and St.
@@ -313,7 +313,7 @@ onMounted(loadCommunityData)
         class="mb-5"
       />
 
-      <h4 class="title is-4">Community extremes</h4>
+      <h3 class="title is-4">Community extremes</h3>
 
       <p>
         <strong>Tanana</strong> reported the lowest official temperature of
@@ -417,7 +417,7 @@ onMounted(loadCommunityData)
         class="mb-5"
       />
 
-      <h4 class="title is-4">Downscaled reanalysis vs. observations</h4>
+      <h3 class="title is-4">Downscaled reanalysis vs. observations</h3>
 
       <p>
         How well does the ERA5-WRF 4km product capture extreme temperature
@@ -645,7 +645,11 @@ onMounted(loadCommunityData)
       </p>
 
       <figure class="image">
-        <video controls preload="metadata">
+        <video
+          controls
+          preload="metadata"
+          aria-label="Animation of hourly temperatures as the 1989 Cold Snap moves across Alaska"
+        >
           <source src="/videos/cold-snap-migration.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -661,7 +665,7 @@ onMounted(loadCommunityData)
         directly without reprojecting.
       </p>
 
-      <h4 class="title is-4">Conclusion and future directions</h4>
+      <h3 class="title is-4">Conclusion and future directions</h3>
 
       <p>
         One possible future research directions is the estimation of

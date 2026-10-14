@@ -73,7 +73,7 @@ mapStore.setLegendItems(mapId, legend)
   <section class="section xray">
     <div class="content is-size-5">
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
-      <h3 class="title is-3">Warm Spell Duration Index</h3>
+      <h2 class="title is-3">Warm Spell Duration Index</h2>
       <p class="mb-6">
         The warm spell duration index is the annual count of occurrences of at
         least 5 consecutive days with daily mean 2m air temperature above 90th
@@ -120,12 +120,12 @@ mapStore.setLegendItems(mapId, legend)
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download warm spell duration index data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle warm spell duration index data
           with other climate indicators. Warm spell duration index uses the

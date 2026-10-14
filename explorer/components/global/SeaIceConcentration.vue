@@ -183,7 +183,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Sea Ice Concentration</h3>
+      <h2 class="title is-3">Sea Ice Concentration</h2>
       <XrayIntroblurb resolution="25" unit="km" />
       <p class="mb-6">
         The map below shows pan-Arctic sea ice concentration for March at
@@ -242,12 +242,12 @@ onUnmounted(() => {
       </div>
       <div id="chart"></div>
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download sea ice concentration data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/seaice/point" />
       </div>
       <GetAndUseData

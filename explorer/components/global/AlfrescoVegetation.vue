@@ -175,7 +175,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Vegetation Type</h3>
+      <h2 class="title is-3">Vegetation Type</h2>
       <XrayIntroblurb resolution="1" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows a 5-model mode of ALFRESCO dominant vegetation type
@@ -244,11 +244,11 @@ onUnmounted(() => {
       </div>
       <div id="chart"></div>
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download vegetation type data for {{ apiData['huc_id'] }}, the HUC-12
           enclosing {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/alfresco/veg_type/local" />
       </div>
       <GetAndUseDataAlfresco

@@ -103,7 +103,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Permafrost Depth: Base & Top</h3>
+      <h2 class="title is-3">Permafrost Depth: Base & Top</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows permafrost base and top depth for three eras using
@@ -112,7 +112,7 @@ onUnmounted(() => {
 
       <MapBlock :mapId="mapId" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">Permafrost Base Depth</h4>
+          <h3 class="title is-4 mb-3">Permafrost Base Depth</h3>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
@@ -124,7 +124,7 @@ onUnmounted(() => {
             <template v-slot:title>{{ layers[4].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">Permafrost Top Depth</h4>
+          <h3 class="title is-4 mb-3">Permafrost Top Depth</h3>
           <MapLayer :mapId="mapId" :layer="layers[1]">
             <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
@@ -159,12 +159,12 @@ onUnmounted(() => {
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download permafrost base and top depth data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle permafrost base and top depth data
           with other permafrost data. Permafrost base depth uses the

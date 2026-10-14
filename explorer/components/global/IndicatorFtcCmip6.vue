@@ -60,7 +60,7 @@ mapStore.setLegendItems(mapId, legend)
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Freeze/Thaw Cycle</h3>
+      <h2 class="title is-3">Freeze/Thaw Cycle</h2>
       <XrayIntroblurb resolution="100" unit="km" cmip="6" beta="true" />
       <p class="mb-6">
         Freeze/thaw cycle is the number of days where maximum daily temperatures
@@ -104,12 +104,12 @@ mapStore.setLegendItems(mapId, legend)
       />
 
       <div v-if="latLng && apiData" class="my-6">
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download freeze/thaw cycle data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <p>
           The following download links bundle freeze/thaw cycle data with other
           climate indicators. Freeze/thaw cycle uses the "ftc" identifier.

@@ -162,9 +162,9 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
 <template>
   <section class="section">
     <div class="content is-size-5">
-      <h3 class="title is-3">
+      <h2 class="title is-3">
         CMIP6: Increasing resolution through downscaling
-      </h3>
+      </h2>
 
       <p>
         Raw outputs from General Circulation Models (GCMs) are helpful to get a
@@ -205,9 +205,9 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
 
       <MapBlock :mapId="cmip6_mapId" crs="EPSG:3572" :zoom="7" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             July Maximum Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer :mapId="cmip6_mapId" :layer="cmip6_layers[0]" default>
             <template v-slot:title>{{ cmip6_layers[0].title }}</template>
           </MapLayer>
@@ -215,9 +215,9 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
             <template v-slot:title>{{ cmip6_layers[1].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             January Minimum Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer :mapId="cmip6_mapId" :layer="cmip6_layers[2]">
             <template v-slot:title>{{ cmip6_layers[2].title }}</template>
           </MapLayer>
@@ -237,9 +237,9 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
 
       <MapBlock :mapId="cmip6_downscaled_mapId" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             July Maximum Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer
             :mapId="cmip6_downscaled_mapId"
             :layer="cmip6_downscaled_layers[0]"
@@ -258,9 +258,9 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
             }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">
+          <h3 class="title is-4 mb-3">
             January Minimum Near-surface Air Temperature
-          </h4>
+          </h3>
           <MapLayer
             :mapId="cmip6_downscaled_mapId"
             :layer="cmip6_downscaled_layers[2]"

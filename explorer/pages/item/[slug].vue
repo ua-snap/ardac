@@ -5,6 +5,9 @@ import { validSlug, slugToCamelCase } from '~/utils/slugs'
 
 const route = useRoute()
 let slug = route.params.slug
+
+const store = useStore()
+useHead({ title: store.itemBySlug(slug as Slug)?.title })
 let itemComponent: ConcreteComponent | string
 
 const componentFileExists = computed<boolean>(() => {

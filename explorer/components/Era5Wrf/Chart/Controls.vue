@@ -24,12 +24,12 @@ watch(
 
 <template>
   <div class="field">
-    <label class="label"
+    <label class="label" for="era5-year"
       >Select a year, {{ startYear }}&ndash;{{ endYear }}</label
     >
     <div class="control">
       <div class="select">
-        <select v-model.number="selectedYear">
+        <select id="era5-year" v-model.number="selectedYear">
           <option v-for="year in availableYears" :key="year" :value="year">
             {{ year }}
           </option>

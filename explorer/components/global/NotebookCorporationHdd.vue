@@ -9,7 +9,7 @@
       <div class="prompt input_prompt"></div>
       <div class="inner_cell">
         <div class="text_cell_render border-box-sizing rendered_html">
-          <h1
+          <h2
             id="Projected-Change-in-Heating-Degree-Days-by-Alaska-Native-Corporation"
           >
             Projected Change in Heating Degree Days by Alaska Native
@@ -18,7 +18,7 @@
               href="#Projected-Change-in-Heating-Degree-Days-by-Alaska-Native-Corporation"
               >¶</a
             >
-          </h1>
+          </h2>
           <p>
             This notebook demonstrates how to query the SNAP Data API for Alaska
             Native Corporation polygons, Alaska communities, and modeled heating

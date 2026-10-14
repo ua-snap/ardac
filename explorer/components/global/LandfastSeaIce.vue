@@ -284,7 +284,7 @@ onUnmounted(() => {
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Landfast Sea Ice Extent</h3>
+      <h2 class="title is-3">Landfast Sea Ice Extent</h2>
       <XrayIntroblurb resolution="100" unit="m" />
       <p class="mb-6">
         Landfast ice is sea ice that is mostly stationary and attached to land.
@@ -305,7 +305,7 @@ onUnmounted(() => {
 
       <MapBlock :mapId="mapId" class="mb-6">
         <template v-slot:layers>
-          <h4 class="title is-4 mb-3">Beaufort Sea</h4>
+          <h3 class="title is-4 mb-3">Beaufort Sea</h3>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
@@ -322,7 +322,7 @@ onUnmounted(() => {
             <template v-slot:title>{{ layers[4].title }}</template>
           </MapLayer>
           <hr />
-          <h4 class="title is-4 mb-3">Chukchi Sea</h4>
+          <h3 class="title is-4 mb-3">Chukchi Sea</h3>
           <MapLayer :mapId="mapId" :layer="layers[5]">
             <template v-slot:title>{{ layers[5].title }}</template>
           </MapLayer>
@@ -398,12 +398,12 @@ onUnmounted(() => {
             <div>Invalid date</div>
           </div>
         </div>
-        <h4 class="title is-4">
+        <h3 class="title is-4">
           Download landfast sea ice data for
           {{ selectedCommunity ? selectedCommunity.name + ' at ' : '' }}
           {{ latLng.lat }},
           {{ latLng.lng }}
-        </h4>
+        </h3>
         <DownloadLinks endpoint="/landfastice/point" />
       </div>
       <GetAndUseData apiUrl="https://earthmaps.io/landfastice/" />
