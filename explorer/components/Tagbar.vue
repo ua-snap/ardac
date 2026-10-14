@@ -10,19 +10,39 @@ const expandedText = computed(() => {
   <nav class="tagbar" aria-label="Topics">
     <ul>
       <li>
-        <NuxtLink to="/tag/Climate">Climate</NuxtLink>
+        <NuxtLink
+          to="/tag/Climate"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Climate' })"
+          >Climate</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/Precipitation">Precipitation</NuxtLink>
+        <NuxtLink
+          to="/tag/Precipitation"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Precipitation' })"
+          >Precipitation</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/Wildfire">Wildfire</NuxtLink>
+        <NuxtLink
+          to="/tag/Wildfire"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Wildfire' })"
+          >Wildfire</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/Cryosphere">Cryosphere</NuxtLink>
+        <NuxtLink
+          to="/tag/Cryosphere"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Cryosphere' })"
+          >Cryosphere</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/Permafrost">Permafrost</NuxtLink>
+        <NuxtLink
+          to="/tag/Permafrost"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Permafrost' })"
+          >Permafrost</NuxtLink
+        >
       </li>
       <li class="more">
         <button
@@ -37,22 +57,46 @@ const expandedText = computed(() => {
     </ul>
     <ul id="tagbar-more" v-show="expanded">
       <li>
-        <NuxtLink to="/tag/Hydrology">Hydrology</NuxtLink>
+        <NuxtLink
+          to="/tag/Hydrology"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Hydrology' })"
+          >Hydrology</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/Terrestrial">Terrestrial</NuxtLink>
+        <NuxtLink
+          to="/tag/Terrestrial"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Terrestrial' })"
+          >Terrestrial</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/Programming">Programming</NuxtLink>
+        <NuxtLink
+          to="/tag/Programming"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Programming' })"
+          >Programming</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/Temperature">Temperature</NuxtLink>
+        <NuxtLink
+          to="/tag/Temperature"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Temperature' })"
+          >Temperature</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/Lightning">Lightning</NuxtLink>
+        <NuxtLink
+          to="/tag/Lightning"
+          @click="trackEvent('Tagbar Clicked', { tag: 'Lightning' })"
+          >Lightning</NuxtLink
+        >
       </li>
       <li>
-        <NuxtLink to="/tag/CMIP6">CMIP6</NuxtLink>
+        <NuxtLink
+          to="/tag/CMIP6"
+          @click="trackEvent('Tagbar Clicked', { tag: 'CMIP6' })"
+          >CMIP6</NuxtLink
+        >
       </li>
     </ul>
   </nav>
