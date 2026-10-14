@@ -80,14 +80,16 @@ onMounted(() => {
 
 <template>
   <section class="section">
-    <div class="content clamp">
+    <div class="clamp block">
       <h2 class="title is-2">
         Introducing the <span>Arctic Climate Data Node</span>
       </h2>
       <h3 class="subtitle is-3">
         Unlocking research potential for CMIP6 climate model data
       </h3>
+    </div>
 
+    <div class="content clamp">
       <p class="is-size-4">
         Access to large distributed data volumes has been a limiting factor for
         researchers in Alaska, which puts them at a disadvantage. Establishing

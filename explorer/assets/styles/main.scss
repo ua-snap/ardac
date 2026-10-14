@@ -2,135 +2,19 @@
 
 // Import the rest of Bulma, without its automatic dark theme.
 // Overrides to Bulma variables go in styles/_variables.scss and are passed to
-// Bulma in styles/_bulma-setup.scss. The values here are Bulma 0.9's, pinned
-// so that the upgrade to Bulma 1 doesn't change how the site looks.
+// Bulma in styles/_bulma-setup.scss
 @use '~/node_modules/bulma/versions/bulma-no-dark-mode' with (
-  $body-background-color: $white,
-  $navbar-background-color: $white,
-  $navbar-burger-color: $text,
-  $strong-weight: 700,
+  // Bulma's default of 800 makes Archivo headings look wide and heavy.
   $title-weight: 600,
-  $content-heading-weight: 600,
-  $label-weight: 700,
-  $button-weight: 400,
-  $button-padding-horizontal: calc(1em + 1px),
-  $notification-padding: 1.25rem 2.5rem 1.25rem 1.5rem,
-  $message-body-radius: 4px,
-  $message-header-padding: 0.75em 1em,
-  $message-header-weight: 700
+  $content-heading-weight: 600
 );
 
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Patrick+Hand&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 @import '~/node_modules/leaflet/dist/leaflet.css';
 
-// More Bulma 0.9 behavior that can't be set through Bulma's Sass variables.
+// The page background is the project's off-white rather than Bulma's white.
 :root {
   --bulma-scheme-main: #{$white};
-  --bulma-code: #da1039;
-  --bulma-info-invert-l: 100%;
-}
-
-code {
-  border-radius: 0;
-}
-
-.button {
-  // Colored buttons had a (transparent) border, which sets their size.
-  &:is(.is-primary, .is-link, .is-info, .is-success, .is-warning, .is-danger),
-  &:is(.is-white, .is-black, .is-light, .is-dark) {
-    --bulma-button-border-width: 1px;
-    border-color: transparent;
-  }
-  &.is-link.is-light {
-    --bulma-button-color-l: 53%;
-  }
-  &.is-info.is-light {
-    --bulma-button-color-l: 41%;
-  }
-}
-
-.notification.is-info.is-light {
-  background-color: #eff5fb;
-  color: hsl(var(--bulma-info-h), var(--bulma-info-s), 41%);
-}
-
-.message-body {
-  border-width: 0 0 0 4px;
-}
-
-.message.is-warning {
-  .message-header {
-    color: rgba(0, 0, 0, 0.7);
-  }
-  .message-body {
-    color: #946c00;
-  }
-}
-
-// A subtitle sat close under its title, including inside .content.
-.title:not(.is-spaced) {
-  &:has(+ .subtitle) {
-    margin-bottom: 1.5rem;
-  }
-  & + .subtitle {
-    margin-top: -1.25rem;
-  }
-}
-
-// A variable column gap only applied sideways.
-.columns.is-variable {
-  margin-top: -0.75rem;
-  &:last-child {
-    margin-bottom: -0.75rem;
-  }
-  &:not(:last-child) {
-    margin-bottom: 0.75rem;
-  }
-  > .column {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-  }
-}
-
-.content {
-  // Lists kept their top margin even as the first thing in a block.
-  ul,
-  ol {
-    margin-top: 1em;
-  }
-  ul ul,
-  ul ul:not(:first-child) {
-    margin-top: 0.5em;
-    margin-bottom: 0;
-  }
-  // The place search results list sets its own spacing.
-  .autoComplete_wrapper > ul:not(:first-child) {
-    margin-top: 0.5rem;
-  }
-
-  // Tables filled the width of their container.
-  table {
-    width: 100%;
-  }
-
-  // Every figure was indented and centered, not only ones without a class.
-  figure {
-    margin-left: 2em;
-    margin-right: 2em;
-    text-align: center;
-    &:not(:first-child) {
-      margin-top: 2em;
-    }
-    &:not(:last-child) {
-      margin-bottom: 2em;
-    }
-    img {
-      display: inline-block;
-    }
-    figcaption {
-      font-style: italic;
-    }
-  }
 }
 
 // A column whose items share its height equally, as Bulma 0.9's vertical tiles
