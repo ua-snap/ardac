@@ -434,3 +434,30 @@ test('Check accessibility basics', async ({ page }) => {
     'gimme'
   )
 })
+
+test('Check Umami events are sent without a full page load', async ({
+  page,
+}) => {
+  // Stub Umami before its script loads. This init script reruns on every full
+  // page load, so the recorded events only survive client-side navigation.
+  await page.addInitScript(() => {
+    window.umamiEvents = []
+    window.umami = {
+      track: (name, data) => window.umamiEvents.push({ name, data }),
+    }
+  })
+
+  await page.goto(url)
+  await page.setViewportSize({ width: 1728, height: 1078 })
+  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
+  await page.click('.tagbar > ul > li > a:has-text("Precipitation")')
+  await page.waitForURL('**/tag/Precipitation')
+
+  await page.click('a:has-text("Precipitation Frequency")')
+  await page.waitForURL('**/item/precipitation-frequency')
+
+  expect(await page.evaluate(() => window.umamiEvents)).toEqual([
+    { name: 'Tagbar Clicked', data: { tag: 'Precipitation' } },
+    { name: 'Item Clicked', data: { title: 'Precipitation Frequency' } },
+  ])
+})
