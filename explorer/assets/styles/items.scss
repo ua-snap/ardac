@@ -8,8 +8,10 @@
     margin-bottom: 0.3rem;
   }
 
+  // Pictures keep a hint of color, with a little extra contrast, until
+  // hovered.
   img {
-    filter: grayscale(1);
+    filter: grayscale(0.85) contrast(1.25);
   }
 
   &:hover {

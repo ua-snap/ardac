@@ -1,11 +1,44 @@
 @charset "utf-8";
 
+// Import the rest of Bulma, without its automatic dark theme.
+// Overrides to Bulma variables go in styles/_variables.scss and are passed to
+// Bulma in styles/_bulma-setup.scss
+@use '~/node_modules/bulma/versions/bulma-no-dark-mode' with (
+  // Bulma's default of 800 makes Archivo headings look wide and heavy.
+  $title-weight: 600,
+  $content-heading-weight: 600,
+  // Lets the background wash at the top of the page show through.
+  $navbar-background-color: transparent
+);
+
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Patrick+Hand&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 @import '~/node_modules/leaflet/dist/leaflet.css';
 
-// Import the rest of Bulma.
-// Overrides to Bulma varibles go in styles/_variables.scss
-@import '~/node_modules/bulma/bulma.sass';
+// The page background is the project's off-white rather than Bulma's white,
+// with a pale ice-blue wash at the top of each page.
+:root {
+  --bulma-scheme-main: #{$white};
+}
+
+body {
+  background: linear-gradient(#e4eef8, $white 40rem) no-repeat;
+}
+
+// A column whose items share its height equally, as Bulma 0.9's vertical tiles
+// did. Used for the stacked items on the home page.
+.stack {
+  > :not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+  @include tablet {
+    display: flex;
+    flex-direction: column;
+    > * {
+      flex: 1 1 0;
+      min-height: min-content;
+    }
+  }
+}
 
 .bling {
   background-color: #f1ef93;

@@ -75,8 +75,8 @@ mapStore.setLegendItems(mapId, legend)
       <h2 class="title is-3">Consecutive Dry Days</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
-        Consecutive dry days are the number of the most consecutive days with at
-        least 1㎜ precipitation. The map below shows the 30-year mean of
+        Consecutive dry days are the number of the most consecutive days with
+        less than 1㎜ precipitation. The map below shows the 30-year mean of
         consecutive dry days for three eras. The historical era
         (1980&ndash;2009) uses historical modeled data provided by the Daymet
         model. The mid-century (2040&ndash;2069) and late-century

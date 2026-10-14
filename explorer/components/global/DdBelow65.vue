@@ -59,7 +59,7 @@ mapStore.setLegendItems(mapId, legend)
       <p class="mb-6">
         Degree days below 65&deg;F, also known as heating degree days, are used
         to approximate the energy needed to heat a building in a given year. The
-        map below shows the 30-year mean of degree bays below 65&deg;F for three
+        map below shows the 30-year mean of degree days below 65&deg;F for three
         eras. The historical era (1980&ndash;2009) uses historical modeled data
         provided by the Daymet model. The mid-century (2040&ndash;2069) and
         late-century (2070&ndash;2099) eras use modeled projections from the

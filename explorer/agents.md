@@ -72,7 +72,7 @@ Place new content components in:
 - `components/global/<PascalCaseFromSlug>.vue`
 
 Examples:
-- `map-permafrost` -> `MapPermafrost.vue`
+- `sea-ice-concentration` -> `SeaIceConcentration.vue`
 - `story-fire-prone-conditions` -> `StoryFireProneConditions.vue`
 
 ### Reusable item preview blocks
@@ -123,6 +123,8 @@ Do not reintroduce Options API patterns.
 ### Templates
 Prefer:
 - Prefer existing Bulma/project class patterns; avoid introducing one-off classes or inline styles unless necessary.
+- The site uses Bulma 1. Its `tile` classes no longer exist: lay out with `columns` / `column`, and add the project's `stack` class to a column whose items should share its height.
+- Bulma's Sass variables are set in `assets/styles/_bulma-setup.scss` (base variables such as fonts and colors) and at the top of `assets/styles/main.scss` (component variables such as heading weight). Check there before overriding a Bulma default somewhere else.
 - `NuxtLink` for internal navigation
 - explicit conditional rendering with `v-if` / `v-else`
 - simple lists / sections over over-abstracted markup

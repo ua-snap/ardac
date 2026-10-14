@@ -12,7 +12,7 @@ useHead({ title: 'People' })
   <div class="section bios">
     <Bio person="Peter Bieniek">
       <ul>
-        <li><ItemBrief slug="lightning-climatology" /></li>
+        <li><ItemBrief slug="era5-wrf-xray" /></li>
       </ul>
     </Bio>
 
@@ -31,6 +31,7 @@ useHead({ title: 'People' })
     <Bio person="Hajo Eicken">
       <ul>
         <li><ItemBrief slug="landfast-sea-ice" /></li>
+        <li><ItemBrief slug="summary-landfast-sea-ice" /></li>
       </ul>
     </Bio>
 
@@ -43,32 +44,38 @@ useHead({ title: 'People' })
       </ul>
     </Bio>
 
+    <Bio person="Jeremy Littell">
+      <ul>
+        <li><ItemBrief slug="story-cmip6-downscaled" /></li>
+        <li><ItemBrief slug="temperature-cmip6-downscaled" /></li>
+        <li><ItemBrief slug="precipitation-cmip6-downscaled" /></li>
+      </ul>
+    </Bio>
+
     <Bio person="Andy Mahoney">
       <ul>
         <li><ItemBrief slug="landfast-sea-ice" /></li>
+        <li><ItemBrief slug="summary-landfast-sea-ice" /></li>
       </ul>
     </Bio>
 
     <Bio person="Josh Paul">
       <ul>
-        <li><ItemBrief slug="notebook-corporation-hdd" /></li>
-        <li><ItemBrief slug="notebook-fmz-flammability" /></li>
+        <li><ItemBrief slug="story-cmip6-downscaled" /></li>
       </ul>
     </Bio>
 
     <Bio person="Charlie Parr">
       <ul>
-        <li><ItemBrief slug="notebook-frost-depth" /></li>
-        <li><ItemBrief slug="notebook-design-freezing-index" /></li>
-        <li><ItemBrief slug="notebook-design-thawing-index" /></li>
+        <li><ItemBrief slug="era5-wrf-xray" /></li>
+        <li><ItemBrief slug="story-fire-prone-conditions" /></li>
+        <li><ItemBrief slug="story-cold-snap-1989" /></li>
       </ul>
     </Bio>
 
     <Bio person="Kyle Redilla">
       <ul>
-        <li><ItemBrief slug="notebook-raster-database" /></li>
         <li><ItemBrief slug="climate-beetle-protection" /></li>
-        <li><ItemBrief slug="notebook-era5-cds-api" /></li>
       </ul>
     </Bio>
 
@@ -83,6 +90,27 @@ useHead({ title: 'People' })
     <Bio person="Anjali Shah">
       <ul>
         <li><ItemBrief slug="story-cold-snap-1989" /></li>
+      </ul>
+    </Bio>
+
+    <Bio person="Craig Stephenson">
+      <ul>
+        <li><ItemBrief slug="story-cmip6-downscaled" /></li>
+        <li><ItemBrief slug="temperature-cmip6-downscaled" /></li>
+        <li><ItemBrief slug="precipitation-cmip6-downscaled" /></li>
+      </ul>
+    </Bio>
+
+    <Bio person="Rick Thoman">
+      <ul>
+        <li><ItemBrief slug="story-cold-snap-1989" /></li>
+      </ul>
+    </Bio>
+
+    <Bio person="Chris Waigl">
+      <ul>
+        <li><ItemBrief slug="era5-wrf-xray" /></li>
+        <li><ItemBrief slug="story-fire-prone-conditions" /></li>
       </ul>
     </Bio>
 

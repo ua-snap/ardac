@@ -2,7 +2,8 @@
 
 <template>
   <div class="edition">
-    &mdash; <span aria-hidden="true">☀️</span>&nbsp;Edition, July 2026 &mdash;
+    &mdash; <span aria-hidden="true">🍁</span>&nbsp;Edition, October 2026
+    &mdash;
   </div>
 </template>
 

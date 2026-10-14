@@ -2,7 +2,7 @@ export default [
   {
     person: 'Scott Rupp',
     image: 'rupp_bw2.jpg',
-    blurb: `I am the director of the <a href="https://uaf-snap.org">Scenarios Network for Alaska and Arctic Planning</a> and the Alaska Climate Adaptation Science Center, and have more than 27 years of experience in ecosystem modeling, climate change/climate impacts science, and yodeling!`,
+    blurb: `I am the director of the <a href="https://uaf-iarc.org">International Arctic Research Center</a>, and have more than 27 years of experience in ecosystem modeling, climate change/climate impacts science, and yodeling!`,
   },
   {
     person: 'Nancy Fresco',
@@ -27,12 +27,12 @@ export default [
   {
     person: 'Hajo Eicken',
     image: 'eicken.png',
-    blurb: `I am the director of UAF's International Arctic Research Center and an expert in the growth and evolution of sea ice, its role in the climate system and its importance for ecosystems and people.`,
+    blurb: `I am the director of the Alfred Wegener Institute in Bremerhaven, Germany and an expert in the growth and evolution of sea ice, its role in the climate system and its importance for ecosystems and people.`,
   },
   {
     person: 'Kyle Redilla',
     image: 'redilla_bw.jpg',
-    blurb: `I am a geospatial programmer at SNAP and use a variety of software and computational resources for manipulation and analysis of data, typically produced by earth observing and earth system modeling efforts.`,
+    blurb: `I use a variety of software and computational resources for manipulation and analysis of data, typically produced by earth observing and earth system modeling efforts.`,
   },
   {
     person: 'John Walsh',

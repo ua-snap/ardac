@@ -62,13 +62,6 @@ const noscriptHtml = `
     of Alaska Fairbanks and other institutions, these stories help explain and
     explore the context and implications of various aspects of these datasets.
   </p>
-  <p>
-    Finally, we also include guides on how to write programs that use the
-    <a href="https://earthmaps.io">Data API</a> that drives this application.
-    Interactive online computational notebooks can be run in the browser, and
-    edited to help you get started with interacting with climate data via
-    Python.
-  </p>
 </section>
 `
 
@@ -82,6 +75,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: [
+        '/item/cusp-permafrost-observations',
         '/item/indicator-su',
         '/item/indicator-dw',
         '/item/indicator-hd',
@@ -94,15 +88,9 @@ export default defineNuxtConfig({
         '/item/thawing-index',
         '/item/freezing-index',
         '/item/story-arctic-climate-data-node',
-        '/item/notebook-corporation-hdd',
-        '/item/notebook-raster-database',
-        '/item/notebook-frost-depth',
-        '/item/notebook-design-freezing-index',
-        '/item/notebook-design-thawing-index',
         '/item/climate-beetle-protection',
         '/item/landfast-sea-ice',
         '/item/sea-ice-concentration',
-        '/item/notebook-sea-ice-traffic',
         '/item/places-and-polygons',
         '/item/hydrology-evap',
         '/item/hydrology-glacier-melt',
@@ -110,30 +98,20 @@ export default defineNuxtConfig({
         '/item/hydrology-runoff',
         '/item/hydrology-sm',
         '/item/hydrology-snow-melt',
-        '/item/lightning-climatology',
         '/item/permafrost-magt',
         '/item/permafrost-base-top',
         '/item/permafrost-talik',
-        '/item/map-permafrost',
-        '/item/notebook-perm-obs-temp',
         '/item/indicator-r10mm',
         '/item/indicator-cwd',
         '/item/indicator-cdd',
-        '/item/precipitation-2km-cmip5',
         '/item/precipitation-frequency',
         '/item/indicator-rx1day',
         '/item/indicator-rx5day',
-        '/item/notebook-design-discharge',
-        '/item/notebook-precip-poly',
-        '/item/temperature-cmip5',
         '/item/temperature-cmip6',
         '/item/temperature-cmip6-downscaled',
-        '/item/notebook-era5-cds-api',
         '/item/elevation',
-        '/item/notebook-fmz-flammability',
         '/item/alfresco-flammability',
         '/item/alfresco-vegetation',
-        '/item/wildfire-combined',
         '/item/wind-cmip6',
         '/item/oceanography-cmip6',
         '/item/precipitation-cmip6',
@@ -154,24 +132,20 @@ export default defineNuxtConfig({
         '/item/story-climate-indicators',
         '/item/story-fire-prone-conditions',
         '/item/story-cold-snap-1989',
-        '/tag/Climate',
-        '/tag/Programming',
-        '/tag/Terrestrial',
-        '/tag/Cryosphere',
         '/tag/GIS',
         '/tag/Hydrology',
-        '/tag/Lightning',
         '/tag/Wildfire',
         '/tag/Permafrost',
         '/tag/Precipitation',
         '/tag/Temperature',
-        '/tag/CMIP6',
         '/tag/Wind',
         '/tag/Oceanography',
         '/tag/Sea Ice',
         '/tag/Solar Radiation',
         '/tag/Snow',
         '/tag/Story',
+        '/tag/Humidity',
+        '/tag/Observation',
       ],
     },
   },
@@ -181,9 +155,12 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
+          // Bulma 1.0.4 and Vite's Sass integration still use features that
+          // newer Dart Sass releases warn about on every compile.
+          silenceDeprecations: ['legacy-js-api', 'if-function', 'import'],
           additionalData: `
             @use "~/assets/styles/_variables.scss" as *;
-            @import "~/node_modules/bulma/sass/utilities/mixins.sass";
+            @use "~/assets/styles/_bulma-setup.scss" as *;
           `,
         },
       },

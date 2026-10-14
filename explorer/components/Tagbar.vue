@@ -1,101 +1,25 @@
 <script lang="ts" setup>
-// true if "see all" is expanded
-const expanded = ref(false)
-const expandedText = computed(() => {
-  return expanded.value === false ? '\u2192 see all' : '\u2715 close'
-})
+const tags: Tag[] = [
+  'Humidity',
+  'Hydrology',
+  'Permafrost',
+  'Precipitation',
+  'Sea Ice',
+  'Snow',
+  'Temperature',
+  'Wildfire',
+  'Wind',
+]
 </script>
 
 <template>
   <nav class="tagbar" aria-label="Topics">
     <ul>
-      <li>
+      <li v-for="tag in tags" :key="tag">
         <NuxtLink
-          to="/tag/Climate"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Climate' })"
-          >Climate</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/Precipitation"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Precipitation' })"
-          >Precipitation</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/Wildfire"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Wildfire' })"
-          >Wildfire</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/Cryosphere"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Cryosphere' })"
-          >Cryosphere</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/Permafrost"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Permafrost' })"
-          >Permafrost</NuxtLink
-        >
-      </li>
-      <li class="more">
-        <button
-          type="button"
-          :aria-expanded="expanded"
-          aria-controls="tagbar-more"
-          @click="expanded = !expanded"
-        >
-          {{ expandedText }}
-        </button>
-      </li>
-    </ul>
-    <ul id="tagbar-more" v-show="expanded">
-      <li>
-        <NuxtLink
-          to="/tag/Hydrology"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Hydrology' })"
-          >Hydrology</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/Terrestrial"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Terrestrial' })"
-          >Terrestrial</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/Programming"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Programming' })"
-          >Programming</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/Temperature"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Temperature' })"
-          >Temperature</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/Lightning"
-          @click="trackEvent('Tagbar Clicked', { tag: 'Lightning' })"
-          >Lightning</NuxtLink
-        >
-      </li>
-      <li>
-        <NuxtLink
-          to="/tag/CMIP6"
-          @click="trackEvent('Tagbar Clicked', { tag: 'CMIP6' })"
-          >CMIP6</NuxtLink
+          :to="'/tag/' + tag"
+          @click="trackEvent('Tagbar Clicked', { tag })"
+          >{{ tag }}</NuxtLink
         >
       </li>
     </ul>
@@ -106,35 +30,50 @@ const expandedText = computed(() => {
 .tagbar {
   border-top: 1px solid $gray-darker;
   border-bottom: 1px solid $gray-darker;
-  padding: 1rem 4rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  ul li {
-    display: inline-block;
-    padding-right: 4rem;
-    a {
-      color: $black;
-      &:hover {
-        transition: 0.3s;
-        background-color: $white-lighter !important;
-        color: $link !important;
-      }
+  // Side padding matches the page heading's section padding.
+  padding: 0.9rem 3rem;
+  @include touch {
+    padding: 0.75rem 1.5rem;
+  }
+  // One row on desktop; an even grid (5 + 4, then 3 × 3) as space runs out.
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: clamp(1rem, 2.2vw, 2.5rem);
+    row-gap: 0.4rem;
+    @include tablet-only {
+      display: grid;
+      grid-template-columns: repeat(5, max-content);
+      column-gap: 2rem;
     }
-    &.more button {
-      // Looks like the other tagbar entries, but is a real button so it
-      // works from the keyboard.
-      padding: 0;
-      border: none;
-      background: none;
-      font: inherit;
-      font-weight: 300;
-      color: $black;
-      &:hover {
-        cursor: pointer;
-        transition: 0.3s;
-        color: $link !important;
-        text-decoration: underline;
-      }
+    @include mobile {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 0.75rem;
+    }
+  }
+  a {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.6;
+    white-space: nowrap;
+    color: $black;
+    text-decoration: underline 2px transparent;
+    text-underline-offset: 0.35em;
+    transition:
+      color 0.2s,
+      text-decoration-color 0.2s;
+    @include mobile {
+      font-size: 1rem;
+    }
+    &:hover,
+    &:focus-visible {
+      color: $link;
+      text-decoration-color: $link;
+    }
+    &.router-link-active {
+      text-decoration-color: $black;
     }
   }
 }
