@@ -206,7 +206,7 @@ onMounted(loadCommunityData)
         </figcaption>
       </figure>
 
-      <div v-if="isLoading" class="notification is-info is-light">
+      <div v-if="isLoading" class="notification is-info is-light" role="status">
         Loading ERA5-WRF temperature data for Alaska communities…
       </div>
 

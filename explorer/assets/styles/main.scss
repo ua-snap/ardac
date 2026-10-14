@@ -34,6 +34,20 @@ footer {
   }
 }
 
+// Bulma's dark text on light info backgrounds is only 3.9:1.
+.notification.is-info.is-light,
+.tag.is-info.is-light,
+.button.is-info.is-light {
+  color: darken($info, 10%);
+}
+
+// Plotly's modebar buttons are made keyboard focusable in
+// plugins/plotly.client.ts; show where focus is.
+.modebar-btn:focus-visible {
+  outline: 2px solid $info;
+  outline-offset: 2px;
+}
+
 // The skip link moves focus here; it's not something to interact with.
 main:focus {
   outline: none;
