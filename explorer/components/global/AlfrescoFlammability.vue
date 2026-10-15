@@ -256,7 +256,7 @@ onUnmounted(() => {
       />
     </div>
 
-    <Bios :people="['Scott Rupp', 'Nancy Fresco']" />
+    <Bios slug="alfresco-flammability" />
   </section>
 </template>
 

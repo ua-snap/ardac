@@ -52,6 +52,11 @@ test('Check people page', async ({ page }) => {
   await page.waitForSelector(
     'p:has-text("I am an expert in Alaska climatology, climate variability and change, dynamical downscaling, and regional climate.")'
   )
+
+  // Cards show a role and link to the items each person worked on.
+  const fresco = page.locator('#nancy-fresco')
+  await expect(fresco.locator('.role')).toHaveText('Network Coordinator, SNAP')
+  await expect(fresco.locator('a:has-text("Flammability")')).toBeVisible()
 })
 
 test('Check Climate Stripes story page', async ({ page }) => {
@@ -99,6 +104,14 @@ test('Check 1989 Cold Snap story page', async ({ page }) => {
 
   await expect(page.locator('table >> text=Nome')).toBeVisible()
   await expect(page.locator('table >> text=-54°F')).toBeVisible()
+
+  // Names under "People behind this work" link to their People page cards.
+  await expect(
+    page.locator('h3:has-text("People behind this work")')
+  ).toBeVisible()
+  await page.click('h4 > a:has-text("Rick Thoman")')
+  await expect(page).toHaveURL(/\/people#rick-thoman$/)
+  await expect(page.locator('#rick-thoman')).toBeInViewport()
 })
 
 test('Check Temperature tag -> Summer Days page', async ({ page }) => {

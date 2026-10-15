@@ -93,16 +93,25 @@ When adding an item, consider if you should tag a person with the bio brief. The
 - It's a new thing
 - The people you'd tag created the data or tech. (If SNAP techs just do QA/QC and ingest/prep, we would not tag them; same for programmers who worked on features).
 
-Use the `Bios` component, for example,
+List the people in the item's `people` field in `assets/items.ts`, in the order the item credits them:
 
-`<Bios :people="['Hajo Eicken', 'Scott Rupp']" />`
+```ts
+people: ['Hajo Eicken', 'Andy Mahoney'],
+```
+
+Then show them at the end of the item's content component with the `Bios` component, which reads that list:
+
+`<Bios slug="landfast-sea-ice" />`
+
+The People page builds each person's list of items from the same field, so there's nothing to add there.
 
 When adding someone new:
 
 - add an image to `/public/images/people`
 - add them to the `types/people.d.ts`
-- add the bio itself in `assets/bios.ts`
-- add the person to the `/people` page
+- add the bio itself in `assets/bios.ts`, with a `role` (job title and organization) if you know it
+
+The People page lists everyone in `assets/bios.ts`, sorted by last name.
 
 
 ## Production

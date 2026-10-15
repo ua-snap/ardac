@@ -294,6 +294,6 @@
         >.
       </p>
     </div>
-    <Bios :people="['Mike DeLue']" />
+    <Bios slug="story-climate-stripes-1" />
   </section>
 </template>

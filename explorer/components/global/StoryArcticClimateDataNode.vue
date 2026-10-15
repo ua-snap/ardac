@@ -651,7 +651,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <Bios :people="['Scott Rupp', 'Bruce Crevensten']" />
+    <Bios slug="story-arctic-climate-data-node" />
   </section>
 </template>
 

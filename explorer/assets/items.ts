@@ -86,6 +86,7 @@ export default [
     image: 'arctic2100_drew-beamer-unsplash.jpg',
     imageAlt:
       'Person holding a crystal ball up to an Arctic sunset.  Photo by Drew Beamer on Unsplash.',
+    people: ['Scott Rupp', 'Bruce Crevensten'],
   },
   {
     slug: 'climate-beetle-protection',
@@ -93,6 +94,7 @@ export default [
     blurb:
       "Cold winters and cool summers hold spruce beetle outbreaks in check. This dataset rates how well the climate protects Alaska's spruce forests, today and through 2099, across models, emissions scenarios, and snowpack levels.",
     tags: ['Temperature', 'Snow'],
+    people: ['Nancy Fresco', 'Kyle Redilla'],
   },
   {
     slug: 'landfast-sea-ice',
@@ -100,6 +102,7 @@ export default [
     blurb:
       'Landfast ice is sea ice anchored to the shore, vital to coastal ecosystems, travel, and hunting. Daily records trace its extent along the Beaufort and Chukchi coasts.',
     tags: ['Sea Ice', 'Observation'],
+    people: ['Andy Mahoney', 'Hajo Eicken'],
   },
   {
     slug: 'sea-ice-concentration',
@@ -107,6 +110,7 @@ export default [
     blurb:
       'Monthly sea ice concentration for the whole Arctic, reconstructed from historical records back to 1850 on a grid of about 17 km. Explore it further in the Historical Sea Ice Atlas.',
     tags: ['Sea Ice', 'Observation'],
+    people: ['John Walsh'],
   },
   {
     slug: 'places-and-polygons',
@@ -236,6 +240,7 @@ export default [
     blurb:
       'Daily minimum and maximum air temperature from CMIP6 models, downscaled to 4 km for Alaska. Maps contrast 2000 with 2100, and charts compare daily values for any two years.',
     tags: ['Temperature'],
+    people: ['Jeremy Littell', 'Craig Stephenson'],
   },
   {
     slug: 'precipitation-cmip6-downscaled',
@@ -243,6 +248,7 @@ export default [
     blurb:
       'Daily precipitation from CMIP6 models, downscaled to 4 km for Alaska. Maps contrast 2000 with 2100, and charts compare daily values for any two years.',
     tags: ['Precipitation'],
+    people: ['Jeremy Littell', 'Craig Stephenson'],
   },
   {
     slug: 'temperature-cmip6',
@@ -264,6 +270,7 @@ export default [
     blurb:
       'ALFRESCO, a wildfire and vegetation model, estimates how often each place burns across many simulations. Maps show flammability change over time.',
     tags: ['Wildfire'],
+    people: ['Scott Rupp', 'Nancy Fresco'],
   },
   {
     slug: 'alfresco-vegetation',
@@ -271,6 +278,7 @@ export default [
     blurb:
       'ALFRESCO simulations project which vegetation, from tundra to spruce and deciduous forest, will dominate as climate and fire change. Maps show vegetation change over time.',
     tags: ['Wildfire'],
+    people: ['Scott Rupp', 'Nancy Fresco'],
   },
   {
     slug: 'wind-cmip6',
@@ -359,6 +367,7 @@ export default [
       'Climate stripes turn a run of yearly temperatures into bands of color, one stripe per year. This story looks closely at the graphic to show what it reveals about local variability and the effect of scale. Read on, then make your own in part two.',
     tags: ['Temperature', 'Story'],
     image: 'ClimateStripes_Arctic_2022.jpg',
+    people: ['Mike DeLue'],
   },
   {
     slug: 'story-climate-stripes-2',
@@ -374,6 +383,7 @@ export default [
     blurb:
       "Spruce beetle outbreaks have swept Alaska's forests in recent decades, and climate impacts the beetles' life cycle. This story explains how warm summers speed their growth and cold winters check it. Read it, then learn about climate protection ratings for your area.",
     tags: ['Temperature', 'Snow', 'Story'],
+    people: ['Nancy Fresco'],
   },
   {
     slug: 'summary-landfast-sea-ice',
@@ -382,6 +392,7 @@ export default [
     blurb:
       'An interactive map summarizes the seaward edge of landfast ice in the Beaufort Sea, month by month, over three nine-year periods since 1996. Pick a month and period to see how far the ice reached and how that reach has changed.',
     tags: ['Sea Ice', 'Observation'],
+    people: ['Hajo Eicken', 'Andy Mahoney'],
   },
   {
     slug: 'story-climate-indicators',
@@ -399,6 +410,7 @@ export default [
     blurb:
       'Daily temperature, humidity, precipitation, and wind from 1960 to 2023, reconstructed on a 4 km grid for Alaska and adjacent Canada. An API supports automated access for many locations.',
     tags: ['Temperature', 'Precipitation', 'Humidity', 'Wind'],
+    people: ['Chris Waigl', 'Charlie Parr', 'Peter Bieniek'],
   },
   {
     slug: 'story-cmip6-downscaled',
@@ -407,6 +419,7 @@ export default [
       'Global climate models see Alaska in coarse 100 km blocks. This story explains how statistical and dynamical downscaling sharpen the picture to 4 km, and what the finer grid can show. Read on, then explore the downscaled temperature and precipitation data.',
     tags: ['Temperature', 'Story'],
     image: 'story-cmip6-downscaled.png',
+    people: ['Jeremy Littell', 'Craig Stephenson', 'Josh Paul'],
   },
   {
     slug: 'story-fire-prone-conditions',
@@ -415,6 +428,7 @@ export default [
       "Hot, dry, rainless days prime Alaska's forests to burn. This story traces those conditions through 2004, the state's largest fire season on record, using high-resolution reanalysis. Choose a place and any year from 1960 to 2023 to see how it compares.",
     tags: ['Wildfire', 'Temperature', 'Humidity', 'Precipitation', 'Story'],
     image: 'story-fire-prone-conditions.png',
+    people: ['Chris Waigl', 'Charlie Parr'],
   },
   {
     slug: 'story-cold-snap-1989',
@@ -424,6 +438,7 @@ export default [
     tags: ['Temperature', 'Wind', 'Story'],
     image: 'story-cold-snap-1989.png',
     imageAlt: 'Preview image for the 1989 Alaska Cold Snap data story',
+    people: ['Anjali Shah', 'Rick Thoman', 'Charlie Parr'],
   },
   {
     slug: 'cusp-permafrost-observations',
@@ -433,5 +448,6 @@ export default [
     tags: ['Permafrost', 'Observation'],
     image: 'permafrost-soil-pit_skip-walker_USPA.jpg',
     imageAlt: 'Preview image for CUSP',
+    people: ['Jon Schwenk', 'Bruce Crevensten', 'Charlie Parr'],
   },
 ] satisfies Item[]

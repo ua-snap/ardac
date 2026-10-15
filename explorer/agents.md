@@ -34,7 +34,7 @@ When adding a new item:
 4. Add the item to the pre-render list in `nuxt.config.ts`
 5. Create the content component in `components/global/` using PascalCase derived from the slug
 6. Add placeholder for preview imagery and placeholder alt text if applicable, for the human developer to complete
-7. Consider whether the item should be linked from bios / people content
+7. Consider whether the item should credit people (its `people` field in `assets/items.ts`)
 
 Do not bypass this system with ad hoc route-specific metadata.
 
@@ -163,12 +163,16 @@ The site targets WCAG 2.1 Level AA. When adding or editing content:
 To check your changes, follow the `a11y-check` skill (`.claude/skills/a11y-check/SKILL.md` at the repo root): a pa11y-ci scan using `explorer/.pa11yci.cjs`, plus the manual checks a scanner can't do.
 
 ### People / bios
-If a new item is story-like, newly significant, or strongly associated with a data creator / subject-matter contributor, consider whether it should also be connected via:
-- `assets/bios.ts`
-- `types/people.d.ts`
-- `/public/images/people`
-- `pages/people.vue`
-- `Bios` or `Bio` components
+If a new item is story-like, newly significant, or strongly associated with a data creator / subject-matter contributor, consider whether it should credit people:
+- List them in the item's `people` field in `assets/items.ts`, in the order the item credits them. This is the only place the link between people and items is recorded: the People page and the item page both read it.
+- Show them on the item page with `<Bios slug="the-item-slug" />` at the end of its content component.
+
+A new person also needs:
+- an entry in `assets/bios.ts`, with a `role` (job title and organization) when known
+- their name in `types/people.d.ts`
+- a photo in `/public/images/people`
+
+The People page lists everyone in `assets/bios.ts` automatically.
 
 ## Naming rules
 
