@@ -37,5 +37,8 @@
     "pinia": "^2.1.7",
     "plotly.js-dist-min": "^2.29.0",
     "proj4leaflet": "^1.0.2"
+  },
+  "overrides": {
+    "nuxi": "~3.12.0"
   }
 }

@@ -16,7 +16,9 @@ const tagPath = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+  @use 'sass:color';
+
   .tag {
-    background-color: lighten($white-darker, 8%);
+    background-color: color.adjust($white-darker, $lightness: 8%);
   }
 </style>
