@@ -58,11 +58,13 @@ Determine a 'slug' for the item.  The slug is a unique but human-readable ID for
 2. Add any new tags for the new item to `types/tags.d.ts`
 3. Add the item in `assets/items.ts`:
     * `slug`: the slug ID
+    * `type`: `'explainer'` for a story or guide, `'xray'` for a dataset you can explore by place (tag pages list them in separate sections)
     * `title`: the 'headline'
     * `blurb`: **short** text description, single line/paragraph, no HTML please
     * `tags`: array of tags
     * `image`: image filename, corresponds to `public/previews` folder
     * `imageAlt`: alt text for accessibility
+    * `people`: optional, the people credited for the item (see below)
 
 The item is now available for use in static layouts and will be included in any pages that display all results for a tag.  Static examples:
 

@@ -131,6 +131,12 @@ test('Check Temperature tag -> Summer Days page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Temperature')
 
+  // Explainers come first, then data X-rays in alphabetical order.
+  await expect(page.locator('main h3.title')).toHaveText([
+    'Explainers',
+    'Data X-rays',
+  ])
+
   await page.click('a:has-text("Summer Days")')
 
   await expect(page.locator('section > div > h2')).toHaveText('Summer Days')
@@ -257,6 +263,9 @@ test('Check Hydrology tag -> Evapotranspiration page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Hydrology')
 
+  // Hydrology has no explainers, so only the data X-rays section shows.
+  await expect(page.locator('main h3.title')).toHaveText(['Data X-rays'])
+
   await page.click('a:has-text("Evapotranspiration")')
 
   await expect(page.locator('section > div > h2')).toHaveText(
@@ -312,7 +321,7 @@ test('Check Temperature tag -> Temperature, CMIP6 page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Temperature')
 
-  await page.click('a:has(h3:text-is("Temperature, CMIP6"))')
+  await page.click('a:has(h4:text-is("Temperature, CMIP6"))')
 
   await expect(page.locator('section > div > h2')).toHaveText(
     'Temperature, CMIP6'
@@ -342,7 +351,7 @@ test('Check Precipitation tag -> Precipitation, CMIP6 page', async ({
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Precipitation')
 
-  await page.click('a:has(h3:text-is("Precipitation, CMIP6"))')
+  await page.click('a:has(h4:text-is("Precipitation, CMIP6"))')
 
   await expect(page.locator('section > div > h2')).toHaveText(
     'Precipitation, CMIP6'
