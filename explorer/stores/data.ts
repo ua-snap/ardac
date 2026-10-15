@@ -1,4 +1,10 @@
 import { defineStore } from 'pinia'
+import { STATEWIDE_TEMPERATURE_INDEX_STATIONS } from '~/assets/statewideTemperatureIndexStations'
+import {
+  STATEWIDE_TEMPERATURE_INDEX_DAYS,
+  buildDailyIndex,
+  offsetDate,
+} from '~/utils/statewideTemperatureIndex'
 const runtimeConfig = useRuntimeConfig()
 const placesStore = usePlacesStore()
 
@@ -33,6 +39,16 @@ export const useDataStore = defineStore('data', () => {
   // data we will get from the API for different ARDAC items.
   const apiData: Ref<Record<string, any>> = ref({})
   const dataErrors: Ref<Record<string, boolean>> = ref({})
+  const statewideTemperatureIndex: Ref<StatewideTemperatureIndexDay[] | null> =
+    ref(null)
+  const statewideTemperatureIndexLoading = ref(false)
+  const statewideTemperatureIndexError = ref<string | null>(null)
+
+  function clearStatewideTemperatureIndex() {
+    statewideTemperatureIndex.value = null
+    statewideTemperatureIndexLoading.value = false
+    statewideTemperatureIndexError.value = null
+  }
 
   const fetchData = async (
     dataset: string,
@@ -67,9 +83,47 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
+  async function fetchStatewideTemperatureIndex() {
+    clearStatewideTemperatureIndex()
+
+    const startDate = offsetDate(-STATEWIDE_TEMPERATURE_INDEX_DAYS)
+    const searchParams = new URLSearchParams({
+      sids: Object.keys(STATEWIDE_TEMPERATURE_INDEX_STATIONS).join(','),
+      sdate: startDate,
+      edate: offsetDate(-1),
+      elems: '1,2', // Max temp, min temp
+      output: 'json',
+    })
+
+    statewideTemperatureIndexLoading.value = true
+
+    try {
+      const response = await fetch(
+        `${runtimeConfig.public.acisUrl}?${searchParams}`
+      )
+
+      if (!response.ok) {
+        throw new Error(`ACIS request failed with status ${response.status}`)
+      }
+
+      const acisData = (await response.json()) as AcisMultiStationData
+      statewideTemperatureIndex.value = buildDailyIndex(acisData, startDate)
+    } catch {
+      statewideTemperatureIndexError.value =
+        'Unable to load station temperature data. Please try again later.'
+    } finally {
+      statewideTemperatureIndexLoading.value = false
+    }
+  }
+
   return {
     fetchData,
     apiData,
     dataErrors,
+    statewideTemperatureIndex,
+    statewideTemperatureIndexLoading,
+    statewideTemperatureIndexError,
+    clearStatewideTemperatureIndex,
+    fetchStatewideTemperatureIndex,
   }
 })

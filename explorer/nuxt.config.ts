@@ -154,6 +154,7 @@ export default defineNuxtConfig({
         '/item/story-climate-indicators',
         '/item/story-fire-prone-conditions',
         '/item/story-cold-snap-1989',
+        '/item/statewide-temperature-index',
         '/tag/Climate',
         '/tag/Programming',
         '/tag/Terrestrial',
@@ -200,6 +201,7 @@ export default defineNuxtConfig({
       apiUrl: process.env.SNAP_API_URL || 'https://earthmaps.io',
       rasdamanUrl:
         process.env.RASDAMAN_URL || 'https://maps.earthmaps.io/rasdaman/ows',
+      acisUrl: process.env.ACIS_URL || 'https://data.rcc-acis.org/MultiStnData',
     },
   },
   app: {
