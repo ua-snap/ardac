@@ -504,7 +504,7 @@ export default [
     blurb:
       'CUSP gathers observations of near-surface permafrost, active-layer depth, and thaw into one documented table with source citations. Download observations near a selected area, or download the full dataset.',
     tags: ['Permafrost', 'Observation'],
-    image: 'permafrost-soil-pit_skip-walker_USPA.jpg',
+    image: 'cusp-hero-edited.jpg',
     imageAlt: 'Preview image for CUSP',
     people: ['Jon Schwenk', 'Bruce Crevensten', 'Charlie Parr', 'Josh Paul'],
   },
