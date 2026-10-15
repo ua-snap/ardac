@@ -501,5 +501,6 @@ mapStore.setLegendItems(mapId, legend)
         especially coarse climate, soil, or surface water layers.
       </p>
     </div>
+    <Bios :people="['Jon Schwenk']" />
   </section>
 </template>
