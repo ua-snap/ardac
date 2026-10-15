@@ -58,7 +58,7 @@ export default [
     person: 'Josh Paul',
     image: 'paul_bw.jpg',
     blurb: `I am a Geospatial Data Analyst with SNAP with a background in soil science and GIS programming who analyzes geospatial data, conducts data quality assurance and quality control, and manages metadata.`,
-  },  
+  },
   {
     person: 'Rick Thoman',
     image: 'Rick2_bw.png',
@@ -78,5 +78,10 @@ export default [
     person: 'Anjali Shah',
     image: 'shah_bw.png',
     blurb: `I am a PhD student at Woods Hole Oceanographic Institution and a former Fellow at the Alaska Center for Climate Assessment and Preparedness (ACCAP). My research combines earth science and applied mathematics to better understand how healthy ecosytems meet community needs.`,
+  },
+  {
+    person: 'Jon Schwenk',
+    image: 'schwenk_bw.jpg',
+    blurb: `I study rivers and Arctic landscapes, with research interests in permafrost, hydrologic change, remote sensing, and environmental data synthesis. I lead development of the CommUnity near-Surface Permafrost (CUSP) dataset, bringing together field observations to better understand where permafrost occurs, how it changes, and the environmental conditions that shape it.`,
   }
 ] satisfies Bio[]

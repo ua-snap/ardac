@@ -16,3 +16,4 @@ type Person =
 	| 'Chris Waigl'
 	| 'Jeremy Littell'
 	| 'Anjali Shah'
+	| 'Jon Schwenk'
