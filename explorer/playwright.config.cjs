@@ -27,7 +27,6 @@ module.exports = defineConfig({
     stderr: 'pipe',
     env: {
       NUXT_TELEMETRY_DISABLED: '1',
-      NUXT_TYPECHECK: '0',
     },
   },
   projects: [

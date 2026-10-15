@@ -27,5 +27,5 @@
 --></template>
 
 <style scoped lang="scss">
-@import '~/assets/styles/items.scss';
+@use '../../../assets/styles/items.scss';
 </style>

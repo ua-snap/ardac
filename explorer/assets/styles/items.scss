@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 :deep(.item) {
   p {
     color: $gray-darker !important;

@@ -16,7 +16,7 @@ store.filteredItems = filteredItems
 let filteredItemsCount = store.sortedFilteredItems.length
 
 // Fetch dynamic component for this topic if present.
-let itemComponent: ConcreteComponent | string
+let itemComponent: ConcreteComponent | string = ''
 
 const componentFileExists = computed<boolean>(() => {
   let slugString = 'Topic' + tag
@@ -62,7 +62,7 @@ for (let row = 0; row < store.sortedFilteredItems.length / 4; row++) {
 </template>
 
 <style lang="scss" scoped>
-@import '~/assets/styles/items.scss';
+@use '../../assets/styles/items.scss';
 // is-gapless removes the columns' padding, so these need to outrank it.
 .columns.is-gapless > .column {
   padding: 0 1rem 1rem 1rem !important;
