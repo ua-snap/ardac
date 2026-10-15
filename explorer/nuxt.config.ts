@@ -207,7 +207,7 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       noscript: [
         {
-          children: noscriptHtml,
+          innerHTML: noscriptHtml,
         },
       ],
       title: 'Arctic Data Collaborative: ARDAC',
