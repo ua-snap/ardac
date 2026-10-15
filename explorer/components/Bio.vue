@@ -17,28 +17,18 @@ const props = withDefaults(
 )
 
 const store = useStore()
-const route = useRoute()
 
 const bio = bios.find(i => {
   return i.person === props.person
 })
 const anchor = personAnchor(props.person)
 const items = props.showItems ? store.itemsByPerson(props.person) : []
-
-// Outline the card a link from an item page landed on.
-// :target doesn't update when the router changes the hash.
-const isTarget = computed(() => route.hash === '#' + anchor)
 </script>
 
 <template>
-  <article
-    v-if="bio"
-    :id="anchor"
-    class="bio"
-    :class="{ 'is-target': isTarget }"
-  >
+  <article v-if="bio" :id="anchor" class="bio person-card">
     <div class="is-flex is-align-items-center mb-3">
-      <figure class="image mr-4">
+      <figure class="image person-card-photo mr-4">
         <img class="is-rounded" :src="'/images/people/' + bio.image" alt="" />
       </figure>
       <div>
@@ -67,38 +57,13 @@ const isTarget = computed(() => route.hash === '#' + anchor)
 </template>
 
 <style lang="scss" scoped>
-// A card that fills its grid cell, so cards in a row share a height.
 .bio {
-  height: 100%;
-  padding: 1rem;
-  @include tablet {
-    padding: 1.25rem 1.5rem;
-  }
-  background-color: $white-lighter;
-  border: 1px solid $white-darker;
-  border-radius: 0.5rem;
-  line-height: 1.5;
   scroll-margin-top: 1rem;
-
-  &.is-target {
-    outline: 2px solid $link;
-    outline-offset: -1px;
-  }
 }
 
-// Smaller photos on phones leave room for the name beside them.
-figure {
-  flex: none;
-  width: 64px;
-  height: 64px;
-  @include tablet {
-    width: 96px;
-    height: 96px;
-  }
-  img {
-    height: 100%;
-    object-fit: cover;
-  }
+figure img {
+  height: 100%;
+  object-fit: cover;
 }
 
 .role {

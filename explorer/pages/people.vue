@@ -24,6 +24,9 @@ const people = bios
   </div>
   <div class="section pt-0">
     <div class="grid people-grid">
+      <div class="cell">
+        <BioInvite />
+      </div>
       <div v-for="person in people" :key="person" class="cell">
         <Bio :person="person" show-items />
       </div>

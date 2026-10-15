@@ -53,6 +53,13 @@ test('Check people page', async ({ page }) => {
     'p:has-text("I am an expert in Alaska climatology, climate variability and change, dynamical downscaling, and regional climate.")'
   )
 
+  // The first card invites collaborators to get in touch.
+  const invite = page.locator('.people-grid .cell').first()
+  await expect(invite.locator('h3')).toHaveText('YOU!!')
+  await expect(
+    invite.locator('a[href="mailto:uaf-snap-data-tools@alaska.edu"]')
+  ).toBeVisible()
+
   // Cards show a role and link to the items each person worked on.
   const fresco = page.locator('#nancy-fresco')
   await expect(fresco.locator('.role')).toHaveText('Network Coordinator, SNAP')

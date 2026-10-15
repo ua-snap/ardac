@@ -448,6 +448,6 @@ export default [
     tags: ['Permafrost', 'Observation'],
     image: 'permafrost-soil-pit_skip-walker_USPA.jpg',
     imageAlt: 'Preview image for CUSP',
-    people: ['Jon Schwenk', 'Bruce Crevensten', 'Charlie Parr'],
+    people: ['Jon Schwenk', 'Bruce Crevensten', 'Charlie Parr', 'Josh Paul'],
   },
 ] satisfies Item[]
