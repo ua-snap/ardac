@@ -503,5 +503,6 @@ mapStore.setLegendItems(mapId, legend)
 
       <Bios slug="cusp-permafrost-observations" />
     </div>
+    <Bios :people="['Jon Schwenk']" />
   </section>
 </template>
