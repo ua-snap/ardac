@@ -221,6 +221,10 @@ mapStore.setLegendItems(mapId, legend)
             >https://arctic.noaa.gov/Report-Card/Report-Card-2018/ArtMID/7878/ArticleID/788/Landfast-Sea-Ice-in-a-Changing-Arctic</a
           >
         </blockquote>
+        <blockquote>
+           Einhorn, A. and Mahoney, A.: Wintertime evolution of landfast ice stability in Alaska from InSAR, The Cryosphere, 20, 3683–3704, <a
+             href="https://doi.org/10.5194/tc-20-3683-2026">https://doi.org/10.5194/tc-20-3683-2026</a>, 2026.
+        </blockquote>
       </div>
     </div>
     <Bios slug="summary-landfast-sea-ice" />
