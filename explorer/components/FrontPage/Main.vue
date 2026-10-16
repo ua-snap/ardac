@@ -133,7 +133,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '~/assets/styles/items.scss';
+@use '../../assets/styles/items.scss';
 
 // "Hello!" on the green of the ARDAC logo. The green is outside the sRGB
 // range, so it gets an sRGB fallback for browsers without lch().

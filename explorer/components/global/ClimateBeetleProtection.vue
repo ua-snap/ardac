@@ -174,50 +174,54 @@ onUnmounted(() => {
           {{ snowpackLabels[snowpackInput].toLowerCase() }} snowpack
         </h3>
         <table class="mb-6">
-          <tr>
-            <th>Model</th>
-            <th>1988&ndash;2017</th>
-            <th>2010&ndash;2039</th>
-            <th>2040&ndash;2069</th>
-            <th>2070&ndash;2099</th>
-          </tr>
-          <tr>
-            <td>Daymet</td>
-            <td>
-              {{
-                apiData['1988-2017']['Daymet']['Historical'][snowpackInput][
-                  'climate-protection'
-                ]
-              }}
-            </td>
-            <td>N/A</td>
-            <td>N/A</td>
-            <td>N/A</td>
-          </tr>
-          <tr v-for="model in models">
-            <td>
-              {{ model.replace('-', ' ') }} ({{
-                scenarioLabels[scenarioInput]
-              }})
-            </td>
-            <td>N/A</td>
-            <td v-for="era in eras">
-              <span v-if="era == '1988-2017'">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>1988&ndash;2017</th>
+              <th>2010&ndash;2039</th>
+              <th>2040&ndash;2069</th>
+              <th>2070&ndash;2099</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Daymet</td>
+              <td>
                 {{
-                  apiData[era]['Daymet']['Historical'][snowpackInput][
+                  apiData['1988-2017']['Daymet']['Historical'][snowpackInput][
                     'climate-protection'
                   ]
                 }}
-              </span>
-              <span v-else>
-                {{
-                  apiData[era][model][scenarioInput][snowpackInput][
-                    'climate-protection'
-                  ]
-                }}
-              </span>
-            </td>
-          </tr>
+              </td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>N/A</td>
+            </tr>
+            <tr v-for="model in models">
+              <td>
+                {{ model.replace('-', ' ') }} ({{
+                  scenarioLabels[scenarioInput]
+                }})
+              </td>
+              <td>N/A</td>
+              <td v-for="era in eras">
+                <span v-if="era == '1988-2017'">
+                  {{
+                    apiData[era]['Daymet']['Historical'][snowpackInput][
+                      'climate-protection'
+                    ]
+                  }}
+                </span>
+                <span v-else>
+                  {{
+                    apiData[era][model][scenarioInput][snowpackInput][
+                      'climate-protection'
+                    ]
+                  }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
         </table>
         <h3 class="title is-4">
           Download climate protection from spruce beetles data for

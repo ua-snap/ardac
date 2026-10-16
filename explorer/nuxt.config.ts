@@ -68,6 +68,9 @@ const noscriptHtml = `
 import { metas } from './utils/metas'
 import items from './assets/items'
 import _ from 'lodash'
+import { fileURLToPath } from 'node:url'
+
+const stylesDir = fileURLToPath(new URL('./assets/styles/', import.meta.url))
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -155,21 +158,23 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          // Bulma 1.0.4 and Vite's Sass integration still use features that
-          // newer Dart Sass releases warn about on every compile.
-          silenceDeprecations: ['legacy-js-api', 'if-function', 'import'],
+          // Bulma 1.0.4, the latest release, still uses the deprecated Sass
+          // if() syntax. quietDeps hides warnings from code Sass reaches
+          // through Vite's resolver, such as node_modules or the ~ alias, so
+          // our own partials are loaded by absolute path to keep their
+          // warnings visible.
+          quietDeps: true,
           additionalData: `
-            @use "~/assets/styles/_variables.scss" as *;
-            @use "~/assets/styles/_bulma-setup.scss" as *;
+            @use "${stylesDir}_variables.scss" as *;
+            @use "${stylesDir}_bulma-setup.scss" as *;
           `,
         },
       },
     },
   },
   modules: ['@pinia/nuxt'],
-  typescript: {
-    typeCheck: true,
-  },
+  // Type checking runs as `npm run typecheck` (and in CI) rather than inside
+  // the Vite build, where it races Nitro's generation of .nuxt/types.
   runtimeConfig: {
     public: {
       geoserverUrl:
@@ -184,7 +189,7 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       noscript: [
         {
-          children: noscriptHtml,
+          innerHTML: noscriptHtml,
         },
       ],
       title: 'Arctic Data Collaborative: ARDAC',

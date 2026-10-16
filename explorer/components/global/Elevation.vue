@@ -95,22 +95,26 @@ onUnmounted(() => {
         </h3>
 
         <table class="elevation mb-6">
-          <tr>
-            <th>Statistic</th>
-            <th>Elevation</th>
-          </tr>
-          <tr>
-            <td>Minimum</td>
-            <td>{{ apiData['min'] }}m</td>
-          </tr>
-          <tr>
-            <td>Mean</td>
-            <td>{{ apiData['mean'] }}m</td>
-          </tr>
-          <tr>
-            <td>Maximum</td>
-            <td>{{ apiData['max'] }}m</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Statistic</th>
+              <th>Elevation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Minimum</td>
+              <td>{{ apiData['min'] }}m</td>
+            </tr>
+            <tr>
+              <td>Mean</td>
+              <td>{{ apiData['mean'] }}m</td>
+            </tr>
+            <tr>
+              <td>Maximum</td>
+              <td>{{ apiData['max'] }}m</td>
+            </tr>
+          </tbody>
         </table>
         <h3 class="title is-4">
           Download elevation data for

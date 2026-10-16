@@ -123,7 +123,7 @@ useHead({ title: 'People' })
 </template>
 
 <style lang="scss" scoped>
-@import '~/assets/styles/items.scss';
+@use '../assets/styles/items.scss';
 
 :deep(ul li .item.brief a h3) {
   color: $link;

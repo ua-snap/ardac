@@ -8,12 +8,15 @@ Install nvm on your workstation if you have not already:
 
 https://github.com/nvm-sh/nvm
 
-Then run:
+Then, from this directory, install and use the Node version in `.nvmrc`
+(Node 24) and install the packages:
 
 ```bash
-nvm use lts/hydrogen
+nvm install
 npm install
 ```
+
+Run `nvm use` in new shells to switch to it again.
 
 ### Set environment variables if necessary
 
@@ -34,6 +37,15 @@ Serve with hot reload at http://localhost:3000:
 
 ```
 npm run dev
+```
+
+### Type check
+
+The dev server and build don't type check. Run this before opening a PR (CI
+runs it too):
+
+```
+npm run typecheck
 ```
 
 ### Development notes
