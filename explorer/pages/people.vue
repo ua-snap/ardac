@@ -87,6 +87,12 @@ useHead({ title: 'People' })
       </ul>
     </Bio>
 
+    <Bio person="Jon Schwenk">
+      <ul>
+        <li><ItemBrief slug="cusp-permafrost-observations" /></li>
+      </ul>
+    </Bio>
+
     <Bio person="Anjali Shah">
       <ul>
         <li><ItemBrief slug="story-cold-snap-1989" /></li>
