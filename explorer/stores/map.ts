@@ -31,6 +31,30 @@ var northEast: LatLng
 var viscosity = 0.0
 
 function getBaseMapAndLayers(crs: string): MapOptions {
+  if (crs == 'EPSG:3857') {
+    return {
+      crs: $L.CRS.EPSG3857,
+      center: latLng(64.7, -155),
+      zoom: 4,
+      minZoom: 0,
+      maxZoom: 16,
+      scrollWheelZoom: false,
+      zoomControl: false,
+      doubleClickZoom: false,
+      attributionControl: true,
+      layers: [
+        tileLayer(
+          'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
+          {
+            attribution:
+              '<a href="https://www.usgs.gov/programs/national-geospatial-program/national-map">USGS The National Map</a>',
+            maxZoom: 16,
+          }
+        ),
+      ],
+    }
+  }
+
   let proj: any
   let resolutions: number[]
   let center: LatLng
