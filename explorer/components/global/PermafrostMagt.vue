@@ -70,7 +70,7 @@ onUnmounted(() => {
   <section class="section xray">
     <div class="content is-size-5">
       <h2 class="title is-3">Ground Temperature</h2>
-      <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
+      <XrayIntroblurb resolution="1" unit="km" cmip="5" />
       <p class="mb-6">
         The map below shows mean annual ground temperature at 3 meters depth for
         three eras using the GFDL CM3 under the RCP 8.5 emissions scenario.
