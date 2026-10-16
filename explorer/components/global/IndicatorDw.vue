@@ -120,7 +120,7 @@ mapStore.setLegendItems(mapId, legend)
           {{ latLng.lat }}, {{ latLng.lng }}
         </h3>
         <p>
-          The following download links bundle summer days data with other
+          The following download links bundle deep winter days data with other
           climate indicators. Deep winter days use the "dw" identifier.
         </p>
         <DownloadLinks endpoint="/indicators/base/point" />

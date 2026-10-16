@@ -12,10 +12,14 @@ const chartStore = useChartStore()
 
 const defaultScenario = 'ssp585'
 
-const modelInput = defineModel('model', { default: '7ModelAvg' })
-const scenarioInput = defineModel('scenario', { default: 'ssp585' })
-const baselineYearInput = defineModel('baselineYear', { default: '1965' })
-const projectedYearInput = defineModel('projectedYear', { default: '2100' })
+const modelInput = defineModel<string>('model', { default: '7ModelAvg' })
+const scenarioInput = defineModel<string>('scenario', { default: 'ssp585' })
+const baselineYearInput = defineModel<string>('baselineYear', {
+  default: '1965',
+})
+const projectedYearInput = defineModel<string>('projectedYear', {
+  default: '2100',
+})
 
 const apiData = computed<any[]>(() => dataStore.apiData[endpoint])
 const latLng = computed<LatLngValue>(() => placesStore.latLng)

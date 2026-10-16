@@ -52,15 +52,29 @@ test('Check people page', async ({ page }) => {
   await page.waitForSelector(
     'p:has-text("I am an expert in Alaska climatology, climate variability and change, dynamical downscaling, and regional climate.")'
   )
+
+  // The first card invites collaborators to get in touch.
+  const invite = page.locator('.people-grid .cell').first()
+  await expect(invite.locator('h3')).toHaveText('YOU!!')
+  await expect(
+    invite.locator('a[href="mailto:uaf-snap-data-tools@alaska.edu"]')
+  ).toBeVisible()
+
+  // Cards show a role and link to the items each person worked on.
+  const fresco = page.locator('#nancy-fresco')
+  await expect(fresco.locator('.role')).toHaveText('Network Coordinator, SNAP')
+  await expect(fresco.locator('a:has-text("Flammability")')).toBeVisible()
 })
 
 test('Check Climate Stripes story page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative")')
-  await page.click('.tagbar > ul > li > a:has-text("Climate")')
+  await page.waitForSelector('nav.tagbar > ul > li > a:has-text("Temperature")')
+
+  await page.click('nav.tagbar > ul > li > a:has-text("Temperature")')
   await page.waitForTimeout(500)
-  await expect(page.locator('h2')).toHaveText('Climate')
+  await expect(page.locator('h2')).toHaveText('Temperature')
 
   await page.click('a:has-text("Climate Stripes: What Might the Future Hold?")')
 
@@ -81,9 +95,11 @@ test('Check 1989 Cold Snap story page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative")')
-  await page.click('.tagbar > ul > li > a:has-text("Climate")')
+  await page.waitForSelector('nav.tagbar > ul > li > a:has-text("Temperature")')
+
+  await page.click('nav.tagbar > ul > li > a:has-text("Temperature")')
   await page.waitForTimeout(500)
-  await expect(page.locator('h2')).toHaveText('Climate')
+  await expect(page.locator('h2')).toHaveText('Temperature')
 
   await page.click('a:has-text("1989 Alaska Cold Snap")')
 
@@ -95,15 +111,31 @@ test('Check 1989 Cold Snap story page', async ({ page }) => {
 
   await expect(page.locator('table >> text=Nome')).toBeVisible()
   await expect(page.locator('table >> text=-54°F')).toBeVisible()
+
+  // Names under "People behind this work" link to their People page cards.
+  await expect(
+    page.locator('h3:has-text("People behind this work")')
+  ).toBeVisible()
+  await page.click('h4 > a:has-text("Rick Thoman")')
+  await expect(page).toHaveURL(/\/people#rick-thoman$/)
+  await expect(page.locator('#rick-thoman')).toBeInViewport()
 })
 
-test('Check Climate tag -> Summer Days page', async ({ page }) => {
+test('Check Temperature tag -> Summer Days page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page.click('.tagbar > ul > li > a:has-text("Climate")')
+  await page.waitForSelector('nav.tagbar > ul > li > a:has-text("Temperature")')
+
+  await page.click('nav.tagbar > ul > li > a:has-text("Temperature")')
   await page.waitForTimeout(500)
-  await expect(page.locator('h2')).toHaveText('Climate')
+  await expect(page.locator('h2')).toHaveText('Temperature')
+
+  // Explainers come first, then data X-rays in alphabetical order.
+  await expect(page.locator('main h3.title')).toHaveText([
+    'Explainers',
+    'Data X-rays',
+  ])
 
   await page.click('a:has-text("Summer Days")')
 
@@ -127,7 +159,7 @@ test('Check Precipitation tag -> Precipitation Frequency page', async ({
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page.click('.tagbar > ul > li > a:has-text("Precipitation")')
+  await page.click('nav.tagbar > ul > li > a:has-text("Precipitation")')
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Precipitation')
 
@@ -152,7 +184,7 @@ test('Check Wildfire tag -> Flammability page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page.click('.tagbar > ul > li > a:has-text("Wildfire")')
+  await page.click('nav.tagbar > ul > li > a:has-text("Wildfire")')
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Wildfire')
 
@@ -171,13 +203,10 @@ test('Check Wildfire tag -> Flammability page', async ({ page }) => {
   await expect(page.locator('#chart > div > div')).toBeVisible()
 })
 
-test('Check Cryosphere tag -> Sea Ice Concentration page', async ({ page }) => {
-  await page.goto(url)
+test('Check Sea Ice tag -> Sea Ice Concentration page', async ({ page }) => {
+  await page.goto(url + '/tag/Sea Ice')
   await page.setViewportSize({ width: 1728, height: 1078 })
-  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page.click('.tagbar > ul > li > a:has-text("Cryosphere")')
-  await page.waitForTimeout(500)
-  await expect(page.locator('h2')).toHaveText('Cryosphere')
+  await expect(page.locator('h2')).toHaveText('Sea Ice')
 
   await page.click('a:has-text("Sea Ice Concentration")')
 
@@ -199,7 +228,7 @@ test('Check Permafrost tag -> Ground Temperature page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page.click('.tagbar > ul > li > a:has-text("Permafrost")')
+  await page.click('nav.tagbar > ul > li > a:has-text("Permafrost")')
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Permafrost')
 
@@ -228,14 +257,14 @@ test('Check Hydrology tag -> Evapotranspiration page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page
-    .locator('.tagbar > ul > li.more > button')
-    .click({ noWaitAfter: true })
-  await page.waitForSelector('.tagbar > ul > li > a:has-text("Hydrology")')
+  await page.waitForSelector('nav.tagbar > ul > li > a:has-text("Hydrology")')
 
-  await page.click('.tagbar > ul > li > a:has-text("Hydrology")')
+  await page.click('nav.tagbar > ul > li > a:has-text("Hydrology")')
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Hydrology')
+
+  // Hydrology has no explainers, so only the data X-rays section shows.
+  await expect(page.locator('main h3.title')).toHaveText(['Data X-rays'])
 
   await page.click('a:has-text("Evapotranspiration")')
 
@@ -255,18 +284,15 @@ test('Check Hydrology tag -> Evapotranspiration page', async ({ page }) => {
   await expect(page.locator('#evap-chart')).toBeVisible()
 })
 
-test('Check Terrestrial tag -> Spruce Beetles page', async ({ page }) => {
+test('Check Snow tag -> Spruce Beetles page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page
-    .locator('.tagbar > ul > li.more > button')
-    .click({ noWaitAfter: true })
-  await page.waitForSelector('.tagbar > ul > li > a:has-text("Terrestrial")')
+  await page.waitForSelector('nav.tagbar > ul > li > a:has-text("Snow")')
 
-  await page.click('.tagbar > ul > li > a:has-text("Terrestrial")')
+  await page.click('nav.tagbar > ul > li > a:has-text("Snow")')
   await page.waitForTimeout(500)
-  await expect(page.locator('h2')).toHaveText('Terrestrial')
+  await expect(page.locator('h2')).toHaveText('Snow')
 
   await page.click('a:has-text("Climate Protection from Spruce Beetles")')
 
@@ -285,56 +311,17 @@ test('Check Terrestrial tag -> Spruce Beetles page', async ({ page }) => {
   await expect(page.locator('table')).toBeVisible()
 })
 
-test('Check Programming tag -> Heating Degree Days page', async ({ page }) => {
-  await page.goto(url)
-  await page.setViewportSize({ width: 1728, height: 1078 })
-  await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page
-    .locator('.tagbar > ul > li.more > button')
-    .click({ noWaitAfter: true })
-  await page.waitForSelector('.tagbar > ul > li > a:has-text("Programming")')
-
-  await page.click('.tagbar > ul > li > a:has-text("Programming")')
-  await page.waitForTimeout(500)
-  await expect(page.locator('h2')).toHaveText('Programming')
-
-  await page.click(
-    'a:has-text("Heating Degree Days by Alaska Native Corporation")'
-  )
-
-  await page.waitForSelector(
-    'h2:has-text("Projected Change in Heating Degree Days by Alaska Native Corporation")'
-  )
-
-  await page.waitForSelector(
-    'div > p:has-text("This notebook demonstrates how to query the SNAP Data API")'
-  )
-
-  await page.waitForSelector('pre:has-text("from ardac_utils import *")')
-
-  await page.waitForSelector(
-    'pre:has-text("index id_left              name_left")'
-  )
-
-  await page.waitForSelector(
-    'pre:has-text("total_pop = sum(nc_dd_mean_pop[\'pop\'])")'
-  )
-})
-
 test('Check Temperature tag -> Temperature, CMIP6 page', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page
-    .locator('.tagbar > ul:nth-child(1) > li.more > button')
-    .click({ noWaitAfter: true })
-  await page.waitForSelector('.tagbar > ul > li > a:has-text("Temperature")')
+  await page.waitForSelector('nav.tagbar > ul > li > a:has-text("Temperature")')
 
-  await page.click('.tagbar > ul > li > a:has-text("Temperature")')
+  await page.click('nav.tagbar > ul > li > a:has-text("Temperature")')
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Temperature')
 
-  await page.click('a:has(h3:text-is("Temperature, CMIP6"))')
+  await page.click('a:has(h4:text-is("Temperature, CMIP6"))')
 
   await expect(page.locator('section > div > h2')).toHaveText(
     'Temperature, CMIP6'
@@ -354,20 +341,17 @@ test('Check Temperature tag -> Temperature, CMIP6 page', async ({ page }) => {
   await expect(page.locator('#tasmin-chart')).toBeVisible()
 })
 
-test('Check CMIP6 tag -> Precipitation, CMIP6 page', async ({ page }) => {
+test('Check Precipitation tag -> Precipitation, CMIP6 page', async ({
+  page,
+}) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page
-    .locator('.tagbar > ul > li.more > button')
-    .click({ noWaitAfter: true })
-  await page.waitForSelector('.tagbar > ul > li > a:has-text("CMIP6")')
-
-  await page.click('.tagbar > ul > li > a:has-text("CMIP6")')
+  await page.click('nav.tagbar > ul > li > a:has-text("Precipitation")')
   await page.waitForTimeout(500)
-  await expect(page.locator('h2')).toHaveText('CMIP6')
+  await expect(page.locator('h2')).toHaveText('Precipitation')
 
-  await page.click('a:has(h3:text-is("Precipitation, CMIP6"))')
+  await page.click('a:has(h4:text-is("Precipitation, CMIP6"))')
 
   await expect(page.locator('section > div > h2')).toHaveText(
     'Precipitation, CMIP6'
@@ -383,6 +367,67 @@ test('Check CMIP6 tag -> Precipitation, CMIP6 page', async ({ page }) => {
   await expect(page.locator('#scenario')).toBeVisible()
   await expect(page.locator('#month')).toBeVisible()
   await expect(page.locator('#pr-chart')).toBeVisible()
+})
+
+test('Check CUSP permafrost observations page', async ({ page }) => {
+  // Stub the CUSP API so this test does not depend on live data.
+  await page.route('**/cusp/point/**', route =>
+    route.fulfill({
+      json: {
+        type: 'FeatureCollection',
+        numberMatched: 1284,
+        numberReturned: 1,
+        features: [
+          {
+            type: 'Feature',
+            id: 'test.1',
+            geometry: { type: 'Point', coordinates: [-147.72, 64.84] },
+            properties: {
+              cusp_obs_id: 'test-1',
+              source: 'test_source',
+              citation: 'Test citation.',
+              site_id: 'TEST-SITE',
+              observation_date: '2019-08-21',
+              method_label: 'Soil Pit',
+              pf_observed_label: 'No permafrost observed',
+              thaw_depth_cm: null,
+              pf_depth_cm: null,
+              obs_limit_cm: 150,
+              quality_flags: null,
+            },
+          },
+        ],
+        quality_flag_definitions: {},
+      },
+    })
+  )
+
+  await page.goto(url + '/item/cusp-permafrost-observations')
+  await page.setViewportSize({ width: 1728, height: 1078 })
+
+  await expect(page.locator('section > div > h2')).toHaveText(
+    'The CommUnity near-Surface Permafrost (CUSP) Dataset'
+  )
+  await expect(page.locator('a:has-text("Download from Zenodo")')).toBeVisible()
+  await expect(page.locator('.layer.active')).toHaveText(
+    /Permafrost Observed\?/
+  )
+
+  await page.fill('#gimme', '64.84, -147.72')
+  await page.click('button:has-text("Get data for")')
+
+  await expect(page.locator('#cusp-nearby-observations')).toHaveText(
+    'CUSP observations near 64.84, -147.72'
+  )
+  await expect(
+    page.locator('p:has-text("1,284 CUSP observations were found")')
+  ).toBeVisible()
+  await expect(page.locator('table td:has-text("Limit: 150 cm")')).toBeVisible()
+  await expect(page.locator('a[href="#cusp-presence-absence"]')).toBeVisible()
+  await expect(page.locator('a:has-text("Download as CSV")')).toBeVisible()
+  await expect(
+    page.locator('code:has-text("test_source")').last()
+  ).toBeVisible()
 })
 
 test('Check footer', async ({ page }) => {
@@ -450,7 +495,7 @@ test('Check Umami events are sent without a full page load', async ({
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
-  await page.click('.tagbar > ul > li > a:has-text("Precipitation")')
+  await page.click('nav.tagbar > ul > li > a:has-text("Precipitation")')
   await page.waitForURL('**/tag/Precipitation')
 
   await page.click('a:has-text("Precipitation Frequency")')

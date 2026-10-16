@@ -8,7 +8,7 @@ let slug = route.params.slug
 
 const store = useStore()
 useHead({ title: store.itemBySlug(slug as Slug)?.title })
-let itemComponent: ConcreteComponent | string
+let itemComponent: ConcreteComponent | string = ''
 
 const componentFileExists = computed<boolean>(() => {
   let slugString = slug.toString()

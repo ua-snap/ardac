@@ -8,12 +8,15 @@ Install nvm on your workstation if you have not already:
 
 https://github.com/nvm-sh/nvm
 
-Then run:
+Then, from this directory, install and use the Node version in `.nvmrc`
+(Node 24) and install the packages:
 
 ```bash
-nvm use lts/hydrogen
+nvm install
 npm install
 ```
+
+Run `nvm use` in new shells to switch to it again.
 
 ### Set environment variables if necessary
 
@@ -36,6 +39,15 @@ Serve with hot reload at http://localhost:3000:
 npm run dev
 ```
 
+### Type check
+
+The dev server and build don't type check. Run this before opening a PR (CI
+runs it too):
+
+```
+npm run typecheck
+```
+
 ### Development notes
 
 #### Adding a new item
@@ -46,11 +58,13 @@ Determine a 'slug' for the item.  The slug is a unique but human-readable ID for
 2. Add any new tags for the new item to `types/tags.d.ts`
 3. Add the item in `assets/items.ts`:
     * `slug`: the slug ID
+    * `type`: `'explainer'` for a story or guide, `'xray'` for a dataset you can explore by place (tag pages list them in separate sections)
     * `title`: the 'headline'
     * `blurb`: **short** text description, single line/paragraph, no HTML please
     * `tags`: array of tags
     * `image`: image filename, corresponds to `public/previews` folder
     * `imageAlt`: alt text for accessibility
+    * `people`: optional, the people credited for the item (see below)
 
 The item is now available for use in static layouts and will be included in any pages that display all results for a tag.  Static examples:
 
@@ -65,10 +79,10 @@ The item is now available for use in static layouts and will be included in any 
 <ItemTextPicture slug="indicator-dw" />
 ````
 
-To build the actual content for the item, add a Vue component in `components/global` named according to the slug pattern in CamelCase, i.e. `map-permafrost` would become `MapPermafrost`. From the command line in the root of the project directory:
+To build the actual content for the item, add a Vue component in `components/global` named according to the slug pattern in CamelCase, i.e. `sea-ice-concentration` would become `SeaIceConcentration`. From the command line in the root of the project directory:
 
 ```bash
-npx nuxi add component global/MapPermafrost
+npx nuxi add component global/SeaIceConcentration
 ```
 
 ...which will add a Vue SFC file in the right place. Now, that component can be accessed by clicking on the item you just created.
@@ -81,28 +95,26 @@ When adding an item, consider if you should tag a person with the bio brief. The
 - It's a new thing
 - The people you'd tag created the data or tech. (If SNAP techs just do QA/QC and ingest/prep, we would not tag them; same for programmers who worked on features).
 
-Use the `Bios` component, for example,
+List the people in the item's `people` field in `assets/items.ts`, in the order the item credits them:
 
-`<Bios :people="['Hajo Eicken', 'Scott Rupp']" />`
+```ts
+people: ['Hajo Eicken', 'Andy Mahoney'],
+```
+
+Then show them at the end of the item's content component with the `Bios` component, which reads that list:
+
+`<Bios slug="landfast-sea-ice" />`
+
+The People page builds each person's list of items from the same field, so there's nothing to add there.
 
 When adding someone new:
 
 - add an image to `/public/images/people`
 - add them to the `types/people.d.ts`
-- add the bio itself in `assets/bios.ts`
-- add the person to the `/people` page
+- add the bio itself in `assets/bios.ts`, with a `role` (job title and organization) if you know it
 
-#### Converting Jupyter notebooks to items
+The People page lists everyone in `assets/bios.ts`, sorted by last name.
 
-Follow the pattern used in the `global/NotebookPermObsTemp` component. To transform the HTML before copy/pasting it into the slot, activate a Conda environment with Jupyter and `nbconvert` and `tidy` (probably already installed in MacOS) then:
-
-```bash
-jupyter nbconvert --to html --template basic notebook.ipynb
-tidy -i -m notebook.html
-sed -i '' 's/class\=\"input\"//' notebook.html
-```
-
-This does a bit of cleanup and removes one class that will clash with Bulma. Finally, copy paste everything in the `<body>` tag of the cleaned HTML into the `<slot>` in the `NotebookTemplate` component.
 
 ## Production
 

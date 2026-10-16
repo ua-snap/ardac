@@ -28,6 +28,11 @@ export const useStore = defineStore('store', () => {
     return items.find(item => item.slug === slug)!
   }
 
+  // Items a person worked on, in registry order.
+  const itemsByPerson = (person: Person): Item[] => {
+    return items.filter((item: Item) => item.people?.includes(person))
+  }
+
   // True if the item has an implemented component.
   // There's code duplication between this and pages/item/[slug]
   // but this is probably interim code -- consider refactoring
@@ -51,6 +56,7 @@ export const useStore = defineStore('store', () => {
     totalItemCount,
     sortedFilteredItems,
     itemBySlug,
+    itemsByPerson,
     itemHasComponent,
   }
 })

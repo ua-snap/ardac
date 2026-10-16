@@ -407,7 +407,7 @@ onUnmounted(() => {
         <DownloadLinks endpoint="/landfastice/point" />
       </div>
       <GetAndUseData apiUrl="https://earthmaps.io/landfastice/" />
-      <Bios :people="['Andy Mahoney', 'Hajo Eicken']" />
+      <Bios slug="landfast-sea-ice" />
     </div>
   </section>
 </template>

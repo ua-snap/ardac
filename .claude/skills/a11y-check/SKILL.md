@@ -26,11 +26,10 @@ pa11y-ci is a global install, not a project dependency. Check with
 `npm install -g pa11y-ci` (it downloads its own Chromium) rather than installing
 it yourself.
 
-pa11y-ci 5 needs Node 20 or newer; under Node 18 it crashes with
-`ReferenceError: File is not defined`. With nvm, a global install belongs to the
-Node version that was active when it was installed, so run it under that
-version, e.g. `PATH=$HOME/.nvm/versions/node/v24.21.0/bin:$PATH pa11y-ci`
-(check `ls ~/.nvm/versions/node` for what's installed).
+With nvm, a global install belongs to the Node version that was active when it
+was installed. Run `nvm use` in `explorer/` first so pa11y-ci runs under the
+project's Node 24 from `.nvmrc`; if it's missing there, it was installed under
+another version.
 
 If it fails with `Could not find Chrome (ver. ...)`, Puppeteer's own Chrome
 wasn't downloaded. Either point it at an installed Chrome with

@@ -62,19 +62,15 @@ const noscriptHtml = `
     of Alaska Fairbanks and other institutions, these stories help explain and
     explore the context and implications of various aspects of these datasets.
   </p>
-  <p>
-    Finally, we also include guides on how to write programs that use the
-    <a href="https://earthmaps.io">Data API</a> that drives this application.
-    Interactive online computational notebooks can be run in the browser, and
-    edited to help you get started with interacting with climate data via
-    Python.
-  </p>
 </section>
 `
 
 import { metas } from './utils/metas'
 import items from './assets/items'
 import _ from 'lodash'
+import { fileURLToPath } from 'node:url'
+
+const stylesDir = fileURLToPath(new URL('./assets/styles/', import.meta.url))
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -82,6 +78,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: [
+        '/item/cusp-permafrost-observations',
         '/item/indicator-su',
         '/item/indicator-dw',
         '/item/indicator-hd',
@@ -94,15 +91,9 @@ export default defineNuxtConfig({
         '/item/thawing-index',
         '/item/freezing-index',
         '/item/story-arctic-climate-data-node',
-        '/item/notebook-corporation-hdd',
-        '/item/notebook-raster-database',
-        '/item/notebook-frost-depth',
-        '/item/notebook-design-freezing-index',
-        '/item/notebook-design-thawing-index',
         '/item/climate-beetle-protection',
         '/item/landfast-sea-ice',
         '/item/sea-ice-concentration',
-        '/item/notebook-sea-ice-traffic',
         '/item/places-and-polygons',
         '/item/hydrology-evap',
         '/item/hydrology-glacier-melt',
@@ -110,30 +101,20 @@ export default defineNuxtConfig({
         '/item/hydrology-runoff',
         '/item/hydrology-sm',
         '/item/hydrology-snow-melt',
-        '/item/lightning-climatology',
         '/item/permafrost-magt',
         '/item/permafrost-base-top',
         '/item/permafrost-talik',
-        '/item/map-permafrost',
-        '/item/notebook-perm-obs-temp',
         '/item/indicator-r10mm',
         '/item/indicator-cwd',
         '/item/indicator-cdd',
-        '/item/precipitation-2km-cmip5',
         '/item/precipitation-frequency',
         '/item/indicator-rx1day',
         '/item/indicator-rx5day',
-        '/item/notebook-design-discharge',
-        '/item/notebook-precip-poly',
-        '/item/temperature-cmip5',
         '/item/temperature-cmip6',
         '/item/temperature-cmip6-downscaled',
-        '/item/notebook-era5-cds-api',
         '/item/elevation',
-        '/item/notebook-fmz-flammability',
         '/item/alfresco-flammability',
         '/item/alfresco-vegetation',
-        '/item/wildfire-combined',
         '/item/wind-cmip6',
         '/item/oceanography-cmip6',
         '/item/precipitation-cmip6',
@@ -154,24 +135,20 @@ export default defineNuxtConfig({
         '/item/story-climate-indicators',
         '/item/story-fire-prone-conditions',
         '/item/story-cold-snap-1989',
-        '/tag/Climate',
-        '/tag/Programming',
-        '/tag/Terrestrial',
-        '/tag/Cryosphere',
         '/tag/GIS',
         '/tag/Hydrology',
-        '/tag/Lightning',
         '/tag/Wildfire',
         '/tag/Permafrost',
         '/tag/Precipitation',
         '/tag/Temperature',
-        '/tag/CMIP6',
         '/tag/Wind',
         '/tag/Oceanography',
         '/tag/Sea Ice',
         '/tag/Solar Radiation',
         '/tag/Snow',
         '/tag/Story',
+        '/tag/Humidity',
+        '/tag/Observation',
       ],
     },
   },
@@ -181,18 +158,23 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
+          // Bulma 1.0.4, the latest release, still uses the deprecated Sass
+          // if() syntax. quietDeps hides warnings from code Sass reaches
+          // through Vite's resolver, such as node_modules or the ~ alias, so
+          // our own partials are loaded by absolute path to keep their
+          // warnings visible.
+          quietDeps: true,
           additionalData: `
-            @use "~/assets/styles/_variables.scss" as *;
-            @import "~/node_modules/bulma/sass/utilities/mixins.sass";
+            @use "${stylesDir}_variables.scss" as *;
+            @use "${stylesDir}_bulma-setup.scss" as *;
           `,
         },
       },
     },
   },
   modules: ['@pinia/nuxt'],
-  typescript: {
-    typeCheck: true,
-  },
+  // Type checking runs as `npm run typecheck` (and in CI) rather than inside
+  // the Vite build, where it races Nitro's generation of .nuxt/types.
   runtimeConfig: {
     public: {
       geoserverUrl:
@@ -207,7 +189,7 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       noscript: [
         {
-          children: noscriptHtml,
+          innerHTML: noscriptHtml,
         },
       ],
       title: 'Arctic Data Collaborative: ARDAC',

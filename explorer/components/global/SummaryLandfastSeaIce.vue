@@ -223,7 +223,7 @@ mapStore.setLegendItems(mapId, legend)
         </blockquote>
       </div>
     </div>
-    <Bios :people="['Hajo Eicken', 'Andy Mahoney']" />
+    <Bios slug="summary-landfast-sea-ice" />
   </section>
 </template>
 

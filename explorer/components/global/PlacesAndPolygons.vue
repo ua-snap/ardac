@@ -139,14 +139,6 @@ const getFlagEmoji = (countryCode: string) => {
             <li>Bjørnøya, Svalbard, Norway</li>
           </ul>
 
-          <p>
-            &#x2192; see an example:
-            <NuxtLink to="/item/notebook-perm-obs-temp"
-              >Combine and compare permafrost observations with modeled baseline
-              air temperature data using SNAP Data API point location
-              queries.</NuxtLink
-            >
-          </p>
 
           <h4 class="title is-5 mt-6 mb-2">Point Location Features</h4>
           <p>
@@ -245,15 +237,6 @@ const getFlagEmoji = (countryCode: string) => {
             <li>Matanuska-Susitna Borough</li>
             <li>Vuntut Gwitchin First Nation Traditional Territory</li>
           </ul>
-          <p>
-            &#x2192; see an example:
-            <NuxtLink to="/item/notebook-precip-poly"
-              >Fetch a polygon from the SNAP Data API, subset historical
-              baseline daily precipitation data using the polygon, compute
-              statistics, and compare results with USGS streamgage
-              data.</NuxtLink
-            >
-          </p>
 
           <h4 class="title is-5 mt-6 mb-2">Polygon Boundary Features</h4>
           <p>
@@ -376,7 +359,7 @@ table caption {
 }
 
 .blurbs .columns .column:first-of-type {
-  border-right: 1px dashed $grey-lighter;
+  border-right: 1px dashed #dbdbdb; // Bulma 0.9's $grey-lighter
 }
 
 @media (max-width: 1023px) {

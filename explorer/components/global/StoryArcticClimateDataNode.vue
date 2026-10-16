@@ -80,25 +80,21 @@ onMounted(() => {
 
 <template>
   <section class="section">
-    <div class="content clamp">
+    <div class="clamp block">
       <h2 class="title is-2">
         Introducing the <span>Arctic Climate Data Node</span>
       </h2>
       <h3 class="subtitle is-3">
         Unlocking research potential for CMIP6 climate model data
       </h3>
+    </div>
 
+    <div class="content clamp">
       <p class="is-size-4">
         Access to large distributed data volumes has been a limiting factor for
         researchers in Alaska, which puts them at a disadvantage. Establishing
         the Arctic Climate Data Node (ACDN) at UAF provides never&ndash;before
         realized local access to cutting-edge global climate model data.
-      </p>
-
-      <p class="is-size-4">
-        <NuxtLink to="/tag/CMIP6"
-          >&#x2192; browse available CMIP6 ACDN data on this site</NuxtLink
-        >
       </p>
 
       <div class="is-size-5">
@@ -265,9 +261,6 @@ onMounted(() => {
         <p>
           Some data listed below are not fully integrated into the web site, but
           work is in progress to add all data assets.
-          <NuxtLink to="/tag/CMIP6"
-            >&#x2192; browse available CMIP6 ACDN data on this site</NuxtLink
-          >
         </p>
       </div>
       <div class="tabs is-large">
@@ -379,174 +372,182 @@ onMounted(() => {
       <div v-if="activeTab === 'scenarios'">
         <div class="content is-size-5">
           <table>
-            <tr>
-              <th>SSP</th>
-              <th>Description</th>
-            </tr>
-            <tr></tr>
-            <tr>
-              <td>SSP126</td>
-              <td>
-                This pathway represents a sustainable world where global
-                population peaks around 2050 and declines thereafter, leading to
-                rapid improvements in education, health, and economic
-                development. It emphasizes low material consumption, reduced
-                greenhouse gas emissions, and efficient resource use. Policies
-                prioritize environmental sustainability, social equity, and
-                international cooperation. Renewable energy sources dominate the
-                energy mix, and technologies for carbon dioxide removal are
-                widely deployed to achieve net-negative emissions by the end of
-                the century.
-              </td>
-            </tr>
-            <tr>
-              <td>SSP245</td>
-              <td>
-                SSP245 depicts a future where the world follows a moderate path
-                of development with uneven progress across regions. Population
-                growth continues, albeit at a slower pace, and income inequality
-                persists. Economic growth is driven by a combination of fossil
-                fuels and renewable energy sources, resulting in moderate
-                increases in greenhouse gas emissions. Technological progress is
-                moderate, and adaptation measures are implemented to address
-                climate change impacts. International cooperation varies, with
-                some efforts to mitigate emissions but limited success in
-                achieving ambitious climate targets.
-              </td>
-            </tr>
-            <tr>
-              <td>SSP370</td>
-              <td>
-                In this scenario, the world experiences a fragmented and
-                regionalized future characterized by high population growth,
-                slow economic development in some regions, and geopolitical
-                tensions. Fossil fuels remain the dominant energy source,
-                leading to substantial greenhouse gas emissions and
-                environmental degradation. Efforts to address climate change are
-                hindered by geopolitical conflicts, limited international
-                cooperation, and inadequate mitigation policies. Adaptation
-                measures are primarily reactive and insufficient to prevent
-                significant climate impacts, resulting in widespread
-                vulnerabilities and disruptions.
-              </td>
-            </tr>
-            <tr>
-              <td>SSP585</td>
-              <td>
-                SSP585 represents a future where the world pursues a pathway of
-                high fossil fuel use and rapid economic growth, leading to
-                continued population growth and increasing demand for energy and
-                resources. Despite technological advancements, efforts to
-                mitigate greenhouse gas emissions are limited, resulting in a
-                high-forcing scenario with extensive climate change impacts.
-                Environmental degradation, biodiversity loss, and social
-                inequalities escalate, exacerbating global challenges.
-                Adaptation measures are reactive and often inadequate, leading
-                to significant disruptions and irreversible damage to ecosystems
-                and societies.
-              </td>
-            </tr>
+            <thead>
+              <tr>
+                <th>SSP</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr></tr>
+              <tr>
+                <td>SSP126</td>
+                <td>
+                  This pathway represents a sustainable world where global
+                  population peaks around 2050 and declines thereafter, leading to
+                  rapid improvements in education, health, and economic
+                  development. It emphasizes low material consumption, reduced
+                  greenhouse gas emissions, and efficient resource use. Policies
+                  prioritize environmental sustainability, social equity, and
+                  international cooperation. Renewable energy sources dominate the
+                  energy mix, and technologies for carbon dioxide removal are
+                  widely deployed to achieve net-negative emissions by the end of
+                  the century.
+                </td>
+              </tr>
+              <tr>
+                <td>SSP245</td>
+                <td>
+                  SSP245 depicts a future where the world follows a moderate path
+                  of development with uneven progress across regions. Population
+                  growth continues, albeit at a slower pace, and income inequality
+                  persists. Economic growth is driven by a combination of fossil
+                  fuels and renewable energy sources, resulting in moderate
+                  increases in greenhouse gas emissions. Technological progress is
+                  moderate, and adaptation measures are implemented to address
+                  climate change impacts. International cooperation varies, with
+                  some efforts to mitigate emissions but limited success in
+                  achieving ambitious climate targets.
+                </td>
+              </tr>
+              <tr>
+                <td>SSP370</td>
+                <td>
+                  In this scenario, the world experiences a fragmented and
+                  regionalized future characterized by high population growth,
+                  slow economic development in some regions, and geopolitical
+                  tensions. Fossil fuels remain the dominant energy source,
+                  leading to substantial greenhouse gas emissions and
+                  environmental degradation. Efforts to address climate change are
+                  hindered by geopolitical conflicts, limited international
+                  cooperation, and inadequate mitigation policies. Adaptation
+                  measures are primarily reactive and insufficient to prevent
+                  significant climate impacts, resulting in widespread
+                  vulnerabilities and disruptions.
+                </td>
+              </tr>
+              <tr>
+                <td>SSP585</td>
+                <td>
+                  SSP585 represents a future where the world pursues a pathway of
+                  high fossil fuel use and rapid economic growth, leading to
+                  continued population growth and increasing demand for energy and
+                  resources. Despite technological advancements, efforts to
+                  mitigate greenhouse gas emissions are limited, resulting in a
+                  high-forcing scenario with extensive climate change impacts.
+                  Environmental degradation, biodiversity loss, and social
+                  inequalities escalate, exacerbating global challenges.
+                  Adaptation measures are reactive and often inadequate, leading
+                  to significant disruptions and irreversible damage to ecosystems
+                  and societies.
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
       <div v-if="activeTab === 'variables'">
         <div class="content is-size-5">
           <table>
-            <tr>
-              <th scope="col">Variable</th>
-              <th scope="col">Short name</th>
-              <th scope="col" style="min-width: 15rem">Temporal frequency</th>
-            </tr>
-            <tr>
-              <td>Near surface air temperature</td>
-              <td><code>tas</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Precipitation</td>
-              <td><code>pr</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Maximum near surface air temperature</td>
-              <td><code>tasmax</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Minimum near surface air temperature</td>
-              <td><code>tasmin</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Surface air temperature</td>
-              <td><code>ts</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Near-surface eastward wind</td>
-              <td><code>uas</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Near-surface northward wind</td>
-              <td><code>vas</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Cloud area fraction</td>
-              <td><code>clt</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Evaporation, including sublimation and transpiration</td>
-              <td><code>evspsbl</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Surface upward latent heat flux</td>
-              <td><code>hfls</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Surface upward sensible heat flux</td>
-              <td><code>hfss</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Sea level pressure</td>
-              <td><code>psl</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Surface downwelling longwave radiation</td>
-              <td><code>rlds</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Surface downwelling shortwavewave radiation</td>
-              <td><code>rsds</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Surface wind</td>
-              <td><code>sfcWind</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Precipitation as snow</td>
-              <td><code>prsn</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Snow water equivalent</td>
-              <td><code>snw</code></td>
-              <td>Monthly</td>
-            </tr>
-            <tr>
-              <td>Sea ice concentration</td>
-              <td><code>siconc</code></td>
-              <td>Monthly</td>
-            </tr>
+            <thead>
+              <tr>
+                <th scope="col">Variable</th>
+                <th scope="col">Short name</th>
+                <th scope="col" style="min-width: 15rem">Temporal frequency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Near surface air temperature</td>
+                <td><code>tas</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Precipitation</td>
+                <td><code>pr</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Maximum near surface air temperature</td>
+                <td><code>tasmax</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Minimum near surface air temperature</td>
+                <td><code>tasmin</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Surface air temperature</td>
+                <td><code>ts</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Near-surface eastward wind</td>
+                <td><code>uas</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Near-surface northward wind</td>
+                <td><code>vas</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Cloud area fraction</td>
+                <td><code>clt</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Evaporation, including sublimation and transpiration</td>
+                <td><code>evspsbl</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Surface upward latent heat flux</td>
+                <td><code>hfls</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Surface upward sensible heat flux</td>
+                <td><code>hfss</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Sea level pressure</td>
+                <td><code>psl</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Surface downwelling longwave radiation</td>
+                <td><code>rlds</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Surface downwelling shortwavewave radiation</td>
+                <td><code>rsds</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Surface wind</td>
+                <td><code>sfcWind</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Precipitation as snow</td>
+                <td><code>prsn</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Snow water equivalent</td>
+                <td><code>snw</code></td>
+                <td>Monthly</td>
+              </tr>
+              <tr>
+                <td>Sea ice concentration</td>
+                <td><code>siconc</code></td>
+                <td>Monthly</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -650,7 +651,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <Bios :people="['Scott Rupp', 'Bruce Crevensten']" />
+    <Bios slug="story-arctic-climate-data-node" />
   </section>
 </template>
 

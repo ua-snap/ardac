@@ -708,7 +708,7 @@ onMounted(loadCommunityData)
         </li>
       </GetAndUseData>
 
-      <Bios :people="['Anjali Shah', 'Rick Thoman', 'Charlie Parr']" />
+      <Bios slug="story-cold-snap-1989" />
     </div>
   </section>
 </template>

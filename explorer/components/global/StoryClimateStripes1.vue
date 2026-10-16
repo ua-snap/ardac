@@ -254,29 +254,27 @@
         and striking.
       </p>
       <p>It also allows people to see the effect in their specific place.</p>
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <div class="tile is-child">
-            <p>My Region</p>
-            <img
-              src="assets/images/ClimateStripesStory1/ArcticStripesWaterisStripes.png"
-              alt="Circular map of the Arctic with climate stripes filling the ocean."
-            />
-          </div>
-          <div class="tile is-child">
-            <p>My State</p>
-            <img
-              src="assets/images/ClimateStripesStory1/AKStripesAKShaped.png"
-              alt="Climate stripes filling the outline of Alaska."
-            />
-          </div>
-          <div class="tile is-child">
-            <p>My City</p>
-            <img
-              src="assets/images/ClimateStripesStory1/Fairbanks Climate Stripes 2022-01 (square).png"
-              alt="Climate stripes for Fairbanks, Alaska, in a square format."
-            />
-          </div>
+      <div class="columns is-gapless">
+        <div class="column">
+          <p>My Region</p>
+          <img
+            src="assets/images/ClimateStripesStory1/ArcticStripesWaterisStripes.png"
+            alt="Circular map of the Arctic with climate stripes filling the ocean."
+          />
+        </div>
+        <div class="column">
+          <p>My State</p>
+          <img
+            src="assets/images/ClimateStripesStory1/AKStripesAKShaped.png"
+            alt="Climate stripes filling the outline of Alaska."
+          />
+        </div>
+        <div class="column">
+          <p>My City</p>
+          <img
+            src="assets/images/ClimateStripesStory1/Fairbanks Climate Stripes 2022-01 (square).png"
+            alt="Climate stripes for Fairbanks, Alaska, in a square format."
+          />
         </div>
       </div>
       <p>
@@ -296,6 +294,6 @@
         >.
       </p>
     </div>
-    <Bios :people="['Mike DeLue']" />
+    <Bios slug="story-climate-stripes-1" />
   </section>
 </template>

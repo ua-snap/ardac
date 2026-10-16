@@ -33,6 +33,16 @@ export const useDataStore = defineStore('data', () => {
   // data we will get from the API for different ARDAC items.
   const apiData: Ref<Record<string, any>> = ref({})
   const dataErrors: Ref<Record<string, boolean>> = ref({})
+  const cuspObservations: Ref<CuspObservationFeatureCollection | null> =
+    ref(null)
+  const cuspObservationsLoading = ref(false)
+  const cuspObservationsError = ref<string | null>(null)
+
+  function clearCuspObservations() {
+    cuspObservations.value = null
+    cuspObservationsLoading.value = false
+    cuspObservationsError.value = null
+  }
 
   const fetchData = async (
     dataset: string,
@@ -67,9 +77,59 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
+  // Incremented on every request so a slow response for a previous location
+  // can't overwrite the results for the current one.
+  let cuspRequestId = 0
+
+  async function fetchCuspObservations() {
+    const location = placesStore.latLng
+    const requestId = ++cuspRequestId
+
+    clearCuspObservations()
+
+    if (!location) return
+
+    cuspObservationsLoading.value = true
+
+    try {
+      const response = await fetch(
+        `${runtimeConfig.public.apiUrl}/cusp/point/${location.lat}/${location.lng}`
+      )
+      if (requestId !== cuspRequestId) return
+
+      if (response.status >= 400 && response.status < 500) {
+        cuspObservationsError.value =
+          'CUSP observations are not available for this location. Try a location within the area covered by the map above.'
+        return
+      }
+
+      if (!response.ok) {
+        throw new Error(`CUSP request failed with status ${response.status}`)
+      }
+
+      const observations =
+        (await response.json()) as CuspObservationFeatureCollection
+      if (requestId !== cuspRequestId) return
+      cuspObservations.value = observations
+    } catch {
+      if (requestId !== cuspRequestId) return
+      cuspObservationsError.value =
+        'The CUSP data service is not responding right now. Please try again later.'
+    } finally {
+      if (requestId === cuspRequestId) {
+        cuspObservationsLoading.value = false
+      }
+    }
+  }
+
   return {
     fetchData,
     apiData,
     dataErrors,
+    cuspObservations,
+    cuspObservationsLoading,
+    cuspObservationsError,
+    clearCuspObservations,
+    fetchCuspObservations,
   }
 })

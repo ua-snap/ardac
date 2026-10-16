@@ -343,7 +343,7 @@ onUnmounted(() => {
           </p>
         </template>
       </GetAndUseData>
-      <Bios :people="['Chris Waigl', 'Charlie Parr']" />
+      <Bios slug="era5-wrf-xray" />
     </div>
   </section>
 </template>
