@@ -190,7 +190,7 @@ mapStore.setLegendItems(mapId, legend)
         color each observation by whether permafrost was observed or by the
         field method that was used.
       </p>
-      <MapBlock :mapId="mapId" class="mb-6">
+      <MapBlock :mapId="mapId" crs="EPSG:3857" class="mb-6">
         <template v-slot:layers>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>

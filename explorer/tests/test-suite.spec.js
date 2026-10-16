@@ -401,6 +401,69 @@ test('Check CUSP permafrost observations page', async ({ page }) => {
   ).toBeVisible()
 })
 
+test('Check CUSP USGS basemap and close zoom', async ({ page }) => {
+  const basemapRequests = []
+  const observationRequests = []
+  page.on('request', request => {
+    const requestUrl = new URL(request.url())
+    if (requestUrl.hostname === 'basemap.nationalmap.gov') {
+      basemapRequests.push(requestUrl)
+    }
+    if (requestUrl.searchParams.get('layers') === 'cusp_observations') {
+      observationRequests.push(requestUrl)
+    }
+  })
+
+  await page.goto(url + '/item/cusp-permafrost-observations')
+  const map = page.locator('#cusp_pf_binary')
+  await expect(map).toHaveAccessibleName('Map of Permafrost Observed?')
+  await expect(
+    map.getByRole('link', { name: 'USGS The National Map' })
+  ).toBeVisible()
+
+  const zoomIn = map.getByRole('button', { name: 'Zoom in', exact: true })
+  // Exercise the real zoom control, including keyboard access, to the limit.
+  for (let zoom = 5; zoom <= 16; zoom++) {
+    await zoomIn.focus()
+    await zoomIn.press('Enter')
+    await expect
+      .poll(() =>
+        basemapRequests.some(requestUrl =>
+          requestUrl.pathname.includes(`/USGSTopo/MapServer/tile/${zoom}/`)
+        )
+      )
+      .toBeTruthy()
+    await expect(map.locator('.leaflet-map-pane')).not.toHaveClass(
+      /leaflet-zoom-anim/
+    )
+  }
+  await expect(zoomIn).toHaveAttribute('aria-disabled', 'true')
+
+  // The observation overlay must use the basemap's Web Mercator projection.
+  await expect
+    .poll(() =>
+      observationRequests.some(
+        requestUrl => requestUrl.searchParams.get('crs') === 'EPSG:3857'
+      )
+    )
+    .toBeTruthy()
+
+  await page.getByRole('button', { name: 'Observation Method' }).focus()
+  await page.getByRole('button', { name: 'Observation Method' }).press('Enter')
+  await expect(map).toHaveAccessibleName('Map of Observation Method')
+  await expect
+    .poll(() =>
+      observationRequests.some(
+        requestUrl =>
+          requestUrl.searchParams.get('styles')?.trim() ===
+            'cusp_observation_method' &&
+          requestUrl.searchParams.get('crs') === 'EPSG:3857'
+      )
+    )
+    .toBeTruthy()
+  await expect(map.locator('.legend')).toContainText('Ground Probe')
+})
+
 test('Check footer', async ({ page }) => {
   await page.goto(url)
   await page.setViewportSize({ width: 1728, height: 1078 })
