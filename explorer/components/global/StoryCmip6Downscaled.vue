@@ -299,7 +299,7 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
           >downscaled precipitation</NuxtLink
         >.
       </p>
-      <Bios :people="['Jeremy Littell', 'Craig Stephenson', 'Josh Paul']" />
+      <Bios slug="story-cmip6-downscaled" />
     </div>
   </section>
 </template>

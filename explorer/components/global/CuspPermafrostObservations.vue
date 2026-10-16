@@ -500,6 +500,8 @@ mapStore.setLegendItems(mapId, legend)
         point. This matters when joining CUSP to environmental rasters,
         especially coarse climate, soil, or surface water layers.
       </p>
+
+      <Bios slug="cusp-permafrost-observations" />
     </div>
   </section>
 </template>

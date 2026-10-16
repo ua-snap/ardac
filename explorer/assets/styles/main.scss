@@ -42,6 +42,42 @@ body {
   }
 }
 
+// Person cards on the People page and item pages. Bulma's grid fills each
+// row with columns at least this wide; min() keeps one column from
+// overflowing a phone screen, and auto-fill keeps a lone card from
+// stretching across the page.
+.people-grid {
+  --bulma-grid-column-min: min(100%, 24rem);
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(var(--bulma-grid-column-min), 1fr)
+  );
+}
+
+// A person card fills its grid cell, so cards in a row share a height.
+.person-card {
+  height: 100%;
+  padding: 1rem;
+  @include tablet {
+    padding: 1.25rem 1.5rem;
+  }
+  background-color: $white-lighter;
+  border: 1px solid $white-darker;
+  border-radius: 0.5rem;
+  line-height: 1.5;
+}
+
+// Smaller photos on phones leave room for the name beside them.
+.person-card-photo {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  @include tablet {
+    width: 96px;
+    height: 96px;
+  }
+}
+
 .bling {
   background-color: #f1ef93;
 }

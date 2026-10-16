@@ -233,7 +233,7 @@ onUnmounted(() => {
       </div>
       <GetAndUseDataBeetle />
     </div>
-    <Bios :people="['Nancy Fresco', 'Kyle Redilla']" />
+    <Bios slug="climate-beetle-protection" />
   </section>
 </template>
 

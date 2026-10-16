@@ -52,6 +52,18 @@ test('Check people page', async ({ page }) => {
   await page.waitForSelector(
     'p:has-text("I am an expert in Alaska climatology, climate variability and change, dynamical downscaling, and regional climate.")'
   )
+
+  // The first card invites collaborators to get in touch.
+  const invite = page.locator('.people-grid .cell').first()
+  await expect(invite.locator('h3')).toHaveText('YOU!!')
+  await expect(
+    invite.locator('a[href="mailto:uaf-snap-data-tools@alaska.edu"]')
+  ).toBeVisible()
+
+  // Cards show a role and link to the items each person worked on.
+  const fresco = page.locator('#nancy-fresco')
+  await expect(fresco.locator('.role')).toHaveText('Network Coordinator, SNAP')
+  await expect(fresco.locator('a:has-text("Flammability")')).toBeVisible()
 })
 
 test('Check Climate Stripes story page', async ({ page }) => {
@@ -99,6 +111,14 @@ test('Check 1989 Cold Snap story page', async ({ page }) => {
 
   await expect(page.locator('table >> text=Nome')).toBeVisible()
   await expect(page.locator('table >> text=-54°F')).toBeVisible()
+
+  // Names under "People behind this work" link to their People page cards.
+  await expect(
+    page.locator('h3:has-text("People behind this work")')
+  ).toBeVisible()
+  await page.click('h4 > a:has-text("Rick Thoman")')
+  await expect(page).toHaveURL(/\/people#rick-thoman$/)
+  await expect(page.locator('#rick-thoman')).toBeInViewport()
 })
 
 test('Check Temperature tag -> Summer Days page', async ({ page }) => {
@@ -110,6 +130,12 @@ test('Check Temperature tag -> Summer Days page', async ({ page }) => {
   await page.click('nav.tagbar > ul > li > a:has-text("Temperature")')
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Temperature')
+
+  // Explainers come first, then data X-rays in alphabetical order.
+  await expect(page.locator('main h3.title')).toHaveText([
+    'Explainers',
+    'Data X-rays',
+  ])
 
   await page.click('a:has-text("Summer Days")')
 
@@ -237,6 +263,9 @@ test('Check Hydrology tag -> Evapotranspiration page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Hydrology')
 
+  // Hydrology has no explainers, so only the data X-rays section shows.
+  await expect(page.locator('main h3.title')).toHaveText(['Data X-rays'])
+
   await page.click('a:has-text("Evapotranspiration")')
 
   await expect(page.locator('section > div > h2')).toHaveText(
@@ -292,7 +321,7 @@ test('Check Temperature tag -> Temperature, CMIP6 page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Temperature')
 
-  await page.click('a:has(h3:text-is("Temperature, CMIP6"))')
+  await page.click('a:has(h4:text-is("Temperature, CMIP6"))')
 
   await expect(page.locator('section > div > h2')).toHaveText(
     'Temperature, CMIP6'
@@ -322,7 +351,7 @@ test('Check Precipitation tag -> Precipitation, CMIP6 page', async ({
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Precipitation')
 
-  await page.click('a:has(h3:text-is("Precipitation, CMIP6"))')
+  await page.click('a:has(h4:text-is("Precipitation, CMIP6"))')
 
   await expect(page.locator('section > div > h2')).toHaveText(
     'Precipitation, CMIP6'

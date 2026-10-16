@@ -274,7 +274,7 @@ onUnmounted(() => {
           </blockquote>
         </li>
       </GetAndUseData>
-      <Bios :people="['John Walsh']" />
+      <Bios slug="sea-ice-concentration" />
     </div>
   </section>
 </template>

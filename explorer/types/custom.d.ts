@@ -1,15 +1,24 @@
+// An explainer tells a story or explains a topic; an xray lets you explore
+// a dataset's maps, charts and downloads.
+type ItemType = 'explainer' | 'xray'
+
 interface Item {
   slug: Slug
+  type: ItemType
   title: string
   blurb: string
   tags: Tag[]
   image?: string
   imageAlt?: string
   priority?: number
+  // People who made the item, in the order its page credits them.
+  people?: Person[]
 }
 
 interface Bio {
   person: Person
+  // Job title and organization, shown under the name.
+  role?: string
   image: string
   blurb: string
 }
