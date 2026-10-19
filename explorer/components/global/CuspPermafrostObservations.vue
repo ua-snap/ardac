@@ -121,7 +121,7 @@ const layers: MapLayer[] = [
     id: 'cusp_method',
     title: 'Observation Method',
     wmsLayerName: 'cusp_observations',
-    style: ' cusp_observation_method',
+    style: 'cusp_observation_method',
     legend: 'cusp_observation',
   },
 ]
