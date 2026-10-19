@@ -232,6 +232,15 @@ test('Check Permafrost tag -> Ground Temperature page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Permafrost')
 
+  // CUSP is a collaboration, so it sits above the data X-rays.
+  await expect(page.locator('main h3.title')).toHaveText([
+    /Collaborations/,
+    'Data X-rays',
+  ])
+  await expect(page.locator('.collaboration h4')).toHaveText(
+    'CUSP: CommUnity near-Surface Permafrost Observations'
+  )
+
   await page.click('a:has-text("Ground Temperature")')
 
   await expect(page.locator('section > div > h2')).toHaveText(

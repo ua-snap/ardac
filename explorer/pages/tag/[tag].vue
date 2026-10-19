@@ -7,24 +7,28 @@ const route = useRoute()
 let tag = route.params.tag as Tag
 useHead({ title: tag })
 
-// Explainers keep their registry order. X-rays are alphabetical so a long
-// list is easy to scan and pairs like "Summer Days" and "Summer Days, CMIP6"
-// sit together.
+// Collaborations and explainers keep their registry order. X-rays are
+// alphabetical so a long list is easy to scan and pairs like "Summer Days"
+// and "Summer Days, CMIP6" sit together.
 const tagItems: Item[] = items.filter((item: Item) => item.tags?.includes(tag))
+const collaborations = tagItems.filter(item => item.type === 'collaboration')
 const explainers = tagItems.filter(item => item.type === 'explainer')
 const xrays = tagItems
   .filter(item => item.type === 'xray')
   .sort((a, b) => a.title.localeCompare(b.title))
 
-// For example, "7 explainers and 17 data X-rays".
+// For example, "1 collaboration and 3 data X-rays" or "7 explainers and 17
+// data X-rays".
 const count = (n: number, one: string, many: string) =>
   `${n} ${n === 1 ? one : many}`
-const summary = [
-  explainers.length && count(explainers.length, 'explainer', 'explainers'),
-  xrays.length && count(xrays.length, 'data X-ray', 'data X-rays'),
-]
-  .filter(Boolean)
-  .join(' and ')
+const summary = new Intl.ListFormat('en').format(
+  [
+    collaborations.length &&
+      count(collaborations.length, 'collaboration', 'collaborations'),
+    explainers.length && count(explainers.length, 'explainer', 'explainers'),
+    xrays.length && count(xrays.length, 'data X-ray', 'data X-rays'),
+  ].filter((part): part is string => Boolean(part))
+)
 
 // Fetch dynamic component for this topic if present.
 let itemComponent: ConcreteComponent | string = ''
@@ -50,9 +54,27 @@ const componentFileExists = computed<boolean>(() => {
       <h2 class="title is-2">{{ tag }}</h2>
       <p class="subtitle is-4">{{ summary }}</p>
 
+      <!-- Collaborations come first, framed as a full-width hero card. -->
+      <div v-if="collaborations.length" class="collaborations mt-5">
+        <h3 class="title is-3 mb-2">
+          <span aria-hidden="true">✨</span>&nbsp;Collaborations
+        </h3>
+        <p class="is-size-5 mb-5">
+          Datasets built together with communities, and open to your
+          contributions.
+        </p>
+        <div
+          v-for="item in collaborations"
+          :key="item.slug"
+          class="collaboration"
+        >
+          <ItemTextPicture :slug="item.slug" :level="4" />
+        </div>
+      </div>
+
       <!-- Explainers on the left and data X-rays on the right, stacked on
            phones. When a tag has only one type, its section fills the row. -->
-      <div class="columns is-8-desktop mt-5">
+      <div class="columns is-8-desktop mt-6">
         <div v-if="explainers.length" class="column">
           <h3 class="title is-3 mb-2">Explainers</h3>
           <p class="is-size-5 mb-5">
@@ -90,6 +112,50 @@ const componentFileExists = computed<boolean>(() => {
   row-gap: 1.5rem;
   column-gap: 2rem;
   --bulma-grid-column-min: min(100%, 17rem);
+}
+
+// The Collaborations section is a hero card above the explainers and
+// X-rays.
+.collaborations {
+  padding: 1.5rem;
+  @include tablet {
+    padding: 2rem 2.5rem;
+  }
+  background-color: $white-lighter;
+  border: 1px solid $white-darker;
+  border-radius: 0.5rem;
+
+  .collaboration + .collaboration {
+    margin-top: 2rem;
+  }
+}
+
+// From tablet width up, a collaboration's picture sits beside its title and
+// description, cropped to a wide shape like the home page hero.
+.collaboration :deep(.item) {
+  h4 {
+    font-size: 1.75rem;
+  }
+  p {
+    font-size: $size-5;
+  }
+  @include tablet {
+    > a {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      column-gap: 2rem;
+    }
+    figure.image {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      aspect-ratio: 2 / 1;
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
 }
 
 // Push each explainer's picture to the bottom of its cell so the pictures in
