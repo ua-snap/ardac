@@ -7,9 +7,10 @@ definePageMeta({
 <template>
   <FrontPageMain />
   <hr />
-  <FrontPageSectionPrecipitation />
-  <FrontPageSectionHydrology />
   <FrontPageSectionPermafrost />
+  <FrontPageSectionPrecipitation />
+  <FrontPageSectionSeaIce />
+  <FrontPageSectionSnow />
 </template>
 
 <style lang="scss" scoped></style>

@@ -50,29 +50,33 @@ const componentFileExists = computed<boolean>(() => {
       <h2 class="title is-2">{{ tag }}</h2>
       <p class="subtitle is-4">{{ summary }}</p>
 
-      <template v-if="explainers.length">
-        <h3 class="title is-3 mt-6 mb-2">Explainers</h3>
-        <p class="is-size-5 mb-5">
-          Stories and guides that put the data in context.
-        </p>
-        <div class="grid is-auto-fill explainer-grid">
-          <div v-for="item in explainers" :key="item.slug" class="cell">
-            <ItemTextPicture :slug="item.slug" :level="4" />
+      <!-- Explainers on the left and data X-rays on the right, stacked on
+           phones. When a tag has only one type, its section fills the row. -->
+      <div class="columns is-8-desktop mt-5">
+        <div v-if="explainers.length" class="column">
+          <h3 class="title is-3 mb-2">Explainers</h3>
+          <p class="is-size-5 mb-5">
+            Stories and guides that put the data in context.
+          </p>
+          <div class="grid is-auto-fill explainer-grid">
+            <div v-for="item in explainers" :key="item.slug" class="cell">
+              <ItemTextPicture :slug="item.slug" :level="4" />
+            </div>
           </div>
         </div>
-      </template>
 
-      <template v-if="xrays.length">
-        <h3 class="title is-3 mt-6 mb-2">Data X-rays</h3>
-        <p class="is-size-5 mb-5">
-          Maps, charts, and downloads for a place you choose.
-        </p>
-        <div class="grid is-auto-fill xray-grid">
-          <div v-for="item in xrays" :key="item.slug" class="cell">
-            <ItemText :slug="item.slug" :level="4" />
+        <div v-if="xrays.length" class="column">
+          <h3 class="title is-3 mb-2">Data X-rays</h3>
+          <p class="is-size-5 mb-5">
+            Maps, charts, and downloads for a place you choose.
+          </p>
+          <div class="grid is-auto-fill xray-grid">
+            <div v-for="item in xrays" :key="item.slug" class="cell">
+              <ItemText :slug="item.slug" :level="4" />
+            </div>
           </div>
         </div>
-      </template>
+      </div>
     </div>
   </section>
 </template>
