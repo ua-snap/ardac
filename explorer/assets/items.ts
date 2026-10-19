@@ -501,4 +501,14 @@ export default [
     image: 'story-cold-snap-1989.png',
     imageAlt: 'Preview image for the 1989 Alaska Cold Snap data story',
   },
+  {
+    slug: 'airport-winds',
+    title: 'Historical Winds at Alaska Airports',
+    blurb:
+      'Explore decades of hourly wind observations at 166 Alaska airports, including wind roses, runway crosswinds, wind energy potential, and how winds have changed.',
+    tags: ['Wind', 'Climate'],
+    image: 'airport-winds.png',
+    imageAlt:
+      'Wind rose for Fairbanks International Airport, with blue petals showing that winds most often blow from the north and northeast',
+  },
 ] satisfies Item[]
