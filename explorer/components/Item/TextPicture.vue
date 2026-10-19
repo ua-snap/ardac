@@ -1,8 +1,13 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  slug: Slug
-  showTag?: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    slug: Slug
+    showTag?: boolean
+    // Heading level for the title: 4 when the card sits under an h3.
+    level?: 3 | 4
+  }>(),
+  { level: 3 }
+)
 
 const store = useStore()
 let item = store.itemBySlug(props.slug)
@@ -15,7 +20,7 @@ let item = store.itemBySlug(props.slug)
       :to="{ name: 'item-slug', params: { slug: item.slug } }"
       @click="trackEvent('Item Clicked', { title: item.title })"
     >
-      <h3 class="title is-4" v-html="item.title"></h3>
+      <component :is="`h${level}`" class="title is-4" v-html="item.title" />
       <p v-html="item.blurb" class="mb-4" />
       <figure v-if="item.image" class="image is-5by4">
         <img
@@ -32,7 +37,7 @@ let item = store.itemBySlug(props.slug)
     title="Content not implemented yet"
   >
     <Tag v-if="showTag" :tag="item.tags[0]" />
-    <h3 class="title is-4" v-html="item.title"></h3>
+    <component :is="`h${level}`" class="title is-4" v-html="item.title" />
     <p v-html="item.blurb" class="mb-4" />
     <figure v-if="item.image" class="image is-5by4">
       <img

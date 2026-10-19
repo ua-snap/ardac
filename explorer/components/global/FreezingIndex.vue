@@ -57,7 +57,7 @@ mapStore.setLegendItems(mapId, legend)
       <h2 class="title is-3">Freezing Index</h2>
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
-        The freezing index is the number of degree days above freezing per year.
+        The freezing index is the number of degree days below freezing per year.
         The map below shows the 30-year mean of the freezing index for three
         eras. The historical era (1980&ndash;2009) uses historical modeled data
         provided by the Daymet model. The mid-century (2040&ndash;2069) and

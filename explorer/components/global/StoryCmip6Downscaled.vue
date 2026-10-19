@@ -290,11 +290,16 @@ mapStore.setLegendItems(cmip6_downscaled_mapId, cmip6_downscaled_legend)
       </p>
 
       <p>
-        To explore our new downscaled CMIP6 data products, visit the
-        <NuxtLink to="/tag/CMIP6">CMIP6 topic</NuxtLink>
-        page.
+        To explore our new downscaled CMIP6 data products, see
+        <NuxtLink to="/item/temperature-cmip6-downscaled"
+          >downscaled temperature</NuxtLink
+        >
+        and
+        <NuxtLink to="/item/precipitation-cmip6-downscaled"
+          >downscaled precipitation</NuxtLink
+        >.
       </p>
-      <Bios :people="['Jeremy Littell', 'Craig Stephenson']" />
+      <Bios slug="story-cmip6-downscaled" />
     </div>
   </section>
 </template>

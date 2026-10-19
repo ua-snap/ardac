@@ -1,0 +1,15 @@
+// Configures Bulma's Sass variables with the project's values and exposes
+// Bulma's mixins. This is loaded ahead of every stylesheet (see nuxt.config.ts)
+// so that Bulma is configured the same way wherever it's used.
+@use 'variables' as v;
+@use '~/node_modules/bulma/sass/utilities/initial-variables' with (
+  $family-sans-serif: v.$family-sans-serif,
+  $size-5: v.$size-5,
+  $black: v.$black,
+  $white: v.$white
+);
+@use '~/node_modules/bulma/sass/utilities/derived-variables' with (
+  $link: v.$link,
+  $text: v.$text
+);
+@forward '~/node_modules/bulma/sass/utilities/mixins';

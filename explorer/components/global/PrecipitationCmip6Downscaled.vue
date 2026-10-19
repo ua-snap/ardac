@@ -137,7 +137,7 @@ onUnmounted(() => {
           </li>
         </ul>
       </div>
-      <Bios :people="['Jeremy Littell', 'Craig Stephenson']" />
+      <Bios slug="precipitation-cmip6-downscaled" />
     </div>
   </section>
 </template>

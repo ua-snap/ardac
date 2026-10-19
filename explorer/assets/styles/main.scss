@@ -1,11 +1,82 @@
 @charset "utf-8";
 
+@use 'sass:color';
+
+// Import the rest of Bulma, without its automatic dark theme.
+// Overrides to Bulma variables go in styles/_variables.scss and are passed to
+// Bulma in styles/_bulma-setup.scss
+@use '~/node_modules/bulma/versions/bulma-no-dark-mode' with (
+  // Bulma's default of 800 makes Archivo headings look wide and heavy.
+  $title-weight: 600,
+  $content-heading-weight: 600,
+  // Lets the background wash at the top of the page show through.
+  $navbar-background-color: transparent
+);
+
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Patrick+Hand&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 @import '~/node_modules/leaflet/dist/leaflet.css';
 
-// Import the rest of Bulma.
-// Overrides to Bulma varibles go in styles/_variables.scss
-@import '~/node_modules/bulma/bulma.sass';
+// The page background is the project's off-white rather than Bulma's white,
+// with a pale ice-blue wash at the top of each page.
+:root {
+  --bulma-scheme-main: #{$white};
+}
+
+body {
+  background: linear-gradient(#e4eef8, $white 40rem) no-repeat;
+}
+
+// A column whose items share its height equally, as Bulma 0.9's vertical tiles
+// did. Used for the stacked items on the home page.
+.stack {
+  > :not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+  @include tablet {
+    display: flex;
+    flex-direction: column;
+    > * {
+      flex: 1 1 0;
+      min-height: min-content;
+    }
+  }
+}
+
+// Person cards on the People page and item pages. Bulma's grid fills each
+// row with columns at least this wide; min() keeps one column from
+// overflowing a phone screen, and auto-fill keeps a lone card from
+// stretching across the page.
+.people-grid {
+  --bulma-grid-column-min: min(100%, 24rem);
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(var(--bulma-grid-column-min), 1fr)
+  );
+}
+
+// A person card fills its grid cell, so cards in a row share a height.
+.person-card {
+  height: 100%;
+  padding: 1rem;
+  @include tablet {
+    padding: 1.25rem 1.5rem;
+  }
+  background-color: $white-lighter;
+  border: 1px solid $white-darker;
+  border-radius: 0.5rem;
+  line-height: 1.5;
+}
+
+// Smaller photos on phones leave room for the name beside them.
+.person-card-photo {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  @include tablet {
+    width: 96px;
+    height: 96px;
+  }
+}
 
 .bling {
   background-color: #f1ef93;
@@ -38,7 +109,7 @@ footer {
 .notification.is-info.is-light,
 .tag.is-info.is-light,
 .button.is-info.is-light {
-  color: darken($info, 10%);
+  color: color.adjust($info, $lightness: -10%);
 }
 
 // Plotly's modebar buttons are made keyboard focusable in

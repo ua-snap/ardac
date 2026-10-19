@@ -592,7 +592,7 @@ const data: any = {
         </template>
       </GetAndUseDataBeetle>
     </div>
-    <Bios :people="['Nancy Fresco']" />
+    <Bios slug="story-beetle-climate-protection" />
   </section>
 </template>
 

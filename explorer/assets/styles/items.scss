@@ -1,21 +1,25 @@
+@use 'variables' as *;
+
 :deep(.item) {
   p {
     color: $gray-darker !important;
   }
 
-  &.text h3,
-  &.text-picture h3 {
+  &.text :is(h3, h4),
+  &.text-picture :is(h3, h4) {
     margin-bottom: 0.3rem;
   }
 
+  // Pictures keep a hint of color, with a little extra contrast, until
+  // hovered.
   img {
-    filter: grayscale(1);
+    filter: grayscale(0.85) contrast(1.25);
   }
 
   &:hover {
     transition: 0.3s;
     background-color: $white-lighter !important;
-    h3 {
+    :is(h3, h4) {
       transition: 0.3s;
       color: $link !important;
     }
@@ -30,7 +34,7 @@
   }
 
   &.missing {
-    h3::after {
+    :is(h3, h4)::after {
       color: $gray;
       display: block;
       font-size: 80%;

@@ -1,15 +1,24 @@
+// An explainer tells a story or explains a topic; an xray lets you explore
+// a dataset's maps, charts and downloads.
+type ItemType = 'explainer' | 'xray'
+
 interface Item {
   slug: Slug
+  type: ItemType
   title: string
   blurb: string
   tags: Tag[]
   image?: string
   imageAlt?: string
   priority?: number
+  // People who made the item, in the order its page credits them.
+  people?: Person[]
 }
 
 interface Bio {
   person: Person
+  // Job title and organization, shown under the name.
+  role?: string
   image: string
   blurb: string
 }
@@ -114,6 +123,52 @@ interface Cmip6DownscaledChartInputs {
   scenario: string
   baselineYear: string
   projectedYear: string
+}
+
+interface CuspObservation {
+  cusp_obs_id: string | null
+  source: string | null
+  citation: string | null
+  site_id: string | null
+  observation_date: string | null
+  method: string | null
+  method_label: string | null
+  pf_observed: number | null
+  pf_observed_label: string | null
+  thaw_depth_cm: number | null
+  pf_depth_cm: number | null
+  obs_limit_cm: number | null
+  has_thaw_depth: boolean | null
+  has_pf_depth: boolean | null
+  has_obs_limit: boolean | null
+  quality_flags: string | null
+  release_version: string | null
+}
+
+interface CuspObservationFeature {
+  type: 'Feature'
+  id: string
+  geometry: {
+    type: 'Point'
+    coordinates: [number, number]
+  }
+  geometry_name: 'geom'
+  properties: CuspObservation
+}
+
+interface CuspQualityFlagDefinition {
+  category: string
+  description: string
+}
+
+interface CuspObservationFeatureCollection {
+  type: 'FeatureCollection'
+  features: CuspObservationFeature[]
+  totalFeatures: number
+  numberMatched: number
+  numberReturned: number
+  timeStamp: string
+  quality_flag_definitions: Record<string, CuspQualityFlagDefinition>
 }
 
 type LatLngValue = LatLng | undefined

@@ -76,9 +76,9 @@ mapStore.setLegendItems(mapId, legend)
       <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
       <p class="mb-6">
         The cold spell duration index is the annual count of occurrences of at
-        least 5 consecutive days with daily mean 2m air temperature above 90th
-        percentile of historical values for the date. The map below shows the
-        30-year mean of the cold spell duration index for three eras. The
+        least 5 consecutive days with daily mean 2m air temperature below the
+        10th percentile of historical values for the date. The map below shows
+        the 30-year mean of the cold spell duration index for three eras. The
         historical era (1980&ndash;2009) uses historical modeled data provided
         by the Daymet model. The mid-century (2040&ndash;2069) and late-century
         (2070&ndash;2099) eras use modeled projections from the NCAR CCSM4 model
