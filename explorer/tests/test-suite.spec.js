@@ -16,7 +16,7 @@ test('Check header links and front page', async ({ page }) => {
   )
 
   await page.waitForSelector(
-    'div > p:has-text("The Arctic Data Collaborative (ARDAC) provides highly-curated, relevant Arctic datasets, streamlined data access, processing code examples and visualizations to support research in the North.")'
+    'div > p:has-text("The Arctic Data Collaborative (ARDAC) provides highly-curated, relevant Arctic datasets, streamlined data access and visualizations to support research in the North.")'
   )
 })
 

@@ -25,9 +25,8 @@
         </p>
         <p class="is-size-4 is-size-5-mobile">
           The Arctic Data Collaborative (ARDAC) provides highly-curated,
-          relevant <b>Arctic datasets</b>, streamlined <b>data access</b>,
-          processing <code>code examples</code> and <b>visualizations</b> to
-          support research in the North.
+          relevant <b>Arctic datasets</b>, streamlined <b>data access</b> and
+          <b>visualizations</b> to support research in the North.
         </p>
       </div>
     </section>

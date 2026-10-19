@@ -16,9 +16,8 @@ const noscriptHtml = `
 
   <p>
     The Arctic Data Collaborative (ARDAC) provides highly-curated, relevant
-    <b>Arctic datasets</b>, streamlined <b>data access</b>, processing
-    <code>code examples</code> and <b>visualizations</b> to support research in
-    the North.
+    <b>Arctic datasets</b>, streamlined <b>data access</b> and
+    <b>visualizations</b> to support research in the North.
   </p>
   <p>
     ⚠️ We&rsquo;re sorry, but this web tool requires JavaScript to be enabled to
