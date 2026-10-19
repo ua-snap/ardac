@@ -222,8 +222,12 @@ mapStore.setLegendItems(mapId, legend)
           >
         </blockquote>
         <blockquote>
-           Einhorn, A. and Mahoney, A.: Wintertime evolution of landfast ice stability in Alaska from InSAR, The Cryosphere, 20, 3683–3704, <a
-             href="https://doi.org/10.5194/tc-20-3683-2026">https://doi.org/10.5194/tc-20-3683-2026</a>, 2026.
+          Einhorn, A. and Mahoney, A.: Wintertime evolution of landfast ice
+          stability in Alaska from InSAR, <em>The Cryosphere</em>, 20,
+          3683–3704,
+          <a href="https://doi.org/10.5194/tc-20-3683-2026"
+            >https://doi.org/10.5194/tc-20-3683-2026</a
+          >, 2026.
         </blockquote>
       </div>
     </div>

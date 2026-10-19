@@ -406,14 +406,21 @@ onUnmounted(() => {
         </h3>
         <DownloadLinks endpoint="/landfastice/point" />
       </div>
-      <div class="references content">
-        <h3 class="title is-4">References</h3>
-        <blockquote>
-           Einhorn, A. and Mahoney, A.: Wintertime evolution of landfast ice stability in Alaska from InSAR, The Cryosphere, 20, 3683–3704, <a
-             href="https://doi.org/10.5194/tc-20-3683-2026">https://doi.org/10.5194/tc-20-3683-2026</a>, 2026.
-        </blockquote>
-      </div>
-      <GetAndUseData apiUrl="https://earthmaps.io/landfastice/" />
+      <GetAndUseData apiUrl="https://earthmaps.io/landfastice/">
+        <li>
+          Academic reference:
+          <blockquote>
+            <p>
+              Einhorn, A. and Mahoney, A.: Wintertime evolution of landfast ice
+              stability in Alaska from InSAR, <i>The Cryosphere</i>, 20,
+              3683–3704,
+              <a href="https://doi.org/10.5194/tc-20-3683-2026"
+                >https://doi.org/10.5194/tc-20-3683-2026</a
+              >, 2026.
+            </p>
+          </blockquote>
+        </li>
+      </GetAndUseData>
       <Bios slug="landfast-sea-ice" />
     </div>
   </section>
