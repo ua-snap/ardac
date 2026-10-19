@@ -501,4 +501,13 @@ export default [
     image: 'story-cold-snap-1989.png',
     imageAlt: 'Preview image for the 1989 Alaska Cold Snap data story',
   },
+  {
+    slug: 'statewide-temperature-index',
+    title: 'Alaska Statewide Temperature Index',
+    blurb:
+      'Has it been unusually warm or cold across Alaska lately? A daily index compares weather station temperatures to historical normals.',
+    tags: ['Climate', 'Temperature'],
+    image: 'statewide-temperature-index.png',
+    imageAlt: 'Preview image for the Alaska Statewide Temperature Index',
+  },
 ] satisfies Item[]
