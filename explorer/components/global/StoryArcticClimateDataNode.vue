@@ -568,14 +568,8 @@ onMounted(() => {
           to object storage servers via a blazing-fast 100 Gb/s network.
           Leveraging the ample storage capacity of this system, SNAP can
           efficiently store, regrid, and bias-correct data pertinent to the
-          state of Alaska. Future opportunities include
-          <a
-            href="https://www.sciencedirect.com/science/article/pii/S1364815217305662"
-            >downscaling the model data to higher resolutions</a
-          >
-          across Alaska's expanse and crafting additional climate indicators,
-          beyond the current offerings of summer days, winter days, maximum
-          1-day precipitation, and freeze/thaw cycles.
+          state of Alaska. Opportunities include downscaling the model data to higher resolutions
+          across Alaska and crafting additional climate indicators.
         </p>
       </div>
 

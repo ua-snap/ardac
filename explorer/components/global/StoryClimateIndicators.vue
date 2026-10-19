@@ -33,11 +33,11 @@ onUnmounted(() => {
       <h3 class="title is-4">What is a climate indicator?</h3>
       <p>
         A climate indicator is a value intended to represent a specific aspect
-        of the climate, such as the number of very cold days expected per year. 
-        Climate indicators summarize complex climate data into
-        singular values that make it easier to understand the state of the
-        environment at a given moment in time, and create connections between
-        climate data and the human experience.
+        of the climate, such as the number of very cold days expected per year.
+        Climate indicators summarize complex climate data into singular values
+        that make it easier to understand the state of the environment at a
+        given moment in time, and create connections between climate data and
+        the human experience.
       </p>
       <p>
         Indicators are calculated from direct observations and from variables in
@@ -81,16 +81,16 @@ onUnmounted(() => {
         class="mb-5"
       />
       <p>
-        In the second plot, we see air temperature data
-        summarized and expressed as "deep winter days" (the number of days per
-        year that are below -22°F). The indicator is further summarized by
-        decade. This is more easily translated into a meaningful informational
-        statement:
+        In the second plot, we see air temperature data summarized and expressed
+        as "deep winter days" (the number of days per year that are below
+        -22°F). The indicator is further summarized by decade. This is more
+        easily translated into a meaningful informational statement:
       </p>
       <p>
-        <strong>When compared to the historical record, by the end of the century
-        Fairbanks is predicted to have 25 to 30 fewer days per year where the
-        air temperature is below -22°F.
+        <strong
+          >When compared to the historical record, by the end of the century
+          Fairbanks is predicted to have 25 to 30 fewer days per year where the
+          air temperature is below -22°F.
         </strong>
       </p>
       <IndicatorsCmip6ChartControls :datasetKeys="['dw']" />
@@ -114,7 +114,9 @@ onUnmounted(() => {
       </ul>
     </div>
     <div class="content clamp is-size-5">
-      <h3 class="title is-4">How does SNAP develop regionally-relevant climate indicators?</h3>
+      <h3 class="title is-4">
+        How does SNAP develop regionally-relevant climate indicators?
+      </h3>
       <p>
         With input from scientists, community members, and a wide variety of
         user groups, SNAP has calculated a set of climate indicators that are
@@ -127,8 +129,8 @@ onUnmounted(() => {
         Indicators are usually calculated on a yearly basis, and can be averaged
         over longer time spans to provide a general overview of climate trends.
         Regionally-relevant indicators analyzed over multi-decadal periods of
-        time provide highly valuable information without requiring any
-        downloads or preprocessing of large and complex climate datasets.
+        time provide highly valuable information without requiring any downloads
+        or preprocessing of large and complex climate datasets.
       </p>
       <h4 class="title is-5">SNAP's climate indicators include:</h4>
       <dl>
@@ -136,7 +138,8 @@ onUnmounted(() => {
         <dd>
           "Hot day" Threshold &mdash; the highest observed daily maximum air
           temperature where there are only 5 other observations equal to or
-          greater than this value. Only five days per year are hotter than this value.
+          greater than this value. Only five days per year are hotter than this
+          value.
         </dd>
         <dt><strong>cd</strong></dt>
         <dd>
@@ -157,14 +160,15 @@ onUnmounted(() => {
         <dt><strong>wsdi</strong></dt>
         <dd>
           Warm Spell Duration Index &mdash; annual count of occurrences of at
-          least 5 consecutive days with daily mean air temperature above the 90th
-          percentile of historical values for that date.
+          least 5 consecutive days with daily mean air temperature above the
+          90th percentile of historical values for that date.
         </dd>
         <dt><strong>cdsi</strong></dt>
         <dd>
           Cold Spell Duration Index &mdash; annual count of occurrences of at
-          least 5 consecutive days with daily mean air temperature below the 10th
-          percentile of historical values for that date. The opposite of WDSI.
+          least 5 consecutive days with daily mean air temperature below the
+          10th percentile of historical values for that date. The opposite of
+          WDSI.
         </dd>
         <dt><strong>rx1day</strong></dt>
         <dd>
@@ -227,7 +231,7 @@ onUnmounted(() => {
       <h3 class="title is-4">Can I suggest an indicator?</h3>
       <p>
         Of course! If there is a useful indicator missing from our collection,
-        we'd like to know about it. Send us your ideas for a climate indicator 
+        we'd like to know about it. Send us your ideas for a climate indicator
         relevant to your needs. Please contact
         <a href="mailto:uaf-snap-data-tools@alaska.edu"
           >uaf-snap-data-tools@alaska.edu</a
@@ -238,9 +242,10 @@ onUnmounted(() => {
     <div class="content clamp is-size-5">
       <h3 class="title is-4">Read more about indicators</h3>
       <ul>
-        <li><a href="https://www.epa.gov/climate-indicators">Climate Change Indicators in the United States</a> (U.S. Environmental Protection Agency)</li>
-        <li>Fifth National Climate Assessment, <a href="https://nca2023.globalchange.gov/chapter/appendix-4/">Appendix 4: Indicators</a></li>
-        <li>Climdex Project <a href="https://www.climdex.org/learn/indices/">Indices</a></li>
+        <li>
+          Climdex Project
+          <a href="https://www.climdex.org/learn/indices/">Indices</a>
+        </li>
       </ul>
     </div>
   </section>
