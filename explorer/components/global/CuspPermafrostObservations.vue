@@ -114,7 +114,7 @@ const layers: MapLayer[] = [
     id: 'cusp_pf_observed',
     title: 'Permafrost Observed?',
     wmsLayerName: 'cusp_observations',
-    style: ' cusp_permafrost_observed',
+    style: 'cusp_permafrost_observed',
     legend: 'cusp_pf_binary',
   },
   {
