@@ -117,6 +117,17 @@
   margin-bottom: 1.5rem;
 }
 
+// Even padding inside each item gives its white hover background the same
+// room on every side; the matching negative margin keeps the text lined up
+// with the heading above.
+.more-items :deep(.item) {
+  padding: 0.75rem;
+  margin: -0.75rem;
+  p {
+    margin-bottom: 0 !important;
+  }
+}
+
 // In the featured grid, push each item's picture to the bottom of its cell
 // so the pictures in a row line up whatever the length of the text above.
 .featured :deep(.item) {
