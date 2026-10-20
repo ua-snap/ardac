@@ -612,12 +612,6 @@ onMounted(() => {
             alt="Mean June Air Temperature"
           />
         </figure>
-        <p>
-          Many of SNAP&rsquo;s datasets are available as Rasdaman coverages. See
-          <NuxtLink to="/item/notebook-raster-database">this notebook</NuxtLink>
-          for a tutorial on how to use
-          these services in your own work.
-        </p>
       </div>
 
       <div id="globus" class="block">
