@@ -331,7 +331,7 @@ export default [
     title: 'Oceanography, CMIP6',
     blurb:
       'Monthly sea level pressure and surface temperature from CMIP6 global climate models. Maps contrast August 2000 with 2100.',
-    tags: ['Oceanography'],
+    tags: ['Oceanography', 'Temperature'],
   },
   {
     slug: 'precipitation-cmip6',
@@ -355,7 +355,7 @@ export default [
     title: 'Solar Radiation & Cloud Cover, CMIP6',
     blurb:
       'Monthly incoming sunlight and longwave radiation, surface heat fluxes, and cloud cover from CMIP6 global climate models; together they trace the surface energy budget.',
-    tags: ['Solar Radiation'],
+    tags: ['Solar Radiation', 'Wildfire'],
   },
   {
     slug: 'sea-ice-cmip6',
