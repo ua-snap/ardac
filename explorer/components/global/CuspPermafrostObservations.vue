@@ -202,14 +202,15 @@ mapStore.setLegendItems(mapId, legend)
         </template>
       </MapBlock>
 
-      <p class="mb-6">
-        Choose a community or enter coordinates to view CUSP observations within
-        a 0.5° by 0.5° box centered on that location.
-      </p>
       <Gimme
         :bbox="[-171.63023, 9.16667, 177.2, 83.09]"
         :show-load-indicator="false"
-      />
+      >
+        <template v-slot:additionalInstructions>
+          Choose a community or enter coordinates to view CUSP observations
+          within a 0.5° by 0.5° box centered on that location.
+        </template>
+      </Gimme>
       <div v-if="cuspObservationsLoading" class="mb-6">
         <p>Loading CUSP observations near {{ placeLabel }}&hellip;</p>
         <progress class="progress" />
