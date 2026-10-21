@@ -45,7 +45,10 @@ function getBaseMapAndLayers(crs: string): MapOptions {
       zoom: 4,
       minZoom: 2,
       maxZoom: 16,
-      maxBounds: latLngBounds(latLng(-85.05, -540), latLng(85.05, 540)),
+      maxBounds: latLngBounds(
+        latLng(-85.05, -Infinity),
+        latLng(85.05, Infinity)
+      ),
       maxBoundsViscosity: 1.0,
       scrollWheelZoom: false,
       zoomControl: false,
