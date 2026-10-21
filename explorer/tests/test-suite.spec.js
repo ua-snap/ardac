@@ -25,10 +25,10 @@ test('Check about page', async ({ page }) => {
   await page.setViewportSize({ width: 1728, height: 1078 })
   await page.waitForSelector('h1:has-text("Arctic Data Collaborative.")')
   await page.click('a:has-text("About")')
-  await page.waitForSelector('h2:has-text("ARDAC is a home for alive data")')
+  await page.waitForSelector('h2:has-text("About ARDAC")')
 
   await page.waitForSelector(
-    'p:has-text("The Arctic Data Collaborative (ARDAC) is a data service that provides access and analysis for Arctic data and interactive tools. ARDAC is not a data archive. Instead of simply serving raw data, it offers vetted and pre-processed datasets to streamline visualization and further processing of data, and allow for faster research discovery.")'
+    'p:has-text("ARDAC exists to remove these barriers. We do the hard work behind the scenes")'
   )
 
   await page.waitForSelector(
