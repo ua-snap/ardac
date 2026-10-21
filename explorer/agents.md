@@ -139,7 +139,7 @@ Add no styling to the generated code.
 ### Items
 Each item entry should stay compact and descriptive:
 - `slug`
-- `type`: `'explainer'` (a story or guide) or `'xray'` (a dataset to explore by place)
+- `type`: `'community'` (a community-built dataset people can contribute to), `'explainer'` (a story or guide) or `'xray'` (a dataset to explore by place)
 - `title`
 - `blurb`
 - `tags`

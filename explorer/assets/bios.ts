@@ -18,9 +18,9 @@ export default [
   },
   {
     person: 'Bruce Crevensten',
-    role: 'Technical Lead, SNAP',
+    role: '',
     image: 'crevensten_bw.jpg',
-    blurb: `I'm the technical lead for the SNAP team's programming, visualization and data architectures.`,
+    blurb: `I lead the broad strategy for SNAP programming, visualization and data architectures.`,
   },
   {
     person: 'Charlie Parr',
@@ -94,5 +94,5 @@ export default [
     person: 'Jon Schwenk',
     image: 'schwenk_bw.jpg',
     blurb: `I study rivers and Arctic landscapes, with research interests in permafrost, hydrologic change, remote sensing, and environmental data synthesis. I lead development of the CommUnity near-Surface Permafrost (CUSP) dataset, bringing together field observations to better understand where permafrost occurs, how it changes, and the environmental conditions that shape it.`,
-  }
+  },
 ] satisfies Bio[]

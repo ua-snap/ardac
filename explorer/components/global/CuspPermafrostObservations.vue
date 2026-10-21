@@ -155,8 +155,10 @@ mapStore.setLegendItems(mapId, legend)
         The CommUnity near-Surface Permafrost (CUSP) Dataset
       </h2>
       <p>
-        CUSP is a data synthesis product for near-surface permafrost,
-        active-layer, thaw depth, and related field observations. CUSP brings
+        CUSP is a
+        <strong
+          >global data synthesis product for near-surface permafrost</strong
+        >, active-layer, thaw depth, and related field observations. CUSP brings
         many published and field datasets into one documented table with source
         citations and tools that make the data corpus easier to use, build, and
         extend.
@@ -186,11 +188,10 @@ mapStore.setLegendItems(mapId, legend)
         </a>
       </section>
       <p>
-        The map below shows where CUSP observations were made. Choose a layer to
-        color each observation by whether permafrost was observed or by the
-        field method that was used.
+        Use the map below to see where CUSP observations are, and how they were
+        taken.
       </p>
-      <MapBlock :mapId="mapId" class="mb-6">
+      <MapBlock :mapId="mapId" crs="EPSG:3857" class="mb-6">
         <template v-slot:layers>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
@@ -201,14 +202,15 @@ mapStore.setLegendItems(mapId, legend)
         </template>
       </MapBlock>
 
-      <p class="mb-6">
-        Choose a community or enter coordinates to view CUSP observations within
-        a 0.5° by 0.5° box centered on that location.
-      </p>
       <Gimme
         :bbox="[-171.63023, 9.16667, 177.2, 83.09]"
         :show-load-indicator="false"
-      />
+      >
+        <template v-slot:additionalInstructions>
+          Choose a community or enter coordinates to view CUSP observations
+          within a 0.5° by 0.5° box centered on that location.
+        </template>
+      </Gimme>
       <div v-if="cuspObservationsLoading" class="mb-6">
         <p>Loading CUSP observations near {{ placeLabel }}&hellip;</p>
         <progress class="progress" />
@@ -395,7 +397,7 @@ mapStore.setLegendItems(mapId, legend)
           </ul>
         </template>
       </section>
-      <h3 class="title is-4">Contribute to CUSP</h3>
+      <h3 class="title is-4 pt-6">Contribute to CUSP</h3>
       <p class="mb-6">
         CUSP grows through community contributions. If you have near-surface
         permafrost observations, including unpublished data, or know of a public

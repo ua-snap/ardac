@@ -24,27 +24,15 @@
               class="is-flex-grow-1 px-4 py-5"
             />
           </div>
-          <div class="column is-half is-flex p-0 border-right border-bottom">
+          <div class="column is-half is-flex p-0 border-right">
             <ItemTextPicture
               slug="story-climate-indicators"
               class="is-flex-grow-1 px-4 py-5"
             />
           </div>
-          <div class="column is-half is-flex p-0 border-bottom">
-            <ItemTextPicture
-              slug="story-climate-stripes-2"
-              class="is-flex-grow-1 px-4 py-5"
-            />
-          </div>
-          <div class="column is-half is-flex p-0 border-right">
-            <ItemTextPicture
-              slug="story-fire-prone-conditions"
-              class="is-flex-grow-1 px-4 py-5"
-            />
-          </div>
           <div class="column is-half is-flex p-0">
             <ItemTextPicture
-              slug="summary-landfast-sea-ice"
+              slug="story-climate-stripes-2"
               class="is-flex-grow-1 px-4 py-5"
             />
           </div>
@@ -107,24 +95,6 @@
             <li>
               <ItemText slug="sea-ice-cmip6" />
             </li>
-            <li>
-              <ItemText slug="precipitation-cmip6" />
-            </li>
-            <li>
-              <ItemText slug="permafrost-base-top" />
-            </li>
-            <li>
-              <ItemText slug="indicator-rx5day" />
-            </li>
-            <li>
-              <ItemText slug="indicator-r10mm" />
-            </li>
-            <li>
-              <ItemText slug="indicator-cwd" />
-            </li>
-            <li>
-              <ItemText slug="indicator-cdd" />
-            </li>
           </ul>
         </div>
       </div>
@@ -145,6 +115,17 @@
 
 .more-items ul li {
   margin-bottom: 1.5rem;
+}
+
+// Even padding inside each item gives its white hover background the same
+// room on every side; the matching negative margin keeps the text lined up
+// with the heading above.
+.more-items :deep(.item) {
+  padding: 0.75rem;
+  margin: -0.75rem;
+  p {
+    margin-bottom: 0 !important;
+  }
 }
 
 // In the featured grid, push each item's picture to the bottom of its cell

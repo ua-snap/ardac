@@ -58,7 +58,7 @@ Determine a 'slug' for the item.  The slug is a unique but human-readable ID for
 2. Add any new tags for the new item to `types/tags.d.ts`
 3. Add the item in `assets/items.ts`:
     * `slug`: the slug ID
-    * `type`: `'explainer'` for a story or guide, `'xray'` for a dataset you can explore by place (tag pages list them in separate sections)
+    * `type`: `'community'` for a dataset built with communities that people can contribute to, `'explainer'` for a story or guide, `'xray'` for a dataset you can explore by place (tag pages list each type in its own section, community datasets first)
     * `title`: the 'headline'
     * `blurb`: **short** text description, single line/paragraph, no HTML please
     * `tags`: array of tags

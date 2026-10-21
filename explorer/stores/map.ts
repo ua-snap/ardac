@@ -31,6 +31,42 @@ var northEast: LatLng
 var viscosity = 0.0
 
 function getBaseMapAndLayers(crs: string): MapOptions {
+  // Web Mercator with the USGS topographic basemap, for global datasets
+  // such as CUSP. Unlike the Alaska maps there's no rubber band pulling the
+  // view back to Alaska: people can pan around the whole world. The only
+  // limit is a hard stop at the top and bottom of the world (where Web
+  // Mercator ends) so the map can't be flung off into empty gray, and zoom
+  // 2 is the widest view because below that the world is shorter than the
+  // map.
+  if (crs == 'EPSG:3857') {
+    return {
+      crs: $L.CRS.EPSG3857,
+      center: latLng(64.7, -155),
+      zoom: 4,
+      minZoom: 2,
+      maxZoom: 16,
+      maxBounds: latLngBounds(
+        latLng(-85.05, -Infinity),
+        latLng(85.05, Infinity)
+      ),
+      maxBoundsViscosity: 1.0,
+      scrollWheelZoom: false,
+      zoomControl: false,
+      doubleClickZoom: false,
+      attributionControl: true,
+      layers: [
+        tileLayer(
+          'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
+          {
+            attribution:
+              '<a href="https://www.usgs.gov/programs/national-geospatial-program/national-map">USGS The National Map</a>',
+            maxZoom: 16,
+          }
+        ),
+      ],
+    }
+  }
+
   let proj: any
   let resolutions: number[]
   let center: LatLng
