@@ -261,14 +261,17 @@ const placeName = computed(() => {
   }
 })
 
+// Items that fetch outside the shared data store (e.g. CUSP) never record
+// any errors, and an empty list shouldn't count as "all failed".
 const nothingButErrors = computed(() => {
-  return Object.values(dataErrors.value).every(error => error == true)
+  const errors = Object.values(dataErrors.value)
+  return errors.length > 0 && errors.every(error => error == true)
 })
 
 const dataStore = useDataStore()
 const dataErrors = computed<Record<string, boolean>>(() => dataStore.dataErrors)
 watch(nothingButErrors, async () => {
-  if (nothingButErrors) {
+  if (nothingButErrors.value) {
     fieldMessage.value = ERROR_MESSAGES.DATA_LOAD_FAILED
   } else {
     fieldMessage.value = ''
