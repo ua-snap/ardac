@@ -155,8 +155,10 @@ mapStore.setLegendItems(mapId, legend)
         The CommUnity near-Surface Permafrost (CUSP) Dataset
       </h2>
       <p>
-        CUSP is a data synthesis product for near-surface permafrost,
-        active-layer, thaw depth, and related field observations. CUSP brings
+        CUSP is a
+        <strong
+          >global data synthesis product for near-surface permafrost</strong
+        >, active-layer, thaw depth, and related field observations. CUSP brings
         many published and field datasets into one documented table with source
         citations and tools that make the data corpus easier to use, build, and
         extend.
@@ -186,9 +188,8 @@ mapStore.setLegendItems(mapId, legend)
         </a>
       </section>
       <p>
-        The map below shows where CUSP observations were made. Choose a layer to
-        color each observation by whether permafrost was observed or by the
-        field method that was used.
+        Use the map below to see where CUSP observations are, and how they were
+        taken.
       </p>
       <MapBlock :mapId="mapId" crs="EPSG:3857" class="mb-6">
         <template v-slot:layers>
@@ -395,7 +396,7 @@ mapStore.setLegendItems(mapId, legend)
           </ul>
         </template>
       </section>
-      <h3 class="title is-4">Contribute to CUSP</h3>
+      <h3 class="title is-4 pt-6">Contribute to CUSP</h3>
       <p class="mb-6">
         CUSP grows through community contributions. If you have near-surface
         permafrost observations, including unpublished data, or know of a public
