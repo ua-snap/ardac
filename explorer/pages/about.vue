@@ -104,8 +104,8 @@ useHead({ title: 'About' })
         Unless otherwise specified by source providers, all data available
         through this tool are available through the
         <a href="https://creativecommons.org/licenses/by/4.0/"
-          >Creative Commons Attribution 4.0 International (CC by 4.0).</a
-        >
+          >Creative Commons Attribution 4.0 International (CC by 4.0)</a
+        >.
       </p>
       <h3 class="title is-3">Rasdaman raster database</h3>
       <p>
