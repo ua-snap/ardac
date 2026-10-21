@@ -499,7 +499,7 @@ export default [
   },
   {
     slug: 'cusp-permafrost-observations',
-    type: 'collaboration',
+    type: 'community',
     title: 'CUSP: CommUnity near-Surface Permafrost Observations',
     blurb:
       'CUSP gathers observations of near-surface permafrost, active-layer depth, and thaw into one documented table with source citations. Download observations near a selected area, or download the full dataset.',

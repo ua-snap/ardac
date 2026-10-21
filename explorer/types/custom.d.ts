@@ -1,7 +1,7 @@
 // An explainer tells a story or explains a topic; an xray lets you explore
-// a dataset's maps, charts and downloads; a collaboration is a dataset built
-// with communities that people can contribute to.
-type ItemType = 'explainer' | 'xray' | 'collaboration'
+// a dataset's maps, charts and downloads; a community dataset is built
+// with communities, and people can contribute to it.
+type ItemType = 'explainer' | 'xray' | 'community'
 
 interface Item {
   slug: Slug

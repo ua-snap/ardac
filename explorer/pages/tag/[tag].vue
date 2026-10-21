@@ -7,24 +7,24 @@ const route = useRoute()
 let tag = route.params.tag as Tag
 useHead({ title: tag })
 
-// Collaborations and explainers keep their registry order. X-rays are
+// Community datasets and explainers keep their registry order. X-rays are
 // alphabetical so a long list is easy to scan and pairs like "Summer Days"
 // and "Summer Days, CMIP6" sit together.
 const tagItems: Item[] = items.filter((item: Item) => item.tags?.includes(tag))
-const collaborations = tagItems.filter(item => item.type === 'collaboration')
+const communityItems = tagItems.filter(item => item.type === 'community')
 const explainers = tagItems.filter(item => item.type === 'explainer')
 const xrays = tagItems
   .filter(item => item.type === 'xray')
   .sort((a, b) => a.title.localeCompare(b.title))
 
-// For example, "1 collaboration and 3 data X-rays" or "7 explainers and 17
+// For example, "1 community dataset and 3 data X-rays" or "7 explainers and 17
 // data X-rays".
 const count = (n: number, one: string, many: string) =>
   `${n} ${n === 1 ? one : many}`
 const summary = new Intl.ListFormat('en').format(
   [
-    collaborations.length &&
-      count(collaborations.length, 'collaboration', 'collaborations'),
+    communityItems.length &&
+      count(communityItems.length, 'community dataset', 'community datasets'),
     explainers.length && count(explainers.length, 'explainer', 'explainers'),
     xrays.length && count(xrays.length, 'data X-ray', 'data X-rays'),
   ].filter((part): part is string => Boolean(part))
@@ -54,19 +54,19 @@ const componentFileExists = computed<boolean>(() => {
       <h2 class="title is-2">{{ tag }}</h2>
       <p class="subtitle is-4">{{ summary }}</p>
 
-      <!-- Collaborations come first, framed as a full-width hero card. -->
-      <div v-if="collaborations.length" class="collaborations mt-5">
+      <!-- Community datasets come first, framed as a full-width hero card. -->
+      <div v-if="communityItems.length" class="community mt-5">
         <h3 class="title is-3 mb-2">
-          <span aria-hidden="true">✨</span>&nbsp;Collaborations
+          <span aria-hidden="true">✨</span>&nbsp;Community
         </h3>
         <p class="is-size-5 mb-5">
           Datasets built together with communities, and open to your
           contributions.
         </p>
         <div
-          v-for="item in collaborations"
+          v-for="item in communityItems"
           :key="item.slug"
-          class="collaboration"
+          class="community-item"
         >
           <ItemTextPicture :slug="item.slug" :level="4" />
         </div>
@@ -76,7 +76,7 @@ const componentFileExists = computed<boolean>(() => {
            phones. When a tag has only one type, its section fills the row. -->
       <div class="columns is-8-desktop mt-6">
         <div v-if="explainers.length" class="column">
-          <h3 class="title is-3 mb-2">Explainers</h3>
+          <h3 class="title is-3 mb-2">Demonstrations &amp; Explainers</h3>
           <p class="is-size-5 mb-5">
             Stories and guides that put the data in context.
           </p>
@@ -114,9 +114,9 @@ const componentFileExists = computed<boolean>(() => {
   --bulma-grid-column-min: min(100%, 17rem);
 }
 
-// The Collaborations section is a hero card above the explainers and
+// The Community section is a hero card above the explainers and
 // X-rays.
-.collaborations {
+.community {
   padding: 1.5rem;
   @include tablet {
     padding: 2rem 2.5rem;
@@ -125,14 +125,14 @@ const componentFileExists = computed<boolean>(() => {
   border: 1px solid $white-darker;
   border-radius: 0.5rem;
 
-  .collaboration + .collaboration {
+  .community-item + .community-item {
     margin-top: 2rem;
   }
 }
 
-// From tablet width up, a collaboration's picture sits beside its title and
+// From tablet width up, a community dataset's picture sits beside its title and
 // description, cropped to a wide shape like the home page hero.
-.collaboration :deep(.item) {
+.community-item :deep(.item) {
   h4 {
     font-size: 1.75rem;
   }

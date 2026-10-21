@@ -133,7 +133,7 @@ test('Check Temperature tag -> Summer Days page', async ({ page }) => {
 
   // Explainers come first, then data X-rays in alphabetical order.
   await expect(page.locator('main h3.title')).toHaveText([
-    'Explainers',
+    'Demonstrations & Explainers',
     'Data X-rays',
   ])
 
@@ -232,12 +232,12 @@ test('Check Permafrost tag -> Ground Temperature page', async ({ page }) => {
   await page.waitForTimeout(500)
   await expect(page.locator('h2')).toHaveText('Permafrost')
 
-  // CUSP is a collaboration, so it sits above the data X-rays.
+  // CUSP is a community dataset, so it sits above the data X-rays.
   await expect(page.locator('main h3.title')).toHaveText([
-    /Collaborations/,
+    /Community/,
     'Data X-rays',
   ])
-  await expect(page.locator('.collaboration h4')).toHaveText(
+  await expect(page.locator('.community-item h4')).toHaveText(
     'CUSP: CommUnity near-Surface Permafrost Observations'
   )
 
