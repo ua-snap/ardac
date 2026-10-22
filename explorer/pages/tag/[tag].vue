@@ -149,9 +149,14 @@ const componentFileExists = computed<boolean>(() => {
     figure.image {
       grid-column: 2;
       grid-row: 1 / span 2;
+      // Without this the picture stretches to the height of the text beside
+      // it, and its aspect-ratio then makes it twice as wide, pushing it out
+      // of the card.
+      align-self: start;
       aspect-ratio: 2 / 1;
       img {
         height: 100%;
+        margin: 0;
         object-fit: cover;
       }
     }
