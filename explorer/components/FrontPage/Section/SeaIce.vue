@@ -6,13 +6,13 @@
     subtitle="Sea ice cools the Arctic by reflecting sunlight, shapes ocean and weather patterns, and is habitat and highway for wildlife and coastal communities."
   >
     <div class="columns">
-      <div class="column pr-4">
+      <div class="column">
         <ItemText slug="landfast-sea-ice" />
       </div>
-      <div class="column px-4">
+      <div class="column">
         <ItemText slug="sea-ice-concentration" />
       </div>
-      <div class="column pl-4">
+      <div class="column">
         <ItemText slug="summary-landfast-sea-ice" />
       </div>
     </div>

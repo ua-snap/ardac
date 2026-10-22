@@ -105,6 +105,13 @@ footer {
   }
 }
 
+// Zoom buttons are links to Leaflet but read as icon buttons.
+// The extra :not()s match the specificity of the rule above.
+.leaflet-control-zoom a.leaflet-control-zoom-in:not(.button):not(.tag),
+.leaflet-control-zoom a.leaflet-control-zoom-out:not(.button):not(.tag) {
+  text-decoration: none;
+}
+
 // Bulma's dark text on light info backgrounds is only 3.9:1.
 .notification.is-info.is-light,
 .tag.is-info.is-light,
