@@ -1,9 +1,9 @@
-name: Build and Deploy
+name: Build and Deploy Arctic-EDS Module Notebooks
 
 on:
   push:
     branches:
-      - main
+      - "*"
   pull_request:
     branches:
       - "*"
@@ -11,11 +11,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: notebooks
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Install the dependencies
@@ -26,13 +29,13 @@ jobs:
           cp README.md content
           jupyter lite build --contents content --output-dir dist
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: ./dist
+          path: notebooks/dist
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/fix_eds_notebooks'
     permissions:
       pages: write
       id-token: write
@@ -45,4 +48,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
