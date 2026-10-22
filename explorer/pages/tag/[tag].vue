@@ -124,7 +124,6 @@ const componentFileExists = computed<boolean>(() => {
   background-color: $white-lighter;
   border: 1px solid $white-darker;
   border-radius: 0.5rem;
-  overflow: hidden;
 
   .community-item + .community-item {
     margin-top: 2rem;
@@ -137,28 +136,23 @@ const componentFileExists = computed<boolean>(() => {
   h4 {
     font-size: 1.75rem;
   }
-  h4,
-  p {
-    overflow-wrap: anywhere;
-  }
   p {
     font-size: $size-5;
   }
   @include tablet {
     > a {
       display: grid;
-      // minmax(0, 1fr) stops the picture's aspect-ratio from stretching a
-      // column beyond its half of the card.
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: 1fr 1fr;
       grid-template-rows: auto 1fr;
       column-gap: 2rem;
     }
     figure.image {
       grid-column: 2;
       grid-row: 1 / span 2;
+      // Without this the picture stretches to the height of the text beside
+      // it, and its aspect-ratio then makes it twice as wide, pushing it out
+      // of the card.
       align-self: start;
-      min-width: 0;
-      width: 100%;
       aspect-ratio: 2 / 1;
       img {
         height: 100%;
