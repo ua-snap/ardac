@@ -6,13 +6,13 @@
     subtitle="Much of Alaska sits on frozen ground. As it warms and thaws, it reshapes landscapes, drainage, and infrastructure, and can release long-stored carbon."
   >
     <div class="columns">
-      <div class="column pr-4">
+      <div class="column">
         <ItemText slug="permafrost-talik" />
       </div>
-      <div class="column px-4">
+      <div class="column">
         <ItemText slug="permafrost-base-top" />
       </div>
-      <div class="column pl-4">
+      <div class="column">
         <ItemText slug="permafrost-magt" />
       </div>
     </div>
