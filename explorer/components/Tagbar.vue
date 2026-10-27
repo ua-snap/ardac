@@ -14,41 +14,38 @@ const tags: Tag[] = [
 
 <template>
   <nav class="tagbar mb-2" aria-label="Topics">
-    <div class="container is-fullhd">
-      <ul>
-        <li v-for="tag in tags" :key="tag">
-          <NuxtLink
-            :to="'/tag/' + tag"
-            @click="trackEvent('Tagbar Clicked', { tag })"
-            >{{ tag }}</NuxtLink
-          >
-        </li>
-      </ul>
-    </div>
+    <ul class="container is-fullhd">
+      <li v-for="tag in tags" :key="tag">
+        <NuxtLink
+          :to="'/tag/' + tag"
+          @click="trackEvent('Tagbar Clicked', { tag })"
+          >{{ tag }}</NuxtLink
+        >
+      </li>
+    </ul>
   </nav>
 </template>
 
 <style lang="scss" scoped>
 // The white band and its borders run the full width of the window, and the
-// container inside keeps the links in line with the page content.
+// list inside is a container, which keeps the links in line with the page
+// content.
 .tagbar {
   background-color: $white-lighter;
   // The same gray as the HeaderBanner at the top of the page.
   border-top: 1px solid $gray;
   border-bottom: 1px solid $gray;
-  // Side padding matches the page heading's section padding.
-  .container {
-    padding: 0.9rem 3rem;
-    @include touch {
-      padding: 0.75rem 1.5rem;
-    }
-  }
   // One row on desktop; an even grid (5 + 4, then 3 × 3) as space runs out.
+  // Side padding matches the page heading's section padding.
   ul {
     display: flex;
     flex-wrap: wrap;
     column-gap: clamp(1rem, 2.2vw, 2.5rem);
     row-gap: 0.4rem;
+    padding: 0.9rem 3rem;
+    @include touch {
+      padding: 0.75rem 1.5rem;
+    }
     @include tablet-only {
       display: grid;
       grid-template-columns: repeat(5, max-content);
