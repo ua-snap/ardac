@@ -13,27 +13,35 @@ const tags: Tag[] = [
 </script>
 
 <template>
-  <nav class="tagbar" aria-label="Topics">
-    <ul>
-      <li v-for="tag in tags" :key="tag">
-        <NuxtLink
-          :to="'/tag/' + tag"
-          @click="trackEvent('Tagbar Clicked', { tag })"
-          >{{ tag }}</NuxtLink
-        >
-      </li>
-    </ul>
+  <nav class="tagbar mb-2" aria-label="Topics">
+    <div class="container is-fullhd">
+      <ul>
+        <li v-for="tag in tags" :key="tag">
+          <NuxtLink
+            :to="'/tag/' + tag"
+            @click="trackEvent('Tagbar Clicked', { tag })"
+            >{{ tag }}</NuxtLink
+          >
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
 <style lang="scss" scoped>
+// The white band and its borders run the full width of the window, and the
+// container inside keeps the links in line with the page content.
 .tagbar {
-  border-top: 1px solid $gray-darker;
-  border-bottom: 1px solid $gray-darker;
+  background-color: $white-lighter;
+  // The same gray as the HeaderBanner at the top of the page.
+  border-top: 1px solid $gray;
+  border-bottom: 1px solid $gray;
   // Side padding matches the page heading's section padding.
-  padding: 0.9rem 3rem;
-  @include touch {
-    padding: 0.75rem 1.5rem;
+  .container {
+    padding: 0.9rem 3rem;
+    @include touch {
+      padding: 0.75rem 1.5rem;
+    }
   }
   // One row on desktop; an even grid (5 + 4, then 3 × 3) as space runs out.
   ul {
