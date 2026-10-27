@@ -42,22 +42,21 @@
         <div class="content resources is-size-5 pt-4">
           <ul>
             <li class="mb-3">
-              <strong class="is-inline-block px-2">Hello!</strong> Looking for
-              an
+              <strong class="is-inline-block px-2">Hello!</strong> Read an
               <NuxtLink to="/about">overview of the content</NuxtLink> available
-              here?
+              on ARDAC
             </li>
             <li class="mb-3">
               <a href="mailto:uaf-snap-data-tools@alaska.edu">Email us</a> with
-              questions?
+              questions
             </li>
             <li class="mb-3">
               Visit the <a href="https://earthmaps.io">data API</a> that this
-              webapp uses to provide data access?
+              webapp uses to provide data access
             </li>
             <li class="mb-3">
               Learn about
-              <NuxtLink to="/people">our team and who we are?</NuxtLink>
+              <NuxtLink to="/people">our team and who we are</NuxtLink>
             </li>
           </ul>
         </div>
