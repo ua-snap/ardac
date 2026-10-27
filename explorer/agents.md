@@ -31,10 +31,11 @@ When adding a new item:
 1. Add the slug to `types/slugs.d.ts`
 2. Add any new tags to `types/tags.d.ts`
 3. Add the item metadata to `assets/items.ts`
-4. Add the item to the pre-render list in `nuxt.config.ts`
-5. Create the content component in `components/global/` using PascalCase derived from the slug
-6. Add placeholder for preview imagery and placeholder alt text if applicable, for the human developer to complete
-7. Consider whether the item should credit people (its `people` field in `assets/items.ts`)
+4. Create the content component in `components/global/` using PascalCase derived from the slug
+5. Add placeholder for preview imagery and placeholder alt text if applicable, for the human developer to complete
+6. Consider whether the item should credit people (its `people` field in `assets/items.ts`)
+
+`nuxt.config.ts` builds its pre-render list from `assets/items.ts`, so the item's page and any new tag pages are pre-rendered without another step. Do not add routes to it by hand.
 
 Do not bypass this system with ad hoc route-specific metadata.
 

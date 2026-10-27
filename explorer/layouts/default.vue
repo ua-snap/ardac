@@ -5,11 +5,10 @@
   <header>
     <HeaderBanner />
     <Navbar />
-    <Edition />
     <div class="container is-fullhd">
       <Header />
-      <Tagbar />
     </div>
+    <Tagbar />
   </header>
   <main id="main-content" class="container is-fullhd" tabindex="-1">
     <slot />

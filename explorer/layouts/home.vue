@@ -5,33 +5,38 @@
   <header>
     <HeaderBanner />
     <Navbar />
-    <Edition />
     <div class="container is-fullhd">
       <Header />
     </div>
   </header>
-  <main id="main-content" class="container is-fullhd" tabindex="-1">
-    <section class="section pt-0 pb-5">
-      <div class="content">
-        <p class="trumpet is-size-3 is-size-4-mobile">
-          <span aria-hidden="true">📢</span>
-          <strong>What&rsquo;s new?</strong> Explore more than 70,000 field
-          observations of permafrost, active layer and thaw depth in
-          <strong
-            ><NuxtLink to="/item/cusp-permafrost-observations"
-              >CUSP: the CommUnity near-Surface Permafrost dataset</NuxtLink
-            ></strong
-          >, a community-built dataset that you can help us build out.
-        </p>
-        <p class="is-size-4 is-size-5-mobile">
-          The Arctic Data Collaborative (ARDAC) provides highly-curated,
-          relevant <b>Arctic datasets</b>, streamlined <b>data access</b> and
-          <b>visualizations</b> to support research in the North.
-        </p>
-      </div>
-    </section>
+  <!-- The Tagbar runs the full width of the window, so the content on either
+       side of it gets its own container. -->
+  <main id="main-content" tabindex="-1">
+    <div class="container is-fullhd">
+      <section class="section pt-0 pb-5">
+        <div class="content">
+          <p class="trumpet is-size-3 is-size-4-mobile">
+            <span aria-hidden="true">📢</span>
+            <strong>What&rsquo;s new?</strong> Explore more than 70,000 field
+            observations of permafrost, active layer and thaw depth in
+            <strong
+              ><NuxtLink to="/item/cusp-permafrost-observations"
+                >CUSP: the CommUnity near-Surface Permafrost dataset</NuxtLink
+              ></strong
+            >, a community-built dataset that you can help us build out.
+          </p>
+          <p class="is-size-4 is-size-5-mobile">
+            The Arctic Data Collaborative (ARDAC) provides highly-curated,
+            relevant <b>Arctic datasets</b>, streamlined <b>data access</b> and
+            <b>visualizations</b> to support research in the North.
+          </p>
+        </div>
+      </section>
+    </div>
     <Tagbar />
-    <slot />
+    <div class="container is-fullhd">
+      <slot />
+    </div>
   </main>
   <Footer />
 </template>

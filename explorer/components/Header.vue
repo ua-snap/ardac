@@ -3,7 +3,8 @@
 <template>
   <section class="section pt-5 pb-5">
     <div class="brand">
-      <h1 class="title is-1">Arctic Data Collaborative.</h1>
+      <Edition />
+      <h1 class="title is-1">Arctic Data Collaborative</h1>
     </div>
   </section>
 </template>

@@ -52,21 +52,21 @@ npm run typecheck
 
 #### Adding a new item
 
-Determine a 'slug' for the item.  The slug is a unique but human-readable ID for the item that will be visible in the URL.
+Determine a 'slug' for the item. The slug is a unique but human-readable ID for the item that will be visible in the URL.
 
 1. Add the slug for the new item to `types/slugs.d.ts`
 2. Add any new tags for the new item to `types/tags.d.ts`
 3. Add the item in `assets/items.ts`:
-    * `slug`: the slug ID
-    * `type`: `'community'` for a dataset built with communities that people can contribute to, `'explainer'` for a story or guide, `'xray'` for a dataset you can explore by place (tag pages list each type in its own section, community datasets first)
-    * `title`: the 'headline'
-    * `blurb`: **short** text description, single line/paragraph, no HTML please
-    * `tags`: array of tags
-    * `image`: image filename, corresponds to `public/previews` folder
-    * `imageAlt`: alt text for accessibility
-    * `people`: optional, the people credited for the item (see below)
+   - `slug`: the slug ID
+   - `type`: `'community'` for a dataset built with communities that people can contribute to, `'explainer'` for a story or guide, `'xray'` for a dataset you can explore by place (tag pages list each type in its own section, community datasets first)
+   - `title`: the 'headline'
+   - `blurb`: **short** text description, single line/paragraph, no HTML please
+   - `tags`: array of tags
+   - `image`: image filename, corresponds to `public/previews` folder
+   - `imageAlt`: alt text for accessibility
+   - `people`: optional, the people credited for the item (see below)
 
-The item is now available for use in static layouts and will be included in any pages that display all results for a tag.  Static examples:
+The item is now available for use in static layouts and will be included in any pages that display all results for a tag. Static examples:
 
 ```html
 <!-- display only headline, show primary tag -->
@@ -77,7 +77,7 @@ The item is now available for use in static layouts and will be included in any 
 
 <!-- headline, blurb, photo (if present), don't show tags -->
 <ItemTextPicture slug="indicator-dw" />
-````
+```
 
 To build the actual content for the item, add a Vue component in `components/global` named according to the slug pattern in CamelCase, i.e. `sea-ice-concentration` would become `SeaIceConcentration`. From the command line in the root of the project directory:
 
@@ -115,56 +115,33 @@ When adding someone new:
 
 The People page lists everyone in `assets/bios.ts`, sorted by last name.
 
-
 ## Production
 
 ### Enable website hosting on the AWS S3 bucket:
 
 **_The following command should be run only during the initial setup of the S3
-bucket. Do not run this command again or it will wipe out the S3 website
-redirection rules._**
+bucket. It replaces the bucket's whole website configuration._**
 
 ```bash
 aws s3 website s3://arcticdatascience.org/ --index-document index.html --error-document index.html
 ```
 
-### Add website redirection rules to S3 bucket
+### Direct links to pages
 
-Website redirection rules need to be added to the S3 bucket for data to hydrate
-properly when a report is referenced directly by its URL (permalink).
+The site is a single-page app (`ssr: false`): every page is the same
+`index.html` app shell, and the app works out which page to show in the
+browser.
 
-From the AWS web interface for the S3 bucket, go to:
+So that a direct link to an item or tag page returns 200, `npm run generate`
+writes a copy of the shell at each page's path, such as
+`item/indicator-su/index.html`. `nuxt.config.ts` builds the list of pages to
+generate from `assets/items.ts`. Any other path gets the error document, which
+is also `index.html`: the app still loads, but with a 404 status, which keeps
+the page out of search results.
 
-Properties → Static website hosting → Edit
-
-In the "Redirection rules" text area, add the following:
-
-```
-[
-    {
-        "Condition": {
-            "HttpErrorCodeReturnedEquals": "404"
-        },
-        "Redirect": {
-            "HostName": "arcticdatascience.org",
-            "Protocol": "http",
-            "ReplaceKeyPrefixWith": "#!/"
-        }
-    },
-    {
-        "Condition": {
-            "HttpErrorCodeReturnedEquals": "403"
-        },
-        "Redirect": {
-            "HostName": "arcticdatascience.org",
-            "Protocol": "http",
-            "ReplaceKeyPrefixWith": "#!/"
-        }
-    }
-]
-```
-
-Code in `app.vue` catches and routes these redirects into fully hydrated report pages.
+The bucket needs no redirection rules. Don't add rules that redirect 404s to
+`#!/` URLs: nothing in the app handles them, so those links would open the
+home page.
 
 ### Build preview
 

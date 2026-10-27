@@ -2,15 +2,22 @@
 
 <template>
   <div class="edition">
-    &mdash; <span aria-hidden="true">🍁</span>&nbsp;Edition, October 2026
-    &mdash;
+    <span aria-hidden="true">🍁</span> October 2026 Edition
   </div>
 </template>
 
 <style scoped lang="scss">
+// An eyebrow over the site title, set in small letter-spaced capitals like
+// the HeaderBanner.
 .edition {
-  text-align: center;
-  font-size: 2rem;
+  margin-bottom: 0.5rem;
   color: $gray;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  span {
+    margin-right: 0.25em;
+  }
 }
 </style>
