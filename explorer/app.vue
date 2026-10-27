@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-// Redirect S3 hashbang URLs to Nuxt URLs.
-const route = useRoute()
-
 import { metas } from '@/utils/metas'
 
 // SEO meta tag configuration
