@@ -44,7 +44,7 @@ const tags: Tag[] = [
     @include tablet-only {
       display: grid;
       grid-template-columns: repeat(5, max-content);
-      column-gap: 2rem;
+      column-gap: 1.25rem;
     }
     @include mobile {
       display: grid;
@@ -54,11 +54,11 @@ const tags: Tag[] = [
   }
   a {
     display: inline-block;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 700;
     line-height: 1.6;
     white-space: nowrap;
-    color: $black;
+    color: var(--bulma-link-text);
     text-decoration: underline 2px transparent;
     text-underline-offset: 0.35em;
     transition:
@@ -69,11 +69,11 @@ const tags: Tag[] = [
     }
     &:hover,
     &:focus-visible {
-      color: $link;
-      text-decoration-color: $link;
+      color: $black;
+      text-decoration-color: $black;
     }
     &.router-link-active {
-      text-decoration-color: $black;
+      text-decoration-color: var(--bulma-link-text);
     }
   }
 }
