@@ -5,7 +5,6 @@
   <header>
     <HeaderBanner />
     <Navbar />
-    <Edition />
     <div class="container is-fullhd">
       <Header />
     </div>
