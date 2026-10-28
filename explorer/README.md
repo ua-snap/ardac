@@ -123,21 +123,21 @@ The People page lists everyone in `assets/bios.ts`, sorted by last name.
 bucket. It replaces the bucket's whole website configuration._**
 
 ```bash
-aws s3 website s3://arcticdatascience.org/ --index-document index.html --error-document index.html
+aws s3 website s3://arcticdatascience.org/ --index-document index.html --error-document 404.html
 ```
 
 ### Direct links to pages
 
-The site is a single-page app (`ssr: false`): every page is the same
-`index.html` app shell, and the app works out which page to show in the
-browser.
+`npm run generate` renders every page to HTML at its own path, such as
+`item/indicator-su/index.html`, so a direct link returns the page's content
+with a 200 status. Nitro finds pages by following links, and `nuxt.config.ts`
+also lists every item and tag page from `assets/items.ts`, because some aren't
+linked from any page.
 
-So that a direct link to an item or tag page returns 200, `npm run generate`
-writes a copy of the shell at each page's path, such as
-`item/indicator-su/index.html`. `nuxt.config.ts` builds the list of pages to
-generate from `assets/items.ts`. Any other path gets the error document, which
-is also `index.html`: the app still loads, but with a 404 status, which keeps
-the page out of search results.
+Any other path gets the error document, `404.html`: an empty app shell that
+works out which page to show in the browser, with a 404 status, which keeps the
+page out of search results. Don't use `index.html` as the error document: it's
+the rendered home page, so every unknown path would show the home page.
 
 The bucket needs no redirection rules. Don't add rules that redirect 404s to
 `#!/` URLs: nothing in the app handles them, so those links would open the

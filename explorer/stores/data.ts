@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia'
-const runtimeConfig = useRuntimeConfig()
-const placesStore = usePlacesStore()
 
 const endpoints: Record<string, string> = {
   elevation: '/elevation/point/',
@@ -29,6 +27,9 @@ const endpoints: Record<string, string> = {
 }
 
 export const useDataStore = defineStore('data', () => {
+  const runtimeConfig = useRuntimeConfig()
+  const placesStore = usePlacesStore()
+
   // Use "any" type since apiData will be used to store many different types of
   // data we will get from the API for different ARDAC items.
   const apiData: Ref<Record<string, any>> = ref({})

@@ -57,6 +57,10 @@ const selectedCommunityName = ref('') // i.e. Fairbanks, etc
 const inputValue = ref('') // input value for autocompleter
 const gimmeInput = ref() // DOM element of #gimme
 const newPlaceButton = ref() // DOM element of "Pick a new place" button
+// The search field arrives in the server-rendered HTML, but typing in it does
+// nothing until the autocompleter is set up, and hydration clears anything
+// typed before then. Keep it disabled until then.
+const isMounted = ref(false)
 
 // The search field is hidden once a place is chosen, which would drop
 // keyboard focus back to the top of the page. Keep it here instead.
@@ -149,6 +153,7 @@ onMounted(() => {
   }
 
   new $autoComplete(config)
+  isMounted.value = true
 
   // When a placename is selected, populate the store.
   gimmeInput.value.addEventListener('selection', function (event: CustomEvent) {
@@ -337,6 +342,7 @@ onUnmounted(() => {
           v-model="inputValue"
           ref="gimmeInput"
           aria-describedby="gimme-help"
+          :disabled="!isMounted"
         />
         <button
           v-if="latLngIsValid"

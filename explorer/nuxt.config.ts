@@ -73,13 +73,11 @@ const stylesDir = fileURLToPath(new URL('./assets/styles/', import.meta.url))
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false, // required or 3rd party libs break the app
   nitro: {
     prerender: {
-      // With ssr: false there are no links in the HTML for Nitro to crawl, so
-      // item and tag pages are listed here, straight from the registry. Each
-      // one becomes a copy of the app shell at its own path, which lets S3
-      // answer a direct link with 200 instead of its 404 error page.
+      // Nitro pre-renders the pages it finds by following links, but some
+      // items and tags aren't linked from any page, so every item and tag
+      // page is listed here, straight from the registry.
       routes: [
         ...items.map(item => `/item/${item.slug}`),
         ..._.uniq(items.flatMap(item => item.tags)).map(tag => `/tag/${tag}`),
