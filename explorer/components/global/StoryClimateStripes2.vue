@@ -349,9 +349,11 @@ const buildChart = () => {
   }
 }
 
-window.addEventListener('resize', () => {
-  $Plotly.purge('chart')
-  buildChart()
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    $Plotly.purge('chart')
+    buildChart()
+  })
 })
 
 watch(latLng, async () => {

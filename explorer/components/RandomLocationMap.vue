@@ -2,18 +2,11 @@
 import { usePlacesStore } from '~/stores/places'
 import { useMapStore } from '~/stores/map'
 import type { LatLngTuple } from 'leaflet'
-import L from 'leaflet'
 
 // Identifies the marker icons for Leaflet when in production
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
-
-L.Icon.Default.mergeOptions({
-  iconUrl: markerIcon,
-  iconRetinaUrl: markerIcon2x,
-  shadowUrl: markerShadow,
-})
 
 const placesStore = usePlacesStore()
 const mapStore = useMapStore()
@@ -81,6 +74,12 @@ async function showRandomLocation() {
 
 function initMap() {
   if (!location.value) return
+
+  $L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
+  })
 
   // Clean up existing map if it exists
   if (mapInstance.value) {

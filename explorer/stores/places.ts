@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-const runtimeConfig = useRuntimeConfig()
 
 export const usePlacesStore = defineStore('places', () => {
+  const runtimeConfig = useRuntimeConfig()
   const allCommunities: Ref<Community[] | undefined> = ref(undefined)
   const selectedCommunity: Ref<CommunityValue> = ref(undefined)
   const latLng: Ref<LatLngValue> = ref(undefined)

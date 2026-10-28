@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
-const { $L } = useNuxtApp()
-const config = useRuntimeConfig()
+
+// Set when the store is first used, from inside the Nuxt app. They can't be
+// read when this module loads: on the server there's no app yet, and Leaflet
+// is only provided in the browser because it needs `window`.
+let $L: typeof import('leaflet')
+let config: ReturnType<typeof useRuntimeConfig>
 
 // Leaflet map objects, keys equal to ID of Leaflet map
 const maps: { [index: string]: any } = {}
@@ -14,13 +18,7 @@ var legendControls: { [index: string]: any } = {}
 // Legend items for each map, keyed like `maps` var above.
 var legendItems: { [index: string]: any } = {}
 
-import {
-  tileLayer,
-  latLng,
-  latLngBounds,
-  type TileLayer,
-  type MapOptions,
-} from 'leaflet'
+import type { TileLayer, MapOptions } from 'leaflet'
 
 var coastlineLayer: TileLayer.WMS
 var circumpolarPlaces: L.GeoJSON
@@ -41,13 +39,13 @@ function getBaseMapAndLayers(crs: string): MapOptions {
   if (crs == 'EPSG:3857') {
     return {
       crs: $L.CRS.EPSG3857,
-      center: latLng(64.7, -155),
+      center: $L.latLng(64.7, -155),
       zoom: 4,
       minZoom: 2,
       maxZoom: 16,
-      maxBounds: latLngBounds(
-        latLng(-85.05, -Infinity),
-        latLng(85.05, Infinity)
+      maxBounds: $L.latLngBounds(
+        $L.latLng(-85.05, -Infinity),
+        $L.latLng(85.05, Infinity)
       ),
       maxBoundsViscosity: 1.0,
       scrollWheelZoom: false,
@@ -55,7 +53,7 @@ function getBaseMapAndLayers(crs: string): MapOptions {
       doubleClickZoom: false,
       attributionControl: true,
       layers: [
-        tileLayer(
+        $L.tileLayer(
           'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
           {
             attribution:
@@ -74,7 +72,7 @@ function getBaseMapAndLayers(crs: string): MapOptions {
   if (crs == 'EPSG:3572') {
     resolutions = [12000, 6000, 3000, 1500]
     zoom = 0
-    center = latLng(90, 0)
+    center = $L.latLng(90, 0)
     proj = new $L.Proj.CRS(
       'EPSG:3572',
       '+proj=laea +lat_0=90 +lon_0=-150 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs',
@@ -92,8 +90,8 @@ function getBaseMapAndLayers(crs: string): MapOptions {
     // then tweaking the latitude values until the maxBounds behaved as
     // expected. The maxBounds behavior isn't perfect, but maybe as good as it
     // gets for the EPSG:3572 projection.
-    southWest = latLng(20, -15)
-    northEast = latLng(20, 165)
+    southWest = $L.latLng(20, -15)
+    northEast = $L.latLng(20, 165)
 
     // Set viscosity to maximum because the map produces (harmless) JavaScript
     // errors if you drag too far outside the maxBounds. This prevents errors
@@ -103,7 +101,7 @@ function getBaseMapAndLayers(crs: string): MapOptions {
   } else {
     resolutions = [4096, 2048, 1024, 512, 256, 128, 64]
     zoom = 1
-    center = latLng(64.7, -155)
+    center = $L.latLng(64.7, -155)
     proj = new $L.Proj.CRS(
       'EPSG:3338',
       '+proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs',
@@ -113,18 +111,18 @@ function getBaseMapAndLayers(crs: string): MapOptions {
         resolutions: resolutions,
       }
     )
-    baseLayer = tileLayer.wms(config.public.geoserverUrl, {
+    baseLayer = $L.tileLayer.wms(config.public.geoserverUrl, {
       transparent: true,
       crs: proj,
       format: 'image/png',
       version: '1.3.0',
       layers: 'atlas_mapproxy:alaska_osm_retina',
     })
-    southWest = latLng(50.5, 155)
-    northEast = latLng(64, -131)
+    southWest = $L.latLng(50.5, 155)
+    northEast = $L.latLng(64, -131)
   }
 
-  const bounds = latLngBounds(southWest, northEast)
+  const bounds = $L.latLngBounds(southWest, northEast)
 
   // Map base configuration
   let layerConfig: MapOptions = {
@@ -150,6 +148,9 @@ function getBaseMapAndLayers(crs: string): MapOptions {
 }
 
 export const useMapStore = defineStore('map', () => {
+  $L = useNuxtApp().$L
+  config = useRuntimeConfig()
+
   // The active layer on each map
   const activeLayers: Ref<Record<string, MapLayer>> = ref({})
 
@@ -231,7 +232,7 @@ export const useMapStore = defineStore('map', () => {
 
     // Add EPSG:3572 mask layer first to hide map artifacts before they load
     if (crs == 'EPSG:3572') {
-      mask = tileLayer.wms(config.public.geoserverUrl, {
+      mask = $L.tileLayer.wms(config.public.geoserverUrl, {
         transparent: true,
         format: 'image/png',
         layers: 'ardac:cmip6_mask',
@@ -256,7 +257,7 @@ export const useMapStore = defineStore('map', () => {
         ? config.public.rasdamanUrl
         : config.public.geoserverUrl
 
-    layerObjects[layerObj.mapId] = tileLayer.wms(wmsUrl, layerConfiguration)
+    layerObjects[layerObj.mapId] = $L.tileLayer.wms(wmsUrl, layerConfiguration)
     maps[layerObj.mapId]?.addLayer(layerObjects[layerObj.mapId])
 
     if (crs == 'EPSG:3572') {
@@ -264,15 +265,15 @@ export const useMapStore = defineStore('map', () => {
     }
 
     if (layerObj.layer.bbox) {
-      const bounds = latLngBounds(
-        latLng(layerObj.layer.bbox[1], layerObj.layer.bbox[0]),
-        latLng(layerObj.layer.bbox[3], layerObj.layer.bbox[2])
+      const bounds = $L.latLngBounds(
+        $L.latLng(layerObj.layer.bbox[1], layerObj.layer.bbox[0]),
+        $L.latLng(layerObj.layer.bbox[3], layerObj.layer.bbox[2])
       )
       maps[layerObj.mapId]?.fitBounds(bounds)
     }
 
     if (layerObj.layer.coastline) {
-      coastlineLayer = tileLayer.wms(config.public.geoserverUrl, {
+      coastlineLayer = $L.tileLayer.wms(config.public.geoserverUrl, {
         transparent: true,
         format: 'image/png',
         version: '1.3.0',
